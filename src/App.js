@@ -21,9 +21,11 @@ function App() {
   useEffect(() => {
 
     initializeAppState(dispatch)
-    setTimeout((() => console.log(state)), 500)
+    setTimeout((() => console.log('init state', state)), 250)
 
   }, []);
+
+
 
 
 
@@ -43,12 +45,11 @@ function App() {
 const initializeAppState = (dispatch, prodId = 37315) => {
   api.get.allProductData(prodId)
     .then((response) => {
-      const action = {
+      dispatch({
         type: 'PROD_INIT',
         payload: response,
-      };
-      dispatch(action);
-  });
+      });
+    });
 }
 
 

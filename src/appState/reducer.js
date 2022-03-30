@@ -3,17 +3,19 @@
 
 
 
-const reducer = (state, action) => {
-  console.log(action)
-  let newState;
+function reducer(state, action) {
+
+  let newState = state
   switch (action.type) {
     case 'PROD_INIT':
-      newState = action.payload;
-      break;
+      newState.QA = action.payload.QA
+      newState.details = action.payload.details
+      newState.reviews = action.payload.reviews
+      newState.related = action.payload.related
+      return newState
     default:
-      throw new Error('App state reducer error');
+      return state;
   }
-  return newState;
 }
 
 export default reducer;
