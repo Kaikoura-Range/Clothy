@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     console.log('state', state)
-    const prodId = 37315
+
     const initEndpointData = [
       ['details', `/products/${prodId}`, {}],
       ['reviews', '/reviews/', { product_id: prodId, page: 1, sort: 'newest' }],
