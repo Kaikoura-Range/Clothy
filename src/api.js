@@ -22,18 +22,34 @@ const buildGetOptions = (endpoint, params = {}) => {
 };
 
 
+
+const runFetch = (options) => {
+  return axios(options)
+    .then((res) => {
+      console.log(res)
+      return res.data
+    })
+    .catch(err => console.log('API fetch err: ', err))
+};
+
+
+
+
+
 // const prodId = 37315 just so we know what queries look like
 // ['details', `/products/${prodId}`, {}],
 // ['reviews', '/reviews/', { product_id: prodId, page: 1, sort: 'newest' }],
 // ['QA', '/qa/questions/', { product_id: prodId }],
 // ['related', `/products/${prodId}/related/`, {}],
 
-const get = ((endpoint, params) => runFetch(buildGetOptions(endpoint, params)));
+const get = ((endpoint, params) => {
+  return runFetch(buildGetOptions(endpoint, params))
+});
 
 const getAll = (getOptionsData) => {
 
   const getPromises = getOptionsData.map((optionData) => {
-    var [key, endpoint, params] = optionData;
+    var [endpoint, params] = optionData.slice(1);
     return runFetch(buildGetOptions(endpoint, params))
   })
 
@@ -47,21 +63,25 @@ const getAll = (getOptionsData) => {
     .catch(err => console.log('GET all fetch err ', err))
 }
 
+
+
+const getAllProductData = (prodId) => {
+  const initEndpointData = [
+    ['details', `/products/${prodId}`, {}],
+    ['reviews', '/reviews/', { product_id: prodId, page: 1, sort: 'newest' }],
+    ['QA', '/qa/questions/', { product_id: prodId }],
+    ['related', `/products/${prodId}/related/`, {}],
+  ]
+  return getAll(initEndpointData)
+}
+
+
+
 get.all = getAll
+get.allProductData = getAllProductData
 
 
 
-
-
-
-const runFetch = (options) => {
-  return axios(options)
-    .then((res) => {
-      console.log(res)
-      return res.data
-    })
-    .catch(err => console.log('API fetch err: ', err))
-};
 
 const api = { get };
 
