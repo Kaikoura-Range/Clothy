@@ -9,17 +9,8 @@ function App() {
   useEffect(() => {
 
     const prodId = 37315
-
-    const initEndpointData = [
-      ['details', `/products/${prodId}`, {}],
-      ['reviews', '/reviews/', { product_id: prodId, page: 1, sort: 'newest' }],
-      ['QA', '/qa/questions/', { product_id: prodId }],
-      ['related', `/products/${prodId}/related/`, {}],
-    ]
-    api.get.all(initEndpointData)
-      .then((response) => {
-        console.log('response', response)
-      })
+    api.get.allProductData(prodId)
+      .then(res => console.log('all product data', res))
 
 
   })
