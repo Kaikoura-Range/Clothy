@@ -20,7 +20,7 @@ function App() {
         </a>
         {/* <ProductDetails />
         <RatingsReviews />
-        <QandA />
+        <QAndA />
         <RelatedProducts /> */}
 
       </header>
