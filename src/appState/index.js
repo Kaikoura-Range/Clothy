@@ -1,7 +1,6 @@
 
-import React from "react";
+import React, { useReducer } from "react";
 import reducer from './reducer.js';
-const { useReducer } = React;
 
 
 export const DispatchContext = React.createContext([null, () => {}]);
@@ -14,6 +13,7 @@ const initPageState = {
   related: {},
   reviews: {},
 };
+
 
 
 const AppContextProvider = (props) => {
