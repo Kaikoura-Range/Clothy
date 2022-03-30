@@ -26,7 +26,6 @@ const buildGetOptions = (endpoint, params = {}) => {
 const runFetch = (options) => {
   return axios(options)
     .then((res) => {
-      console.log(res)
       return res.data
     })
     .catch(err => console.log('API fetch err: ', err))
@@ -65,20 +64,36 @@ const getAll = (getOptionsData) => {
 
 
 
-const getAllProductData = (prodId) => {
-  const initEndpointData = [
-    ['details', `/products/${prodId}`, {}],
-    ['reviews', '/reviews/', { product_id: prodId, page: 1, sort: 'newest' }],
-    ['QA', '/qa/questions/', { product_id: prodId }],
-    ['related', `/products/${prodId}/related/`, {}],
-  ]
-  return getAll(initEndpointData)
+
+const initProductDataFetch = (detailsGets, reviewsGet, QAgets, relatedGets ) => {
+  const stateKeys = [ 'details', 'reviews', 'QA', 'related' ];
+  const allGets = [detailsGets, reviewsGet, QAgets, relatedGets]
+
+  get.allProductData = (productId) => {
+    const poductDataPromises = allGets.map(getOptions => {
+      return getAll(getOptions(productId))
+    })
+    return Promise.all(poductDataPromises)
+      .then((getRes) => {
+        return getRes.reduce((memo, res, ind) => {
+          memo[stateKeys[ind]] = res
+          return memo
+        }, {})
+      })
+      .catch(err => console.log('getting all prodData err', err))
+  }
 }
 
 
 
+
+
 get.all = getAll
-get.allProductData = getAllProductData
+get.initProductDataFetch = initProductDataFetch
+get.allProductData = (() => {
+  console.log('Please initalize this function')
+  return {}
+})
 
 
 
@@ -87,6 +102,24 @@ const api = { get };
 
 export default api;
 
+
+
+// api.get.initProductDataFetch(
+//   detailsStateInit,
+//   reviewStateInit,
+//   qAndAStateInit,
+//   relatedStateInit,
+// )
+
+// const getAllProductData = (prodId) => {
+//   const initEndpointData = [
+//     ['details', `/products/${prodId}`, {}],
+//     ['reviews', '/reviews/', { product_id: prodId, page: 1, sort: 'newest' }],
+//     ['QA', '/qa/questions/', { product_id: prodId }],
+//     ['related', `/products/${prodId}/related/`, {}],
+//   ]
+//   return getAll(initEndpointData)
+// }
 
 
     // const endpoint = '/products/'
