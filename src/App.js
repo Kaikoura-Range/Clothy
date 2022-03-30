@@ -8,17 +8,23 @@ import QAndA from './QandA/index';
 import RatingsReviews from './RatingsReviews/index';
 
 
-
 function App() {
   const [, dispatch] = useContext(DispatchContext);
   const [state] = useContext(StateContext);
 
   useEffect(() => {
 
-    initializeAppState(dispatch)
-    setTimeout((() => console.log(state)), 500)
+    api.get.allProductData(37315)
+      .then((response) => {
+        dispatch({
+          type: 'PROD_INIT',
+          payload: response,
+        });
+      });
+    setTimeout((() => console.log(state)), 1000)
 
   }, []);
+
 
 
 
@@ -35,16 +41,10 @@ function App() {
 
 
 
-const initializeAppState = (dispatch, prodId = 37315) => {
-  api.get.getAllProductData(prodId)
-    .then((response) => {
-      const action = {
-        type: 'PROD_INIT',
-        payload: response,
-      };
-      dispatch(action);
-  });
-}
+
+
+
+
 
 
 
