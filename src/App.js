@@ -2,12 +2,17 @@ import './App.css';
 import api from './api.js';
 import React, { useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from './appState/index.js';
-import ProductDetails from './ProductDetails/index';
-import RelatedProducts from './RelatedProducts/index';
-import QAndA from './QandA/index';
-import RatingsReviews from './RatingsReviews/index';
+import ProductDetails, { detailsStateInit } from './ProductDetails/index';
+import RatingsReviews, { reviewStateInit } from './RatingsReviews/index';
+import QAndA, { qAndAStateInit } from './QandA/index';
+import RelatedProducts, { relatedStateInit } from './RelatedProducts/index';
 
-
+api.get.initProductDataFetch(
+  detailsStateInit,
+  reviewStateInit,
+  qAndAStateInit,
+  relatedStateInit,
+)
 
 function App() {
   const [, dispatch] = useContext(DispatchContext);
@@ -15,7 +20,7 @@ function App() {
 
   useEffect(() => {
 
-    productDataInitializer(dispatch)
+    initializeAppState(dispatch)
     setTimeout((() => console.log('init state', state)), 250)
 
   }, []);
@@ -36,7 +41,8 @@ function App() {
 
 
 
-const productDataInitializer = (dispatch, prodId = 37315) => {
+
+const initializeAppState = (dispatch, prodId = 37315) => {
   api.get.allProductData(prodId)
     .then((response) => {
       dispatch({
