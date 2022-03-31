@@ -45,19 +45,22 @@ const get = ((endpoint, params) => {
   return runFetch(buildGetOptions(endpoint, params))
 });
 
-const getAll = (getOptionsData) => {
+const getAll = (getOptionsData, reduce = true) => {
 
   const getPromises = getOptionsData.map((optionData) => {
-    var [endpoint, params] = optionData.slice(1);
+    var [endpoint, params] = optionData.length > 2 ? optionData.slice(1) : optionData;
     return runFetch(buildGetOptions(endpoint, params))
   })
 
   return Promise.all(getPromises)
     .then((resData) => {
-      return resData.reduce((memo, apiRes, ind) => {
-        memo[getOptionsData[ind][0]] = apiRes
-        return memo;
-      }, {})
+      if (reduce) {
+        return resData.reduce((memo, apiRes, ind) => {
+          memo[getOptionsData[ind][0]] = apiRes
+          return memo;
+        }, {})
+      }
+      return resData
     })
     .catch(err => console.log('GET all fetch err ', err))
 }
@@ -83,6 +86,7 @@ const initProductDataFetch = (detailsGets, reviewsGet, QAgets, relatedGets ) => 
       .catch(err => console.log('getting all prodData err', err))
   }
 }
+
 
 
 
