@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 export default function Answers(props) {
   const [addMoreAnswers, setAddMoreAnswers] = useState(0);
+  const [length, setLength] = useState(Object.keys(props.a.answers).length);
   const addMoreAnswersClickHandler = () => {
     setAddMoreAnswers(addMoreAnswers + 1);
   };
@@ -17,21 +18,22 @@ export default function Answers(props) {
                 By: {answer.answerer_name} on: {moment(answer.date).format('MMMM Do, YYYY')}
               </p>
               <p>
-                Helpful Answer? <a href='#'>Yes</a> ({answer.helpfulness})
+                Helpful Answer? <a href='#'>Yes</a> ({answer.helpfulness}) <a href='#'>Report</a>
               </p>
-              <a href='#'>Report</a>
               {answer.photos &&
                 answer.photos.map((photo) => {
                   return (
-                    <div>
-                      <img alt='some pic' src={photo.url} />
+                    <div key={photo}>
+                      <img alt='some pic' src={photo} />
                     </div>
                   );
                 })}
             </div>
           );
         })}
-      {Object.keys(props.a.answers).length > 1 && <p onClick={addMoreAnswersClickHandler}>Load more answers...</p>}
+      {length > 1 && length && addMoreAnswers !== length - 1 && (
+        <p onClick={addMoreAnswersClickHandler}>Load more answers</p>
+      )}
     </div>
   );
 }
