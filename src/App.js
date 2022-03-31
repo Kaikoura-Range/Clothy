@@ -19,18 +19,25 @@ function App() {
   const [state] = useContext(StateContext);
 
   useLayoutEffect(() => {
-
-    initializeAppState(dispatch)
-    setTimeout((() => console.log('init state', state)), 250)
+    console.log(state)
+    initializeAppState(dispatch, state, state.currentProduct)
 
   }, []);
 
+  useEffect(() => {
+    console.log('state', state)
+    initializeAppState(dispatch, state, state.currentProduct)
+    // console.log('main state', state)
+  }, [state.currentProduct]);
 
-  
+
   return (
     <div className='App'>
+      <div>{state.details.init ? state.details.init.name : 'loading'} </div>
+      <div>{state.details.init ? state.details.init.description : null} </div>
+
       <ProductDetails />
-      <RelatedProducts />
+      <RelatedProducts state={state.related} />
       <QAndA />
       <RatingsReviews />
     </div>
@@ -40,12 +47,12 @@ function App() {
 
 
 
-const initializeAppState = (dispatch, prodId = 37315) => {
+const initializeAppState = (dispatch, state, prodId) => {
   api.get.allProductData(prodId)
     .then((response) => {
       dispatch({
         type: 'PROD_INIT',
-        payload: response,
+        payload: { ...state, ...response}
       });
     });
 }
