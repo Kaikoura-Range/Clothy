@@ -12,7 +12,7 @@ export default function QandQ() {
   const addQuestionsHandler = () => {
     setAddMoreQuestions(addMoreQuestions + 2);
   };
-
+  /////////////PUT ALL STATE VARS AND FUNCTIONS ABOVE/////////////////////////////////
   return (
     <div>
       <h1>Questions & Answers:</h1>
@@ -21,9 +21,10 @@ export default function QandQ() {
         state.QA.main.results
           .slice(0, 2 + addMoreQuestions)
           .map((q) => <QAList key={q.question_id} q={q} />)}
-      {state.QA.main && state.QA.main.results.length > 3 && (
+      {state.QA.main && state.QA.main.results.length > 2 && (
         <button onClick={addQuestionsHandler}>More Answered Questions</button>
       )}
+      <button>Add A Question</button>
     </div>
   );
 }
