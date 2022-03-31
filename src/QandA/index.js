@@ -7,7 +7,7 @@ export default function QandQ() {
 
   const [state] = useContext(StateContext);
   const [addMoreQuestions, setAddMoreQuestions] = useState(0);
-  
+
   useEffect(() => {
     console.log(state.QA);
   }, [state.QA]);
