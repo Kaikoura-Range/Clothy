@@ -15,14 +15,15 @@ function ProductDetails() {
   console.log('DEV RENDER ProductDetails')
   return (<div>ProductDetails Section</div>);
 
+
 }
 
 // When page is loaded, call the API on a default product
 const detailsStateInit = (productId) => {
   return [
     // API GET request on key, endpoint, params
-    ['product', `/products/${productId}`, {}],
-    ['productStyles', `/products/${productId}/styles`, {}]
+    ['styles', `/products/${productId}/styles`, {}],
+    ['product', `/products/${productId}`, {}]
   ]
 }
 
