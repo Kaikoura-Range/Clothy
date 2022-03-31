@@ -1,6 +1,8 @@
 import React from 'react';
 
 export default function QandQ() {
+  // console.log('DEV- QandQ rendered')
+
   return <div>QandA Section</div>;
 }
 

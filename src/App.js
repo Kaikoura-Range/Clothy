@@ -1,6 +1,6 @@
 import './App.css';
 import api from './api.js';
-import React, { useLayoutEffect, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from './appState/index.js';
 import ProductDetails, { detailsStateInit } from './ProductDetails/index';
 import RatingsReviews, { reviewStateInit } from './RatingsReviews/index';
@@ -17,17 +17,14 @@ api.get.initProductDataFetch(
 function App() {
   const [, dispatch] = useContext(DispatchContext);
   const [state] = useContext(StateContext);
+  if( state.dev.pref ) {
+    console.log('\n\nDEV  RENDER   App')
+  }
 
-  useLayoutEffect(() => {
-    console.log(state)
-    initializeAppState(dispatch, state, state.currentProduct)
-
-  }, []);
 
   useEffect(() => {
-    console.log('state', state)
+    // console.log('state', state)
     initializeAppState(dispatch, state, state.currentProduct)
-    // console.log('main state', state)
   }, [state.currentProduct]);
 
 
@@ -37,7 +34,7 @@ function App() {
       <div>{state.details.init ? state.details.init.description : null} </div>
 
       <ProductDetails />
-      <RelatedProducts state={state.related} />
+      <RelatedProducts state={state.related} dev={state.dev} />
       <QAndA />
       <RatingsReviews />
     </div>
