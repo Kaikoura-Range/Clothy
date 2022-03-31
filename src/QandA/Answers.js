@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 export default function Answers(props) {
   const [addMoreAnswers, setAddMoreAnswers] = useState(0);
+  const [length, setLength] = useState(Object.keys(props.a.answers).length);
   const addMoreAnswersClickHandler = () => {
     setAddMoreAnswers(addMoreAnswers + 1);
   };
@@ -23,8 +24,8 @@ export default function Answers(props) {
               {answer.photos &&
                 answer.photos.map((photo) => {
                   return (
-                    <div>
-                      <img alt='some pic' src={photo.url} />
+                    <div key={photo}>
+                      <img alt='some pic' src={photo} />
                     </div>
                   );
                 })}

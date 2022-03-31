@@ -30,5 +30,5 @@ export default function QandQ() {
 }
 
 export const qAndAStateInit = (productId) => {
-  return [['main', '/qa/questions/', { product_id: productId, count: 500 }]];
+  return [['main', '/qa/questions/', { product_id: 37311, count: 500 }]];
 };
