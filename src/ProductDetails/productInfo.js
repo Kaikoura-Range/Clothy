@@ -3,7 +3,7 @@ import _ from "underscore";
 
 function ProductInfo(props) {
   if (props.product && props.styles.length !== 0 ) {
-    const {name, slogan, default_price, category} = props.product;
+    const {name, default_price, category} = props.product;
 
     const allStyles = props.styles.results.map(style =>
       <p key={style.style_id}>{style.name}</p>
@@ -19,7 +19,7 @@ function ProductInfo(props) {
 
     return(<div>
       <p>{category}</p>
-      <h1>{name} - {slogan}</h1>
+      <h1>{name}</h1>
       <p>${default_price}</p>
       <p>style > {activeStyle}</p>
       {allStyles}
