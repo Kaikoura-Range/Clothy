@@ -8,13 +8,13 @@ function ProductDetails() {
 
   useEffect(() => {
 
-    accessProductStyles(state.currentProduct)
-      .then(stylesData => {console.log(stylesData)})
+    // accessProductStyles(state.currentProduct)
+    //   .then(stylesData => {console.log(stylesData)})
 
     console.log(state.details);
   }, [state.details, state.currentProduct])
 
-  console.log('DEV RENDER ProductDetails')
+  // console.log('DEV RENDER ProductDetails')
   return <div>ProductDetails Section</div>;
 }
 
@@ -22,7 +22,7 @@ const accessProductStyles = (productId) => {
 
   return api.get.all([
     // API GET request on key, endpoint, params
-    ['productStyles', `/products/${productId}/styles`, {}]
+    // ['productStyles', `/products/${productId}/styles`, {}]
   ])
 }
 
@@ -31,6 +31,7 @@ const accessProductStyles = (productId) => {
 const detailsStateInit = (productId) => {
   return [
     // API GET request on key, endpoint, params
+    ['styles', `/products/${productId}/styles`, {}],
     ['product', `/products/${productId}`, {}]
   ]
 }

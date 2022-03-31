@@ -8,7 +8,7 @@ export default function QandQ() {
   const [addMoreQuestions, setAddMoreQuestions] = useState(0);
 
   useEffect(() => {
-    console.log(state.QA);
+    // console.log(state.QA);
   }, [state.QA]);
 
   const addQuestionsHandler = () => {
