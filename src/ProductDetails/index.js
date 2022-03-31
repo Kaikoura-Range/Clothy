@@ -21,6 +21,7 @@ function ProductDetails() {
     <Info product={activeProduct} styles={styles}/>
   </div>);
 
+
 }
 
 // When page is loaded, call the API on a default product

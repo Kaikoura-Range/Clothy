@@ -8,9 +8,9 @@ export default function Questions(props) {
         By: {props.q.asker_name} on: {moment(props.q.question_date).format('MMMM Do, YYYY')}
       </p>
       <p>
-        Helpful Question? <a href='#'>Yes</a> ({props.q.question_helpfulness})
+        Helpful Question? <a href='#'>Yes</a> ({props.q.question_helpfulness}) <a href='#'>Report</a>
       </p>
-      <a href='#'>Report</a>
+      <a href='#'>Add Answer</a>
     </div>
   );
 }

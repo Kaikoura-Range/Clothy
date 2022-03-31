@@ -8,9 +8,9 @@ export const StateContext = React.createContext([{}]);
 
 
 const initPageState = {
-  dev: { logs: true, renders: true, state: true, reducer: true },
+  dev: { logs: false, renders: true, state: true, reducer: true },
   user: { cart:[], outfit: [] },
-  currentProduct: 37315,
+  currentProduct: 37311,
   QA: {},
   details: {},
   related: {},
