@@ -2,9 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
 import QAList from './QAList';
 export default function QandQ() {
+
   const [, dispatch] = useContext(DispatchContext);
+
   const [state] = useContext(StateContext);
   const [addMoreQuestions, setAddMoreQuestions] = useState(0);
+
   useEffect(() => {
     console.log(state.QA);
   }, [state.QA]);
