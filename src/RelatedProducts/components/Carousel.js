@@ -17,16 +17,18 @@ const Carousel = ({ products }) => {
 }
 
 const CarouselContainer = styled.div`
-  width: 95%;
+  width: 85%;
   height: auto;
   display: flex;
-  padding: 10px;
-  overflow: scroll;
+  padding: 15px;
+  overflow: auto;
+  white-space: nowrap;
   border-radius: 7px;
   padding-top: 20px;
   padding-bottom: 20px;
   align-items: center;
-  justify-content: space-evenly;
+  /* flex-direction: column; */
+  /* justify-content: space-evenly; */
   background-color: rgb(242, 242, 242);
 `
 

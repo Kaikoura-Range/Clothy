@@ -54,13 +54,16 @@ const getAll = (getOptionsData, reduce = true) => {
 
   return Promise.all(getPromises)
     .then((resData) => {
+
       if (reduce) {
         return resData.reduce((memo, apiRes, ind) => {
           memo[getOptionsData[ind][0]] = apiRes
           return memo;
         }, {})
+      } else {
+        return resData
       }
-      return resData
+
     })
     .catch(err => console.log('GET all fetch err ', err))
 }

@@ -53,6 +53,7 @@ const RelatedContainer = styled.div`
   height: auto;
   display: flex;
   /* overflow: scroll; */
+  padding-top: 15px;
   padding-top: 50px;
   padding-bottom: 50px;
   align-items: center;
