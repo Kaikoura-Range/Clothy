@@ -8,6 +8,7 @@ export const StateContext = React.createContext([{}]);
 
 
 const initPageState = {
+  currentProduct: 37315,
   QA: {},
   details: {},
   related: {},

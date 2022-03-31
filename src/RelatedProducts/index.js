@@ -3,25 +3,43 @@ import { StateContext, DispatchContext } from '../appState/index.js';
 import api from '../api.js';
 
 
-export default function RelatedProducts() {
+export default function RelatedProducts({ state }) {
   const [, dispatch] = useContext(DispatchContext);
-  const [state] = useContext(StateContext);
+  // const [state] = useContext(StateContext);
 
   useEffect(() => {
+  }, [])
 
-    if (state.related.main){
-      console.log('related', state.related)
+
+  const changeProduct = (newId) => {
+    return () => {
+      dispatch({
+        type: 'CHANGE_PRODUCT',
+        payload: newId,
+      })
     }
+  }
 
-  }, [state.related])
-
-  return <div>RelatedProducts Section</div>;
+  return state.related ?
+  (
+    <div>
+      {state.related.map((newId, ind) => {
+        return <button key={ind} onClick={changeProduct(newId)} >Nav to product {newId} </button>
+      })}
+    </div>
+  )
+  :
+  (
+    <div>
+      <div>loading</div>
+    </div>
+  )
 }
 
 
 
 export const relatedStateInit = (productId) => {
   return [
-    ['main', `/products/${productId}/related/`, {}],
+    ['related', `/products/${productId}/related/`, {}],
   ]
 }
