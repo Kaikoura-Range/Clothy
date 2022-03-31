@@ -18,9 +18,8 @@ export default function Answers(props) {
                 By: {answer.answerer_name} on: {moment(answer.date).format('MMMM Do, YYYY')}
               </p>
               <p>
-                Helpful Answer? <a href='#'>Yes</a> ({answer.helpfulness})
+                Helpful Answer? <a href='#'>Yes</a> ({answer.helpfulness}) <a href='#'>Report</a>
               </p>
-              <a href='#'>Report</a>
               {answer.photos &&
                 answer.photos.map((photo) => {
                   return (
@@ -32,7 +31,9 @@ export default function Answers(props) {
             </div>
           );
         })}
-      {Object.keys(props.a.answers).length > 1 && <p onClick={addMoreAnswersClickHandler}>Load more answers...</p>}
+      {length > 1 && length && addMoreAnswers !== length - 1 && (
+        <p onClick={addMoreAnswersClickHandler}>Load more answers</p>
+      )}
     </div>
   );
 }

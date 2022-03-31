@@ -18,7 +18,7 @@ export default function QandQ() {
   return (
     <div>
       <h1>Questions & Answers:</h1>
-      <input placeholder='Have a question? Search for answers...' />
+      <input type='search' placeholder='Have a question? Search for answers...' />
       {state.QA.main &&
         state.QA.main.results.slice(0, 2 + addMoreQuestions).map((q) => <QAList key={q.question_id} q={q} />)}
       {state.QA.main && state.QA.main.results.length > 2 && (
