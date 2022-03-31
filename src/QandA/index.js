@@ -4,11 +4,17 @@ import QAList from './QAList';
 export default function QandQ() {
 
   const [, dispatch] = useContext(DispatchContext);
-  const [state] = useContext(StateContext)
 
+  const [state] = useContext(StateContext);
+  const [addMoreQuestions, setAddMoreQuestions] = useState(0);
+  
   useEffect(() => {
     console.log(state.QA);
   }, [state.QA]);
+
+  const addQuestionsHandler = () => {
+    setAddMoreQuestions(addMoreQuestions + 2);
+  };
 
   return (
     <div>
@@ -16,12 +22,15 @@ export default function QandQ() {
       <input placeholder='Have a question? Search for answers...' />
       {state.QA.main &&
         state.QA.main.results
-          .slice(0, 4)
+          .slice(0, 2 + addMoreQuestions)
           .map((q) => <QAList key={q.question_id} q={q} />)}
+      {state.QA.main && state.QA.main.results.length > 3 && (
+        <button onClick={addQuestionsHandler}>More Answered Questions</button>
+      )}
     </div>
   );
 }
 
 export const qAndAStateInit = (productId) => {
-  return [['main', '/qa/questions/', { product_id: productId, count: 10 }]];
+  return [['main', '/qa/questions/', { product_id: productId, count: 20 }]];
 };
