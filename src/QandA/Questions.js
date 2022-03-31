@@ -5,8 +5,7 @@ export default function Questions(props) {
     <div>
       <h3>Q: {props.q.question_body}</h3>
       <p>
-        By: {props.q.asker_name} on:{' '}
-        {moment(props.q.question_date).format('MMMM Do, YYYY')}
+        By: {props.q.asker_name} on: {moment(props.q.question_date).format('MMMM Do, YYYY')}
       </p>
       <p>
         Helpful Question? <a href='#'>Yes</a> ({props.q.question_helpfulness})
