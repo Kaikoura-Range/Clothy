@@ -41,7 +41,12 @@ export default function QandQ() {
         state.QA.main &&
         state.QA.main.results
           .slice(0, 2 + addMoreQuestions)
-          .map((q) => q.question_body.indexOf(searchText) > -1 && <QAList key={q.question_id} q={q} />)}
+          .map(
+            (q) =>
+              q.question_body.toLowerCase().indexOf(searchText.toLowerCase()) > -1 && (
+                <QAList key={q.question_id} q={q} />
+              )
+          )}
 
       {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
       {!searchTextThere &&
