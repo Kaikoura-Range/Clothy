@@ -5,7 +5,7 @@ import api from '../api.js';
 
 
 // const RelatedInputNonMemo = (props) => {
-//   console.log('DEV  RENDER   RelatedInput')
+//   console.log('DEV  RENDER  Memod RelatedInput')
 //   const [inputState, setInputState] = useState('');
 //   return (
 //     <div>
@@ -17,8 +17,12 @@ import api from '../api.js';
 // const RelatedInput = memo(RelatedInputNonMemo)
 
 
+
+var inputRenderCount = 0;
+
 const RelatedInput = (props) => {
-  console.log('DEV  RENDER   RelatedInput')
+  // inputRenderCount++;
+  // console.log('DEV  RENDER   RelatedInput     number of renders: ', inputRenderCount)
   const [inputState, setInputState] = useState('');
   return (
     <div>
@@ -29,26 +33,24 @@ const RelatedInput = (props) => {
 
 
 
-export default function RelatedProducts({ state, dev }) {
+
+var mainRenderCount = 0;
+
+const RelatedProducts = ({ state, dev }) => {
   const [, dispatch] = useContext(DispatchContext);
   // const [state] = useContext(StateContext);
   const [inputState, setInputState] = useState('');
-  if( dev.pref ) {
-    console.log('DEV  RENDER   related')
+  if( dev.logs ) {
+    mainRenderCount++;
+    dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
+    dev.state && console.log('DEV  STATE   RelatedProducts: ', state)
   }
+
 
   useEffect(() => {
   }, [])
 
 
-  const changeProduct = (newId) => {
-    return () => {
-      dispatch({
-        type: 'CHANGE_PRODUCT',
-        payload: newId,
-      })
-    }
-  }
 
   return state.related ?
   (
@@ -56,7 +58,7 @@ export default function RelatedProducts({ state, dev }) {
       {/* <input value={inputState} onChange={(e) => setInputState(e.target.value)} /> */}
       <RelatedInput />
       {state.related.map((newId, ind) => {
-        return <button key={ind} onClick={changeProduct(newId)} >Nav to product {newId} </button>
+        return <button key={ind} onClick={() => addProductToOutfit(dispatch, newId)} >Nav to product {newId} </button>
       })}
     </div>
   )
@@ -68,10 +70,30 @@ export default function RelatedProducts({ state, dev }) {
   )
 }
 
+const addProductToOutfit = (dispatch, prodId) => {
+  dispatch({
+    type: 'ADD_PRODUCT_TO_OUTFIT',
+    payload: prodId,
+  });
+}
 
+
+const initializeAppState = (dispatch, prodId) => {
+  api.get.allProductData(prodId)
+    .then((response) => {
+      response.currentProduct = prodId
+      dispatch({
+        type: 'PROD_INIT',
+        payload: response,
+      });
+    });
+}
 
 export const relatedStateInit = (productId) => {
   return [
     ['related', `/products/${productId}/related/`, {}],
   ]
 }
+
+export default RelatedProducts
+// export default memo(RelatedProducts)

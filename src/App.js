@@ -1,11 +1,12 @@
 import './App.css';
 import api from './api.js';
-import React, { useEffect, useContext } from 'react';
+import React, { useLayoutEffect, useEffect, useContext, memo } from 'react';
 import { StateContext, DispatchContext } from './appState/index.js';
 import ProductDetails, { detailsStateInit } from './ProductDetails/index';
 import RatingsReviews, { reviewStateInit } from './RatingsReviews/index';
 import QAndA, { qAndAStateInit } from './QandA/index';
 import RelatedProducts, { relatedStateInit } from './RelatedProducts/index';
+
 
 api.get.initProductDataFetch(
   detailsStateInit,
@@ -14,18 +15,26 @@ api.get.initProductDataFetch(
   relatedStateInit,
 )
 
+var renderCount = 0;
+
 function App() {
   const [, dispatch] = useContext(DispatchContext);
   const [state] = useContext(StateContext);
-  if( state.dev.pref ) {
-    console.log('\n\nDEV  RENDER   App')
+  if( state.dev.logs ) {
+    renderCount++
+    state.dev.renders && console.log('\n\nDEV  RENDER   App     number of renders: ', renderCount)
+    state.dev.state && console.log('DEV  App STATE: ', state)
   }
 
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     // console.log('state', state)
-    initializeAppState(dispatch, state, state.currentProduct)
-  }, [state.currentProduct]);
+    initializeAppState(dispatch, state.currentProduct)
+  }, []);
+
+  // useEffect(() => {
+  //   // console.log('state', state)
+  //   initializeAppState(dispatch, state.currentProduct)
+  // }, []);
 
 
   return (
@@ -44,16 +53,15 @@ function App() {
 
 
 
-const initializeAppState = (dispatch, state, prodId) => {
-  api.get.allProductData(prodId)
+const initializeAppState = (dispatch, prodId) => {
+  return api.get.allProductData(prodId)
     .then((response) => {
+      response.currentProduct = prodId
       dispatch({
         type: 'PROD_INIT',
-        payload: { ...state, ...response}
+        payload: response,
       });
     });
 }
-
-
 
 export default App;
