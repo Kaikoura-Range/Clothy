@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { StateContext, DispatchContext } from '../appState/index.js';
 import moment from 'moment';
 export default function Answers(props) {
+  const [state] = useContext(StateContext);
   const [addMoreAnswers, setAddMoreAnswers] = useState(0);
   const [length, setLength] = useState(Object.keys(props.a.answers).length);
   const addMoreAnswersClickHandler = () => {
     setAddMoreAnswers(addMoreAnswers + 1);
   };
+  useEffect(() => {
+    setAddMoreAnswers(0);
+  }, [state.QA]);
   return (
     <div>
       {Object.values(props.a.answers)
