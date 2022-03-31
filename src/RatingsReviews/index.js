@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import moment from 'moment';
 
 function Review() {
+  // if( state.dev.pref ) {
+    // console.log('DEV- Review rendered')
+  // }
 
     return (
         <div>
