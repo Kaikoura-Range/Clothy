@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import moment from 'moment';
 
 function Review() {
+  // if( state.dev.pref ) {
+    // console.log('DEV- Review rendered')
+  // }
 
     return (
         <div>
@@ -22,7 +25,7 @@ function Review() {
 
 export const reviewStateInit = (productId) => {
     return [
-      ['main', '/reviews/', { product_id: productId, page: 1, sort: 'newest' }]
+      ['this', '/reviews/', { product_id: productId, page: 1, sort: 'newest' }]
     ]
   }
 

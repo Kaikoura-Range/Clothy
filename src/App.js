@@ -1,6 +1,6 @@
 import './App.css';
 import api from './api.js';
-import React, { useLayoutEffect, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from './appState/index.js';
 import ProductDetails, { detailsStateInit } from './ProductDetails/index';
 import RatingsReviews, { reviewStateInit } from './RatingsReviews/index';
@@ -17,20 +17,24 @@ api.get.initProductDataFetch(
 function App() {
   const [, dispatch] = useContext(DispatchContext);
   const [state] = useContext(StateContext);
-
-  useLayoutEffect(() => {
-
-    initializeAppState(dispatch)
-    setTimeout((() => console.log('init state', state)), 250)
-
-  }, []);
+  if( state.dev.pref ) {
+    console.log('\n\nDEV  RENDER   App')
+  }
 
 
-  
+  useEffect(() => {
+    // console.log('state', state)
+    initializeAppState(dispatch, state, state.currentProduct)
+  }, [state.currentProduct]);
+
+
   return (
     <div className='App'>
+      <div>{state.details.init ? state.details.init.name : 'loading'} </div>
+      <div>{state.details.init ? state.details.init.description : null} </div>
+
       <ProductDetails />
-      <RelatedProducts />
+      <RelatedProducts state={state.related} dev={state.dev} />
       <QAndA />
       <RatingsReviews />
     </div>
@@ -40,12 +44,12 @@ function App() {
 
 
 
-const initializeAppState = (dispatch, prodId = 37315) => {
+const initializeAppState = (dispatch, state, prodId) => {
   api.get.allProductData(prodId)
     .then((response) => {
       dispatch({
         type: 'PROD_INIT',
-        payload: response,
+        payload: { ...state, ...response}
       });
     });
 }
