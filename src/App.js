@@ -1,6 +1,6 @@
 import './App.css';
 import api from './api.js';
-import React, { useEffect, useContext } from 'react';
+import React, { useLayoutEffect, useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from './appState/index.js';
 import ProductDetails, { detailsStateInit } from './ProductDetails/index';
 import RatingsReviews, { reviewStateInit } from './RatingsReviews/index';
@@ -18,7 +18,7 @@ function App() {
   const [, dispatch] = useContext(DispatchContext);
   const [state] = useContext(StateContext);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
 
     initializeAppState(dispatch)
     setTimeout((() => console.log('init state', state)), 250)
@@ -26,9 +26,7 @@ function App() {
   }, []);
 
 
-
-
-
+  
   return (
     <div className='App'>
       <ProductDetails />

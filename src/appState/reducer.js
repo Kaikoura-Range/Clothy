@@ -4,10 +4,10 @@
 
 
 function reducer(state, action) {
-
-  let newState = state
+  let newState;
   switch (action.type) {
     case 'PROD_INIT':
+      newState = {}
       newState.QA = action.payload.QA
       newState.details = action.payload.details
       newState.reviews = action.payload.reviews
