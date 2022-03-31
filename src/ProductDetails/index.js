@@ -1,14 +1,39 @@
-import React from 'react';
+import React, {useState, useContext, useEffect} from 'react';
+import { StateContext, DispatchContext } from './../appState/index.js';
+import api from './../api.js';
 
-export default function ProductDetails() {
-  // console.log('DEV- ProductDetails rendered')
+function ProductDetails() {
+  const [state] = useContext(StateContext);
+  const [, dispatch] = useContext(DispatchContext);
+
+  useEffect(() => {
+
+    accessProductStyles(state.currentProduct)
+      .then(stylesData => {console.log(stylesData)})
+
+    console.log(state.details);
+  }, [state.details, state.currentProduct])
+
+  console.log('DEV RENDER ProductDetails')
   return <div>ProductDetails Section</div>;
 }
 
+const accessProductStyles = (productId) => {
+
+  return api.get.all([
+    // API GET request on key, endpoint, params
+    ['productStyles', `/products/${productId}/styles`, {}]
+  ])
+}
 
 
-export const detailsStateInit = (productId) => {
+// When page is loaded, call the API on a default product
+const detailsStateInit = (productId) => {
   return [
-    ['init', `/products/${productId}`, {}]
+    // API GET request on key, endpoint, params
+    ['product', `/products/${productId}`, {}]
   ]
 }
+
+export default ProductDetails;
+export {detailsStateInit};
