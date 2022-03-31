@@ -20,6 +20,11 @@ function Review() {
 };
 
 
+export const reviewStateInit = (productId) => {
+    return [
+      ['main', '/reviews/', { product_id: productId, page: 1, sort: 'newest' }]
+    ]
+  }
 
 export default Review;
 

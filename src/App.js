@@ -1,27 +1,27 @@
 import './App.css';
 import api from './api.js';
-import React, { useEffect, useContext } from 'react';
+import React, { useLayoutEffect, useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from './appState/index.js';
-import ProductDetails from './ProductDetails/index';
-import RelatedProducts from './RelatedProducts/index';
-import QAndA from './QandA/index';
-import RatingsReviews from './RatingsReviews/index';
+import ProductDetails, { detailsStateInit } from './ProductDetails/index';
+import RatingsReviews, { reviewStateInit } from './RatingsReviews/index';
+import QAndA, { qAndAStateInit } from './QandA/index';
+import RelatedProducts, { relatedStateInit } from './RelatedProducts/index';
 
+api.get.initProductDataFetch(
+  detailsStateInit,
+  reviewStateInit,
+  qAndAStateInit,
+  relatedStateInit,
+)
 
 function App() {
   const [, dispatch] = useContext(DispatchContext);
   const [state] = useContext(StateContext);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
 
-    api.get.allProductData(37315)
-      .then((response) => {
-        dispatch({
-          type: 'PROD_INIT',
-          payload: response,
-        });
-      });
-    setTimeout((() => console.log(state)), 1000)
+    initializeAppState(dispatch)
+    setTimeout((() => console.log('init state', state)), 250)
 
   }, []);
 
@@ -41,10 +41,15 @@ function App() {
 
 
 
-
-
-
-
+const initializeAppState = (dispatch, prodId = 37315) => {
+  api.get.allProductData(prodId)
+    .then((response) => {
+      dispatch({
+        type: 'PROD_INIT',
+        payload: response,
+      });
+    });
+}
 
 
 
