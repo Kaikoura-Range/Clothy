@@ -20,7 +20,6 @@ export default function RelatedProducts() {
 
 
 
-
 export const relatedStateInit = (productId) => {
   return [
     ['main', `/products/${productId}/related/`, {}],
