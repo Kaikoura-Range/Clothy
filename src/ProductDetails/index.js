@@ -10,7 +10,6 @@ function ProductDetails() {
   const [, dispatch] = useContext(DispatchContext);
   const [activeProduct, setActiveProduct] = useState({});
   const [styles, setStyles] = useState([]);
-  // const [activeStyle, setActiveStyle] = useState('');
 
   useEffect(() => {
     setActiveProduct(state.details.product);
