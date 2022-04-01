@@ -122,52 +122,39 @@ export default function QandQ() {
 }
 
 export const qAndAStateInit = (productId) => {
-  return [['main', '/qa/questions/', { product_id: productId, count: 400 }]];
+  return [['main', '/qa/questions/', { product_id: productId, count: 30 }]];
 };
-
-
-
-
-
-
-
-
-
-
-
-
 
 // POST METHODS
 
-    // var newQuestion =  {
-    //   product_id: state.currentProduct,
-    //   body: 'This is a question.',
-    //   name: 'random',
-    //   email: 'sdfsdf'
-    // }
+// var newQuestion =  {
+//   product_id: state.currentProduct,
+//   body: 'This is a question.',
+//   name: 'random',
+//   email: 'sdfsdf'
+// }
 
-    // api.post.question(  newQuestion  )
-    //   .then(res => console.log('post question res', res))
+// api.post.question(  newQuestion  )
+//   .then(res => console.log('post question res', res))
 
-    // api.post.question.helpful('questionId')
-    //   .then(res => console.log('post help question res', res))
+// api.post.question.helpful('questionId')
+//   .then(res => console.log('post help question res', res))
 
-    // api.post.question.report('questionId')
-    //   .then(res => console.log('post report question res', res))
+// api.post.question.report('questionId')
+//   .then(res => console.log('post report question res', res))
 
+// var newAnswer =  {
+//   photos: [... any photo url ],
+//   body: 'This is a question.',
+//   name: 'random',
+//   email: 'sdfsdf'
+// }
 
-  // var newAnswer =  {
-    //   photos: [... any photo url ],
-    //   body: 'This is a question.',
-    //   name: 'random',
-    //   email: 'sdfsdf'
-    // }
+// api.post.answer( newAnswer )
+//   .then(res => console.log('post questioin res', res))
 
-    // api.post.answer( newAnswer )
-    //   .then(res => console.log('post questioin res', res))
+// api.post.answer.helpful('answerId')
+//   .then(res => console.log('post help answer res', res))
 
-    // api.post.answer.helpful('answerId')
-    //   .then(res => console.log('post help answer res', res))
-
-    // api.post.answer.report('answerId')
-    //   .then(res => console.log('post report answer res', res))
+// api.post.answer.report('answerId')
+//   .then(res => console.log('post report answer res', res))
