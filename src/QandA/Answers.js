@@ -26,9 +26,9 @@ export default function Answers(props) {
                 Helpful Answer? <a href='#'>Yes</a> ({answer.helpfulness}) <a href='#'>Report</a>
               </p>
               {answer.photos &&
-                answer.photos.map((photo) => {
+                answer.photos.map((photo, i) => {
                   return (
-                    <div key={photo}>
+                    <div key={i}>
                       <img alt='some pic' src={photo} />
                     </div>
                   );
