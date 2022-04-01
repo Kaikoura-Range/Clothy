@@ -1,8 +1,10 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { StateContext, DispatchContext } from './../appState/index.js';
+import api from './../api';
 import Info from './productInfo.js';
 import Description from './productDesc.js';
 import Features from './productFeatures.js';
+
 
 function ProductDetails() {
   const [state] = useContext(StateContext);
