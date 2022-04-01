@@ -34,7 +34,6 @@ export default function QandQ() {
 
   const renderWhenSearchInput = () => {
     let filteredResults = state.QA.main.results
-      .slice(0, 2 + addQuestionsSearch)
       .sort((a, b) => b.helpfulness - a.helpfulness)
       .map(
         (q) =>
@@ -42,15 +41,30 @@ export default function QandQ() {
             <QAList key={q.question_id} q={q} />
           )
       );
-    return filteredResults;
-  };
-
-  const addMoreQuestionsButtonWhenSearchInput = () => {
-    let results = state.QA.main.results.length > 2 &&
-      addQuestionsSearch !== state.QA.main.results.length - 2 && (
-        <button onClick={addQuestionsSearchHandler}>More Answered Questions</button>
-      );
-    return results;
+    let length = filteredResults.filter((val) => val !== false).length;
+    let results = filteredResults.filter((val) => val !== false).slice(0, 2 + addQuestionsSearch);
+    if (results.length) {
+      if (length % 2 !== 0) {
+        return (
+          <div>
+            {results}
+            {length > 2 && addQuestionsSearch + 1 !== length && (
+              <button onClick={addQuestionsSearchHandler}>More Answered Questions</button>
+            )}
+          </div>
+        );
+      }
+      if (length % 2 === 0) {
+        return (
+          <div>
+            {results}
+            {length > 2 && addQuestionsSearch + 2 !== length && (
+              <button onClick={addQuestionsSearchHandler}>More Answered Questions</button>
+            )}
+          </div>
+        );
+      }
+    }
   };
 
   const renderWhenNoSearchInput = () => {
@@ -62,11 +76,24 @@ export default function QandQ() {
   };
 
   const addMoreQuestionsButtonWhenNoSearchInput = () => {
-    let results = state.QA.main.results.length > 2 &&
-      addMoreQuestionsNoSearch !== state.QA.main.results.length - 2 && (
-        <button onClick={addQuestionsNoSearchHandler}>More Answered Questions</button>
+    let length = state.QA.main.results.length;
+    let results;
+    if (length % 2 !== 0) {
+      return (
+        state.QA.main.results.length > 2 &&
+        addMoreQuestionsNoSearch + 1 !== length && (
+          <button onClick={addQuestionsNoSearchHandler}>More Answered Questions</button>
+        )
       );
-    return results;
+    }
+    if (length % 2 === 0) {
+      return (
+        state.QA.main.results.length > 2 &&
+        addMoreQuestionsNoSearch + 2 !== length && (
+          <button onClick={addQuestionsNoSearchHandler}>More Answered Questions</button>
+        )
+      );
+    }
   };
   /////////////PUT ALL STATE VARS AND FUNCTIONS ABOVE/////////////////////////////////
   return (
@@ -81,12 +108,13 @@ export default function QandQ() {
 
       {/* RENDERS WHEN USER STARTS SEARCHING */}
       {searchTextThere && state.QA.main && renderWhenSearchInput()}
-      {searchTextThere && state.QA.main && addMoreQuestionsButtonWhenSearchInput()}
 
       {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
       {!searchTextThere && state.QA.main && renderWhenNoSearchInput()}
-
-      {!searchTextThere && state.QA.main && addMoreQuestionsButtonWhenNoSearchInput()}
+      {!searchTextThere &&
+        state.QA.main &&
+        state.QA.main.results.length > 2 &&
+        addMoreQuestionsButtonWhenNoSearchInput()}
 
       <button>Add A Question</button>
     </div>
@@ -94,5 +122,5 @@ export default function QandQ() {
 }
 
 export const qAndAStateInit = (productId) => {
-  return [['main', '/qa/questions/', { product_id: productId, count: 500 }]];
+  return [['main', '/qa/questions/', { product_id: productId, count: 400 }]];
 };
