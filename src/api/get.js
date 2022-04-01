@@ -1,6 +1,7 @@
 
+
 import axios from 'axios';
-import GIT_TOKEN from './config/config.js'
+import GIT_TOKEN from '../config/config.js'
 const CAMPUS_CODE = 'hr-rfe';
 const baseUrl = `https://app-hrsei-api.herokuapp.com/api/fec2/${CAMPUS_CODE}`;
 
@@ -104,41 +105,4 @@ get.allProductData = (() => {
 
 
 
-
-const api = { get };
-
-export default api;
-
-
-
-// api.get.initProductDataFetch(
-//   detailsStateInit,
-//   reviewStateInit,
-//   qAndAStateInit,
-//   relatedStateInit,
-// )
-
-// const getAllProductData = (prodId) => {
-//   const initEndpointData = [
-//     ['details', `/products/${prodId}`, {}],
-//     ['reviews', '/reviews/', { product_id: prodId, page: 1, sort: 'newest' }],
-//     ['QA', '/qa/questions/', { product_id: prodId }],
-//     ['related', `/products/${prodId}/related/`, {}],
-//   ]
-//   return getAll(initEndpointData)
-// }
-
-
-    // const endpoint = '/products/'
-    // const params = { page: 1, count: 50 }
-    // api.get('/products/37315')
-    //   .then((response) => {
-    //     console.log(response)
-    //   })
-
-    // const initEndpointData = [
-    //   ['/products/', { product_id: prodId }],
-    //   ['/reviews/', { product_id: prodId, page: 1, sort: 'newest' }],
-    //   ['/qa/questions/', { product_id: prodId }],
-    //   ['/products/related/', { product_id: prodId }],
-    // ]
+export default get;

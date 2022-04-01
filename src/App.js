@@ -1,5 +1,5 @@
 import './App.css';
-import api from './api.js';
+import api from './api/index';
 import React, { useLayoutEffect, useEffect, useContext, memo } from 'react';
 import { StateContext, DispatchContext } from './appState/index.js';
 import ProductDetails, { detailsStateInit } from './ProductDetails/index';
@@ -27,14 +27,12 @@ function App() {
   }
 
   useLayoutEffect(() => {
-    // console.log('state', state)
+
+
     initializeAppState(dispatch, state.currentProduct)
   }, []);
 
-  // useEffect(() => {
-  //   // console.log('state', state)
-  //   initializeAppState(dispatch, state.currentProduct)
-  // }, []);
+
 
 
   return (

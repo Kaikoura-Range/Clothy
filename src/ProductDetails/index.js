@@ -1,6 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { StateContext, DispatchContext } from './../appState/index.js';
-import api from './../api.js';
+import api from './../api';
 
 function ProductDetails() {
   const [state] = useContext(StateContext);

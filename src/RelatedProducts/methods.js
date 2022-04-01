@@ -1,5 +1,5 @@
 
-import api from '../api.js';
+import api from '../api';
 
 const getPhotoUrls = (styles) => {
   return styles.results.reduce((memo, data) => {

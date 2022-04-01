@@ -31,3 +31,30 @@ export const reviewStateInit = (productId) => {
 
 export default Review;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// POST METHODS
+
+    // api.post.review( { product_id: state.currentProduct,  })
+    //   .then(res => console.log('post review res', res))
+
+    // api.post.review.helpful('reviewId')
+    //   .then(res => console.log('post help review res', res))
+
+    // api.post.review.report('reviewId')
+    //   .then(res => console.log('post report review res', res))
