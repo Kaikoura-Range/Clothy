@@ -5,6 +5,7 @@ export default function Answers(props) {
   const [state] = useContext(StateContext);
   const [addMoreAnswers, setAddMoreAnswers] = useState(0);
   const [length, setLength] = useState(Object.keys(props.a.answers).length);
+
   const addMoreAnswersClickHandler = () => {
     setAddMoreAnswers(addMoreAnswers + 1);
   };
