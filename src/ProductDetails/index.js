@@ -1,6 +1,8 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { StateContext, DispatchContext } from './../appState/index.js';
 import Info from './productInfo.js';
+import Description from './productDesc.js';
+import Features from './productFeatures.js';
 
 function ProductDetails() {
   const [state] = useContext(StateContext);
@@ -17,8 +19,12 @@ function ProductDetails() {
 
   console.log('DEV RENDER ProductDetails')
   return (<div>
-    ProductDetails Section
+    <br/>
     <Info product={activeProduct} styles={styles}/>
+    <br/>
+    <Description product={activeProduct}/>
+    <br/>
+    <Features product={activeProduct}/>
   </div>);
 
 
