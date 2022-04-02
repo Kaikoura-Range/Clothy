@@ -42,12 +42,10 @@ export default function Questions(props) {
   };
 
   return (
-    <QuestionsContainer data-testid="question" >
+    <QuestionsContainer data-testid='question'>
       <QuestionBody>Q: {props.q.question_body}</QuestionBody>
       <HelpfulReportContainer>
-        <h3>Q: {props.q.question_body}</h3>
-        <p>By: {props.q.asker_name} on: {moment(props.q.question_date).format('MMMM Do, YYYY')}</p>
-        <p> Helpful Question?{' '}</p>
+        Helpful Question?{' '}
         <Link onClick={() => helpfulQuestionHandler(props.q.question_id)}>Yes</Link> (
         {props.q.question_helpfulness}){' '}
         <Link onClick={() => reportQuestionHandler(props.q.question_id)}>
@@ -64,7 +62,6 @@ export default function Questions(props) {
         </div>
       )}
     </QuestionsContainer>
-
   );
 }
 

@@ -51,9 +51,6 @@ export default function Answers(props) {
           return (
             <div key={answer.id}>
               <h3>A: {answer.body}</h3>
-              <p>
-                By: {answer.answerer_name} on: {moment(answer.date).format('MMMM Do, YYYY')}
-              </p>
               {answer.photos &&
                 answer.photos.map((photo, i) => {
                   return (
@@ -62,6 +59,9 @@ export default function Answers(props) {
                     </ImagesContainer>
                   );
                 })}
+              <p>
+                By: {answer.answerer_name} on: {moment(answer.date).format('MMMM Do, YYYY')}
+              </p>
               <p>
                 Helpful Answer? <Link onClick={() => helpfulAnswerHandler(answer.id)}>Yes</Link> (
                 {answer.helpfulness}){' '}
