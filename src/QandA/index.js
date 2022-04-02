@@ -16,7 +16,7 @@ export default function QAndA() {
   const [createForm, setCreateForm] = useState(false);
   //////////////////////////////////////////////////////////////////////
   useEffect(() => {
-    console.log(state.QA);
+    // console.log(state.QA);
     setAddMoreQuestionsNoSearch(0);
     setAddQuestionsSearch(0);
   }, [state.QA]);
@@ -118,6 +118,7 @@ export default function QAndA() {
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
+
     <EntireQuestionsContainer>
       <EntireQuestionsWrapper>
         <h1>Questions & Answers:</h1>
@@ -147,6 +148,34 @@ export default function QAndA() {
         )}
       </EntireQuestionsWrapper>
     </EntireQuestionsContainer>
+
+    <div data-testid="QandA" >
+      <h1>Questions & Answers:</h1>
+      <input
+        type='search'
+        value={searchText}
+        onChange={searchTextHandler}
+        placeholder='Have a question? Search for answers...'
+      />
+
+      {/* RENDERS WHEN USER STARTS SEARCHING */}
+      {searchTextThere && state.QA.main && renderWhenSearchInput()}
+
+      {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
+      {!searchTextThere && state.QA.main && renderWhenNoSearchInput()}
+      {!searchTextThere &&
+        state.QA.main &&
+        state.QA.main.results.length > 2 &&
+        addMoreQuestionsButtonWhenNoSearchInput()}
+
+      <button onClick={createQuestionForm}>Add A Question</button>
+      {createForm && (
+        <div>
+          <QuestionForm showForm={setCreateForm} />
+        </div>
+      )}
+    </div>
+
   );
 }
 

@@ -4,17 +4,18 @@ import styled from 'styled-components';
 
 const RelatedCard = ({ data, dispatch }) => {
   if (data.name) {
-    const { category, description, name, id, slogan, updated_at, photos } = data;
+    const { name, id, photos } = data;
     var photoUrl = photos.length ? photos[0].url : null;
-    // console.log(photoUrl)
+
+
     return  (
-      <RelatecCardContainer>
+      <RelatecCardContainer data-testid="RelatedCard" >
         {photoUrl ? <CardImage src={photoUrl} ></CardImage> : <EmptyCardImage ></EmptyCardImage>}
         <CardFooter>
           <CardFooterText>{name}</CardFooterText>
           <CardFooterButtonContainer>
-            <CardFooterButton onClick={() => initializeAppState(dispatch, id)} >View product  </CardFooterButton>
-            <CardFooterButton onClick={() => addProductToOutfit(dispatch, id)} >Add to outfit </CardFooterButton>
+            <CardFooterButton data-testid="nav" onClick={() => initializeAppState(dispatch, id)} >View product</CardFooterButton>
+            <CardFooterButton data-testid="outfit" onClick={() => addProductToOutfit(dispatch, id)} >Add to outfit</CardFooterButton>
           </CardFooterButtonContainer>
         </CardFooter>
       </RelatecCardContainer>
@@ -28,6 +29,9 @@ const RelatedCard = ({ data, dispatch }) => {
     </RelatecCardContainer>
   );
 }
+
+
+
 
 
 
