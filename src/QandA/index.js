@@ -1,19 +1,25 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
+import api from '../api/index';
 import QAList from './QAList';
-export default function QandQ() {
+import QuestionForm from './QuestionForm';
+export default function QAndA() {
+  //central API state
   const [state] = useContext(StateContext);
+  //state for toggling how many questions get showed and what gets filtered
   const [addMoreQuestionsNoSearch, setAddMoreQuestionsNoSearch] = useState(0);
   const [addQuestionsSearch, setAddQuestionsSearch] = useState(0);
   const [searchText, setSearchText] = useState('');
   const [searchTextThere, setSearchTextThere] = useState(false);
-
+  //state for form inputs
+  const [createForm, setCreateForm] = useState(false);
+  //////////////////////////////////////////////////////////////////////
   useEffect(() => {
     // console.log(state.QA);
     setAddMoreQuestionsNoSearch(0);
     setAddQuestionsSearch(0);
   }, [state.QA]);
-
+  //these functions render 2 questions at a time
   const addQuestionsNoSearchHandler = () => {
     setAddMoreQuestionsNoSearch(addMoreQuestionsNoSearch + 2);
   };
@@ -21,7 +27,8 @@ export default function QandQ() {
   const addQuestionsSearchHandler = () => {
     setAddQuestionsSearch(addQuestionsSearch + 2);
   };
-
+  //////////////////////////////////////////////////////////////////////////////////////////
+  //uses text from search input to filter out results
   const searchTextHandler = (e) => {
     const value = e.target.value;
     setSearchText(value);
@@ -31,7 +38,8 @@ export default function QandQ() {
       setSearchTextThere(false);
     }
   };
-
+  ///////////////////////////////////////////////////////////////////////////
+  //these functions render out each question & answer and conditionally renders "more answered questions button"
   const renderWhenSearchInput = () => {
     let filteredResults = state.QA.main.results
       .sort((a, b) => b.helpfulness - a.helpfulness)
@@ -95,7 +103,15 @@ export default function QandQ() {
       );
     }
   };
-  /////////////PUT ALL STATE VARS AND FUNCTIONS ABOVE/////////////////////////////////
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  //functions used for sending post requests for adding a question
+  //toggles add question form
+  const createQuestionForm = () => {
+    setCreateForm(true);
+  };
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <div data-testid="QandA" >
       <h1>Questions & Answers:</h1>
@@ -116,58 +132,16 @@ export default function QandQ() {
         state.QA.main.results.length > 2 &&
         addMoreQuestionsButtonWhenNoSearchInput()}
 
-      <button>Add A Question</button>
+      <button onClick={createQuestionForm}>Add A Question</button>
+      {createForm && (
+        <div>
+          <QuestionForm showForm={setCreateForm} />
+        </div>
+      )}
     </div>
   );
 }
 
 export const qAndAStateInit = (productId) => {
-  return [['main', '/qa/questions/', { product_id: productId, count: 400 }]];
+  return [['main', '/qa/questions/', { product_id: productId, count: 500 }]];
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-// POST METHODS
-
-    // var newQuestion =  {
-    //   product_id: state.currentProduct,
-    //   body: 'This is a question.',
-    //   name: 'random',
-    //   email: 'sdfsdf'
-    // }
-
-    // api.post.question(  newQuestion  )
-    //   .then(res => console.log('post question res', res))
-
-    // api.post.question.helpful('questionId')
-    //   .then(res => console.log('post help question res', res))
-
-    // api.post.question.report('questionId')
-    //   .then(res => console.log('post report question res', res))
-
-
-  // var newAnswer =  {
-    //   photos: [... any photo url ],
-    //   body: 'This is a question.',
-    //   name: 'random',
-    //   email: 'sdfsdf'
-    // }
-
-    // api.post.answer( newAnswer )
-    //   .then(res => console.log('post questioin res', res))
-
-    // api.post.answer.helpful('answerId')
-    //   .then(res => console.log('post help answer res', res))
-
-    // api.post.answer.report('answerId')
-    //   .then(res => console.log('post report answer res', res))
