@@ -1,5 +1,5 @@
 import './App.css';
-import api from './api/index';
+import api from './api/index.js';
 import React, { useLayoutEffect, useEffect, useContext, memo } from 'react';
 import { StateContext, DispatchContext } from './appState/index.js';
 import ProductDetails, { detailsStateInit } from './ProductDetails/index';
@@ -20,14 +20,16 @@ var renderCount = 0;
 function App() {
   const [, dispatch] = useContext(DispatchContext);
   const [state] = useContext(StateContext);
+  renderCount++
   if( state.dev.logs ) {
-    renderCount++
     state.dev.renders && console.log('\n\nDEV  RENDER   App     number of renders: ', renderCount)
     state.dev.state && console.log('DEV  App STATE: ', state)
   }
+  if (state.dev.test) {
+    state.dev.get(state)
+  }
 
-  useLayoutEffect(() => {
-
+  useEffect(() => {
 
     initializeAppState(dispatch, state.currentProduct)
   }, []);
@@ -36,10 +38,7 @@ function App() {
 
 
   return (
-    <div className='App'>
-      <div>{state.details.init ? state.details.init.name : 'loading'} </div>
-      <div>{state.details.init ? state.details.init.description : null} </div>
-
+    <div className='App' data-testid="app"  >
       <ProductDetails />
       <RelatedProducts state={state.related} dev={state.dev} />
       <QAndA />

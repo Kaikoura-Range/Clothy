@@ -1,17 +1,20 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { StateContext, DispatchContext } from './../appState/index.js';
-import api from './../api';
-import Info from './productInfo.js';
-import Description from './productDesc.js';
-import Features from './productFeatures.js';
+import { StateContext} from './../appState/index.js';
+import Info from './components/ProductInfo.js';
+import Description from './components/ProductDesc.js';
+import Features from './components/ProductFeatures.js';
 
 
 function ProductDetails() {
   const [state] = useContext(StateContext);
-  const [, dispatch] = useContext(DispatchContext);
+  // const [, dispatch] = useContext(DispatchContext);
   const [activeProduct, setActiveProduct] = useState({});
   const [styles, setStyles] = useState([]);
-  // const [activeStyle, setActiveStyle] = useState('');
+
+  if (state.dev.logs) {
+    console.log('DEV RENDER ProductDetails')
+  }
+
 
   useEffect(() => {
     setActiveProduct(state.details.product);
@@ -19,8 +22,8 @@ function ProductDetails() {
 
   }, [state.details, state.currentProduct])
 
-  console.log('DEV RENDER ProductDetails')
-  return (<div>
+
+  return (<div data-testid="details" >
     <br/>
     <Info product={activeProduct} styles={styles}/>
     <br/>
