@@ -17,36 +17,3 @@ export default function QAList(props) {
 }
 
 // POST METHODS
-
-// api.post.question
-//   .helpful('questionId')
-//   .then((res) => console.log('post help question res', res))
-//   .catch((err) => console.log('helpful question not sent!'));
-
-// api.post.question
-//   .report('questionId')
-//   .then((res) => console.log('post report question res', res))
-//   .catch((err) => console.log('report question not sent!'));
-
-// var newAnswer = {
-//   //photos = ['image url']
-//   photos: [],
-//   body: 'This is a question.',
-//   name: 'random',
-//   email: 'sdfsdf',
-// };
-
-// api.post
-//   .answer(newAnswer)
-//   .then((res) => console.log('post questioin res', res))
-//   .catch((err) => console.log('answer not sent!'));
-
-// api.post.answer
-//   .helpful('answerId')
-//   .then((res) => console.log('post help answer res', res))
-//   .catch((err) => console.log('helpful answer not sent!'));
-
-// api.post.answer
-//   .report('answerId')
-//   .then((res) => console.log('post report answer res', res))
-//   .catch((err) => console.log('report answer not sent!'));
