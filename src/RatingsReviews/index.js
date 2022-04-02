@@ -1,11 +1,14 @@
 
 import React from 'react';
 import moment from 'moment';
-
+var mainRenderCount = 0;
 export default function RatingsReviews(props) {
-  // if( state.dev.pref ) {
-    // console.log('DEV- Review rendered')
-  // }
+  if( props.dev.logs ) {
+    mainRenderCount++;
+    props.dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
+    props.dev.state && console.log('DEV  STATE   RelatedProducts: ', props.reviewData)
+  }
+
   const [fullSummary, setFullSummary] = React.useState(false);
 
   function Recommended(props) {

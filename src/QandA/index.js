@@ -118,37 +118,36 @@ export default function QAndA() {
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
-    <div data-testid='QandA'>
-      <EntireQuestionsContainer>
-        <EntireQuestionsWrapper>
-          <h1>Questions & Answers:</h1>
-          <SearchBar
-            type='search'
-            value={searchText}
-            onChange={searchTextHandler}
-            placeholder='Have a question? Search for answers...'
-          />
 
-          {/* RENDERS WHEN USER STARTS SEARCHING */}
-          {searchTextThere && state.QA.main && renderWhenSearchInput()}
+    <EntireQuestionsContainer  data-testid="QandA"  >
+      <EntireQuestionsWrapper>
+        <h1>Questions & Answers:</h1>
+        <SearchBar
+          type='search'
+          value={searchText}
+          onChange={searchTextHandler}
+          placeholder='Have a question? Search for answers...'
+        />
 
-          {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
-          {!searchTextThere && state.QA.main && renderWhenNoSearchInput()}
-          {!searchTextThere &&
-            state.QA.main &&
-            state.QA.main.results.length > 2 &&
-            addMoreQuestionsButtonWhenNoSearchInput()}
+        {/* RENDERS WHEN USER STARTS SEARCHING */}
+        {searchTextThere && state.QA.main && renderWhenSearchInput()}
 
-          <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
+        {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
+        {!searchTextThere && state.QA.main && renderWhenNoSearchInput()}
+        {!searchTextThere &&
+          state.QA.main &&
+          state.QA.main.results.length > 2 &&
+          addMoreQuestionsButtonWhenNoSearchInput()}
 
-          {createForm && (
-            <div>
-              <QuestionForm showForm={setCreateForm} />
-            </div>
-          )}
-        </EntireQuestionsWrapper>
-      </EntireQuestionsContainer>
-    </div>
+        <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
+
+        {createForm && (
+          <div>
+            <QuestionForm showForm={setCreateForm} />
+          </div>
+        )}
+      </EntireQuestionsWrapper>
+    </EntireQuestionsContainer>
   );
 }
 

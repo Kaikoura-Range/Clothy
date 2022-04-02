@@ -40,7 +40,7 @@ function reducer(state, action) {
 
     default:
       console.log('\n\nDEV  STATE-REDUCER   default    prodId: ', newState.currentProduct)
-      return state;
+      return { ...state};
   }
 }
 
