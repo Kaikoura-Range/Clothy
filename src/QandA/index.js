@@ -15,7 +15,7 @@ export default function QAndA() {
   const [createForm, setCreateForm] = useState(false);
   //////////////////////////////////////////////////////////////////////
   useEffect(() => {
-    console.log(state.QA);
+    // console.log(state.QA);
     setAddMoreQuestionsNoSearch(0);
     setAddQuestionsSearch(0);
   }, [state.QA]);
@@ -113,7 +113,7 @@ export default function QAndA() {
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
-    <div>
+    <div data-testid="QandA" >
       <h1>Questions & Answers:</h1>
       <input
         type='search'

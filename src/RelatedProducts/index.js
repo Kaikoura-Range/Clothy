@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, memo } from 'react';
+import React, { useState, useEffect } from 'react';
 // import { StateContext, DispatchContext } from '../appState/index.js';
 import styled from 'styled-components';
 
@@ -35,13 +35,13 @@ const RelatedProducts = ({ state, dev }) => {
 
   return relatedItemData.length ?
   (
-    <RelatedContainer>
+    <RelatedContainer data-testid="related" >
       <Carousel products={relatedItemData} />
     </RelatedContainer>
   )
   :
   (
-    <div>
+    <div data-testid="related" >
       <div>loading</div>
     </div>
   )

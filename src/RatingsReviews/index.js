@@ -42,7 +42,7 @@ function SummaryBody(props) {
 
     if(props.reviewData) {
     return (
-        <div>
+        <div data-testid="reviews" >
            {props.reviewData.results.map((review,id) => {
             return (
             <div key={id}>
@@ -57,10 +57,15 @@ function SummaryBody(props) {
             </div>
             )
           })}
-            
+
         </div>
     )
-        }
+    }
+    return (
+      <div data-testid="reviews" >
+        Loading...
+      </div>
+    )
 };
 
 
