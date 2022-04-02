@@ -9,7 +9,7 @@ export default function QandQ() {
   const [searchTextThere, setSearchTextThere] = useState(false);
 
   useEffect(() => {
-    console.log(state.QA);
+    // console.log(state.QA);
     setAddMoreQuestionsNoSearch(0);
     setAddQuestionsSearch(0);
   }, [state.QA]);
@@ -97,7 +97,7 @@ export default function QandQ() {
   };
   /////////////PUT ALL STATE VARS AND FUNCTIONS ABOVE/////////////////////////////////
   return (
-    <div>
+    <div data-testid="QandA" >
       <h1>Questions & Answers:</h1>
       <input
         type='search'

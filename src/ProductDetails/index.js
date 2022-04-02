@@ -12,6 +12,9 @@ function ProductDetails() {
   const [activeProduct, setActiveProduct] = useState({});
   const [styles, setStyles] = useState([]);
   // const [activeStyle, setActiveStyle] = useState('');
+  if (state.dev.logs) {
+    console.log('DEV RENDER ProductDetails')
+  }
 
   useEffect(() => {
     setActiveProduct(state.details.product);
@@ -19,8 +22,8 @@ function ProductDetails() {
 
   }, [state.details, state.currentProduct])
 
-  console.log('DEV RENDER ProductDetails')
-  return (<div>
+
+  return (<div data-testid="details" >
     <br/>
     <Info product={activeProduct} styles={styles}/>
     <br/>
