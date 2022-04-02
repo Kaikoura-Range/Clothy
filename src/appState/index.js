@@ -19,13 +19,14 @@ const initPageState = {
 
 
 
-const AppContextProvider = (props) => {
-  const [state, dispatch] = useReducer(reducer, initPageState);
+const AppContextProvider = ({children, passedState}) => {
+  const initState = passedState || initPageState
+  const [state, dispatch] = useReducer(reducer, initState);
 
   return (
     <DispatchContext.Provider value={[null, dispatch]}>
       <StateContext.Provider value={[state]}>
-        {props.children}
+        {children}
       </StateContext.Provider>
     </DispatchContext.Provider>
   );
