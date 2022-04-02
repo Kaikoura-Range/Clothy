@@ -44,7 +44,7 @@ export default function Answers(props) {
   };
 
   return (
-    <div>
+    <AnswersContainer>
       {Object.values(props.a.answers)
         .slice(0, 1 + addMoreAnswers)
         .map((answer) => {
@@ -54,35 +54,44 @@ export default function Answers(props) {
               <p>
                 By: {answer.answerer_name} on: {moment(answer.date).format('MMMM Do, YYYY')}
               </p>
-              <p>
-                Helpful Answer?{' '}
-                <a onClick={() => helpfulAnswerHandler(answer.id)} href='#'>
-                  Yes
-                </a>{' '}
-                ({answer.helpfulness}){' '}
-                <a onClick={() => reportAnswerHandler(answer.id)} href='#'>
-                  {isReported ? 'Reported' : 'Report'}
-                </a>
-              </p>
               {answer.photos &&
                 answer.photos.map((photo, i) => {
                   return (
-                    <div key={i}>
-                      <img alt='some pic' src={photo} />
-                    </div>
+                    <ImagesContainer key={i}>
+                      <Img alt='picture from answerer' src={photo} />
+                    </ImagesContainer>
                   );
                 })}
+              <p>
+                Helpful Answer? <Link onClick={() => helpfulAnswerHandler(answer.id)}>Yes</Link> (
+                {answer.helpfulness}){' '}
+                <Link onClick={() => reportAnswerHandler(answer.id)}>
+                  {isReported ? 'Reported' : 'Report'}
+                </Link>
+              </p>
             </div>
           );
         })}
       {length > 1 && length && addMoreAnswers !== length - 1 && (
         <p onClick={addMoreAnswersClickHandler}>Load more answers</p>
       )}
-    </div>
+    </AnswersContainer>
   );
 }
 
-const ReportLink = styled.p`
+const Link = styled.span`
   text-decoration: underline;
   cursor: pointer;
+`;
+
+const AnswersContainer = styled.div``;
+
+const ImagesContainer = styled.div`
+  display: inline;
+`;
+
+const Img = styled.img`
+  width: 90px;
+  height: 90px;
+  margin: 5px;
 `;
