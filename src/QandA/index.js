@@ -118,64 +118,37 @@ export default function QAndA() {
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
+    <div data-testid='QandA'>
+      <EntireQuestionsContainer>
+        <EntireQuestionsWrapper>
+          <h1>Questions & Answers:</h1>
+          <SearchBar
+            type='search'
+            value={searchText}
+            onChange={searchTextHandler}
+            placeholder='Have a question? Search for answers...'
+          />
 
-    <EntireQuestionsContainer>
-      <EntireQuestionsWrapper>
-        <h1>Questions & Answers:</h1>
-        <SearchBar
-          type='search'
-          value={searchText}
-          onChange={searchTextHandler}
-          placeholder='Have a question? Search for answers...'
-        />
+          {/* RENDERS WHEN USER STARTS SEARCHING */}
+          {searchTextThere && state.QA.main && renderWhenSearchInput()}
 
-        {/* RENDERS WHEN USER STARTS SEARCHING */}
-        {searchTextThere && state.QA.main && renderWhenSearchInput()}
+          {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
+          {!searchTextThere && state.QA.main && renderWhenNoSearchInput()}
+          {!searchTextThere &&
+            state.QA.main &&
+            state.QA.main.results.length > 2 &&
+            addMoreQuestionsButtonWhenNoSearchInput()}
 
-        {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
-        {!searchTextThere && state.QA.main && renderWhenNoSearchInput()}
-        {!searchTextThere &&
-          state.QA.main &&
-          state.QA.main.results.length > 2 &&
-          addMoreQuestionsButtonWhenNoSearchInput()}
+          <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
 
-        <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
-
-        {createForm && (
-          <div>
-            <QuestionForm showForm={setCreateForm} />
-          </div>
-        )}
-      </EntireQuestionsWrapper>
-    </EntireQuestionsContainer>
-
-    <div data-testid="QandA" >
-      <h1>Questions & Answers:</h1>
-      <input
-        type='search'
-        value={searchText}
-        onChange={searchTextHandler}
-        placeholder='Have a question? Search for answers...'
-      />
-
-      {/* RENDERS WHEN USER STARTS SEARCHING */}
-      {searchTextThere && state.QA.main && renderWhenSearchInput()}
-
-      {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
-      {!searchTextThere && state.QA.main && renderWhenNoSearchInput()}
-      {!searchTextThere &&
-        state.QA.main &&
-        state.QA.main.results.length > 2 &&
-        addMoreQuestionsButtonWhenNoSearchInput()}
-
-      <button onClick={createQuestionForm}>Add A Question</button>
-      {createForm && (
-        <div>
-          <QuestionForm showForm={setCreateForm} />
-        </div>
-      )}
+          {createForm && (
+            <div>
+              <QuestionForm showForm={setCreateForm} />
+            </div>
+          )}
+        </EntireQuestionsWrapper>
+      </EntireQuestionsContainer>
     </div>
-
   );
 }
 

@@ -42,34 +42,28 @@ export default function Questions(props) {
   };
 
   return (
-    <QuestionsContainer>
-      <QuestionBody>Q: {props.q.question_body}</QuestionBody>
-      <HelpfulReportContainer>
-
-    <div data-testid="question">
-      <h3>Q: {props.q.question_body}</h3>
-      <p>
-        By: {props.q.asker_name} on: {moment(props.q.question_date).format('MMMM Do, YYYY')}
-      </p>
-      <p>
-
-        Helpful Question?{' '}
-        <Link onClick={() => helpfulQuestionHandler(props.q.question_id)}>Yes</Link> (
-        {props.q.question_helpfulness}){' '}
-        <Link onClick={() => reportQuestionHandler(props.q.question_id)}>
-          {isReported ? 'Reported' : 'Report'}
-        </Link>
-      </HelpfulReportContainer>
-      <QuestionsAuthor>
-        By: {props.q.asker_name} on: {moment(props.q.question_date).format('MMMM Do, YYYY')}
-      </QuestionsAuthor>
-      <Link onClick={answerFormHandler}>Add Answer</Link>
-      {answerForm && (
-        <div>
-          <AnswerForm id={props.q.question_id} showForm={showAnswerForm} />
-        </div>
-      )}
-    </QuestionsContainer>
+    <div data-testid='question'>
+      <QuestionsContainer>
+        <QuestionBody>Q: {props.q.question_body}</QuestionBody>
+        <HelpfulReportContainer>
+          Helpful Question?{' '}
+          <Link onClick={() => helpfulQuestionHandler(props.q.question_id)}>Yes</Link> (
+          {props.q.question_helpfulness}){' '}
+          <Link onClick={() => reportQuestionHandler(props.q.question_id)}>
+            {isReported ? 'Reported' : 'Report'}
+          </Link>
+        </HelpfulReportContainer>
+        <QuestionsAuthor>
+          By: {props.q.asker_name} on: {moment(props.q.question_date).format('MMMM Do, YYYY')}
+        </QuestionsAuthor>
+        <Link onClick={answerFormHandler}>Add Answer</Link>
+        {answerForm && (
+          <div>
+            <AnswerForm id={props.q.question_id} showForm={showAnswerForm} />
+          </div>
+        )}
+      </QuestionsContainer>
+    </div>
   );
 }
 
@@ -86,7 +80,7 @@ const QuestionBody = styled.h3`
   display: inline;
 `;
 
-const HelpfulReportContainer = styled.p`
+const HelpfulReportContainer = styled.div`
   display: inline;
   float: right;
   vertical-align: top;
