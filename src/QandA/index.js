@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
+import styled from 'styled-components';
 import api from '../api/index';
 import QAList from './QAList';
 import QuestionForm from './QuestionForm';
@@ -90,7 +91,9 @@ export default function QAndA() {
       return (
         state.QA.main.results.length > 2 &&
         addMoreQuestionsNoSearch + 1 !== length && (
-          <button onClick={addQuestionsNoSearchHandler}>More Answered Questions</button>
+          <MoreAnsweredQuestionsButton onClick={addQuestionsNoSearchHandler}>
+            More Answered Questions
+          </MoreAnsweredQuestionsButton>
         )
       );
     }
@@ -98,7 +101,9 @@ export default function QAndA() {
       return (
         state.QA.main.results.length > 2 &&
         addMoreQuestionsNoSearch + 2 !== length && (
-          <button onClick={addQuestionsNoSearchHandler}>More Answered Questions</button>
+          <MoreAnsweredQuestionsButton onClick={addQuestionsNoSearchHandler}>
+            More Answered Questions
+          </MoreAnsweredQuestionsButton>
         )
       );
     }
@@ -114,30 +119,35 @@ export default function QAndA() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <div data-testid='QandA'>
-      <h1>Questions & Answers:</h1>
-      <input
-        type='search'
-        value={searchText}
-        onChange={searchTextHandler}
-        placeholder='Have a question? Search for answers...'
-      />
+      <EntireQuestionsContainer>
+        <EntireQuestionsWrapper>
+          <h1>Questions & Answers:</h1>
+          <SearchBar
+            type='search'
+            value={searchText}
+            onChange={searchTextHandler}
+            placeholder='Have a question? Search for answers...'
+          />
 
-      {/* RENDERS WHEN USER STARTS SEARCHING */}
-      {searchTextThere && state.QA.main && renderWhenSearchInput()}
+          {/* RENDERS WHEN USER STARTS SEARCHING */}
+          {searchTextThere && state.QA.main && renderWhenSearchInput()}
 
-      {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
-      {!searchTextThere && state.QA.main && renderWhenNoSearchInput()}
-      {!searchTextThere &&
-        state.QA.main &&
-        state.QA.main.results.length > 2 &&
-        addMoreQuestionsButtonWhenNoSearchInput()}
+          {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
+          {!searchTextThere && state.QA.main && renderWhenNoSearchInput()}
+          {!searchTextThere &&
+            state.QA.main &&
+            state.QA.main.results.length > 2 &&
+            addMoreQuestionsButtonWhenNoSearchInput()}
 
-      <button onClick={createQuestionForm}>Add A Question</button>
-      {createForm && (
-        <div>
-          <QuestionForm showForm={setCreateForm} />
-        </div>
-      )}
+          <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
+
+          {createForm && (
+            <div>
+              <QuestionForm showForm={setCreateForm} />
+            </div>
+          )}
+        </EntireQuestionsWrapper>
+      </EntireQuestionsContainer>
     </div>
   );
 }
@@ -145,3 +155,31 @@ export default function QAndA() {
 export const qAndAStateInit = (productId) => {
   return [['main', '/qa/questions/', { product_id: productId, count: 500 }]];
 };
+
+const SearchBar = styled.input`
+  width: 400px;
+  font-size: 20px;
+`;
+
+const EntireQuestionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const EntireQuestionsWrapper = styled.div`
+  margin-left: 100px;
+  margin-right: 100px;
+  display: inline;
+`;
+
+const ButtonsContainer = styled.div``;
+
+const AddQuestionButton = styled.button`
+  margin: 25px;
+  float: left;
+`;
+
+const MoreAnsweredQuestionsButton = styled.button`
+  margin: 25px;
+  float: left;
+`;
