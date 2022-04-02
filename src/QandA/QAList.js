@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
+import styled from 'styled-components';
 import moment from 'moment';
 import Answers from './Answers';
 import Questions from './Questions';
@@ -15,5 +16,3 @@ export default function QAList(props) {
     </div>
   );
 }
-
-// POST METHODS

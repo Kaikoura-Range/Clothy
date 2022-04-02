@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { StateContext, DispatchContext } from '../appState/index.js';
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import AnswerForm from './AnswerForm';
 import moment from 'moment';
 import api from '../api/index';
@@ -7,6 +7,7 @@ export default function Questions(props) {
   const [answerForm, setAnswerForm] = useState(false);
   const [submitHelpfulQuestionOnce, setsubmitHelpfulQuestionOnce] = useState(true);
   const [reportQuestionOnce, setreportQuestionOnce] = useState(true);
+  const [isReported, setIsReported] = useState(false);
   const answerFormHandler = () => {
     setAnswerForm(true);
   };
@@ -30,9 +31,10 @@ export default function Questions(props) {
   const reportQuestionHandler = (id) => {
     setreportQuestionOnce(false);
     if (reportQuestionOnce) {
+      setIsReported(true);
       api.post.question
         .report(id)
-        .then((res) => console.log('post report question res', res))
+        .then(() => alert('An admin will be notified'))
         .catch((err) => console.log('report question not sent!'));
     } else {
       alert('You can only report question once!');
@@ -52,7 +54,7 @@ export default function Questions(props) {
         </a>{' '}
         ({props.q.question_helpfulness}){' '}
         <a onClick={() => reportQuestionHandler(props.q.question_id)} href='#'>
-          Report
+          {isReported ? 'Reported' : 'Report'}
         </a>
       </p>
       <a onClick={answerFormHandler} href='#'>

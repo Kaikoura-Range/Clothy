@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
+import styled from 'styled-components';
 import api from '../api/index';
 import ImageForm from './ImageForm';
 export default function AnswerForm(props) {
@@ -11,10 +12,10 @@ export default function AnswerForm(props) {
   const [photoUrl, setPhotoUrl] = useState('');
   const [imageForm, setImageForm] = useState(false);
   const [uploadImagesButton, setUploadImagesButton] = useState(true);
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     let newAnswer = {
-      //photos = ['image url']
       photos: photos,
       body: body,
       name: username,

@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
+import styled from 'styled-components';
 import moment from 'moment';
 import api from '../api/index';
+
 export default function Answers(props) {
   const [state] = useContext(StateContext);
   const [addMoreAnswers, setAddMoreAnswers] = useState(0);
   const [length, setLength] = useState(Object.keys(props.a.answers).length);
   const [submitHelpfulAnswerOnce, setsubmitHelpfulAnswerOnce] = useState(true);
   const [reportAnswerOnce, setReportAnswerOnce] = useState(true);
+  const [isReported, setIsReported] = useState(false);
   const addMoreAnswersClickHandler = () => {
     setAddMoreAnswers(addMoreAnswers + 1);
   };
@@ -30,9 +33,10 @@ export default function Answers(props) {
   const reportAnswerHandler = (id) => {
     setReportAnswerOnce(false);
     if (reportAnswerOnce) {
+      setIsReported(true);
       api.post.answer
         .report(id)
-        .then((res) => console.log('post report answer res', res))
+        .then(() => alert('An admin will be notified'))
         .catch((err) => console.log('report answer not sent!'));
     } else {
       alert('You can only report this answer once!');
@@ -57,7 +61,7 @@ export default function Answers(props) {
                 </a>{' '}
                 ({answer.helpfulness}){' '}
                 <a onClick={() => reportAnswerHandler(answer.id)} href='#'>
-                  Report
+                  {isReported ? 'Reported' : 'Report'}
                 </a>
               </p>
               {answer.photos &&
@@ -77,3 +81,8 @@ export default function Answers(props) {
     </div>
   );
 }
+
+const ReportLink = styled.p`
+  text-decoration: underline;
+  cursor: pointer;
+`;
