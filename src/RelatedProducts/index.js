@@ -52,7 +52,6 @@ const RelatedContainer = styled.div`
   width: 100%;
   height: auto;
   display: flex;
-  /* overflow: scroll; */
   padding-top: 15px;
   padding-top: 50px;
   padding-bottom: 50px;
@@ -79,21 +78,3 @@ export const relatedStateInit = (productId) => {
 }
 
 export default RelatedProducts
-// export default memo(RelatedProducts)
-
-
-
-
-
-
-// const RelatedInputNonMemo = (props) => {
-//   console.log('DEV  RENDER  Memod RelatedInput')
-//   const [inputState, setInputState] = useState('');
-//   return (
-//     <div>
-//       <input value={inputState} onChange={(e) => setInputState(e.target.value)} />
-//     </div>
-//   )
-// }
-
-// const RelatedInput = memo(RelatedInputNonMemo)

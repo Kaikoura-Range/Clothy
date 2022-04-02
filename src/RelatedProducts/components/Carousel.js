@@ -10,7 +10,7 @@ const Carousel = ({ products }) => {
   // console.log('products', products)
   const [, dispatch] = useContext(DispatchContext);
   return (
-    <CarouselContainer>
+    <CarouselContainer data-testid={'carousel'} >
       {products.map(data => <RelatedCard data={data} dispatch={dispatch} key={data.id ? data.id : data} />)}
     </CarouselContainer>
   )
