@@ -45,7 +45,7 @@ export default function Questions(props) {
     <QuestionsContainer data-testid='question'>
       <QuestionBody>Q: {props.q.question_body}</QuestionBody>
       <HelpfulReportContainer>
-        <p>Helpful Question?</p>
+        Helpful Question?{' '}
         <Link onClick={() => helpfulQuestionHandler(props.q.question_id)}>Yes</Link> (
         {props.q.question_helpfulness}){' '}
         <Link onClick={() => reportQuestionHandler(props.q.question_id)}>
