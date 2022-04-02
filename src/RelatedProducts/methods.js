@@ -1,6 +1,29 @@
 
 import api from '../api/index.js';
 
+
+
+export const addProductToOutfit = (dispatch, prodId) => {
+  dispatch({
+    type: 'ADD_PRODUCT_TO_OUTFIT',
+    payload: prodId,
+  });
+}
+
+
+export const initializeAppState = (dispatch, prodId) => {
+  api.get.allProductData(prodId)
+    .then((response) => {
+      response.currentProduct = prodId
+      dispatch({
+        type: 'PROD_INIT',
+        payload: response,
+      });
+    });
+}
+
+
+
 const getPhotoUrls = (styles) => {
   return styles.results.reduce((memo, data) => {
     if (data.photos[0].url) {
@@ -9,6 +32,11 @@ const getPhotoUrls = (styles) => {
     return memo
   }, [])
 }
+
+
+
+
+
 
 
 
@@ -41,28 +69,4 @@ export const initRelatedProducts = (relatedIds, setRelatedItemData) => {
         console.log('Related items fetch not even error  getRes: ', getRes)
       }
     })
-
 }
-
-
-
-export const addProductToOutfit = (dispatch, prodId) => {
-  dispatch({
-    type: 'ADD_PRODUCT_TO_OUTFIT',
-    payload: prodId,
-  });
-}
-
-
-export const initializeAppState = (dispatch, prodId) => {
-  api.get.allProductData(prodId)
-    .then((response) => {
-      response.currentProduct = prodId
-      dispatch({
-        type: 'PROD_INIT',
-        payload: response,
-      });
-    });
-}
-
-

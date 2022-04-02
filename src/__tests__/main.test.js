@@ -1,11 +1,13 @@
 import React from "react";
 import ReactDOM from 'react-dom/client'
 
-import { render, screen, cleanup, fireEvent, waitFor, act } from '@testing-library/react';
+import {  screen, cleanup, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import '@testing-library/user-event';
 import App from '../App.js';
 import AppContextProvider from '../appState/index.js';
+/*global globalThis */
+/*eslint no-undef: "error"*/
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
 

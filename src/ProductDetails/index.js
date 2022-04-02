@@ -15,7 +15,6 @@ function ProductDetails() {
     console.log('DEV RENDER ProductDetails')
   }
 
-
   useEffect(() => {
     setActiveProduct(state.details.product);
     setStyles(state.details.styles);
