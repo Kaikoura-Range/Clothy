@@ -42,28 +42,26 @@ export default function Questions(props) {
   };
 
   return (
-    <div data-testid='question'>
-      <QuestionsContainer>
-        <QuestionBody>Q: {props.q.question_body}</QuestionBody>
-        <HelpfulReportContainer>
-          Helpful Question?{' '}
-          <Link onClick={() => helpfulQuestionHandler(props.q.question_id)}>Yes</Link> (
-          {props.q.question_helpfulness}){' '}
-          <Link onClick={() => reportQuestionHandler(props.q.question_id)}>
-            {isReported ? 'Reported' : 'Report'}
-          </Link>
-        </HelpfulReportContainer>
-        <QuestionsAuthor>
-          By: {props.q.asker_name} on: {moment(props.q.question_date).format('MMMM Do, YYYY')}
-        </QuestionsAuthor>
-        <Link onClick={answerFormHandler}>Add Answer</Link>
-        {answerForm && (
-          <div>
-            <AnswerForm id={props.q.question_id} showForm={showAnswerForm} />
-          </div>
-        )}
-      </QuestionsContainer>
-    </div>
+    <QuestionsContainer data-testid='question'>
+      <QuestionBody>Q: {props.q.question_body}</QuestionBody>
+      <HelpfulReportContainer>
+        Helpful Question?{' '}
+        <Link onClick={() => helpfulQuestionHandler(props.q.question_id)}>Yes</Link> (
+        {props.q.question_helpfulness}){' '}
+        <Link onClick={() => reportQuestionHandler(props.q.question_id)}>
+          {isReported ? 'Reported' : 'Report'}
+        </Link>
+      </HelpfulReportContainer>
+      <QuestionsAuthor>
+        By: {props.q.asker_name} on: {moment(props.q.question_date).format('MMMM Do, YYYY')}
+      </QuestionsAuthor>
+      <Link onClick={answerFormHandler}>Add Answer</Link>
+      {answerForm && (
+        <div>
+          <AnswerForm id={props.q.question_id} showForm={showAnswerForm} />
+        </div>
+      )}
+    </QuestionsContainer>
   );
 }
 
