@@ -42,29 +42,44 @@ export default function Questions(props) {
   };
 
   return (
-    <div>
-      <h3>Q: {props.q.question_body}</h3>
-      <p>
-        By: {props.q.asker_name} on: {moment(props.q.question_date).format('MMMM Do, YYYY')}
-      </p>
-      <p>
+    <QuestionsContainer>
+      <QuestionBody>Q: {props.q.question_body}</QuestionBody>
+      <HelpfulReportContainer>
         Helpful Question?{' '}
-        <a onClick={() => helpfulQuestionHandler(props.q.question_id)} href='#'>
-          Yes
-        </a>{' '}
-        ({props.q.question_helpfulness}){' '}
-        <a onClick={() => reportQuestionHandler(props.q.question_id)} href='#'>
+        <Link onClick={() => helpfulQuestionHandler(props.q.question_id)}>Yes</Link> (
+        {props.q.question_helpfulness}){' '}
+        <Link onClick={() => reportQuestionHandler(props.q.question_id)}>
           {isReported ? 'Reported' : 'Report'}
-        </a>
-      </p>
-      <a onClick={answerFormHandler} href='#'>
-        Add Answer
-      </a>
+        </Link>
+      </HelpfulReportContainer>
+      <QuestionsAuthor>
+        By: {props.q.asker_name} on: {moment(props.q.question_date).format('MMMM Do, YYYY')}
+      </QuestionsAuthor>
+      <Link onClick={answerFormHandler}>Add Answer</Link>
       {answerForm && (
         <div>
           <AnswerForm id={props.q.question_id} showForm={showAnswerForm} />
         </div>
       )}
-    </div>
+    </QuestionsContainer>
   );
 }
+
+const Link = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
+`;
+
+const QuestionsContainer = styled.div``;
+
+const QuestionsAuthor = styled.div``;
+
+const QuestionBody = styled.h3`
+  display: inline;
+`;
+
+const HelpfulReportContainer = styled.p`
+  display: inline;
+  float: right;
+  vertical-align: top;
+`;
