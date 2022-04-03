@@ -19,6 +19,7 @@ export default function QAndA() {
     // console.log(state.QA);
     setAddMoreQuestionsNoSearch(0);
     setAddQuestionsSearch(0);
+    setCreateForm(false);
   }, [state.QA]);
   //these functions render 2 questions at a time
   const addQuestionsNoSearchHandler = () => {
@@ -58,7 +59,9 @@ export default function QAndA() {
           <div>
             {results}
             {length > 2 && addQuestionsSearch + 1 !== length && (
-              <button onClick={addQuestionsSearchHandler}>More Answered Questions</button>
+              <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
+                More Answered Questions
+              </MoreAnsweredQuestionsButton>
             )}
           </div>
         );
@@ -68,7 +71,9 @@ export default function QAndA() {
           <div>
             {results}
             {length > 2 && addQuestionsSearch + 2 !== length && (
-              <button onClick={addQuestionsSearchHandler}>More Answered Questions</button>
+              <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
+                More Answered Questions
+              </MoreAnsweredQuestionsButton>
             )}
           </div>
         );
@@ -113,13 +118,12 @@ export default function QAndA() {
   //functions used for sending post requests for adding a question
   //toggles add question form
   const createQuestionForm = () => {
-    setCreateForm(true);
+    setCreateForm(!createForm);
   };
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
-
-    <EntireQuestionsContainer  data-testid="QandA"  >
+    <EntireQuestionsContainer data-testid='QandA'>
       <EntireQuestionsWrapper>
         <h1>Questions & Answers:</h1>
         <SearchBar
@@ -156,7 +160,11 @@ export const qAndAStateInit = (productId) => {
 };
 
 const SearchBar = styled.input`
-  width: 400px;
+  border: 2px solid black;
+  display: block;
+  margin-top: 25px;
+  padding: 15px;
+  width: 50%;
   font-size: 20px;
 `;
 
@@ -174,11 +182,27 @@ const EntireQuestionsWrapper = styled.div`
 const ButtonsContainer = styled.div``;
 
 const AddQuestionButton = styled.button`
+  cursor: pointer;
   margin: 25px;
   float: left;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 15px;
+  text-align: center;
+  &:active {
+    transform: translateY(4px);
+  }
 `;
 
 const MoreAnsweredQuestionsButton = styled.button`
+  cursor: pointer;
   margin: 25px;
   float: left;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 15px;
+  text-align: center;
+  &:active {
+    transform: translateY(4px);
+  }
 `;

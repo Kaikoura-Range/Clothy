@@ -6,7 +6,6 @@ export default function QuestionForm(props) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
-  console.log(props.qId);
   const onSubmitHandler = (e) => {
     e.preventDefault();
     var newQuestion = {
@@ -56,7 +55,7 @@ export default function QuestionForm(props) {
         type='text'
         name='body'
         onChange={onChangeBody}
-        placeholder='Did you like the product or not?'></textarea>
+        placeholder='Ask a question about the product'></textarea>
       <input type='submit' />
     </form>
   );

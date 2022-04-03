@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { StateContext, DispatchContext } from '../appState/index.js';
 import styled from 'styled-components';
 import AnswerForm from './AnswerForm';
 import moment from 'moment';
 import api from '../api/index';
 export default function Questions(props) {
+  const [state] = useContext(StateContext);
   const [answerForm, setAnswerForm] = useState(false);
   const [submitHelpfulQuestionOnce, setsubmitHelpfulQuestionOnce] = useState(true);
   const [reportQuestionOnce, setreportQuestionOnce] = useState(true);
   const [isReported, setIsReported] = useState(false);
+
+  useEffect(() => {
+    setAnswerForm(false);
+  }, [state.QA]);
+
   const answerFormHandler = () => {
-    setAnswerForm(true);
+    setAnswerForm(!answerForm);
   };
 
   const showAnswerForm = () => {
@@ -18,6 +25,7 @@ export default function Questions(props) {
 
   const helpfulQuestionHandler = (id) => {
     setsubmitHelpfulQuestionOnce(false);
+
     if (submitHelpfulQuestionOnce) {
       api.post.question
         .helpful(id)
@@ -46,16 +54,23 @@ export default function Questions(props) {
       <QuestionBody>Q: {props.q.question_body}</QuestionBody>
       <HelpfulReportContainer>
         Helpful Question?{' '}
-        <Link onClick={() => helpfulQuestionHandler(props.q.question_id)}>Yes</Link> (
-        {props.q.question_helpfulness}){' '}
-        <Link onClick={() => reportQuestionHandler(props.q.question_id)}>
+        <HelpfulLink
+          helpful={!submitHelpfulQuestionOnce}
+          onClick={() => helpfulQuestionHandler(props.q.question_id)}>
+          Yes
+        </HelpfulLink>{' '}
+        ({props.q.question_helpfulness}) |{'  '}
+        <ReportedLink
+          reported={isReported}
+          onClick={() => reportQuestionHandler(props.q.question_id)}>
           {isReported ? 'Reported' : 'Report'}
-        </Link>
+        </ReportedLink>
+        <AddAnswerLink onClick={answerFormHandler}>Add Answer</AddAnswerLink>
       </HelpfulReportContainer>
+
       <QuestionsAuthor>
-        By: {props.q.asker_name} on: {moment(props.q.question_date).format('MMMM Do, YYYY')}
+        By: {props.q.asker_name} | {moment(props.q.question_date).format('MMMM Do, YYYY')}
       </QuestionsAuthor>
-      <Link onClick={answerFormHandler}>Add Answer</Link>
       {answerForm && (
         <div>
           <AnswerForm id={props.q.question_id} showForm={showAnswerForm} />
@@ -65,16 +80,36 @@ export default function Questions(props) {
   );
 }
 
-const Link = styled.span`
+const ReportedLink = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
+  color: ${(props) => (props.reported ? 'red' : 'black')};
+  padding-left: 1.5px;
+`;
+
+const HelpfulLink = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
+  color: ${(props) => (props.helpful ? 'blue' : 'black')};
+`;
+
+const AddAnswerLink = styled.div`
+  margin-top: 10px;
   text-decoration: underline;
   cursor: pointer;
 `;
 
-const QuestionsContainer = styled.div``;
+const QuestionsContainer = styled.div`
+  width: 100%;
+  margin-top: 25px;
+`;
 
-const QuestionsAuthor = styled.div``;
+const QuestionsAuthor = styled.p`
+  margin-top: 5px;
+`;
 
 const QuestionBody = styled.h3`
+  overflow-wrap: break-word;
   display: inline;
 `;
 
