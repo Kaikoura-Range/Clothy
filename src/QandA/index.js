@@ -145,11 +145,7 @@ export default function QAndA() {
 
         <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
 
-        {createForm && (
-          <div>
-            <QuestionForm showForm={setCreateForm} />
-          </div>
-        )}
+        {createForm && <QuestionForm showForm={setCreateForm} />}
       </EntireQuestionsWrapper>
     </EntireQuestionsContainer>
   );

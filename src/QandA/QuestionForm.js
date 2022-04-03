@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
+import styled from 'styled-components';
 import api from '../api/index';
 export default function QuestionForm(props) {
   const [state] = useContext(StateContext);
@@ -36,27 +37,73 @@ export default function QuestionForm(props) {
   };
 
   return (
-    <form onSubmit={onSubmitHandler}>
-      <label>Username: </label>
-      <input
-        type='text'
-        name='username'
-        onChange={onChangeUsername}
-        placeholder='Example: jackson11!'
-      />
-      <label>Email: </label>
-      <input
-        type='email'
-        name='email'
-        onChange={onChangeEmail}
-        placeholder='Example: abc@gmail.com'
-      />
-      <textarea
-        type='text'
-        name='body'
-        onChange={onChangeBody}
-        placeholder='Ask a question about the product'></textarea>
-      <input type='submit' />
-    </form>
+    <QuestionsFormContainer>
+      <form onSubmit={onSubmitHandler}>
+        <label>Username: </label>
+        <Input
+          type='text'
+          name='username'
+          onChange={onChangeUsername}
+          placeholder='Example: jackson11!'
+          required
+        />
+        <label>Email: </label>
+        <Input
+          type='email'
+          name='email'
+          onChange={onChangeEmail}
+          placeholder='Example: abc@gmail.com'
+          required
+        />
+        <TextArea
+          type='text'
+          name='body'
+          onChange={onChangeBody}
+          placeholder='Ask a question about the product'
+          required></TextArea>
+        <CenterItemsWrapper>
+          <InputSubmit type='submit' />
+        </CenterItemsWrapper>
+      </form>
+    </QuestionsFormContainer>
   );
 }
+
+const QuestionsFormContainer = styled.div`
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  padding: 20px;
+  z-index: 2;
+`;
+
+const TextArea = styled.textarea`
+  height: 200px;
+  width: 100%;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+`;
+
+const CenterItemsWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
+
+const InputSubmit = styled.input`
+  background-color: #ccc;
+  color: black;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+`;
