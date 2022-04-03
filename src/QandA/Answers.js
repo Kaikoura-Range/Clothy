@@ -69,7 +69,7 @@ export default function Answers(props) {
                   onClick={() => helpfulAnswerHandler(answer.id)}>
                   Yes
                 </HelpfulLink>{' '}
-                ({answer.helpfulness}){' '}
+                ({answer.helpfulness}) |{' '}
                 <ReportedLink reported={isReported} onClick={() => reportAnswerHandler(answer.id)}>
                   {isReported ? 'Reported' : 'Report'}
                 </ReportedLink>
@@ -88,6 +88,7 @@ const ReportedLink = styled.span`
   text-decoration: underline;
   cursor: pointer;
   color: ${(props) => (props.reported ? 'red' : 'black')};
+  padding-left: 1.5px;
 `;
 
 const AnswerAuthor = styled.p`
@@ -112,6 +113,7 @@ const LoadMoreAnswers = styled.p`
   cursor: pointer;
   text-decoration: underline;
   margin-top: 10px;
+  margin-bottom: 15px;
 `;
 
 const AnswersContainer = styled.div`

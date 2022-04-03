@@ -59,7 +59,9 @@ export default function QAndA() {
           <div>
             {results}
             {length > 2 && addQuestionsSearch + 1 !== length && (
-              <button onClick={addQuestionsSearchHandler}>More Answered Questions</button>
+              <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
+                More Answered Questions
+              </MoreAnsweredQuestionsButton>
             )}
           </div>
         );
@@ -69,7 +71,9 @@ export default function QAndA() {
           <div>
             {results}
             {length > 2 && addQuestionsSearch + 2 !== length && (
-              <button onClick={addQuestionsSearchHandler}>More Answered Questions</button>
+              <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
+                More Answered Questions
+              </MoreAnsweredQuestionsButton>
             )}
           </div>
         );
@@ -156,10 +160,11 @@ export const qAndAStateInit = (productId) => {
 };
 
 const SearchBar = styled.input`
+  border: 2px solid black;
   display: block;
   margin-top: 25px;
   padding: 15px;
-  width: 70%;
+  width: 50%;
   font-size: 20px;
 `;
 

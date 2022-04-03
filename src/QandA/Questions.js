@@ -59,7 +59,7 @@ export default function Questions(props) {
           onClick={() => helpfulQuestionHandler(props.q.question_id)}>
           Yes
         </HelpfulLink>{' '}
-        ({props.q.question_helpfulness}) |{' '}
+        ({props.q.question_helpfulness}) |{'  '}
         <ReportedLink
           reported={isReported}
           onClick={() => reportQuestionHandler(props.q.question_id)}>
@@ -84,6 +84,7 @@ const ReportedLink = styled.span`
   text-decoration: underline;
   cursor: pointer;
   color: ${(props) => (props.reported ? 'red' : 'black')};
+  padding-left: 1.5px;
 `;
 
 const HelpfulLink = styled.span`
