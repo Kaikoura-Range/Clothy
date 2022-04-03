@@ -144,9 +144,8 @@ export default function QAndA() {
           addMoreQuestionsButtonWhenNoSearchInput()}
 
         <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
-
-        {createForm && <QuestionForm showForm={setCreateForm} />}
       </EntireQuestionsWrapper>
+      {createForm && <QuestionForm showForm={setCreateForm} />}
     </EntireQuestionsContainer>
   );
 }
@@ -167,11 +166,11 @@ const SearchBar = styled.input`
 const EntireQuestionsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: 100px;
+  margin-right: 100px;
 `;
 
 const EntireQuestionsWrapper = styled.div`
-  margin-left: 100px;
-  margin-right: 100px;
   display: inline;
 `;
 
