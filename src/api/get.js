@@ -1,48 +1,9 @@
 
 
-import axios from 'axios';
-import GIT_TOKEN from '../config/config.js'
-const CAMPUS_CODE = 'hr-rfe';
-const baseUrl = `https://app-hrsei-api.herokuapp.com/api/fec2/${CAMPUS_CODE}`;
+import request from './request';
 
 
-
-
-const headers = {
-  Authorization: GIT_TOKEN,
-};
-
-const buildGetOptions = (endpoint, params = {}) => {
-  return {
-    method: 'get',
-    params,
-    headers,
-    url: endpoint,
-    baseURL: baseUrl,
-  }
-};
-
-
-
-const runFetch = (options) => {
-  return axios(options)
-    .then((res) => {
-      return res.data
-    })
-    .catch(err => {
-      console.log('API GET fetch err: ', err)
-      console.log('input options', options)
-    })
-};
-
-
-
-
-
-
-const get = ((endpoint, params) => {
-  return runFetch(buildGetOptions(endpoint, params))
-});
+const get = request.get
 
 
 const getAllObj = (allGetOptions) => {
@@ -69,6 +30,7 @@ const getAllArray = (allGetOptions) => {
       console.log('input array ', allGetOptions)
     })
 }
+
 
 
 
@@ -101,10 +63,9 @@ const initProductDataFetch = (detailsGets, reviewsGets, QAGets, relatedGets ) =>
 }
 
 const getAllProductData = (productId) => {
+
   if (get.allProductDataEndpoints) {
     let newEndpoints = get.allProductDataEndpoints(productId)
-    console.log('\nallProductDataEndpoints')
-    console.log(newEndpoints)
     return getAll(newEndpoints)
   } else {
     return new Promise((rej, res) => {
