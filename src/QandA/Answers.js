@@ -49,11 +49,8 @@ export default function Answers(props) {
         .slice(0, 1 + addMoreAnswers)
         .map((answer) => {
           return (
-            <div key={answer.id}>
+            <EachAnswerContainer key={answer.id}>
               <h3>A: {answer.body}</h3>
-              <p>
-                By: {answer.answerer_name} on: {moment(answer.date).format('MMMM Do, YYYY')}
-              </p>
               {answer.photos &&
                 answer.photos.map((photo, i) => {
                   return (
@@ -62,29 +59,67 @@ export default function Answers(props) {
                     </ImagesContainer>
                   );
                 })}
-              <p>
-                Helpful Answer? <Link onClick={() => helpfulAnswerHandler(answer.id)}>Yes</Link> (
-                {answer.helpfulness}){' '}
-                <Link onClick={() => reportAnswerHandler(answer.id)}>
+              <AnswerAuthor>
+                By: {answer.answerer_name} | {moment(answer.date).format('MMMM Do, YYYY')}
+              </AnswerAuthor>
+              <HelpfulAnswer>
+                Helpful Answer?{' '}
+                <HelpfulLink
+                  helpful={!submitHelpfulAnswerOnce}
+                  onClick={() => helpfulAnswerHandler(answer.id)}>
+                  Yes
+                </HelpfulLink>{' '}
+                ({answer.helpfulness}) |{' '}
+                <ReportedLink reported={isReported} onClick={() => reportAnswerHandler(answer.id)}>
                   {isReported ? 'Reported' : 'Report'}
-                </Link>
-              </p>
-            </div>
+                </ReportedLink>
+              </HelpfulAnswer>
+            </EachAnswerContainer>
           );
         })}
       {length > 1 && length && addMoreAnswers !== length - 1 && (
-        <p onClick={addMoreAnswersClickHandler}>Load more answers</p>
+        <LoadMoreAnswers onClick={addMoreAnswersClickHandler}>Load more answers</LoadMoreAnswers>
       )}
     </AnswersContainer>
   );
 }
 
-const Link = styled.span`
+const ReportedLink = styled.span`
   text-decoration: underline;
   cursor: pointer;
+  color: ${(props) => (props.reported ? 'red' : 'black')};
+  padding-left: 1.5px;
 `;
 
-const AnswersContainer = styled.div``;
+const AnswerAuthor = styled.p`
+  margin-top: 5px;
+`;
+
+const HelpfulLink = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
+  color: ${(props) => (props.helpful ? 'blue' : 'black')};
+`;
+
+const EachAnswerContainer = styled.div`
+  margin-top: 25px;
+`;
+
+const HelpfulAnswer = styled.div`
+  margin-top: 10px;
+  margin-bottom: 25px;
+`;
+
+const LoadMoreAnswers = styled.p`
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 10px;
+  margin-bottom: 25px;
+`;
+
+const AnswersContainer = styled.div`
+  margin-top: 25px;
+`;
 
 const ImagesContainer = styled.div`
   display: inline;

@@ -10,9 +10,13 @@ export default function QAList(props) {
   const [state] = useContext(StateContext);
 
   return (
-    <div id={props.q.question_id}>
+    <QAndAContainer id={props.q.question_id}>
       <Questions q={props.q} />
       <Answers a={props.q} />
-    </div>
+    </QAndAContainer>
   );
 }
+
+const QAndAContainer = styled.div`
+  border-bottom: 2px solid black;
+`;

@@ -8,6 +8,7 @@ import ProductDetails, { detailsStateInit } from './ProductDetails/index';
 import RatingsReviews, { reviewStateInit } from './RatingsReviews/index';
 import QAndA, { qAndAStateInit } from './QandA/index';
 import RelatedProducts, { relatedStateInit } from './RelatedProducts/index';
+import Header from './header/index.js'
 
 
 api.get.initProductDataFetch(
@@ -56,6 +57,7 @@ function App() {
     requestCount = 0
     return (
       <AppContainer className='App' data-testid="app"  >
+        <Header />
         <ProductDetails />
         <RelatedProducts state={state.related} dev={state.dev} />
         <QAndA />
