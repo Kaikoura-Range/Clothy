@@ -73,9 +73,7 @@ function SummaryBody(props) {
 
 
 export const reviewStateInit = (productId) => {
-    return [
-      ['this', '/reviews/', { product_id: productId, page: 1, sort: 'newest' }]
-    ]
+    return ['/reviews/', { product_id: productId, page: 1, sort: 'newest' }]
   }
 
 
