@@ -121,6 +121,9 @@ export default function QAndA() {
     setCreateForm(!createForm);
   };
 
+  const backDropHandler = () => {
+    setCreateForm(false);
+  };
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <EntireQuestionsContainer data-testid='QandA'>
@@ -145,7 +148,11 @@ export default function QAndA() {
 
         <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
       </EntireQuestionsWrapper>
-      {createForm && <QuestionForm showForm={setCreateForm} />}
+      {createForm && (
+        <BackDrop onClick={backDropHandler}>
+          <QuestionForm showForm={setCreateForm} />
+        </BackDrop>
+      )}
     </EntireQuestionsContainer>
   );
 }
@@ -200,4 +207,13 @@ const MoreAnsweredQuestionsButton = styled.button`
   &:active {
     transform: translateY(4px);
   }
+`;
+
+const BackDrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
 `;
