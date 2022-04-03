@@ -68,13 +68,19 @@ export default function AnswerForm(props) {
     <AnswerFormContainer>
       <form onSubmit={onSubmitHandler}>
         <label>Username: </label>
-        <Input type='text' onChange={onChangeUsername} placeholder='Example: jackson11!' />
+        <Input type='text' onChange={onChangeUsername} placeholder='Example: jackson11!' required />
         <label>Email: </label>
-        <Input type='email' onChange={onChangeEmail} placeholder='Example: abc@gmail.com' />
+        <Input
+          type='email'
+          onChange={onChangeEmail}
+          placeholder='Example: abc@gmail.com'
+          required
+        />
         <TextArea
           type='text'
           onChange={onChangeBody}
-          placeholder='Add your answer to a question here...'></TextArea>
+          placeholder='Add your answer to a question here...'
+          required></TextArea>
         <CenterItemsWrapper>
           <InputSubmit type='submit' />
         </CenterItemsWrapper>

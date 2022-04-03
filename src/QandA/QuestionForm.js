@@ -45,6 +45,7 @@ export default function QuestionForm(props) {
           name='username'
           onChange={onChangeUsername}
           placeholder='Example: jackson11!'
+          required
         />
         <label>Email: </label>
         <Input
@@ -52,12 +53,14 @@ export default function QuestionForm(props) {
           name='email'
           onChange={onChangeEmail}
           placeholder='Example: abc@gmail.com'
+          required
         />
         <TextArea
           type='text'
           name='body'
           onChange={onChangeBody}
-          placeholder='Ask a question about the product'></TextArea>
+          placeholder='Ask a question about the product'
+          required></TextArea>
         <CenterItemsWrapper>
           <InputSubmit type='submit' />
         </CenterItemsWrapper>
