@@ -107,13 +107,14 @@ const EachAnswerContainer = styled.div`
 
 const HelpfulAnswer = styled.div`
   margin-top: 10px;
+  margin-bottom: 25px;
 `;
 
 const LoadMoreAnswers = styled.p`
   cursor: pointer;
   text-decoration: underline;
   margin-top: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 `;
 
 const AnswersContainer = styled.div`
