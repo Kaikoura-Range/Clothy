@@ -13,7 +13,7 @@ export default function ErrorModal() {
 
 const XMark = styled.div`
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 5px;
   width: 15px;
   height: 15px;
   background: -webkit-linear-gradient(
@@ -27,6 +27,11 @@ const XMark = styled.div`
     ),
     -webkit-linear-gradient(45deg, transparent 0%, transparent 40%, #d8000c 46%, #d8000c 56%, transparent
           56%, transparent 100%);
+`;
+
+const fadeOut = keyframes`
+0%{opacity:1;}
+100%{opacity: 0;}
 `;
 
 const successAnimation = keyframes`
@@ -50,7 +55,7 @@ const SuccessMessage = styled.h3`
   color: #d8000c;
   padding: 20px;
   border-radius: 5px;
-  animation: ${successAnimation} 1s ease-in-out;
+  /* animation: ${successAnimation} 1s ease-in-out; */
 `;
 
 const Modal = styled.div`
@@ -60,12 +65,5 @@ const Modal = styled.div`
   top: 5.5vh;
   width: 50%;
   z-index: 5;
-`;
-const BackDrop = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.75);
+  animation: ${fadeOut} ease 1s;
 `;

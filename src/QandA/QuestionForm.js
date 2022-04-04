@@ -5,6 +5,7 @@ import api from '../api/index';
 export default function QuestionForm(props) {
   const [state] = useContext(StateContext);
   const [username, setUsername] = useState('');
+  const [, dispatch] = useContext(DispatchContext);
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
   const onSubmitHandler = (e) => {
@@ -24,7 +25,14 @@ export default function QuestionForm(props) {
         setUsername('');
         setEmail('');
         setBody('');
+        return api.get.getAllProductData(state.currentProduct);
       })
+      .then((data) =>
+        dispatch({
+          type: 'PROD_INIT',
+          payload: data,
+        })
+      )
       .catch((err) => console.log('question not sent!'));
   };
   const onChangeUsername = (e) => {

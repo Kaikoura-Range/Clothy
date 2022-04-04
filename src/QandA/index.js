@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
 import styled from 'styled-components';
+import { keyframes } from 'styled-components';
 import api from '../api/index';
 import QAList from './QAList';
 import QuestionForm from './QuestionForm';
@@ -231,11 +232,17 @@ const MoreAnsweredQuestionsButton = styled.button`
   }
 `;
 
+const fadeOut = keyframes`
+0%{opacity:1;}
+100%{opacity: 0;}
+`;
+
 const BackDrop = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
+  animation: ${fadeOut} ease 1s;
   background: rgba(0, 0, 0, 0.75);
 `;
