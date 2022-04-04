@@ -5,6 +5,7 @@ import api from '../api/index';
 import QAList from './QAList';
 import QuestionForm from './QuestionForm';
 import SuccessModal from './SuccessModal';
+import ErrorModal from './ErrorModal';
 export default function QAndA() {
   //central API state
   const [state] = useContext(StateContext);
@@ -168,6 +169,12 @@ export default function QAndA() {
       {showModal && (
         <BackDrop onClick={backDropSuccessHandler}>
           <SuccessModal />
+        </BackDrop>
+      )}
+
+      {showModal && (
+        <BackDrop onClick={backDropSuccessHandler}>
+          <ErrorModal />
         </BackDrop>
       )}
     </EntireQuestionsContainer>

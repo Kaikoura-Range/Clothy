@@ -1,24 +1,32 @@
 import React from 'react';
 import styled from 'styled-components';
 import { keyframes } from 'styled-components';
-export default function SuccessModal() {
+export default function ErrorModal() {
   return (
     <Modal>
       <SuccessMessage>
-        <CheckMark></CheckMark> Success! Your message has been posted.
+        <XMark></XMark> Error! Your message has not been posted.
       </SuccessMessage>
     </Modal>
   );
 }
 
-const CheckMark = styled.div`
+const XMark = styled.div`
   display: inline-block;
-  transform: rotate(45deg);
-  height: 20px;
-  width: 12px;
   margin-right: 10px;
-  border-bottom: 4px solid #78b13f;
-  border-right: 4px solid #78b13f;
+  width: 15px;
+  height: 15px;
+  background: -webkit-linear-gradient(
+      -45deg,
+      transparent 0%,
+      transparent 40%,
+      #d8000c 46%,
+      #d8000c 56%,
+      transparent 56%,
+      transparent 100%
+    ),
+    -webkit-linear-gradient(45deg, transparent 0%, transparent 40%, #d8000c 46%, #d8000c 56%, transparent
+          56%, transparent 100%);
 `;
 
 const successAnimation = keyframes`
@@ -38,8 +46,8 @@ const successAnimation = keyframes`
 `;
 
 const SuccessMessage = styled.h3`
-  background-color: #dff2bf;
-  color: #270;
+  background-color: #ffbaba;
+  color: #d8000c;
   padding: 20px;
   border-radius: 5px;
   animation: ${successAnimation} 1s ease-in-out;
