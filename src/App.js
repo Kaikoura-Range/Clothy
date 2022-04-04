@@ -66,7 +66,7 @@ function App() {
         <Modal />
         <Header />
         <ProductDetails />
-        <RelatedProducts relatedProducts={state.related} dev={state.dev} />
+        <RelatedProducts  />
         <QAndA />
         <RatingsReviews reviewData={state.reviews} dev={state.dev} />
       </AppContainer>
