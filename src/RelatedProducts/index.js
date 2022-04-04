@@ -13,7 +13,7 @@ import Carousel from './components/Carousel.js';
 
 
 var mainRenderCount = 0;
-const RelatedProducts = ({ state, dev }) => {
+const RelatedProducts = ({ relatedProducts, dev }) => {
   // const [, dispatch] = useContext(DispatchContext);
   // const [state] = useContext(StateContext);
   const [relatedItemData, setRelatedItemData] = useState([]);
@@ -21,13 +21,13 @@ const RelatedProducts = ({ state, dev }) => {
   if( dev.logs ) {
     mainRenderCount++;
     dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
-    dev.state && console.log('DEV  STATE   RelatedProducts: ', state)
+    dev.state && console.log('DEV  STATE   RelatedProducts: ', relatedProducts)
   }
 
 
   useEffect(() => {
-    state.related && initRelatedProducts(state.related, setRelatedItemData)
-  }, [state.related])
+    relatedProducts && initRelatedProducts(relatedProducts, setRelatedItemData)
+  }, [relatedProducts])
 
 
 
@@ -72,9 +72,7 @@ const RelatedContainer = styled.div`
 
 
 export const relatedStateInit = (productId) => {
-  return [
-    ['related', `/products/${productId}/related/`, {}],
-  ]
+  return [`/products/${productId}/related/`, {}]
 }
 
 export default RelatedProducts

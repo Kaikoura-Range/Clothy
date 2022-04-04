@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import api from '../api/index';
 import QAList from './QAList';
 import QuestionForm from './QuestionForm';
+import SuccessModal from './SuccessModal';
+import ErrorModal from './ErrorModal';
 export default function QAndA() {
   //central API state
   const [state] = useContext(StateContext);
@@ -14,9 +16,10 @@ export default function QAndA() {
   const [searchTextThere, setSearchTextThere] = useState(false);
   //state for form inputs
   const [createForm, setCreateForm] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   //////////////////////////////////////////////////////////////////////
   useEffect(() => {
-    // console.log(state.QA);
+    console.log(state.QA);
     setAddMoreQuestionsNoSearch(0);
     setAddQuestionsSearch(0);
     setCreateForm(false);
@@ -43,8 +46,8 @@ export default function QAndA() {
   ///////////////////////////////////////////////////////////////////////////
   //these functions render out each question & answer and conditionally renders "more answered questions button"
   const renderWhenSearchInput = () => {
-    let filteredResults = state.QA.main.results
-      .sort((a, b) => b.helpfulness - a.helpfulness)
+    let filteredResults = state.QA.results
+      .sort((a, b) => b.question_helpfulness - a.question_helpfulness)
       .map(
         (q) =>
           q.question_body.toLowerCase().indexOf(searchText.toLowerCase()) > -1 && (
@@ -82,19 +85,19 @@ export default function QAndA() {
   };
 
   const renderWhenNoSearchInput = () => {
-    let results = state.QA.main.results
+    let results = state.QA.results
       .slice(0, 2 + addMoreQuestionsNoSearch)
-      .sort((a, b) => b.helpfulness - a.helpfulness)
+      .sort((a, b) => a.helpfulness - b.helpfulness)
       .map((q) => <QAList key={q.question_id} q={q} />);
     return results;
   };
 
   const addMoreQuestionsButtonWhenNoSearchInput = () => {
-    let length = state.QA.main.results.length;
+    let length = state.QA.results.length;
     let results;
     if (length % 2 !== 0) {
       return (
-        state.QA.main.results.length > 2 &&
+        state.QA.results.length > 2 &&
         addMoreQuestionsNoSearch + 1 !== length && (
           <MoreAnsweredQuestionsButton onClick={addQuestionsNoSearchHandler}>
             More Answered Questions
@@ -104,7 +107,7 @@ export default function QAndA() {
     }
     if (length % 2 === 0) {
       return (
-        state.QA.main.results.length > 2 &&
+        state.QA.results.length > 2 &&
         addMoreQuestionsNoSearch + 2 !== length && (
           <MoreAnsweredQuestionsButton onClick={addQuestionsNoSearchHandler}>
             More Answered Questions
@@ -121,6 +124,18 @@ export default function QAndA() {
     setCreateForm(!createForm);
   };
 
+  const backDropHandler = () => {
+    setCreateForm(false);
+  };
+
+  const showModalHandler = () => {
+    setShowModal(!showModal);
+  };
+
+  const backDropSuccessHandler = () => {
+    setShowModal(false);
+  };
+
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <EntireQuestionsContainer data-testid='QandA'>
@@ -134,25 +149,40 @@ export default function QAndA() {
         />
 
         {/* RENDERS WHEN USER STARTS SEARCHING */}
-        {searchTextThere && state.QA.main && renderWhenSearchInput()}
+        {searchTextThere && state.QA && renderWhenSearchInput()}
 
         {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
-        {!searchTextThere && state.QA.main && renderWhenNoSearchInput()}
+        {!searchTextThere && state.QA && renderWhenNoSearchInput()}
         {!searchTextThere &&
-          state.QA.main &&
-          state.QA.main.results.length > 2 &&
+          state.QA &&
+          state.QA.results.length > 2 &&
           addMoreQuestionsButtonWhenNoSearchInput()}
 
         <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
-
-        {createForm && <QuestionForm showForm={setCreateForm} />}
       </EntireQuestionsWrapper>
+      {createForm && (
+        <BackDrop onClick={backDropHandler}>
+          <QuestionForm showForm={setCreateForm} />
+        </BackDrop>
+      )}
+      <button onClick={showModalHandler}>Testing Success Modal</button>
+      {showModal && (
+        <BackDrop onClick={backDropSuccessHandler}>
+          <SuccessModal />
+        </BackDrop>
+      )}
+
+      {showModal && (
+        <BackDrop onClick={backDropSuccessHandler}>
+          <ErrorModal />
+        </BackDrop>
+      )}
     </EntireQuestionsContainer>
   );
 }
 
 export const qAndAStateInit = (productId) => {
-  return [['main', '/qa/questions/', { product_id: productId, count: 500 }]];
+  return ['/qa/questions/', { product_id: productId, count: 500 }];
 };
 
 const SearchBar = styled.input`
@@ -167,15 +197,13 @@ const SearchBar = styled.input`
 const EntireQuestionsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: 100px;
+  margin-right: 100px;
 `;
 
 const EntireQuestionsWrapper = styled.div`
-  margin-left: 100px;
-  margin-right: 100px;
   display: inline;
 `;
-
-const ButtonsContainer = styled.div``;
 
 const AddQuestionButton = styled.button`
   cursor: pointer;
@@ -201,4 +229,13 @@ const MoreAnsweredQuestionsButton = styled.button`
   &:active {
     transform: translateY(4px);
   }
+`;
+
+const BackDrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
 `;

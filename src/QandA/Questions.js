@@ -49,6 +49,10 @@ export default function Questions(props) {
     }
   };
 
+  const backDropHandler = () => {
+    setAnswerForm(false);
+  };
+
   return (
     <QuestionsContainer data-testid='question'>
       <QuestionBody>Q: {props.q.question_body}</QuestionBody>
@@ -71,9 +75,9 @@ export default function Questions(props) {
         By: {props.q.asker_name} | {moment(props.q.question_date).format('MMMM Do, YYYY')}
       </QuestionsAuthor>
       {answerForm && (
-        <div>
+        <BackDrop onClick={backDropHandler}>
           <AnswerForm id={props.q.question_id} showForm={showAnswerForm} />
-        </div>
+        </BackDrop>
       )}
     </QuestionsContainer>
   );
@@ -116,4 +120,14 @@ const HelpfulReportContainer = styled.div`
   display: inline;
   float: right;
   vertical-align: top;
+`;
+
+const BackDrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1.5;
+  background: rgba(0, 0, 0, 0.75);
 `;

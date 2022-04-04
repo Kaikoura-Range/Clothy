@@ -28,22 +28,35 @@ export default function ImageForm(props) {
     setSubmitButton(false);
   };
 
+  const backDropHandler = (e) => {
+    e.stopPropagation();
+    props.afterSubmit(false);
+  };
+
+  const preventBubbling = (e) => {
+    e.stopPropagation();
+  };
+
   return (
-    <ImagesFormContainer>
-      <label>Image 1:</label>
-      <Input value={img1} onChange={img1Handler} type='text' />
-      <label>Image 2:</label>
-      <Input value={img2} onChange={img2Handler} type='text' />
-      <label>Image 3:</label>
-      <Input value={img3} onChange={img3Handler} type='text' />
-      <label>Image 4:</label>
-      <Input value={img4} onChange={img4Handler} type='text' />
-      <label>Image 5:</label>
-      <Input value={img5} onChange={img5Handler} type='text' />
-      <CenterItemsWrapper>
-        {submitButton && <InputSubmit onClick={onSubmitHandler}>Submit photos</InputSubmit>}
-      </CenterItemsWrapper>
-    </ImagesFormContainer>
+    <BackDrop onClick={backDropHandler}>
+      <Modal onClick={preventBubbling}>
+        <ImagesFormContainer>
+          <label>Image 1:</label>
+          <Input value={img1} onChange={img1Handler} type='text' />
+          <label>Image 2:</label>
+          <Input value={img2} onChange={img2Handler} type='text' />
+          <label>Image 3:</label>
+          <Input value={img3} onChange={img3Handler} type='text' />
+          <label>Image 4:</label>
+          <Input value={img4} onChange={img4Handler} type='text' />
+          <label>Image 5:</label>
+          <Input value={img5} onChange={img5Handler} type='text' />
+          <CenterItemsWrapper>
+            {submitButton && <InputSubmit onClick={onSubmitHandler}>Submit photos</InputSubmit>}
+          </CenterItemsWrapper>
+        </ImagesFormContainer>
+      </Modal>
+    </BackDrop>
   );
 }
 
@@ -51,7 +64,15 @@ const ImagesFormContainer = styled.div`
   background-color: #f3f3f3;
   border-radius: 5px;
   padding: 20px;
-  z-index: 3;
+`;
+
+const Modal = styled.div`
+  position: fixed;
+  margin-left: 25%;
+  top: 30vh;
+  left: 10%;
+  width: 30%;
+  z-index: 5;
 `;
 
 const Input = styled.input`
@@ -79,4 +100,14 @@ const InputSubmit = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+`;
+
+const BackDrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.75);
 `;

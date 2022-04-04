@@ -49,14 +49,14 @@ export default function AnswerForm(props) {
     setPhotoUrl(e.target.value);
   };
 
-  const showImageFormHandler = () => {
+  const showImageFormHandler = (e) => {
+    e.stopPropagation();
     setImageForm(true);
     setUploadImagesButton(false);
   };
 
   const getPhotosHandler = (arrOfPhotos) => {
     const filtered = arrOfPhotos.filter((val) => val !== '');
-    console.log(filtered);
     setPhotos(filtered);
   };
 
@@ -64,38 +64,51 @@ export default function AnswerForm(props) {
     setImageForm(false);
   };
 
+  const preventBubbling = (e) => {
+    e.stopPropagation();
+  };
+
   return (
-    <AnswerFormContainer>
-      <form onSubmit={onSubmitHandler}>
-        <label>Username: </label>
-        <Input type='text' onChange={onChangeUsername} placeholder='Example: jackson11!' required />
-        <label>Email: </label>
-        <Input
-          type='email'
-          onChange={onChangeEmail}
-          placeholder='Example: abc@gmail.com'
-          required
-        />
-        <TextArea
-          type='text'
-          onChange={onChangeBody}
-          placeholder='Add your answer to a question here...'
-          required></TextArea>
-        <CenterItemsWrapper>
-          <InputSubmit type='submit' />
-        </CenterItemsWrapper>
-      </form>
-      {imageForm && (
-        <ImageForm afterSubmit={afterImageFormSubmitHandler} getPhotos={getPhotosHandler} />
-      )}
-      {uploadImagesButton && (
-        <CenterItemsWrapper>
-          <UploadImageButton onClick={showImageFormHandler}>
-            Click to upload images
-          </UploadImageButton>
-        </CenterItemsWrapper>
-      )}
-    </AnswerFormContainer>
+    <Modal onClick={preventBubbling}>
+      <AnswerFormContainer>
+        <form onSubmit={onSubmitHandler}>
+          <label>Username: </label>
+          <Input
+            type='text'
+            onChange={onChangeUsername}
+            placeholder='Example: jackson11!'
+            required
+          />
+          <label>Email: </label>
+          <Input
+            type='email'
+            onChange={onChangeEmail}
+            placeholder='Example: abc@gmail.com'
+            required
+          />
+          <TextArea
+            type='text'
+            onChange={onChangeBody}
+            placeholder='Add your answer to a question here...'
+            required></TextArea>
+          <CenterItemsWrapper>
+            <InputSubmit type='submit' />
+          </CenterItemsWrapper>
+        </form>
+        {imageForm && (
+          <ImageFormContainer>
+            <ImageForm afterSubmit={afterImageFormSubmitHandler} getPhotos={getPhotosHandler} />
+          </ImageFormContainer>
+        )}
+        {uploadImagesButton && (
+          <CenterItemsWrapper>
+            <UploadImageButton onClick={showImageFormHandler}>
+              Click to upload images
+            </UploadImageButton>
+          </CenterItemsWrapper>
+        )}
+      </AnswerFormContainer>
+    </Modal>
   );
 }
 
@@ -103,7 +116,6 @@ const AnswerFormContainer = styled.div`
   background-color: #f3f3f3;
   border-radius: 5px;
   padding: 20px;
-  z-index: 2;
 `;
 
 const TextArea = styled.textarea`
@@ -145,4 +157,16 @@ const UploadImageButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+`;
+
+const ImageFormContainer = styled.div`
+  display: flex;
+`;
+
+const Modal = styled.div`
+  position: fixed;
+  top: 30vh;
+  left: 15%;
+  width: 75%;
+  z-index: 2;
 `;
