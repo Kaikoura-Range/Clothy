@@ -6,29 +6,52 @@ function ProductInfo(props) {
   const [activeStyle, setActiveStyle] = useState({});
   const [skus, setSkus] = useState([]);
 
+  const handleSizeDuplicates = (originalSkus) => {
+    const sizeDuplicates = originalSkus.reduce((allSkus, currentSku) => {
+      const size = currentSku.size;
+      const quantity = currentSku.quantity;
+      if (!allSkus[size]) {
+        allSkus[size] = quantity;
+      } else {
+        allSkus[size] += quantity;
+      }
+
+      return allSkus;
+    }, {});
+    return sizeDuplicates;
+  }
+
+  // Triggered when the whole product changes
   useEffect(() => {
     if (props.styles) {
-      console.log('props', props.styles.results);
       setActiveStyle(props.styles.results[0]);
-      setSkus(Object.entries(props.styles.results[0].skus));
+      const initialSkus = handleSizeDuplicates((Object.values(props.styles.results[0].skus)));
+      setSkus(Object.entries(initialSkus));
     }
   }, [props.styles])
 
-  if (activeStyle.name) {
+  // Triggered when the active style changes
+  useEffect(() => {
+    if (activeStyle.name) {
+      const newSkus = handleSizeDuplicates((Object.values(activeStyle.skus)));
+      setSkus(Object.entries(newSkus));
+    }
+  }, [activeStyle])
 
+
+  if (activeStyle.name) {
     const {name, category} = props.product;
 
     const handleSelectedStyle = (e, style) => {
       setActiveStyle(style);
-      setSkus(Object.entries(activeStyle.skus));
     }
 
     const allStyles = props.styles.results.map(style =>
       <img src={style.photos[0].thumbnail_url} alt={style.name} key={style.style_id} width="100px" height="100px" onClick={(e) => handleSelectedStyle(e, style)}/>
     )
 
-    const availableSizes = skus.map(sku =>
-      <option key={sku[0]} value={sku[1].size}>{sku[1].size}</option>
+    const availableSizes = skus.map((sku, index) =>
+      <option key={index} value={sku[0]}>{sku[0]}</option>
     )
 
     return(<div>
