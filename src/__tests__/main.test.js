@@ -30,6 +30,7 @@ const setter = (appState) => {
 
 const initPageState = {
   dev: { test: true, logs: false, renders: true, state: true, reducer: true, get:setter},
+  modal: { comparison: false },
   user: { cart:[], outfit: [] },
   currentProduct: 37311,
   QA: {},

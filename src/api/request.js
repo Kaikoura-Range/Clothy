@@ -19,18 +19,24 @@ const checkCache = (options) => {
   }
 }
 
-var numApiRequests = 0;
+// var numApiRequests = 0;
+// var numCached = 0;
+
 
 const startRequest = (options) => {
   const cached = checkCache(options)
   if (cached) {
+    // numCached++
+    // console.log('numApiRequests', numApiRequests)
+    // console.log('numCached', numCached)
     return cached
   }
-  numApiRequests++
+  // numApiRequests++
   // console.log('numApiRequests', numApiRequests)
+  // console.log('numCached', numCached)
   return axios(options)
     .then((res) => {
-      const value = res.data;
+      const value = options.method.toUpperCase() === 'GET' ? res.data : res;
       cache.add(options.url, value)
       return value
     })

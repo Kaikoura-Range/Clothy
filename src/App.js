@@ -2,13 +2,14 @@ import './App.css';
 import api from './api/index.js';
 import React, {  useContext } from 'react';
 import styled from 'styled-components';
-
+import Header from './components/Header.js'
+import Modal from './components/Modal/index'
 import { StateContext, DispatchContext } from './appState/index.js';
 import ProductDetails, { detailsStateInit } from './ProductDetails/index';
 import RatingsReviews, { reviewStateInit } from './RatingsReviews/index';
 import QAndA, { qAndAStateInit } from './QandA/index';
 import RelatedProducts, { relatedStateInit } from './RelatedProducts/index';
-import Header from './header/index.js'
+
 
 
 api.get.initProductDataFetch(
@@ -17,6 +18,8 @@ api.get.initProductDataFetch(
   qAndAStateInit,
   relatedStateInit,
 )
+
+
 
 const maxApiRequests = 2;
 var renderCount = 0;
@@ -56,8 +59,11 @@ function App() {
     }
   } else {
     requestCount = 0
+
+
     return (
       <AppContainer className='App' data-testid="app"  >
+        <Modal />
         <Header />
         <ProductDetails />
         <RelatedProducts relatedProducts={state.related} dev={state.dev} />
