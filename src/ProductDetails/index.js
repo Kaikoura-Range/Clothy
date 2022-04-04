@@ -8,8 +8,8 @@ import Features from './components/ProductFeatures.js';
 function ProductDetails() {
   const [state] = useContext(StateContext);
   // const [, dispatch] = useContext(DispatchContext);
-  const [activeProduct, setActiveProduct] = useState({});
-  const [styles, setStyles] = useState([]);
+  const [activeProduct, setActiveProduct] = useState(state.details.product);
+  const [styles, setStyles] = useState(state.details.styles);
 
   useEffect(() => {
     setActiveProduct(state.details.product);
