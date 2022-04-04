@@ -6,10 +6,10 @@ import moment from 'moment';
 import api from '../api/index';
 export default function Questions(props) {
   const [state] = useContext(StateContext);
+  const [, dispatch] = useContext(DispatchContext);
   const [answerForm, setAnswerForm] = useState(false);
   const [submitHelpfulQuestionOnce, setsubmitHelpfulQuestionOnce] = useState(true);
   const [reportQuestionOnce, setreportQuestionOnce] = useState(true);
-  const [isReported, setIsReported] = useState(false);
 
   useEffect(() => {
     setAnswerForm(false);
@@ -29,7 +29,15 @@ export default function Questions(props) {
     if (submitHelpfulQuestionOnce) {
       api.post.question
         .helpful(id)
-        .then((res) => console.log('post help answer res', res))
+        .then(() => {
+          return api.get.allProductData(state.currentProduct);
+        })
+        .then((getRes) =>
+          dispatch({
+            type: 'PROD_INIT',
+            payload: getRes,
+          })
+        )
         .catch((err) => console.log('helpful answer not sent!'));
     } else {
       alert('You can only mark question as helpful once!');
@@ -39,10 +47,18 @@ export default function Questions(props) {
   const reportQuestionHandler = (id) => {
     setreportQuestionOnce(false);
     if (reportQuestionOnce) {
-      setIsReported(true);
       api.post.question
         .report(id)
-        .then(() => alert('An admin will be notified'))
+        .then(() => alert('Reported! The question will get deleted immediately'))
+        .then(() => {
+          return api.get.allProductData(state.currentProduct);
+        })
+        .then((getRes) =>
+          dispatch({
+            type: 'PROD_INIT',
+            payload: getRes,
+          })
+        )
         .catch((err) => console.log('report question not sent!'));
     } else {
       alert('You can only report question once!');
@@ -64,14 +80,11 @@ export default function Questions(props) {
           Yes
         </HelpfulLink>{' '}
         ({props.q.question_helpfulness}) |{'  '}
-        <ReportedLink
-          reported={isReported}
-          onClick={() => reportQuestionHandler(props.q.question_id)}>
-          {isReported ? 'Reported' : 'Report'}
+        <ReportedLink onClick={() => reportQuestionHandler(props.q.question_id)}>
+          Report
         </ReportedLink>
         <AddAnswerLink onClick={answerFormHandler}>Add Answer</AddAnswerLink>
       </HelpfulReportContainer>
-
       <QuestionsAuthor>
         By: {props.q.asker_name} | {moment(props.q.question_date).format('MMMM Do, YYYY')}
       </QuestionsAuthor>
@@ -87,14 +100,12 @@ export default function Questions(props) {
 const ReportedLink = styled.span`
   text-decoration: underline;
   cursor: pointer;
-  color: ${(props) => (props.reported ? 'red' : 'black')};
   padding-left: 1.5px;
 `;
 
 const HelpfulLink = styled.span`
   text-decoration: underline;
   cursor: pointer;
-  color: ${(props) => (props.helpful ? 'blue' : 'black')};
 `;
 
 const AddAnswerLink = styled.div`

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StateContext, DispatchContext } from '../appState/index.js';
+import { StateContext } from '../appState/index.js';
 import styled from 'styled-components';
+import { keyframes } from 'styled-components';
 import QAList from './QAList';
 import QuestionForm from './QuestionForm';
 import SuccessModal from './SuccessModal';
@@ -92,7 +93,6 @@ export default function QAndA() {
 
   const addMoreQuestionsButtonWhenNoSearchInput = () => {
     let length = state.QA.results.length;
-    let results;
     if (length % 2 !== 0) {
       return (
         state.QA.results.length > 2 &&
@@ -228,6 +228,11 @@ const MoreAnsweredQuestionsButton = styled.button`
     transform: translateY(4px);
   }
 `;
+
+// const fadeOut = keyframes`
+// 0%{opacity:1;}
+// 100%{opacity: 0;}
+// `;
 
 const BackDrop = styled.div`
   position: fixed;

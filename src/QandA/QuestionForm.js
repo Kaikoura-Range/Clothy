@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
 import styled from 'styled-components';
 import api from '../api/index';
 export default function QuestionForm(props) {
   const [state] = useContext(StateContext);
-  const [, dispatch] = useContext(DispatchContext)
   const [username, setUsername] = useState('');
+  const [, dispatch] = useContext(DispatchContext);
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
   const onSubmitHandler = (e) => {
@@ -25,12 +25,14 @@ export default function QuestionForm(props) {
         setUsername('');
         setEmail('');
         setBody('');
-        return api.get.allProductData(state.currentProduct)
+        return api.get.allProductData(state.currentProduct);
       })
-      .then((getRes) => dispatch({
-        type: 'PROD_INIT',
-        payload: getRes
-      }))
+      .then((getRes) =>
+        dispatch({
+          type: 'PROD_INIT',
+          payload: getRes,
+        })
+      )
       .catch((err) => console.log('question not sent!'));
   };
   const onChangeUsername = (e) => {

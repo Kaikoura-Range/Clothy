@@ -42,7 +42,12 @@ const SuccessMessage = styled.h3`
   color: #270;
   padding: 20px;
   border-radius: 5px;
-  animation: ${successAnimation} 1s ease-in-out;
+  /* animation: ${successAnimation} 1s ease-in-out; */
+`;
+
+const fadeOut = keyframes`
+0%{opacity:1;}
+100%{opacity: 0;}
 `;
 
 const Modal = styled.div`
@@ -52,12 +57,5 @@ const Modal = styled.div`
   top: 5.5vh;
   width: 50%;
   z-index: 5;
-`;
-const BackDrop = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.75);
+  animation: ${fadeOut} ease 1s;
 `;

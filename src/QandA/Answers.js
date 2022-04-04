@@ -1,25 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
+
 import styled from 'styled-components';
 import moment from 'moment';
 import api from '../api/index';
 
 export default function Answers(props) {
-
   const [state] = useContext(StateContext);
+  const [, dispatch] = useContext(DispatchContext);
   const [addMoreAnswers, setAddMoreAnswers] = useState(0);
   const [length, setLength] = useState(Object.keys(props.a).length);
   const [submitHelpfulAnswerOnce, setsubmitHelpfulAnswerOnce] = useState(true);
   const [reportAnswerOnce, setReportAnswerOnce] = useState(true);
-  const [isReported, setIsReported] = useState(false);
+
   const addMoreAnswersClickHandler = () => {
     setAddMoreAnswers(addMoreAnswers + 1);
   };
 
   useEffect(() => {
-    setLength(Object.keys(props.a).length)
-  }, [props.a])
-
+    setLength(Object.keys(props.a).length);
+    console.log(props.a);
+  }, [props.a]);
 
   useEffect(() => {
     setAddMoreAnswers(0);
@@ -30,7 +31,15 @@ export default function Answers(props) {
     if (submitHelpfulAnswerOnce) {
       api.post.answer
         .helpful(id)
-        .then((res) => console.log('post help question res', res))
+        .then(() => {
+          return api.get.allProductData(state.currentProduct);
+        })
+        .then((getRes) =>
+          dispatch({
+            type: 'PROD_INIT',
+            payload: getRes,
+          })
+        )
         .catch((err) => console.log('helpful question not sent!'));
     } else {
       alert('You can only mark answer as helpful once!');
@@ -40,10 +49,18 @@ export default function Answers(props) {
   const reportAnswerHandler = (id) => {
     setReportAnswerOnce(false);
     if (reportAnswerOnce) {
-      setIsReported(true);
       api.post.answer
         .report(id)
-        .then(() => alert('An admin will be notified'))
+        .then(() => alert('Reported! The answer will get deleted immediately.'))
+        .then(() => {
+          return api.get.allProductData(state.currentProduct);
+        })
+        .then((getRes) =>
+          dispatch({
+            type: 'PROD_INIT',
+            payload: getRes,
+          })
+        )
         .catch((err) => console.log('report answer not sent!'));
     } else {
       alert('You can only report this answer once!');
@@ -77,9 +94,7 @@ export default function Answers(props) {
                   Yes
                 </HelpfulLink>{' '}
                 ({answer.helpfulness}) |{' '}
-                <ReportedLink reported={isReported} onClick={() => reportAnswerHandler(answer.id)}>
-                  {isReported ? 'Reported' : 'Report'}
-                </ReportedLink>
+                <ReportedLink onClick={() => reportAnswerHandler(answer.id)}>Report</ReportedLink>
               </HelpfulAnswer>
             </EachAnswerContainer>
           );
@@ -94,7 +109,6 @@ export default function Answers(props) {
 const ReportedLink = styled.span`
   text-decoration: underline;
   cursor: pointer;
-  color: ${(props) => (props.reported ? 'red' : 'black')};
   padding-left: 1.5px;
 `;
 
@@ -105,7 +119,6 @@ const AnswerAuthor = styled.p`
 const HelpfulLink = styled.span`
   text-decoration: underline;
   cursor: pointer;
-  color: ${(props) => (props.helpful ? 'blue' : 'black')};
 `;
 
 const EachAnswerContainer = styled.div`
