@@ -1,13 +1,16 @@
 
 import React from 'react';
 import moment from 'moment';
+import Modal from 'react-bootstrap/Modal'
 
 export default function RatingsReviews(props) {
   // if( state.dev.pref ) {
     // console.log('DEV- Review rendered')
   // }
   const [fullSummary, setFullSummary] = React.useState(false);
-
+  const [sortedReviews, setSortedReviews] = React.useState([{date:'2022-02-21T00:00:00.000Z', helpfulness:1},
+  {date:'2020-02-21T00:00:00.000Z',helpfulness:3},{date:'2021-02-21T00:00:00.000Z',helpfulness:2}]);
+  //[{helpfulness:1},{helpfulness:2},{helpfulness:3}]
   function Recommended(props) {
     if(props.input === 'true') {
       return <div>Recommended!</div>
@@ -40,9 +43,70 @@ function SummaryBody(props) {
   )
 }
 
+function sorting(a,b,option) {
+  if(option === "helpful") {
+   return b.helpfulness - a.helpfulness;
+  } else if(option === "newest") {
+    return moment(b.date).valueOf() - moment(a.date).valueOf();
+  } else {
+    return 0
+  }
+}
+//sortedReviews.sort((a,b)=>sorting(a,b,e.target.value))
+// props.reviewData.results.sort((a,b) => sorting( a,b,e.target.value))
+
+function SortReviews() {
+console.log();
+  return (
+    <>
+      <div>{props.reviewData.results.length} reviews
+      <select onChange={ (e) => { setSortedReviews(props.reviewData.results.sort((a,b) => sorting( a,b,e.target.value)).sort((a,b) => sorting(a,b,e.target.value))) } }>
+        <option value="newest">newest</option>
+        <option value="helpful">Helpfulness</option>
+        <option value="relevant">Relevance</option>
+      </select>
+      </div>
+    </>
+  )
+}
+
+function writeReview() {
+  const [show, setShow] = ReacuseState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  return (
+    <>
+      <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button>
+
+      <Modal show={show} onHide={handleClose} animation={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+}
+
+render(<Example />);
+
+
     if(props.reviewData) {
     return (
         <div>
+          <SortReviews/>
            {props.reviewData.results.map((review,id) => {
             return (
             <div key={id}>
