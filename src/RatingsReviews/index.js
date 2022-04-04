@@ -3,10 +3,15 @@ import React from 'react';
 import moment from 'moment';
 import Modal from 'react-bootstrap/Modal'
 
+var mainRenderCount = 0;
+
 export default function RatingsReviews(props) {
-  // if( state.dev.pref ) {
-    // console.log('DEV- Review rendered')
-  // }
+  if( props.dev.logs ) {
+    mainRenderCount++;
+    props.dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
+    props.dev.state && console.log('DEV  STATE   RelatedProducts: ', props.reviewData)
+  }
+
   const [fullSummary, setFullSummary] = React.useState(false);
   const [sortedReviews, setSortedReviews] = React.useState([{date:'2022-02-21T00:00:00.000Z', helpfulness:1},
   {date:'2020-02-21T00:00:00.000Z',helpfulness:3},{date:'2021-02-21T00:00:00.000Z',helpfulness:2}]);
@@ -105,8 +110,12 @@ render(<Example />);
 
     if(props.reviewData) {
     return (
+
         <div>
           <SortReviews/>
+
+        <div data-testid="reviews" >
+
            {props.reviewData.results.map((review,id) => {
             return (
             <div key={id}>
@@ -121,17 +130,20 @@ render(<Example />);
             </div>
             )
           })}
-            
+
         </div>
     )
-        }
+    }
+    return (
+      <div data-testid="reviews" >
+        Loading...
+      </div>
+    )
 };
 
 
 export const reviewStateInit = (productId) => {
-    return [
-      ['this', '/reviews/', { product_id: productId, page: 1, sort: 'newest' }]
-    ]
+    return ['/reviews/', { product_id: productId, page: 1, sort: 'newest' }]
   }
 
 

@@ -8,7 +8,7 @@ export const StateContext = React.createContext([{}]);
 
 
 const initPageState = {
-  dev: { logs: false, renders: true, state: true, reducer: true },
+  dev: { logs: false, renders: false, state: true, reducer: true },
   user: { cart:[], outfit: [] },
   currentProduct: 37311,
   QA: {},
@@ -19,13 +19,14 @@ const initPageState = {
 
 
 
-const AppContextProvider = (props) => {
-  const [state, dispatch] = useReducer(reducer, initPageState);
+const AppContextProvider = ({children, passedState}) => {
+  const initState = passedState || initPageState
+  const [state, dispatch] = useReducer(reducer, initState);
 
   return (
     <DispatchContext.Provider value={[null, dispatch]}>
       <StateContext.Provider value={[state]}>
-        {props.children}
+        {children}
       </StateContext.Provider>
     </DispatchContext.Provider>
   );

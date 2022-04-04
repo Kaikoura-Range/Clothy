@@ -1,107 +1,86 @@
 
 
-import axios from 'axios';
-import GIT_TOKEN from '../config/config.js'
-const CAMPUS_CODE = 'hr-rfe';
-const baseUrl = `https://app-hrsei-api.herokuapp.com/api/fec2/${CAMPUS_CODE}`;
+import request from './request';
 
 
+const get = request.get
 
 
-const headers = {
-  Authorization: GIT_TOKEN,
-};
+const getAllObj = (allGetOptions) => {
 
-const buildGetOptions = (endpoint, params = {}) => {
-  return {
-    method: 'get',
-    params,
-    headers,
-    url: endpoint,
-    baseURL: baseUrl,
-  }
-};
+  const Promisified = Object.keys(allGetOptions).reduce((memo, key) => {
+    let getOptions = allGetOptions[key];
+    let newPromise = Array.isArray(getOptions) ? get(...getOptions) : getAllObj(getOptions)
+    memo[key] =  newPromise
+    return memo
+  }, {})
 
-
-
-const runFetch = (options) => {
-  return axios(options)
-    .then((res) => {
-      return res.data
+  return Promise.all.obj(Promisified)
+    .catch(err => {
+      console.log('GET getAllObj fetch err ', err)
+      console.log('input obj ', allGetOptions)
     })
-    .catch(err => console.log('API fetch err: ', err))
-};
+}
 
-
-
-
-
-// const prodId = 37315 just so we know what queries look like
-// ['details', `/products/${prodId}`, {}],
-// ['reviews', '/reviews/', { product_id: prodId, page: 1, sort: 'newest' }],
-// ['QA', '/qa/questions/', { product_id: prodId }],
-// ['related', `/products/${prodId}/related/`, {}],
-
-const get = ((endpoint, params) => {
-  return runFetch(buildGetOptions(endpoint, params))
-});
-
-const getAll = (getOptionsData, reduce = true) => {
-
-  const getPromises = getOptionsData.map((optionData) => {
-    var [endpoint, params] = optionData.length > 2 ? optionData.slice(1) : optionData;
-    return runFetch(buildGetOptions(endpoint, params))
-  })
-
+const getAllArray = (allGetOptions) => {
+  const getPromises = allGetOptions.map((getOptions) => get(...getOptions))
   return Promise.all(getPromises)
-    .then((resData) => {
-
-      if (reduce) {
-        return resData.reduce((memo, apiRes, ind) => {
-          memo[getOptionsData[ind][0]] = apiRes
-          return memo;
-        }, {})
-      } else {
-        return resData
-      }
-
+    .catch(err => {
+      console.log('GET getAllArray fetch err ', err)
+      console.log('input array ', allGetOptions)
     })
-    .catch(err => console.log('GET all fetch err ', err))
 }
 
 
 
 
-const initProductDataFetch = (detailsGets, reviewsGet, QAgets, relatedGets ) => {
-  const stateKeys = [ 'details', 'reviews', 'QA', 'related' ];
-  const allGets = [detailsGets, reviewsGet, QAgets, relatedGets]
-
-  get.allProductData = (productId) => {
-    const poductDataPromises = allGets.map(getOptions => {
-      return getAll(getOptions(productId))
-    })
-    return Promise.all(poductDataPromises)
-      .then((getRes) => {
-        return getRes.reduce((memo, res, ind) => {
-          memo[stateKeys[ind]] = res
-          return memo
-        }, {})
+const getAll = (allGetOptions) => {
+  let getAllFunc = Array.isArray(allGetOptions) ? getAllArray : getAllObj
+    return getAllFunc(allGetOptions)
+      .catch(err => {
+        console.log('GET all fetch err ', err)
+        console.log('GET all input ', allGetOptions)
       })
-      .catch(err => console.log('getting all prodData err', err))
+}
+
+
+
+
+const initProductDataFetch = (detailsGets, reviewsGets, QAGets, relatedGets ) => {
+  const initStateEndpoints = {
+    details: detailsGets,
+    reviews: reviewsGets,
+    QA: QAGets,
+    related: relatedGets,
+  }
+  get.allProductDataEndpoints = (productId) => {
+    return Object.keys(initStateEndpoints).reduce((memo, key) => {
+      let keyEndpoints = initStateEndpoints[key]
+      memo[key] = keyEndpoints(productId)
+      return memo
+    }, {})
   }
 }
 
+const getAllProductData = (productId) => {
 
+  if (get.allProductDataEndpoints) {
+    let newEndpoints = get.allProductDataEndpoints(productId)
+    return getAll(newEndpoints)
+  } else {
+    return new Promise((rej, res) => {
+      console.log('Inital endpoints not given. get.allProductDataEndpoints function is undefined')
+      rej(null)
+    })
+  }
 
+}
 
 
 
 get.all = getAll
 get.initProductDataFetch = initProductDataFetch
-get.allProductData = (() => {
-  console.log('Please initalize this function')
-  return {}
-})
+get.allProductData = getAllProductData
 
 
 

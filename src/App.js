@@ -1,11 +1,14 @@
 import './App.css';
-import api from './api/index';
-import React, { useLayoutEffect, useEffect, useContext, memo } from 'react';
+import api from './api/index.js';
+import React, {  useContext } from 'react';
+import styled from 'styled-components';
+
 import { StateContext, DispatchContext } from './appState/index.js';
 import ProductDetails, { detailsStateInit } from './ProductDetails/index';
 import RatingsReviews, { reviewStateInit } from './RatingsReviews/index';
 import QAndA, { qAndAStateInit } from './QandA/index';
 import RelatedProducts, { relatedStateInit } from './RelatedProducts/index';
+import Header from './header/index.js'
 
 
 api.get.initProductDataFetch(
@@ -15,51 +18,103 @@ api.get.initProductDataFetch(
   relatedStateInit,
 )
 
+const maxApiRequests = 2;
 var renderCount = 0;
+var requestCount = 0;
 
 function App() {
   const [, dispatch] = useContext(DispatchContext);
   const [state] = useContext(StateContext);
-  if( state.dev.logs ) {
-    renderCount++
+  renderCount++
+
+  if( state.dev.logs ) { // Used to see preformance and data flow
     state.dev.renders && console.log('\n\nDEV  RENDER   App     number of renders: ', renderCount)
     state.dev.state && console.log('DEV  App STATE: ', state)
   }
+  if (state.dev.test) { // Gives tests access to state while running
+    state.dev.get(state)
+  }
+  if (!state.details.product) {
+    if (maxApiRequests > requestCount) {
+      requestCount++
+      initializeAppState(state.currentProduct, dispatch)
+      return (
+        <LoadingContainer className='App' data-testid="app"  >
+          <LoadingScreen>
+            <LoadingText>Temp loading screen</LoadingText>
+          </LoadingScreen>
+        </LoadingContainer>
+      );
+    } else {
+      return (
+        <LoadingContainer className='App' data-testid="app"  >
+          <LoadingScreen>
+            <LoadingText>404 not found</LoadingText>
+          </LoadingScreen>
+        </LoadingContainer>
+      );
+    }
+  } else {
+    requestCount = 0
+    return (
+      <AppContainer className='App' data-testid="app"  >
+        <Header />
+        <ProductDetails />
+        <RelatedProducts relatedProducts={state.related} dev={state.dev} />
+        <QAndA />
+        <RatingsReviews reviewData={state.reviews} dev={state.dev} />
+      </AppContainer>
+    );
+  }
 
-  useLayoutEffect(() => {
-
-
-    initializeAppState(dispatch, state.currentProduct)
-  }, []);
-
-
-
-
-  return (
-    <div className='App'>
-      <div>{state.details.init ? state.details.init.name : 'loading'} </div>
-      <div>{state.details.init ? state.details.init.description : null} </div>
-
-      <ProductDetails />
-      <RelatedProducts state={state.related} dev={state.dev} />
-      <QAndA />
-      <RatingsReviews />
-    </div>
-  );
 }
 
+const appBackgroundColor = [250, 250, 250]
+
+const AppContainer = styled.div`
+  width: 100%;
+  background-color: rgb(${appBackgroundColor.toString()});
+`
+const LoadingContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(${appBackgroundColor.toString()});
+`
+
+const loadingBackgroundColor = [240, 240, 240]
+const LoadingScreen = styled.div`
+  width: 50%;
+  height: 50%;
+  display: flex;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(${loadingBackgroundColor.toString()});
+`
+const textColor = [60, 60, 60]
+const LoadingText = styled.h1`
+  color: rgb(${textColor.toString()});
+`
 
 
 
-const initializeAppState = (dispatch, prodId) => {
-  return api.get.allProductData(prodId)
+const initializeAppState = (productId, dispatch) => {
+  return api.get.allProductData(productId)
     .then((response) => {
-      response.currentProduct = prodId
+      response.currentProduct = productId
       dispatch({
         type: 'PROD_INIT',
         payload: response,
       });
-    });
+    })
+    .catch((err) => {
+      console.log('Data init fetch error: ', err)
+      dispatch({ type: '' }) //sets state so that the app rerenders and trys again.
+    })
 }
+
 
 export default App;

@@ -1,48 +1,5 @@
 
-import api from '../api';
-
-const getPhotoUrls = (styles) => {
-  return styles.results.reduce((memo, data) => {
-    if (data.photos[0].url) {
-      memo.push(...data.photos)
-    }
-    return memo
-  }, [])
-}
-
-
-
-
-export const initRelatedProducts = (relatedIds, setRelatedItemData) => {
-  relatedIds = relatedIds.filter((id, ind) =>  relatedIds.slice((ind + 1)).indexOf(id) === -1)
-  const endpoints = relatedIds.map(prodId => {
-    return [
-      [prodId, `/products/${prodId}`, {}],
-      [prodId, `/products/${prodId}/styles`, {}]
-    ]}).flat()
-
-
-  api.get.all(endpoints, false)
-    .then((getRes) => {
-      var resL = getRes.length
-
-      if (! (resL%2) ) {
-        var itemData = [];
-        while (resL) {
-          var [details, styles] = getRes.slice(resL - 2, resL)
-          var photos = getPhotoUrls(styles)
-          itemData.push({ ...details, photos })
-          resL -= 2;
-        }
-        // console.log(itemData)
-        setRelatedItemData(itemData)
-
-      } else {
-        console.log('Related items fetch not even error  getRes: ', getRes)
-      }
-    })
-
-}
+import api from '../api/index.js';
 
 
 
@@ -65,4 +22,43 @@ export const initializeAppState = (dispatch, prodId) => {
     });
 }
 
+
+
+const getPhotoUrls = (styles) => {
+  return styles.results.reduce((memo, data) => {
+    if (data.photos[0].url) {
+      memo.push(...data.photos)
+    }
+    return memo
+  }, [])
+}
+
+
+
+
+
+const getRelatedEndpoints = (relatedIds) => {
+  return relatedIds.reduce((memo, prodId) => {
+    memo[prodId] = {
+      product: [`/products/${prodId}`, {}],
+      styles: [`/products/${prodId}/styles`, {}]
+    }
+    return memo
+  }, {})
+}
+
+
+
+export const initRelatedProducts = (relatedIds, setRelatedItemData) => {
+  relatedIds = relatedIds.filter((id, ind) =>  relatedIds.slice((ind + 1)).indexOf(id) === -1)
+  const endpoints = getRelatedEndpoints(relatedIds)
+  api.get.all(endpoints)
+    .then((getResult) => {
+      const condensed = Object.values(getResult).map((values) => {
+        var photos = getPhotoUrls(values.styles)
+        return ({ ...values.product, photos })
+      })
+      setRelatedItemData(condensed)
+      })
+}
 
