@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
 import styled from 'styled-components';
-import api from '../api/index';
 import QAList from './QAList';
 import QuestionForm from './QuestionForm';
 export default function QAndA() {
