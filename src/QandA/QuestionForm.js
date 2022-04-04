@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
 import styled from 'styled-components';
 import api from '../api/index';
@@ -25,12 +25,12 @@ export default function QuestionForm(props) {
         setUsername('');
         setEmail('');
         setBody('');
-        return api.get.getAllProductData(state.currentProduct);
+        return api.get.allProductData(state.currentProduct);
       })
-      .then((data) =>
+      .then((getRes) =>
         dispatch({
           type: 'PROD_INIT',
-          payload: data,
+          payload: getRes,
         })
       )
       .catch((err) => console.log('question not sent!'));

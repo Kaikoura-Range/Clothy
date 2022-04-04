@@ -1,7 +1,9 @@
 
 import React from 'react';
 import moment from 'moment';
+
 var mainRenderCount = 0;
+
 export default function RatingsReviews(props) {
   if( props.dev.logs ) {
     mainRenderCount++;
@@ -10,7 +12,9 @@ export default function RatingsReviews(props) {
   }
 
   const [fullSummary, setFullSummary] = React.useState(false);
-
+  const [sortedReviews, setSortedReviews] = React.useState([{date:'2022-02-21T00:00:00.000Z', helpfulness:1},
+  {date:'2020-02-21T00:00:00.000Z',helpfulness:3},{date:'2021-02-21T00:00:00.000Z',helpfulness:2}]);
+  //[{helpfulness:1},{helpfulness:2},{helpfulness:3}]
   function Recommended(props) {
     if(props.input === 'true') {
       return <div>Recommended!</div>
@@ -43,9 +47,40 @@ function SummaryBody(props) {
   )
 }
 
+function sorting(a,b,option) {
+  if(option === "helpful") {
+   return b.helpfulness - a.helpfulness;
+  } else if(option === "newest") {
+    return moment(b.date).valueOf() - moment(a.date).valueOf();
+  } else {
+    return 0
+  }
+}
+//sortedReviews.sort((a,b)=>sorting(a,b,e.target.value))
+// props.reviewData.results.sort((a,b) => sorting( a,b,e.target.value))
+
+function SortReviews() {
+console.log();
+  return (
+    <>
+      <div>{props.reviewData.results.length} reviews
+      <select onChange={ (e) => { setSortedReviews(props.reviewData.results.sort((a,b) => sorting( a,b,e.target.value)).sort((a,b) => sorting(a,b,e.target.value))) } }>
+        <option value="newest">newest</option>
+        <option value="helpful">Helpfulness</option>
+        <option value="relevant">Relevance</option>
+      </select>
+      </div>
+    </>
+  )
+}
+
+
+
     if(props.reviewData) {
     return (
+
         <div data-testid="reviews" >
+
            {props.reviewData.results.map((review,id) => {
             return (
             <div key={id}>

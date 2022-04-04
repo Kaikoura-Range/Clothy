@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
 import styled from 'styled-components';
 import api from '../api/index';
 import ImageForm from './ImageForm';
 export default function AnswerForm(props) {
   const [state] = useContext(StateContext);
+  const [, dispatch] = useContext(DispatchContext);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
   const [photos, setPhotos] = useState(null);
-  const [photoUrl, setPhotoUrl] = useState('');
   const [imageForm, setImageForm] = useState(false);
   const [uploadImagesButton, setUploadImagesButton] = useState(true);
 
@@ -31,7 +31,14 @@ export default function AnswerForm(props) {
         setBody('');
         setPhotos(null);
         setUploadImagesButton(true);
+        return api.get.allProductData(state.currentProduct);
       })
+      .then((data) =>
+        dispatch({
+          type: 'PROD_INIT',
+          payload: data,
+        })
+      )
       .catch((err) => console.log('answer not sent!'));
   };
 
@@ -43,10 +50,6 @@ export default function AnswerForm(props) {
   };
   const onChangeBody = (e) => {
     setBody(e.target.value);
-  };
-
-  const onChangePhotos = (e) => {
-    setPhotoUrl(e.target.value);
   };
 
   const showImageFormHandler = (e) => {

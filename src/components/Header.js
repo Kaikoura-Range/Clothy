@@ -7,6 +7,15 @@ const Header = (props) => {
   const [state] = useContext(StateContext)
   const [, dispatch] = useContext(DispatchContext)
 
+
+  const toggleModal = () => {
+    const next = state.modal === 'none' ? 'compare' : 'none'
+    dispatch({
+      type: 'TOGGLE_MODAL',
+      payload: next
+    })
+  }
+
   return (
     <HeaderContainer data-testid="Header" >
       <HeaderLogoContainer  >
@@ -14,7 +23,7 @@ const Header = (props) => {
       </HeaderLogoContainer>
       <HeaderCartContainer >
         <CartText> Cart: {state.user.cart.length}  </CartText>
-        <CartText> Outfit: {state.user.outfit.length}  </CartText>
+        <CartText onClick={toggleModal} > Outfit: {state.user.outfit.length}  </CartText>
       </HeaderCartContainer>
     </HeaderContainer>
   )
