@@ -1,0 +1,53 @@
+import React from 'react';
+import styled from 'styled-components';
+import { keyframes } from 'styled-components';
+export default function SuccessModal() {
+  return (
+    <Modal>
+      <SuccessMessage>
+        <CheckMark></CheckMark> Success! Your message has been posted.
+      </SuccessMessage>
+    </Modal>
+  );
+}
+
+const CheckMark = styled.div`
+  display: inline-block;
+  transform: rotate(45deg);
+  height: 20px;
+  width: 12px;
+  margin-right: 10px;
+  border-bottom: 4px solid #78b13f;
+  border-right: 4px solid #78b13f;
+`;
+
+const successAnimation = keyframes`
+ 0%,100% { opacity: 0; }
+  50% { opacity: 1; }
+`;
+
+const SuccessMessage = styled.h3`
+  background-color: #dff2bf;
+  color: #270;
+  padding: 20px;
+  border-radius: 5px;
+  animation-name: ${successAnimation};
+  animation-duration: 2s;
+`;
+
+const Modal = styled.div`
+  text-align: center;
+  position: fixed;
+  margin-left: 25%;
+  top: 5vh;
+  width: 50%;
+  z-index: 5;
+`;
+const BackDrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+`;
