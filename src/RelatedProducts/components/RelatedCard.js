@@ -37,7 +37,7 @@ const RelatedCard = ({ data, outfit, nav, action }) => {
 
 
 
-const mainBackground = [230, 230, 230]
+const mainBackground = [240, 240, 240]
 var cardHeight = 250;
 const cardWidth = Math.round(cardHeight * 0.66).toString()
 cardHeight = cardHeight.toString()
@@ -53,6 +53,7 @@ const RelatecCardContainer = styled.div`
   width: ${cardWidth}px;
   height: ${cardHeight}px;
   justify-content: space-evenly;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.15);
   background-color: rgb( ${mainBackground.toString()} );
 
 `
@@ -94,7 +95,7 @@ const CardFooterText = styled.p`
 `
 
 
-const buttonBackground = [217, 217, 217]
+const buttonBackground = [225, 225, 225]
 const CardFooterButton = styled.button`
   height: 75%;
   padding: 7px;

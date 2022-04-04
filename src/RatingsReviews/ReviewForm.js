@@ -31,7 +31,7 @@ export default function QuestionForm(props) {
   const onChangeSummary = (e) => {
     setUsername(e.target.value);
   };
- 
+
   const onChangeBody = (e) => {
     setBody(e.target.value);
   };

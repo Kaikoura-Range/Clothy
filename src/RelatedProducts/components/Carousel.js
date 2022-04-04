@@ -60,7 +60,7 @@ const CarouselContainer = styled.div`
   width: 85%;
   height: auto;
   display: flex;
-  padding: 15px;
+  padding: 20px;
   overflow: auto;
   white-space: nowrap;
   border-radius: 7px;
@@ -68,8 +68,21 @@ const CarouselContainer = styled.div`
   padding-bottom: 20px;
   align-items: center;
   background-color: rgb(242, 242, 242);
+  /* background-Color: rgba(247, 193, 18, 0.8); */
 `
 
+// const CarouselAccent = styled.div`
+//   width: 90%;
+//   height: auto;
+//   padding: 5px;
+//   display: flex;
+//   padding: 6px;
+//   /* padding-bottom: 5px; */
+//   align-items: center;
+//   border-radius: 7px;
+//   justify-content: center;
+//   background-Color: rgb(247, 193, 18);
+// `
 
 
 export default Carousel;

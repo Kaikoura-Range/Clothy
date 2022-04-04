@@ -63,20 +63,21 @@ const RelatedContainer = styled.div`
 `
 
 
+
 const CarouselContainer = styled.div`
   width: 100%;
   height: auto;
   display: flex;
   padding-top: 10px;
-  padding-bottom: 10px;
   align-items: center;
+  padding-bottom: 10px;
   justify-content: space-evenly;
 `
 
 const HeaderText = styled.h1`
-  color: rgb(30, 30, 30);
   font-size: 24px;
   margin-left: 7.5%;
+  color: rgb(50, 50, 50);
 `
 
 
