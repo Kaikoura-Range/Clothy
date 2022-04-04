@@ -5,6 +5,7 @@ import api from '../api/index';
 import ImageForm from './ImageForm';
 export default function AnswerForm(props) {
   const [state] = useContext(StateContext);
+  const [, dispatch] = useContext(DispatchContext)
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
@@ -31,7 +32,12 @@ export default function AnswerForm(props) {
         setBody('');
         setPhotos(null);
         setUploadImagesButton(true);
+        return api.get.allProductData(state.currentProduct)
       })
+      .then(getRes => dispatch({
+        type: 'PROD_INIT',
+        payload: getRes
+      }))
       .catch((err) => console.log('answer not sent!'));
   };
 
