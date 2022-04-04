@@ -81,7 +81,7 @@ function ProductInfo(props) {
       <Carousel photos={activeStyle.photos}/>
       <p>{category}</p>
       <h1>{name}</h1>
-      <p>${activeStyle.original_price}</p>
+      <p>${ activeStyle.original_price } { activeStyle.sale_price ? '$' + activeStyle.sale_price  : ''}</p>
       <p>style > {activeStyle.name}</p>
       {allStyles}
       <br/>
