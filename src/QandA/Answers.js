@@ -7,7 +7,7 @@ import api from '../api/index';
 export default function Answers(props) {
   const [state] = useContext(StateContext);
   const [addMoreAnswers, setAddMoreAnswers] = useState(0);
-  const [length, setLength] = useState(Object.keys(props.a.answers).length);
+  const [length, setLength] = useState(Object.keys(props.a).length);
   const [submitHelpfulAnswerOnce, setsubmitHelpfulAnswerOnce] = useState(true);
   const [reportAnswerOnce, setReportAnswerOnce] = useState(true);
   const [isReported, setIsReported] = useState(false);
@@ -17,9 +17,8 @@ export default function Answers(props) {
   };
 
   useEffect(() => {
-    setLength(Object.keys(props.a.answers).length);
-    console.log(props.a.answers);
-  }, [props.a.answers]);
+    setLength(Object.keys(props.a).length);
+  }, [props.a]);
 
   useEffect(() => {
     setAddMoreAnswers(0);
@@ -51,7 +50,7 @@ export default function Answers(props) {
 
   return (
     <AnswersContainer>
-      {Object.values(props.a.answers)
+      {Object.values(props.a)
         .slice(0, 1 + addMoreAnswers)
         .map((answer) => {
           return (

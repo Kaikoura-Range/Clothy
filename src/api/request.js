@@ -36,9 +36,12 @@ const startRequest = (options) => {
   // console.log('numCached', numCached)
   return axios(options)
     .then((res) => {
-      const value = options.method.toUpperCase() === 'GET' ? res.data : res;
-      cache.add(options.url, value)
-      return value
+      if (options.method.toUpperCase() === 'GET') {
+        const value = res.data;
+        cache.add(options.url, value)
+        return value
+      }
+      return res
     })
     .catch(err => {
       console.log('API startRequest err: ', err)
@@ -81,7 +84,7 @@ const getReqest = ((endpoint, params) => {
 
 const postRequest = (endpoint, params, data, method = 'POST', formater = '') => {
   data = formater ? format.post[formater](data) : data;
-  return startRequest(buildPostOptions(endpoint, params, data))
+  return startRequest(buildPostOptions(endpoint, params, data, method))
 }
 
 

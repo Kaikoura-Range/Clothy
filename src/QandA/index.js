@@ -19,11 +19,10 @@ export default function QAndA() {
   const [showModal, setShowModal] = useState(false);
   //////////////////////////////////////////////////////////////////////
   useEffect(() => {
-    console.log(state.QA);
     setAddMoreQuestionsNoSearch(0);
     setAddQuestionsSearch(0);
     setCreateForm(false);
-  }, [state.QA]);
+  }, [state.currentProduct]);
   //these functions render 2 questions at a time
   const addQuestionsNoSearchHandler = () => {
     setAddMoreQuestionsNoSearch(addMoreQuestionsNoSearch + 2);

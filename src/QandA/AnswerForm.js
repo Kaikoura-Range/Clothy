@@ -33,10 +33,10 @@ export default function AnswerForm(props) {
         setUploadImagesButton(true);
         return api.get.allProductData(state.currentProduct);
       })
-      .then((data) =>
+      .then((getRes) =>
         dispatch({
           type: 'PROD_INIT',
-          payload: data,
+          payload: getRes,
         })
       )
       .catch((err) => console.log('answer not sent!'));
