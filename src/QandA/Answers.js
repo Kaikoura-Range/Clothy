@@ -11,12 +11,19 @@ export default function Answers(props) {
   const [submitHelpfulAnswerOnce, setsubmitHelpfulAnswerOnce] = useState(true);
   const [reportAnswerOnce, setReportAnswerOnce] = useState(true);
   const [isReported, setIsReported] = useState(false);
+
   const addMoreAnswersClickHandler = () => {
     setAddMoreAnswers(addMoreAnswers + 1);
   };
+
+  useEffect(() => {
+    setLength(Object.keys(props.a.answers).length);
+    console.log(props.a.answers);
+  }, [props.a.answers]);
+
   useEffect(() => {
     setAddMoreAnswers(0);
-  }, [state.QA]);
+  }, [state.currentProduct]);
 
   const helpfulAnswerHandler = (id) => {
     setsubmitHelpfulAnswerOnce(false);
@@ -31,9 +38,8 @@ export default function Answers(props) {
   };
 
   const reportAnswerHandler = (id) => {
-    setReportAnswerOnce(false);
+    console.log('report answer', [id, props.a.answers[id].id]);
     if (reportAnswerOnce) {
-      setIsReported(true);
       api.post.answer
         .report(id)
         .then(() => alert('An admin will be notified'))
