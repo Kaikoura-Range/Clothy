@@ -18,5 +18,5 @@ export default function QAList(props) {
 }
 
 const QAndAContainer = styled.div`
-  border-bottom: 2px solid black;
+  border-bottom: 0.5px solid black;
 `;

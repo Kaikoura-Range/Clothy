@@ -8,6 +8,7 @@ export default function QuestionForm(props) {
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
   const onSubmitHandler = (e) => {
+    e.stopPropagation();
     e.preventDefault();
     var newQuestion = {
       product_id: state.currentProduct,
@@ -36,36 +37,42 @@ export default function QuestionForm(props) {
     setBody(e.target.value);
   };
 
+  const preventBubbling = (e) => {
+    e.stopPropagation();
+  };
+
   return (
-    <QuestionsFormContainer>
-      <form onSubmit={onSubmitHandler}>
-        <label>Username: </label>
-        <Input
-          type='text'
-          name='username'
-          onChange={onChangeUsername}
-          placeholder='Example: jackson11!'
-          required
-        />
-        <label>Email: </label>
-        <Input
-          type='email'
-          name='email'
-          onChange={onChangeEmail}
-          placeholder='Example: abc@gmail.com'
-          required
-        />
-        <TextArea
-          type='text'
-          name='body'
-          onChange={onChangeBody}
-          placeholder='Ask a question about the product'
-          required></TextArea>
-        <CenterItemsWrapper>
-          <InputSubmit type='submit' />
-        </CenterItemsWrapper>
-      </form>
-    </QuestionsFormContainer>
+    <Modal onClick={preventBubbling}>
+      <QuestionsFormContainer>
+        <form onSubmit={onSubmitHandler}>
+          <label>Username: </label>
+          <Input
+            type='text'
+            name='username'
+            onChange={onChangeUsername}
+            placeholder='Example: jackson11!'
+            required
+          />
+          <label>Email: </label>
+          <Input
+            type='email'
+            name='email'
+            onChange={onChangeEmail}
+            placeholder='Example: abc@gmail.com'
+            required
+          />
+          <TextArea
+            type='text'
+            name='body'
+            onChange={onChangeBody}
+            placeholder='Ask a question about the product'
+            required></TextArea>
+          <CenterItemsWrapper>
+            <InputSubmit type='submit' />
+          </CenterItemsWrapper>
+        </form>
+      </QuestionsFormContainer>
+    </Modal>
   );
 }
 
@@ -73,7 +80,6 @@ const QuestionsFormContainer = styled.div`
   background-color: #f3f3f3;
   border-radius: 5px;
   padding: 20px;
-  z-index: 2;
 `;
 
 const TextArea = styled.textarea`
@@ -106,4 +112,12 @@ const InputSubmit = styled.input`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+`;
+
+const Modal = styled.div`
+  position: fixed;
+  top: 30vh;
+  left: 15%;
+  width: 75%;
+  z-index: 2;
 `;
