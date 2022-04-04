@@ -42,12 +42,14 @@ const QuickCache = (maxStoreTime = baseTime) => {
 
   instance.remove = (key) => {
     const checkKey = /\/qa\/questions\/[0-9]+\/answers\/||\/qa\/questions/i
-
+    console.log(instance.store)
     const keyMatch = key.match(checkKey)
     console.log(key, keyMatch)
     if (keyMatch) {
+      const deletedKey = '/qa/questions/'
       cachedLogs && console.log('removed from cache ', key)
-      delete instance.store[key + '/']
+      delete instance.store[deletedKey]
+      console.log(instance.store)
     }
   }
 
