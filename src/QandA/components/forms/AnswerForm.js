@@ -130,7 +130,6 @@ const Title = styled.h3`
 const TextArea = styled.textarea`
   height: 200px;
   width: 100%;
-  text-align: center;
 `;
 
 const Input = styled.input`
