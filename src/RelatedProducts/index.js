@@ -11,15 +11,19 @@ import Carousel from './components/Carousel.js';
 
 
 
-
 var mainRenderCount = 0;
 const RelatedProducts = () => {
   const [state] = useContext(StateContext)
   const { related, user, dev, currentProduct } = state;
   const { outfit } = user
 
-  const [relatedItemData, setRelatedItemData] = useState(Array(related.length).fill(null) );
-  const [outFitItemData, setOutfitItemData] = useState(Array(outfit.length).fill(null) );
+
+
+
+  const relatedInit = related.length ? Array(related.length).fill({}) : [ { type: 'emptyRelated', id: state.currentProduct } ];
+  const [relatedItemData, setRelatedItemData] = useState(relatedInit);
+  const outfitInit = outfit.length ? Array(outfit.length).fill({}) : [ { type: 'emptyOutfit', id: state.currentProduct } ];
+  const [outFitItemData, setOutfitItemData] = useState(outfitInit);
 
   if( dev.logs ) {
     mainRenderCount++;
@@ -28,14 +32,21 @@ const RelatedProducts = () => {
   }
 
   useEffect(() => {
-    initProductsFromIds(related, currentProduct, setRelatedItemData)
-  }, [related, currentProduct])
+    if (related.length) {
+      initProductsFromIds(related, currentProduct, setRelatedItemData)
+    } else {
+      setRelatedItemData([ { type: 'emptyRelated', id: state.currentProduct } ])
+    }
+  }, [related, currentProduct, state.currentProduct])
+
 
   useEffect(() => {
-    initProductsFromIds(outfit, currentProduct, setOutfitItemData, false)
-  }, [currentProduct, outfit])
-
-
+    if (outfit.length) {
+      initProductsFromIds(outfit, currentProduct, setOutfitItemData, false)
+    } else {
+      setOutfitItemData([ { type: 'emptyOutfit', id: state.currentProduct } ])
+    }
+  }, [outfit, currentProduct, state.currentProduct])
 
 
   return (

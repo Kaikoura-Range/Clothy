@@ -2,10 +2,9 @@ import styled from 'styled-components';
 
 
 export const RelatedCard = ({ data, outfit, nav, action }) => {
-  if (data.name) {
-    const { name, id, photos } = data;
+  if ( data.type === 'render') {
+    const { name, photos } = data;
     var photoUrl = photos.length ? photos[0].url : null;
-
 
     return  (
       <RelatecCardContainer data-testid="RelatedCard" >
@@ -13,34 +12,45 @@ export const RelatedCard = ({ data, outfit, nav, action }) => {
         <CardFooter>
           <CardFooterText>{name}</CardFooterText>
           <CardFooterButtonContainer>
-            {/* <CardFooterButton data-testid="nav" onClick={nav} >View product</CardFooterButton> */}
             <CardFooterButton data-testid="outfit" onClick={outfit} >{`${action} outfit`}</CardFooterButton>
           </CardFooterButtonContainer>
         </CardFooter>
       </RelatecCardContainer>
     );
   }
-  return  (
-    <RelatecCardContainer>
-      <EmptyTextContainer>
-        <p>Dont forget </p>
-        <p>to add items </p>
-        <p>to your outfit!</p>
-      </EmptyTextContainer>
-    </RelatecCardContainer>
-  );
+  if (data.type === 'emptyOutfit') {
+    return  (
+      <RelatecCardContainer data-testid="RelatedCard" onClick={outfit} >
+        <EmptyTextContainer>
+          <p>Click to add </p>
+          <p>the viewed item </p>
+          <p>to your outfit!</p>
+        </EmptyTextContainer>
+      </RelatecCardContainer>
+    );
+  }
+  if (data.type === 'emptyRelated') {
+    return  (
+      <RelatecCardContainer data-testid="RelatedCard"  >
+        <EmptyTextContainer>
+          <p>Sorry, no </p>
+          <p>related items. </p>
+        </EmptyTextContainer>
+      </RelatecCardContainer>
+    );
+  } else {
+    return (
+      <RelatecCardContainer data-testid="RelatedCard"  >
+        <EmptyTextContainer>
+          <p>Loading</p>
+        </EmptyTextContainer>
+      </RelatecCardContainer>
+    )
+  }
+
 }
 
 
-export const LoadingRelatedCard = (props) => {
-  return  (
-    <RelatecCardContainer>
-    <EmptyTextContainer>
-      <p>Loading </p>
-    </EmptyTextContainer>
-  </RelatecCardContainer>
-  )
-}
 
 
 

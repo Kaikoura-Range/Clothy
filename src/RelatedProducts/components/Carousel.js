@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { initializeAppState } from '../methods.js'
 
 import { DispatchContext } from '../../appState/index.js';
-import { RelatedCard, LoadingRelatedCard} from './RelatedCard.js'
+import { RelatedCard } from './RelatedCard.js'
 
 
 
@@ -12,26 +12,21 @@ import { RelatedCard, LoadingRelatedCard} from './RelatedCard.js'
 const Carousel = ({ products, outfit }) => {
   var rendered = products || outfit
   const [, dispatch] = useContext(DispatchContext);
-  const cardFunction = products ? getAddProductToOutfit : getRemoveProductFromOutfit
+  var cardFunction = products ? getAddProductToOutfit : getRemoveProductFromOutfit
 
-
-  rendered = rendered.length ? rendered : [{}]
+  // console.log('rendered', rendered)
   return (
     <CarouselContainer data-testid={'carousel'} >
       {rendered.map((data, ind) => {
-        return data ?
-        (
+        cardFunction = data.type !== 'emptyOutfit' ? cardFunction : getAddProductToOutfit
+        return (
           <RelatedCard
           data={data}
-          outfit={products ? cardFunction(outfit, dispatch, data) : cardFunction(outfit, dispatch, ind)}
+          outfit={cardFunction(outfit, dispatch, data, ind)}
           nav={() => initializeAppState(dispatch, data.id)}
-          key={data.id ? data.id : data}
+          key={data.id ? data.id : ind}
           action={products ? "Add to" : "Remove from"}
           />
-        )
-        :
-        (
-          <LoadingRelatedCard key={ind} />
         )
       })}
     </CarouselContainer>
@@ -42,9 +37,14 @@ const Carousel = ({ products, outfit }) => {
 
 
 
-const getAddProductToOutfit = (outfit, dispatch, productData) => {
+const getAddProductToOutfit = (outfit, dispatch, productData, index) => {
+
+  if (productData.type === 'emptyOutfit') {
+    outfit = outfit.filter(outfitData => outfit.type === productData.type)
+  }
+
   return () => {
-    const notInOutFit = outfit.every(product => productData.id !== product.id)
+    const notInOutFit = outfit.length ?  outfit.every(product => productData.id !== product.id) : true;
     if (notInOutFit) {
       const newOutfit = [productData.id, ...outfit.map(product => product.id) ]
       dispatch({
@@ -58,7 +58,7 @@ const getAddProductToOutfit = (outfit, dispatch, productData) => {
 }
 
 
-const getRemoveProductFromOutfit = (outfit, dispatch, index) => {
+const getRemoveProductFromOutfit = (outfit, dispatch, productData, index) => {
   return () => {
     const newOutfit = [...outfit.map(product => product.id)]
     newOutfit.splice(index, 1)
