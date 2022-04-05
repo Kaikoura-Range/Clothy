@@ -1,6 +1,9 @@
 import React, {useState, useEffect, useRef, useContext} from "react";
 import Carousel from "./ProductCarousel.js";
 import { DispatchContext } from './../../appState/index.js';
+import { FlexRow, FlexColumn } from './../styles/Flex.styled.js'
+import { StylesImages, StylesContainer } from './../styles/Styles.styled.js'
+import SizeQty from './../styles/SizeQty.styled.js'
 import _ from "underscore";
 
 function ProductInfo(props) {
@@ -56,7 +59,7 @@ function ProductInfo(props) {
     }
 
     const allStyles = props.styles.results.map(style =>
-      <img src={style.photos[0].thumbnail_url} alt={style.name} key={style.style_id} width="100px" height="100px" onClick={(e) => handleSelectedStyle(e, style)}/>
+      <StylesImages src={style.photos[0].thumbnail_url} alt={style.name} key={style.style_id} onClick={(e) => handleSelectedStyle(e, style)}/>
     )
 
     const availableSizes = skus.map((sku, index) =>
@@ -97,26 +100,33 @@ function ProductInfo(props) {
       }
     }
 
-    return(<div>
+    return(<FlexRow>
       <Carousel photos={activeStyle.photos}/>
-      <p>{category}</p>
-      <h1>{name}</h1>
-      <p>${ activeStyle.original_price } { activeStyle.sale_price ? '$' + activeStyle.sale_price  : ''}</p>
-      <p>style > {activeStyle.name}</p>
-      {allStyles}
-      <br/>
-      <p>{isAddCartValid ? '' : 'Please select a size'}</p>
-      <label htmlFor="size">Size</label>
-      <select name="size" id="size" onChange={onSizeChange} ref={selectedSize} disabled={skus[0] === 'OUT OF STOCK' ? true : false}>
-        <option key="default" value="default">{skus[0] === 'OUT OF STOCK' ? 'OUT OF STOCK' : 'SELECT SIZE'}</option>
-        {availableSizes}
-      </select>
-      <label htmlFor="quantity">Quantity</label>
-      <select name="quantity" id="quantity" disabled={availableQty ? false : true} ref={selectedQuantity}>
-        {selectedSize.current.value === 'default' ? defaultQty : availableQuantities}
-      </select>
-      <button onClick={handleAddToCart}>Add to cart</button>
-    </div>)
+      <FlexColumn>
+        <p>{category}</p>
+        <h1>{name}</h1>
+        <p>${ activeStyle.original_price } { activeStyle.sale_price ? '$' + activeStyle.sale_price  : ''}</p>
+        <p>style > {activeStyle.name}</p>
+        <StylesContainer>
+          {allStyles}
+        </StylesContainer>
+        <br/>
+        <p>{isAddCartValid ? '' : 'Please select a size'}</p>
+          <SizeQty>
+            <FlexRow>
+              <select name="size" id="size" onChange={onSizeChange} ref={selectedSize} disabled={skus[0] === 'OUT OF STOCK' ? true : false}>
+                <option key="default" value="default">{skus[0] === 'OUT OF STOCK' ? 'OUT OF STOCK' : 'SELECT SIZE'}</option>
+                {availableSizes}
+              </select>
+              <select name="quantity" id="quantity" disabled={availableQty ? false : true} ref={selectedQuantity}>
+                {selectedSize.current.value === 'default' ? defaultQty : availableQuantities}
+              </select>
+            </FlexRow>
+            <button onClick={handleAddToCart}>Add to cart</button>
+            <button>Star</button>
+          </SizeQty>
+      </FlexColumn>
+    </FlexRow>)
   } else {
     return <p>loading</p>
   }
