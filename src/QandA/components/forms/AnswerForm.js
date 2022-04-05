@@ -23,7 +23,7 @@ export default function AnswerForm(props) {
       email: email,
     };
     api.post
-      .answer(props.id, newAnswer)
+      .answer(props.id, newAnswer, state.currentProduct)
       .then((res) => console.log('post answer res', res))
       .then(() => {
         setUsername('');

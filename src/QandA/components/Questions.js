@@ -50,7 +50,7 @@ export default function Questions(props) {
     if (submitHelpfulQuestionOnce) {
       setShowHelpfulModal(true);
       api.post.question
-        .helpful(id)
+        .helpful(id, state.currentProduct)
         .then(() => {
           return api.get.allProductData(state.currentProduct);
         })
@@ -70,7 +70,7 @@ export default function Questions(props) {
     setreportQuestionOnce(false);
     if (reportQuestionOnce) {
       api.post.question
-        .report(id)
+        .report(id, state.currentProduct)
         .then(() => {
           return api.get.allProductData(state.currentProduct);
         })
