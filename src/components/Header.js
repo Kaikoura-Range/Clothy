@@ -31,6 +31,7 @@ const Header = (props) => {
 
 const HeaderContainer = styled.div`
   top: 0;
+  z-index: 1;
   width: 100%;
   height: 50px;
   position: sticky;

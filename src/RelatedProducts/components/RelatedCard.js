@@ -1,18 +1,53 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 
 export const RelatedCard = ({ data, outfit, nav, action }) => {
+  data.photos = data.photos || []
+  // console.log(data)
+  const [photoIndex, setPotohIndex] = useState(0)
+  const [canScrollUp, setScrollUp] = useState(true)
+  const [canScrollDown, setScrollDown] = useState(false)
+  const { name, photos } = data;
+
+  useEffect(() => {
+    if (photos.length === photoIndex + 1 ) {
+      setScrollUp(false)
+      setScrollDown(true)
+    }
+    if (photos.length > photoIndex > 0) {
+      !canScrollUp && setScrollUp(true)
+      !canScrollDown && setScrollDown(true)
+    }
+    if (photoIndex === 0) {
+      setScrollUp(true)
+      setScrollDown(false)
+    }
+  }, [photoIndex, canScrollUp, canScrollDown, photos.length])
+
+
   if ( data.type === 'render') {
-    const { name, photos } = data;
-    var photoUrl = photos.length ? photos[0].url : null;
+
+    const scrollUp = () => {
+      if (canScrollUp) {
+        setPotohIndex(photoIndex + 1)
+      }
+    }
+    const scrollDown = () => {
+      if (canScrollDown) {
+        setPotohIndex(photoIndex - 1)
+      }
+    }
 
     return  (
       <RelatecCardContainer data-testid="RelatedCard" >
-        {photoUrl ? <CardImage src={photoUrl} onClick={nav} data-testid="nav" ></CardImage> : <EmptyCardImage onClick={nav} data-testid="nav"  ></EmptyCardImage>}
+        {photos[photoIndex] ? <CardImage src={photos[photoIndex].url} onClick={nav} data-testid="nav" ></CardImage> : <EmptyCardImage onClick={nav} data-testid="nav"  ></EmptyCardImage>}
         <CardFooter>
           <CardFooterText>{name}</CardFooterText>
           <CardFooterButtonContainer>
+            {canScrollDown ?  <ScrollButton data-testid="scroll" onClick={scrollDown} >{`<`}</ScrollButton> :  <NoScrollButton>X</NoScrollButton>}
             <CardFooterButton data-testid="outfit" onClick={outfit} >{`${action} outfit`}</CardFooterButton>
+            {canScrollUp ? <ScrollButton data-testid="scroll" onClick={scrollUp} >{`>`}</ScrollButton> : <NoScrollButton>X</NoScrollButton>}
           </CardFooterButtonContainer>
         </CardFooter>
       </RelatecCardContainer>
@@ -113,7 +148,7 @@ const CardFooterText = styled.p`
 `
 
 
-const buttonBackground = [225, 225, 225]
+const buttonBackground = [230, 230, 230]
 const CardFooterButton = styled.button`
   height: 75%;
   padding: 7px;
@@ -122,6 +157,42 @@ const CardFooterButton = styled.button`
   background-color: rgb(${buttonBackground.toString()});
 
 `
+
+
+const ScrollButton = styled.button`
+  height: 75%;
+  padding: 7px;
+  font-size: 12px;
+  border-radius: 5px;
+  font-weight: bold;
+  background-color: rgb(${buttonBackground.toString()});
+
+`
+
+// const ScrollButton = styled.button`
+//   height: 75%;
+//   padding: 7px;
+//   font-size: 12px;
+//   border-radius: 5px;
+//   font-weight: bold;
+//   color: white;
+//   background-color: rgba(247, 193, 18, 0.5);
+
+// `
+
+const NoScrollButton = styled.button`
+  /* color: white; */
+  color: rgba(251, 123, 111, 1);
+  font-size: 14px;
+  font-weight: bold;
+  height: 75%;
+  padding: 7px;
+  font-size: 12px;
+  border-radius: 5px;
+  /* background-color: rgba(251, 123, 111, 0.7); */
+  background-color: rgb(${buttonBackground.toString()});
+`
+
 
 const CardFooterButtonContainer = styled.div`
   width: ${cardWidth}px;
