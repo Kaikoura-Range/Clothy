@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 
-const RelatedCard = ({ data, outfit, nav, action }) => {
+export const RelatedCard = ({ data, outfit, nav, action }) => {
   if (data.name) {
     const { name, id, photos } = data;
     var photoUrl = photos.length ? photos[0].url : null;
@@ -32,7 +32,15 @@ const RelatedCard = ({ data, outfit, nav, action }) => {
 }
 
 
-
+export const LoadingRelatedCard = (props) => {
+  return  (
+    <RelatecCardContainer>
+    <EmptyTextContainer>
+      <p>Loading </p>
+    </EmptyTextContainer>
+  </RelatecCardContainer>
+  )
+}
 
 
 
@@ -124,4 +132,3 @@ const EmptyTextContainer = styled.div`
 `
 
 
-export default RelatedCard

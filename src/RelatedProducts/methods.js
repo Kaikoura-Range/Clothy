@@ -3,12 +3,6 @@ import api from '../api/index.js';
 
 
 
-export const addProductToOutfit = (dispatch, prodId) => {
-  dispatch({
-    type: 'ADD_PRODUCT_TO_OUTFIT',
-    payload: prodId,
-  });
-}
 
 
 export const initializeAppState = (dispatch, prodId) => {
@@ -49,8 +43,13 @@ const getProductEndpoints = (productIds) => {
 
 
 
-export const initProductsFromIds = (productIds, currentProduct, setItemData) => {
-  productIds = productIds.filter((id, ind) =>  productIds.slice((ind + 1)).indexOf(id) === -1 && id !== currentProduct)
+export const initProductsFromIds = (productIds, currentProduct, setItemData, filterCurrentProduct = true) => {
+  if (filterCurrentProduct) {
+    productIds = productIds.filter((id, ind) =>  productIds.slice((ind + 1)).indexOf(id) === -1 && id !== currentProduct && id)
+  } else {
+    productIds = productIds.filter((id, ind) =>  productIds.slice((ind + 1)).indexOf(id) === -1 && id)
+  }
+
   const endpoints = getProductEndpoints(productIds)
   api.get.all(endpoints)
     .then((getResult) => {
