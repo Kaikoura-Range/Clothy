@@ -8,6 +8,7 @@ export default function QuestionForm(props) {
   const [, dispatch] = useContext(DispatchContext);
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
+
   const onSubmitHandler = (e) => {
     e.stopPropagation();
     e.preventDefault();
@@ -53,6 +54,7 @@ export default function QuestionForm(props) {
   return (
     <Modal onClick={preventBubbling}>
       <QuestionsFormContainer>
+        <Title>Question Form</Title>
         <form onSubmit={onSubmitHandler}>
           <label>Username: </label>
           <Input
@@ -89,6 +91,10 @@ const QuestionsFormContainer = styled.div`
   background-color: #f3f3f3;
   border-radius: 5px;
   padding: 20px;
+`;
+
+const Title = styled.h3`
+  text-align: center;
 `;
 
 const TextArea = styled.textarea`

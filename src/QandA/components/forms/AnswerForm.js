@@ -74,6 +74,7 @@ export default function AnswerForm(props) {
   return (
     <Modal onClick={preventBubbling}>
       <AnswerFormContainer>
+        <Title>Answer Form</Title>
         <form onSubmit={onSubmitHandler}>
           <label>Username: </label>
           <Input
@@ -119,6 +120,10 @@ const AnswerFormContainer = styled.div`
   background-color: #f3f3f3;
   border-radius: 5px;
   padding: 20px;
+`;
+
+const Title = styled.h3`
+  text-align: center;
 `;
 
 const TextArea = styled.textarea`
