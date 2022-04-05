@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import moment from 'moment';
 import api from '../../api/index';
 import HelpfulModal from './modals/HelpfulModal';
-
+import ErrorModal from './modals/ErrorModal';
 export default function Answers(props) {
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
@@ -14,6 +14,7 @@ export default function Answers(props) {
   const [submitHelpfulAnswerOnce, setsubmitHelpfulAnswerOnce] = useState(true);
   const [reportAnswerOnce, setReportAnswerOnce] = useState(true);
   const [showHelpfulModal, setShowHelpfulModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
   const addMoreAnswersClickHandler = () => {
     setAddMoreAnswers(addMoreAnswers + 1);
   };
@@ -43,7 +44,7 @@ export default function Answers(props) {
         )
         .catch((err) => console.log('helpful question not sent!'));
     } else {
-      alert('You can only mark answer as helpful once!');
+      setShowErrorModal(true);
     }
   };
 
@@ -70,6 +71,10 @@ export default function Answers(props) {
   const backDropHandler = (e) => {
     e.stopPropagation();
     setShowHelpfulModal(false);
+  };
+
+  const backDropErrorHandler = () => {
+    setShowErrorModal(false);
   };
 
   return (
@@ -111,6 +116,11 @@ export default function Answers(props) {
         })}
       {length > 1 && length && addMoreAnswers !== length - 1 && (
         <LoadMoreAnswers onClick={addMoreAnswersClickHandler}>Load more answers</LoadMoreAnswers>
+      )}
+      {showErrorModal && (
+        <BackDrop onClick={backDropErrorHandler}>
+          <ErrorModal />
+        </BackDrop>
       )}
     </AnswersContainer>
   );

@@ -6,7 +6,7 @@ import moment from 'moment';
 import api from '../../api/index';
 import HelpfulModal from './modals/HelpfulModal';
 import SuccessModal from './modals/SuccessModal';
-import ReportModal from './modals/ReportModal';
+import ErrorModal from './modals/ErrorModal';
 export default function Questions(props) {
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
@@ -14,8 +14,8 @@ export default function Questions(props) {
   const [submitHelpfulQuestionOnce, setsubmitHelpfulQuestionOnce] = useState(true);
   const [reportQuestionOnce, setreportQuestionOnce] = useState(true);
   const [showHelpfulModal, setShowHelpfulModal] = useState(false);
-  // const [showReportModal, setShowReportModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
   useEffect(() => {
     setAnswerForm(false);
   }, [state.currentProduct]);
@@ -27,6 +27,22 @@ export default function Questions(props) {
   const showAnswerForm = () => {
     setAnswerForm(false);
     setShowSuccess(true);
+  };
+
+  const backDropHandler = () => {
+    setAnswerForm(false);
+  };
+
+  const backDropHelpfulHandler = () => {
+    setShowHelpfulModal(false);
+  };
+
+  const backDropSuccessHandler = () => {
+    setShowSuccess(false);
+  };
+
+  const backDropErrorHandler = () => {
+    setShowErrorModal(false);
   };
 
   const helpfulQuestionHandler = (id) => {
@@ -44,15 +60,14 @@ export default function Questions(props) {
             payload: getRes,
           })
         )
-        .catch((err) => console.log('helpful answer not sent!'));
+        .catch((err) => console.log('helpful question not sent!'));
     } else {
-      alert('You can only mark question as helpful once!');
+      setShowErrorModal(true);
     }
   };
 
   const reportQuestionHandler = (id) => {
     setreportQuestionOnce(false);
-    // setShowReportModal(true);
     if (reportQuestionOnce) {
       api.post.question
         .report(id)
@@ -67,25 +82,9 @@ export default function Questions(props) {
         )
         .catch((err) => console.log('report question not sent!'));
     } else {
-      alert('You can only report question once!');
+      alert('You can only report this once!');
     }
   };
-
-  const backDropHandler = () => {
-    setAnswerForm(false);
-  };
-
-  const backDropHelpfulHandler = () => {
-    setShowHelpfulModal(false);
-  };
-
-  const backDropSuccessHandler = () => {
-    setShowSuccess(false);
-  };
-
-  // const backDropReportHandler = () => {
-  //   setShowReportModal(false);
-  // };
 
   return (
     <QuestionsContainer data-testid='question'>
@@ -121,12 +120,12 @@ export default function Questions(props) {
           <SuccessModal />
         </BackDrop>
       )}
-
-      {/* {showReportModal && (
-        <BackDrop onClick={backDropReportHandler}>
-          <ReportModal />
+      {showErrorModal && (
+        <BackDrop onClick={backDropErrorHandler}>
+          {' '}
+          <ErrorModal />{' '}
         </BackDrop>
-      )} */}
+      )}
     </QuestionsContainer>
   );
 }
@@ -143,13 +142,14 @@ const HelpfulLink = styled.span`
 `;
 
 const AddAnswerLink = styled.div`
+  width: 90px;
+  display: block;
   margin-top: 10px;
   text-decoration: underline;
   cursor: pointer;
 `;
 
 const QuestionsContainer = styled.div`
-  width: 100%;
   margin-top: 25px;
 `;
 
