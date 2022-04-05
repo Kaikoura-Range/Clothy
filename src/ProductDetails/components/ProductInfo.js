@@ -3,7 +3,8 @@ import Carousel from "./ProductCarousel.js";
 import { DispatchContext } from './../../appState/index.js';
 import { FlexRow, FlexColumn } from './../styles/Flex.styled.js'
 import { StylesImages, StylesContainer } from './../styles/Styles.styled.js'
-import SizeQty from './../styles/SizeQty.styled.js'
+import StyledSizeQty from './../styles/SizeQty.styled.js'
+import { StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory } from './../styles/Overview.styled.js'
 import _ from "underscore";
 
 function ProductInfo(props) {
@@ -11,6 +12,7 @@ function ProductInfo(props) {
   const [skus, setSkus] = useState([]);
   const [availableQty, setAvailableQty] = useState(0);
   const [isAddCartValid, setIsAddCartValid] = useState(true);
+  const [salePrice, setSalePrice] = useState(null);
   const selectedSize = useRef('default');
   const selectedQuantity = useRef(0);
   const [, dispatch] = useContext(DispatchContext);
@@ -47,6 +49,8 @@ function ProductInfo(props) {
     if (activeStyle.name) {
       const newSkus = handleSizeDuplicates((Object.values(activeStyle.skus)));
       setSkus(Object.entries(newSkus));
+
+      setSalePrice( activeStyle.sale_price || null );
     }
   }, [activeStyle])
 
@@ -103,16 +107,17 @@ function ProductInfo(props) {
     return(<FlexRow>
       <Carousel photos={activeStyle.photos}/>
       <FlexColumn>
-        <p>{category}</p>
-        <h1>{name}</h1>
-        <p>${ activeStyle.original_price } { activeStyle.sale_price ? '$' + activeStyle.sale_price  : ''}</p>
-        <p>style > {activeStyle.name}</p>
+        <StyledOverviewContainer>
+          <StyledCategory>{category}</StyledCategory>
+          <h1>{name}</h1>
+          <StyledPrice salePrice={ salePrice ? true : false }><span>${ salePrice ? salePrice  : activeStyle.original_price }</span><span>{ salePrice ? '$' + activeStyle.original_price  : '' }</span></StyledPrice>
+          <StyledCurrentStyle><span>style ></span> {activeStyle.name}</StyledCurrentStyle>
+        </StyledOverviewContainer>
         <StylesContainer>
           {allStyles}
         </StylesContainer>
-        <br/>
-        <p>{isAddCartValid ? '' : 'Please select a size'}</p>
-          <SizeQty>
+          <StyledSizeQty>
+            <p>{isAddCartValid ? '' : 'Please select a size'}</p>
             <FlexRow>
               <select name="size" id="size" onChange={onSizeChange} ref={selectedSize} disabled={skus[0] === 'OUT OF STOCK' ? true : false}>
                 <option key="default" value="default">{skus[0] === 'OUT OF STOCK' ? 'OUT OF STOCK' : 'SELECT SIZE'}</option>
@@ -124,7 +129,7 @@ function ProductInfo(props) {
             </FlexRow>
             <button onClick={handleAddToCart}>Add to cart</button>
             <button>Star</button>
-          </SizeQty>
+          </StyledSizeQty>
       </FlexColumn>
     </FlexRow>)
   } else {

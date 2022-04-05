@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-const SizeQty = styled.div`
-  margin: 15px 0 10px 30px;
+const StyledSizeQty = styled.div`
+  margin: 5px 0 20px 30px;
 
   select, button {
     background-color: #f1f2f6;
@@ -11,6 +11,13 @@ const SizeQty = styled.div`
 
   select {
     padding: 15px 30px 15px 40px;
+  }
+
+  p {
+    color: red;
+    font-size: 14px;
+    display: inline-block;
+    margin-bottom: 8px;
   }
 
   button {
@@ -23,6 +30,6 @@ const SizeQty = styled.div`
   }
 `
 
-export default SizeQty;
+export default StyledSizeQty;
 
 
