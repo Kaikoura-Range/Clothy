@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { StateContext, DispatchContext } from '../appState/index.js';
+import { StateContext } from '../appState/index.js';
 import styled from 'styled-components';
 
 
@@ -16,7 +16,6 @@ const RelatedProducts = () => {
   const [state] = useContext(StateContext)
   const { related, user, dev, currentProduct } = state;
   const { outfit } = user
-
 
 
 
@@ -61,8 +60,11 @@ const RelatedProducts = () => {
       </CarouselContainer>
     </RelatedContainer>
   )
-
 }
+
+
+
+
 
 const RelatedContainer = styled.div`
   width: 100%;
@@ -70,8 +72,6 @@ const RelatedContainer = styled.div`
   padding-top: 40px;
   padding-bottom: 40px;
 `
-
-
 
 const CarouselContainer = styled.div`
   width: 100%;
