@@ -9,12 +9,12 @@ const postReview = (postData) => {
   return post('/reviews', {}, postData,  'POST', 'review')
 }
 
-const postReviewAction = (reveiwId, action = 'helpful' ) => {
+const postReviewAction = (reveiwId, currentId, action = 'helpful' ) => {
   const endpoint = `/reviews/${reveiwId}/${action}`
-  return post(endpoint, {}, {}, 'PUT')
+  return post(endpoint, {product_id: currentId}, {}, 'PUT')
 }
 
-postReview.report = ((prodId) => postReviewAction(prodId, 'report'))
+postReview.report = ((prodId, currentId) => postReviewAction(prodId, currentId, 'report'))
 postReview.helpful = postReviewAction
 
 
@@ -26,30 +26,30 @@ const postQuestion = (qestionData) => {
   return post('/qa/questions', {}, qestionData, 'POST', 'question')
 }
 
-const postQuestionAction = (questionId, action = 'helpful' ) => {
+const postQuestionAction = (questionId, currentId,  action = 'helpful' ) => {
   const endpoint = `/qa/questions/${questionId}/${action}`
-  return post(endpoint, {}, {}, 'PUT')
+  return post(endpoint, {product_id: currentId}, {}, 'PUT')
 }
 
-postQuestion.report = ((qId) => postQuestionAction(qId, 'report'))
+postQuestion.report = ((qId, currentId) => postQuestionAction(qId, currentId, 'report'))
 postQuestion.helpful = postQuestionAction
 
 
 
 
 
-const postAnswer = (questionId, answerData) => {
+const postAnswer = (questionId, answerData, currentId) => {
   const endpoint = `/qa/questions/${questionId}/answers`
-  return post(endpoint,  {}, answerData, 'POST', 'answer')
+  return post(endpoint,  {product_id: currentId}, answerData, 'POST', 'answer')
 }
 
-const postAnswerAction = (answerId, action = 'helpful' ) => {
+const postAnswerAction = (answerId, currentId,  action = 'helpful' ) => {
   const endpoint = `/qa/answers/${answerId}/${action}`
-  return post(endpoint, {}, {}, 'PUT')
+  return post(endpoint, {product_id: currentId}, {}, 'PUT')
 }
 
 
-postAnswer.report = ((aId) => postAnswerAction(aId, 'report'))
+postAnswer.report = ((aId , currentId) => postAnswerAction(aId, currentId, 'report'))
 postAnswer.helpful = postAnswerAction
 
 

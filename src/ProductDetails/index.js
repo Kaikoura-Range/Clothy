@@ -1,8 +1,10 @@
-import React, {useState, useContext, useEffect} from 'react';
-import { StateContext} from './../appState/index.js';
+import React, { useState, useContext, useEffect } from 'react';
+import { StateContext } from './../appState/index.js';
 import Info from './components/ProductInfo.js';
 import Description from './components/ProductDesc.js';
 import Features from './components/ProductFeatures.js';
+import { FlexRow } from './styles/Flex.styled.js'
+
 
 
 function ProductDetails() {
@@ -22,15 +24,14 @@ function ProductDetails() {
   }, [state.details, state.currentProduct])
 
 
-  return (<div data-testid="details" >
-    <br/>
-    <Info product={activeProduct} styles={styles}/>
-    <br/>
-    <Description product={activeProduct}/>
-    <br/>
-    <Features product={activeProduct}/>
-  </div>);
-
+  return (
+    <div data-testid="details" >
+      <Info product={activeProduct} styles={styles}/>
+      <FlexRow>
+        <Description product={activeProduct}/>
+        <Features product={activeProduct}/>
+      </FlexRow>
+    </div>);
 
 }
 

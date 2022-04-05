@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
 
-const RelatedCard = ({ data, outfit, nav, action }) => {
-  if (data.name) {
-    const { name, id, photos } = data;
+export const RelatedCard = ({ data, outfit, nav, action }) => {
+  if ( data.type === 'render') {
+    const { name, photos } = data;
     var photoUrl = photos.length ? photos[0].url : null;
-
 
     return  (
       <RelatecCardContainer data-testid="RelatedCard" >
@@ -13,22 +12,42 @@ const RelatedCard = ({ data, outfit, nav, action }) => {
         <CardFooter>
           <CardFooterText>{name}</CardFooterText>
           <CardFooterButtonContainer>
-            {/* <CardFooterButton data-testid="nav" onClick={nav} >View product</CardFooterButton> */}
             <CardFooterButton data-testid="outfit" onClick={outfit} >{`${action} outfit`}</CardFooterButton>
           </CardFooterButtonContainer>
         </CardFooter>
       </RelatecCardContainer>
     );
   }
-  return  (
-    <RelatecCardContainer>
-      <EmptyTextContainer>
-        <p>Dont forget </p>
-        <p>to add items </p>
-        <p>to your outfit!</p>
-      </EmptyTextContainer>
-    </RelatecCardContainer>
-  );
+  if (data.type === 'emptyOutfit') {
+    return  (
+      <RelatecCardContainer data-testid="RelatedCard" onClick={outfit} >
+        <EmptyTextContainer>
+          <p>Click to add </p>
+          <p>the viewed item </p>
+          <p>to your outfit!</p>
+        </EmptyTextContainer>
+      </RelatecCardContainer>
+    );
+  }
+  if (data.type === 'emptyRelated') {
+    return  (
+      <RelatecCardContainer data-testid="RelatedCard"  >
+        <EmptyTextContainer>
+          <p>Sorry, no </p>
+          <p>related items. </p>
+        </EmptyTextContainer>
+      </RelatecCardContainer>
+    );
+  } else {
+    return (
+      <RelatecCardContainer data-testid="RelatedCard"  >
+        <EmptyTextContainer>
+          <p>Loading</p>
+        </EmptyTextContainer>
+      </RelatecCardContainer>
+    )
+  }
+
 }
 
 
@@ -36,8 +55,7 @@ const RelatedCard = ({ data, outfit, nav, action }) => {
 
 
 
-
-const mainBackground = [230, 230, 230]
+const mainBackground = [240, 240, 240]
 var cardHeight = 250;
 const cardWidth = Math.round(cardHeight * 0.66).toString()
 cardHeight = cardHeight.toString()
@@ -53,6 +71,7 @@ const RelatecCardContainer = styled.div`
   width: ${cardWidth}px;
   height: ${cardHeight}px;
   justify-content: space-evenly;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.15);
   background-color: rgb( ${mainBackground.toString()} );
 
 `
@@ -94,7 +113,7 @@ const CardFooterText = styled.p`
 `
 
 
-const buttonBackground = [217, 217, 217]
+const buttonBackground = [225, 225, 225]
 const CardFooterButton = styled.button`
   height: 75%;
   padding: 7px;
@@ -123,4 +142,3 @@ const EmptyTextContainer = styled.div`
 `
 
 
-export default RelatedCard

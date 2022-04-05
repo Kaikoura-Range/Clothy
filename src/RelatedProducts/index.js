@@ -11,16 +11,19 @@ import Carousel from './components/Carousel.js';
 
 
 
-
 var mainRenderCount = 0;
 const RelatedProducts = () => {
   const [state] = useContext(StateContext)
-  const [, dispatch] = useContext(DispatchContext)
   const { related, user, dev, currentProduct } = state;
   const { outfit } = user
 
-  const [relatedItemData, setRelatedItemData] = useState([]);
-  const [outFitItemData, setOutfitItemData] = useState([]);
+
+
+
+  const relatedInit = related.length ? Array(related.length).fill({}) : [ { type: 'emptyRelated', id: state.currentProduct } ];
+  const [relatedItemData, setRelatedItemData] = useState(relatedInit);
+  const outfitInit = outfit.length ? Array(outfit.length).fill({}) : [ { type: 'emptyOutfit', id: state.currentProduct } ];
+  const [outFitItemData, setOutfitItemData] = useState(outfitInit);
 
   if( dev.logs ) {
     mainRenderCount++;
@@ -29,33 +32,24 @@ const RelatedProducts = () => {
   }
 
   useEffect(() => {
-    initProductsFromIds(related, currentProduct, setRelatedItemData)
-  }, [related, currentProduct])
+    if (related.length) {
+      initProductsFromIds(related, currentProduct, setRelatedItemData)
+    } else {
+      setRelatedItemData([ { type: 'emptyRelated', id: state.currentProduct } ])
+    }
+  }, [related, currentProduct, state.currentProduct])
+
 
   useEffect(() => {
-
-    const localUserOutfit = state.localUser.outfit || [];
-    if ( !outfit.length && localUserOutfit.length ) {
-      const setAndDispatch = (condensed) => {
-        setOutfitItemData(condensed)
-        dispatch({
-          type: 'SET_OUTFIT',
-          payload: condensed
-        })
-      }
-      initProductsFromIds(localUserOutfit, currentProduct, setAndDispatch)
+    if (outfit.length) {
+      initProductsFromIds(outfit, currentProduct, setOutfitItemData, false)
+    } else {
+      setOutfitItemData([ { type: 'emptyOutfit', id: state.currentProduct } ])
     }
-
-    if (outfit.length !== outFitItemData.length) {
-      setOutfitItemData(outfit)
-    }
-  }, [outFitItemData, currentProduct, state.localUser.outfit, outfit, dispatch])
+  }, [outfit, currentProduct, state.currentProduct])
 
 
-
-
-  return relatedItemData.length ?
-  (
+  return (
     <RelatedContainer data-testid="related" >
       <HeaderText>Related Products</HeaderText>
       <CarouselContainer  >
@@ -66,14 +60,8 @@ const RelatedProducts = () => {
         <Carousel outfit={outFitItemData} />
       </CarouselContainer>
     </RelatedContainer>
+  )
 
-  )
-  :
-  (
-    <div data-testid="related" >
-      <div>loading</div>
-    </div>
-  )
 }
 
 const RelatedContainer = styled.div`
@@ -84,20 +72,21 @@ const RelatedContainer = styled.div`
 `
 
 
+
 const CarouselContainer = styled.div`
   width: 100%;
   height: auto;
   display: flex;
   padding-top: 10px;
-  padding-bottom: 10px;
   align-items: center;
+  padding-bottom: 10px;
   justify-content: space-evenly;
 `
 
 const HeaderText = styled.h1`
-  color: rgb(30, 30, 30);
   font-size: 24px;
   margin-left: 7.5%;
+  color: rgb(50, 50, 50);
 `
 
 
