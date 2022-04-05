@@ -1,12 +1,16 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef, useContext} from "react";
 import Carousel from "./ProductCarousel.js";
+import { DispatchContext } from './../../appState/index.js';
 import _ from "underscore";
 
 function ProductInfo(props) {
   const [activeStyle, setActiveStyle] = useState({});
   const [skus, setSkus] = useState([]);
   const [availableQty, setAvailableQty] = useState(0);
+  const [isAddCartValid, setIsAddCartValid] = useState(true);
   const selectedSize = useRef('default');
+  const selectedQuantity = useRef(0);
+  const [, dispatch] = useContext(DispatchContext);
 
   const handleSizeDuplicates = (originalSkus) => {
     const sizeDuplicates = originalSkus.reduce((allSkus, currentSku) => {
@@ -77,23 +81,41 @@ function ProductInfo(props) {
 
     const defaultQty = <option value="none">-</option>;
 
+    const handleAddToCart = () => {
+      if (selectedSize.current.value !== 'default') {
+        dispatch({
+          type: 'ADD_PRODUCT_TO_CART',
+          payload: {
+            style: activeStyle.name,
+            size: selectedSize.current.value,
+            quantity: selectedQuantity.current.value,
+          }
+        })
+      } else {
+        selectedSize.current.focus();
+        setIsAddCartValid(false);
+      }
+    }
+
     return(<div>
       <Carousel photos={activeStyle.photos}/>
       <p>{category}</p>
       <h1>{name}</h1>
-      <p>${activeStyle.original_price}</p>
+      <p>${ activeStyle.original_price } { activeStyle.sale_price ? '$' + activeStyle.sale_price  : ''}</p>
       <p>style > {activeStyle.name}</p>
       {allStyles}
       <br/>
+      <p>{isAddCartValid ? '' : 'Please select a size'}</p>
       <label htmlFor="size">Size</label>
       <select name="size" id="size" onChange={onSizeChange} ref={selectedSize} disabled={skus[0] === 'OUT OF STOCK' ? true : false}>
         <option key="default" value="default">{skus[0] === 'OUT OF STOCK' ? 'OUT OF STOCK' : 'SELECT SIZE'}</option>
         {availableSizes}
       </select>
       <label htmlFor="quantity">Quantity</label>
-      <select name="quantity" id="quantity" disabled={availableQty ? false : true}>
+      <select name="quantity" id="quantity" disabled={availableQty ? false : true} ref={selectedQuantity}>
         {selectedSize.current.value === 'default' ? defaultQty : availableQuantities}
       </select>
+      <button onClick={handleAddToCart}>Add to cart</button>
     </div>)
   } else {
     return <p>loading</p>

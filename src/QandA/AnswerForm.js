@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
 import styled from 'styled-components';
-import api from '../api/index';
+import api from '../api/index.js';
 import ImageForm from './ImageForm';
 export default function AnswerForm(props) {
   const [state] = useContext(StateContext);
