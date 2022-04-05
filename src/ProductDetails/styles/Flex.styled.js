@@ -8,4 +8,5 @@ export const FlexColumn = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0;
+  justify-content: center;
 `

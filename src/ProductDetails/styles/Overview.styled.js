@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledOverviewContainer = styled.div`
-  margin: 15px 0 10px 37px;
+  margin: 0 0 10px 77px;
 
   span {
     display: inline-block;
@@ -32,6 +32,6 @@ export const StyledCurrentStyle = styled.p`
 `
 
 export const StyledCategory = styled.span`
-margin-bottom: 10px;
+  margin-bottom: 10px;
   font-size: 12px;
 `

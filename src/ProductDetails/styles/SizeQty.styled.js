@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledSizeQty = styled.div`
-  margin: 5px 0 20px 30px;
+  margin: 5px 0 20px 70px;
 
   select, button {
     background-color: #f1f2f6;

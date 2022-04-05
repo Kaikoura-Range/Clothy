@@ -11,6 +11,6 @@ export const StylesImages = styled.img`
 export const StylesContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 0 70px 20px 30px;
+  margin: 0 70px 20px 70px;
   width: 340px;
 `
