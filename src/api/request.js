@@ -10,11 +10,10 @@ const cache = QuickCache()
 
 const checkCache = (options) => {
 
-  const key = options.url
   if (options.method.toUpperCase() === 'GET') {
-    return cache.check(key)
+    return cache.check(options)
   } else {
-    cache.remove(key)
+    cache.remove(options)
     return null
   }
 }
@@ -38,7 +37,7 @@ const startRequest = (options) => {
     .then((res) => {
       if (options.method.toUpperCase() === 'GET') {
         const value = res.data;
-        cache.add(options.url, value)
+        cache.add(options, value)
         return value
       }
       return res

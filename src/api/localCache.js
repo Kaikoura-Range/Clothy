@@ -1,6 +1,7 @@
 
 
-const cachedLogs = false // true will turn on all logs to the cache
+
+const cachedLogs = true // true will turn on all logs to the cache
 
 
 
@@ -12,7 +13,15 @@ const cleanup = (key, timeToCleanup, store) => {
 
 }
 
-
+const getKey = (options) => {
+  // console.log(options)
+  var key = options.url;
+  if (options.params.product_id) {
+    key += options.params.product_id
+  }
+  // console.log('new key', key)
+  return key
+}
 
 const minute = 60 * 1000;
 const baseTime = 2 * minute
@@ -21,14 +30,16 @@ const QuickCache = (maxStoreTime = baseTime) => {
   const instance = { maxStoreTime };
   instance.store = {}
 
-  instance.add = (key, value) => {
+  instance.add = (options, value) => {
+    const key = getKey(options)
     const createdAt = Date.now()
     instance.store[key] = { value, createdAt }
-    cachedLogs && console.log('added to cache ', key)
+    cachedLogs && console.log('added to cache ', key, instance.store)
     cleanup(key, instance.maxStoreTime, instance.store)
   }
 
-  instance.check = (key, promise = true) => {
+  instance.check = (options, promise = true) => {
+    const key = getKey(options)
     if (instance.store[key]) {
       const cachedData = instance.store[key].value;
       cachedLogs && console.log('fetched from cache ', key)
@@ -40,17 +51,15 @@ const QuickCache = (maxStoreTime = baseTime) => {
     return null;
   }
 
-  instance.remove = (key) => {
-    const checkKey = /\/qa\/questions\/[0-9]+\/answers\/||\/qa\/questions/i
-    console.log(instance.store)
-    const keyMatch = key.match(checkKey)
-    console.log(key, keyMatch)
-    if (keyMatch) {
-      const deletedKey = '/qa/questions/'
-      cachedLogs && console.log('removed from cache ', key)
-      delete instance.store[deletedKey]
-      console.log(instance.store)
-    }
+  instance.remove = (options) => {
+    // const checkKey = /\/qa\/questions\/[0-9]+\/answers\/||\/qa\/questions/i
+    // console.log(instance.store)
+    // const keyMatch = key.match(checkKey)
+    // console.log(key, keyMatch)
+    const key = getKey(options)
+    delete instance.store[key]
+    cachedLogs && console.log('removed from cache ', key)
+    // console.log(instance.store)
   }
 
   return instance;

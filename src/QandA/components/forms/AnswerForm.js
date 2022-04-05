@@ -12,7 +12,7 @@ export default function AnswerForm(props) {
   const [photos, setPhotos] = useState(null);
   const [imageForm, setImageForm] = useState(false);
   const [uploadImagesButton, setUploadImagesButton] = useState(true);
-
+  console.log(state);
   const onSubmitHandler = (e) => {
     e.preventDefault();
     props.showForm();
@@ -74,7 +74,8 @@ export default function AnswerForm(props) {
   return (
     <Modal onClick={preventBubbling}>
       <AnswerFormContainer>
-        <Title>Answer Form</Title>
+        <Title>Submit Answer About Product:</Title>
+        <ProductName>{state.details.product.name}</ProductName>
         <form onSubmit={onSubmitHandler}>
           <label>Username: </label>
           <Input
@@ -93,7 +94,7 @@ export default function AnswerForm(props) {
           <TextArea
             type='text'
             onChange={onChangeBody}
-            placeholder='Add your answer to a question here...'
+            placeholder='Have an answer to a question? Answer it here!'
             required></TextArea>
           <CenterItemsWrapper>
             <InputSubmit type='submit' />
@@ -129,6 +130,7 @@ const Title = styled.h3`
 const TextArea = styled.textarea`
   height: 200px;
   width: 100%;
+  text-align: center;
 `;
 
 const Input = styled.input`
@@ -140,6 +142,11 @@ const Input = styled.input`
   margin-top: 6px;
   margin-bottom: 16px;
   resize: vertical;
+`;
+
+const ProductName = styled.h4`
+  margin-top: 10px;
+  text-align: center;
 `;
 
 const CenterItemsWrapper = styled.div`

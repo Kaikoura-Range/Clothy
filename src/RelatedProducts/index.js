@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { StateContext } from '../appState/index.js';
+import { StateContext, DispatchContext } from '../appState/index.js';
 import styled from 'styled-components';
 
 
-import { initRelatedProducts } from './methods.js'
+import { initProductsFromIds } from './methods.js'
 import Carousel from './components/Carousel.js';
 
 
@@ -15,9 +15,12 @@ import Carousel from './components/Carousel.js';
 var mainRenderCount = 0;
 const RelatedProducts = () => {
   const [state] = useContext(StateContext)
-  const [relatedItemData, setRelatedItemData] = useState([]);
-  const { related, user, dev } = state;
+  const [, dispatch] = useContext(DispatchContext)
+  const { related, user, dev, currentProduct } = state;
   const { outfit } = user
+
+  const [relatedItemData, setRelatedItemData] = useState([]);
+  const [outFitItemData, setOutfitItemData] = useState([]);
 
   if( dev.logs ) {
     mainRenderCount++;
@@ -25,10 +28,28 @@ const RelatedProducts = () => {
     dev.state && console.log('DEV  STATE   RelatedProducts: ', related)
   }
 
+  useEffect(() => {
+    initProductsFromIds(related, currentProduct, setRelatedItemData)
+  }, [related, currentProduct])
 
   useEffect(() => {
-    related && initRelatedProducts(related, state.currentProduct, setRelatedItemData)
-  }, [related, state.currentProduct])
+
+    const localUserOutfit = state.localUser.outfit || [];
+    if ( !outfit.length && localUserOutfit.length ) {
+      const setAndDispatch = (condensed) => {
+        setOutfitItemData(condensed)
+        dispatch({
+          type: 'SET_OUTFIT',
+          payload: condensed
+        })
+      }
+      initProductsFromIds(localUserOutfit, currentProduct, setAndDispatch)
+    }
+
+    if (outfit.length !== outFitItemData.length) {
+      setOutfitItemData(outfit)
+    }
+  }, [outFitItemData, currentProduct, state.localUser.outfit, outfit, dispatch])
 
 
 
@@ -38,11 +59,11 @@ const RelatedProducts = () => {
     <RelatedContainer data-testid="related" >
       <HeaderText>Related Products</HeaderText>
       <CarouselContainer  >
-        <Carousel products={relatedItemData} outfit={outfit}  />
+        <Carousel products={relatedItemData} outfit={outFitItemData}  />
       </CarouselContainer>
       <HeaderText>My outfit</HeaderText>
       <CarouselContainer >
-        <Carousel outfit={outfit} />
+        <Carousel outfit={outFitItemData} />
       </CarouselContainer>
     </RelatedContainer>
 

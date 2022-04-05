@@ -1,11 +1,17 @@
 
 
-// var actionTest = {
-//   type: 'ADD_POSTED_QUESTION',
-//   payload: newPost,
-// }
+const setUserLocalStore = (newUserState) => {
+  const savedToLocal = Object.keys(newUserState).reduce((memo, key) => {
+    const keyValue = newUserState[key];
+    memo[key] = keyValue.map(product => product.id)
+    return memo;
+  }, {})
+  console.log(`setting ${JSON.stringify(savedToLocal)} as localstore`)
+  localStorage.setItem('user', JSON.stringify(savedToLocal));
 
-// dispatch(actionTest)
+}
+
+
 
 function reducer(state, action) {
   let newState;
@@ -31,6 +37,7 @@ function reducer(state, action) {
     case 'ADD_PRODUCT_TO_CART':
       newState = {...state}
       newState.user.cart.push(action.payload)
+      setUserLocalStore(newState.user)
       if (toLog) {
         console.log('\n\nDEV  STATE-REDUCER   ADD_PRODUCT_TO_CART    added prodId: ', action.payload)
       }
@@ -40,6 +47,7 @@ function reducer(state, action) {
     case 'SET_OUTFIT':
       newState = { ...state }
       newState.user.outfit = action.payload
+      setUserLocalStore(newState.user)
       if (toLog) {
         console.log('\n\nDEV  STATE-REDUCER   SET_OUTFIT   new Outfit: ', newState.currentProduct)
       }
@@ -64,7 +72,7 @@ function reducer(state, action) {
 
 
     default:
-      console.log('\n\nDEV  STATE-REDUCER   default    prodId: ', newState.currentProduct)
+      console.log('\n\nDEV  STATE-REDUCER   default    prodId: ', state.currentProduct)
       return { ...state};
   }
 }
