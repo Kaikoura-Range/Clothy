@@ -1,13 +1,13 @@
 
 
 const setUserLocalStore = (newUserState) => {
-  const savedToLocal = Object.keys(newUserState).reduce((memo, key) => {
-    const keyValue = newUserState[key];
-    memo[key] = keyValue.map(product => product.id)
-    return memo;
-  }, {})
-  console.log(`setting ${JSON.stringify(savedToLocal)} as localstore`)
-  localStorage.setItem('user', JSON.stringify(savedToLocal));
+  // const savedToLocal = Object.keys(newUserState).reduce((memo, key) => {
+  //   const keyValue = newUserState[key];
+  //   memo[key] = keyValue.map(product => product.id)
+  //   return memo;
+  // }, {})
+  console.log(`setting ${JSON.stringify(newUserState)} as localstore`)
+  localStorage.setItem('user', JSON.stringify(newUserState));
 
 }
 
