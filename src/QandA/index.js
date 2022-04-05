@@ -63,6 +63,7 @@ export default function QAndA() {
                 More Answered Questions
               </MoreAnsweredQuestionsButton>
             )}
+            {results.length === 0 && <p>No match</p>}
           </div>
         );
       }
@@ -78,6 +79,8 @@ export default function QAndA() {
           </div>
         );
       }
+    } else {
+      return <NoMatchMessage>No match</NoMatchMessage>;
     }
   };
 
@@ -124,10 +127,6 @@ export default function QAndA() {
     setCreateForm(false);
   };
 
-  const showModalHandler = () => {
-    setShowModal(!showModal);
-  };
-
   const backDropSuccessHandler = () => {
     setShowModal(false);
   };
@@ -157,12 +156,17 @@ export default function QAndA() {
           state.QA &&
           state.QA.results.length > 2 &&
           addMoreQuestionsButtonWhenNoSearchInput()}
-
+        {state.QA.results.length === 0 && <p>No match</p>}
         <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
       </EntireQuestionsWrapper>
       {createForm && (
         <BackDrop onClick={backDropHandler}>
           <QuestionForm success={success} showForm={setCreateForm} />
+        </BackDrop>
+      )}
+      {showModal && (
+        <BackDrop onClick={backDropSuccessHandler}>
+          <SuccessModal />
         </BackDrop>
       )}
     </EntireQuestionsContainer>
@@ -219,11 +223,6 @@ const MoreAnsweredQuestionsButton = styled.button`
   }
 `;
 
-// const fadeOut = keyframes`
-// 0%{opacity:1;}
-// 100%{opacity: 0;}
-// `;
-
 const BackDrop = styled.div`
   position: fixed;
   top: 0;
@@ -231,4 +230,9 @@ const BackDrop = styled.div`
   width: 100%;
   height: 100vh;
   background: rgba(0, 0, 0, 0.75);
+`;
+
+const NoMatchMessage = styled.p`
+  margin-top: 25px;
+  text-align: center;
 `;
