@@ -154,7 +154,7 @@ var newlist = sortedReviews;
     if(props.reviewData) {
     return (
       <div data-testid="reviews" >
-        {/* <Rating data={props.reviewMeta}/> */}
+         <Rating data={props.reviewMeta}/> 
         <SortReviews/>
         <SearchReviews type='search' value={keyword} onChange={(e)=>setKeyword(e.target.value)} placeholder='searching'/>
         <ReviewDisplay/>

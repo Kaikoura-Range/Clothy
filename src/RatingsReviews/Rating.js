@@ -3,63 +3,75 @@ import moment from 'moment';
 import styled from 'styled-components';
 
 
-export default function Rating(props){
+export default function Rating({data}){
 
-    console.log('characteristics', props.data.characteristics)
+    console.log('characteristics', data.characteristics)
     function ratingAverage(){
         var total = 0, totalcount = 0;
 
-        for(var i in props.data.ratings) {
-            total += Number(props.data.ratings[i]*i);
-            totalcount += Number(props.data.ratings[i]);
+        for(var i in data.ratings) {
+            total += Number(data.ratings[i]*i);
+            totalcount += Number(data.ratings[i]);
 
         }
 
         return total / totalcount;
     }
     function recommendPercentage(){
-        var numerator = Number(props.data.recommended.true);
-        var denominator = Number(props.data.recommended.false);
+        var numerator = Number(data.recommended.true);
+        var denominator = Number(data.recommended.false);
         return (numerator /(numerator+denominator))*100;
     }
     function Stars() {
        return (
            <div>
-               5 stars:{props.data.ratings[5]},
-               4 stars:{props.data.ratings[4]},
-               3 stars:{props.data.ratings[3]},
-               2 stars:{props.data.ratings[2]},
-               1 stars:{props.data.ratings[1]}
+               5 stars:{data.ratings[5]},
+               4 stars:{data.ratings[4]},
+               3 stars:{data.ratings[3]},
+               2 stars:{data.ratings[2]},
+               1 stars:{data.ratings[1]}
            </div>
        )
     }
     function Comfort(){
+        if(data.characteristics.Comfort){
+
+        
         return(
             <>
-            comfort: {props.data.characteristics.Comfort.value}
+            comfort: {data.characteristics.Comfort.value}
             </>
         )
+        }
     }
     function Fit(){
+        if(data.characteristics.Fit) {
         return(
             <>
-            fit: {props.data.characteristics.Fit.value}
+            fit: {data.characteristics.Fit.value}
             </>
         )
+        }
     }
     function Quality(){
+        if(data.characteristics.Quality){
         return(
             <>
-            Quality: {props.data.characteristics.Quality.value}
+            Quality: {data.characteristics.Quality.value}
             </>
         )
+        }
     }
     function Length(){
+
+       if(data.characteristics.Length) {
         return(
             <>
-            Length: {props.data.characteristics.Length.value}
+            Length: {data.characteristics.Length.value}
             </>
         )
+       }
+        
     }
     return (
         <div>
