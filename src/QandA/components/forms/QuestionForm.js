@@ -54,7 +54,8 @@ export default function QuestionForm(props) {
   return (
     <Modal onClick={preventBubbling}>
       <QuestionsFormContainer>
-        <Title>Question Form</Title>
+        <Title>Submit Question About Product:</Title>
+        <ProductName>{state.details.product.name}</ProductName>
         <form onSubmit={onSubmitHandler}>
           <label>Username: </label>
           <Input
@@ -76,7 +77,7 @@ export default function QuestionForm(props) {
             type='text'
             name='body'
             onChange={onChangeBody}
-            placeholder='Ask a question about the product'
+            placeholder='Have a question about a product? Ask it here!'
             required></TextArea>
           <CenterItemsWrapper>
             <InputSubmit type='submit' />
@@ -100,6 +101,12 @@ const Title = styled.h3`
 const TextArea = styled.textarea`
   height: 200px;
   width: 100%;
+  text-align: center;
+`;
+
+const ProductName = styled.h4`
+  margin-top: 10px;
+  text-align: center;
 `;
 
 const Input = styled.input`
