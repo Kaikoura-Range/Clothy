@@ -15,6 +15,7 @@ const initPageState = {
   details: {},
   related: {},
   reviews: {},
+  reviewMeta: {}
 };
 
 

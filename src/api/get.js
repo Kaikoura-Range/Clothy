@@ -46,10 +46,11 @@ const getAll = (allGetOptions) => {
 
 
 
-const initProductDataFetch = (detailsGets, reviewsGets, QAGets, relatedGets ) => {
+const initProductDataFetch = (detailsGets, reviewsGets, reviewMetaGets, QAGets, relatedGets ) => {
   const initStateEndpoints = {
     details: detailsGets,
     reviews: reviewsGets,
+    reviewMeta: reviewMetaGets,
     QA: QAGets,
     related: relatedGets,
   }

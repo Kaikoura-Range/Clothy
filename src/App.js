@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { StateContext, DispatchContext } from './appState/index.js';
 import ProductDetails, { detailsStateInit } from './ProductDetails/index';
-import RatingsReviews, { reviewStateInit } from './RatingsReviews/index';
+import RatingsReviews, { reviewStateInit, reviewMetaStateInit } from './RatingsReviews/index';
 import QAndA, { qAndAStateInit } from './QandA/index';
 import RelatedProducts, { relatedStateInit } from './RelatedProducts/index';
 import Header from './header/index.js'
@@ -14,6 +14,7 @@ import Header from './header/index.js'
 api.get.initProductDataFetch(
   detailsStateInit,
   reviewStateInit,
+  reviewMetaStateInit,
   qAndAStateInit,
   relatedStateInit,
 )
@@ -62,7 +63,7 @@ function App() {
         <ProductDetails />
         <RelatedProducts relatedProducts={state.related} dev={state.dev} />
         <QAndA />
-        <RatingsReviews reviewData={state.reviews} dev={state.dev} />
+        <RatingsReviews reviewData={state.reviews} reviewMeta={state.reviewMeta} dev={state.dev} />
       </AppContainer>
     );
   }
