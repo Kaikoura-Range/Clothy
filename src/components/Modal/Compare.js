@@ -8,7 +8,7 @@ const CompareModal = (props) => {
 
   return (
     <CompareContainer>
-      <TestText>TEST</TestText>
+      <TestText>skfjs;kdfj;aslkdfjs;lkdfjas</TestText>
     </CompareContainer>
   )
 };

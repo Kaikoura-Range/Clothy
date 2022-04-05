@@ -60,7 +60,6 @@ function App() {
   } else {
     requestCount = 0
 
-
     return (
       <AppContainer className='App' data-testid="app"  >
         <Modal />
