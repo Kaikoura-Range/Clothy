@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StateContext } from '../appState/index.js';
 import styled from 'styled-components';
-import { keyframes } from 'styled-components';
-import QAList from './QAList';
-import QuestionForm from './QuestionForm';
-import SuccessModal from './SuccessModal';
-import ErrorModal from './ErrorModal';
+import QAList from './components/QAList';
+import QuestionForm from './components/forms/QuestionForm';
+import SuccessModal from './components/modals/SuccessModal';
 export default function QAndA() {
   //central API state
   const [state] = useContext(StateContext);
@@ -45,14 +43,12 @@ export default function QAndA() {
   ///////////////////////////////////////////////////////////////////////////
   //these functions render out each question & answer and conditionally renders "more answered questions button"
   const renderWhenSearchInput = () => {
-    let filteredResults = state.QA.results
-      .sort((a, b) => b.question_helpfulness - a.question_helpfulness)
-      .map(
-        (q) =>
-          q.question_body.toLowerCase().indexOf(searchText.toLowerCase()) > -1 && (
-            <QAList key={q.question_id} q={q} />
-          )
-      );
+    let filteredResults = state.QA.results.map(
+      (q) =>
+        q.question_body.toLowerCase().indexOf(searchText.toLowerCase()) > -1 && (
+          <QAList key={q.question_id} q={q} />
+        )
+    );
     let length = filteredResults.filter((val) => val !== false).length;
     let results = filteredResults.filter((val) => val !== false).slice(0, 2 + addQuestionsSearch);
     if (results.length) {
@@ -65,6 +61,7 @@ export default function QAndA() {
                 More Answered Questions
               </MoreAnsweredQuestionsButton>
             )}
+            {results.length === 0 && <p>No match</p>}
           </div>
         );
       }
@@ -80,6 +77,8 @@ export default function QAndA() {
           </div>
         );
       }
+    } else {
+      return <NoMatchMessage>No match</NoMatchMessage>;
     }
   };
 
@@ -126,12 +125,12 @@ export default function QAndA() {
     setCreateForm(false);
   };
 
-  const showModalHandler = () => {
-    setShowModal(!showModal);
-  };
-
   const backDropSuccessHandler = () => {
     setShowModal(false);
+  };
+
+  const success = () => {
+    setShowModal(true);
   };
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,24 +154,19 @@ export default function QAndA() {
           state.QA &&
           state.QA.results.length > 2 &&
           addMoreQuestionsButtonWhenNoSearchInput()}
-
+        {state.QA.results.length === 0 && (
+          <NoMatchMessage>There are no questions here. Add one!</NoMatchMessage>
+        )}
         <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
       </EntireQuestionsWrapper>
       {createForm && (
         <BackDrop onClick={backDropHandler}>
-          <QuestionForm showForm={setCreateForm} />
+          <QuestionForm success={success} showForm={setCreateForm} />
         </BackDrop>
       )}
-      <button onClick={showModalHandler}>Testing Success Modal</button>
       {showModal && (
         <BackDrop onClick={backDropSuccessHandler}>
           <SuccessModal />
-        </BackDrop>
-      )}
-
-      {showModal && (
-        <BackDrop onClick={backDropSuccessHandler}>
-          <ErrorModal />
         </BackDrop>
       )}
     </EntireQuestionsContainer>
@@ -229,11 +223,6 @@ const MoreAnsweredQuestionsButton = styled.button`
   }
 `;
 
-// const fadeOut = keyframes`
-// 0%{opacity:1;}
-// 100%{opacity: 0;}
-// `;
-
 const BackDrop = styled.div`
   position: fixed;
   top: 0;
@@ -241,4 +230,9 @@ const BackDrop = styled.div`
   width: 100%;
   height: 100vh;
   background: rgba(0, 0, 0, 0.75);
+`;
+
+const NoMatchMessage = styled.p`
+  margin-top: 25px;
+  text-align: center;
 `;
