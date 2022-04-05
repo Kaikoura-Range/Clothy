@@ -9,6 +9,7 @@ export default function QAndA() {
   const [state] = useContext(StateContext);
   //state for toggling how many questions get showed and what gets filtered
   const [addMoreQuestionsNoSearch, setAddMoreQuestionsNoSearch] = useState(0);
+  const [filteredSearchLength, setFilteredSearchLength] = useState(null);
   const [addQuestionsSearch, setAddQuestionsSearch] = useState(0);
   const [searchText, setSearchText] = useState('');
   const [searchTextThere, setSearchTextThere] = useState(false);
@@ -17,11 +18,10 @@ export default function QAndA() {
   const [showModal, setShowModal] = useState(false);
   //////////////////////////////////////////////////////////////////////
   useEffect(() => {
-    console.log(state);
     setAddMoreQuestionsNoSearch(0);
     setAddQuestionsSearch(0);
     setCreateForm(false);
-  }, [state]);
+  }, [state.currentProduct]);
   //these functions render 2 questions at a time
   const addQuestionsNoSearchHandler = () => {
     setAddMoreQuestionsNoSearch(addMoreQuestionsNoSearch + 2);
@@ -43,6 +43,7 @@ export default function QAndA() {
   };
   ///////////////////////////////////////////////////////////////////////////
   //these functions render out each question & answer and conditionally renders "more answered questions button"
+
   const renderWhenSearchInput = () => {
     let filteredResults = state.QA.results.map(
       (q) =>
@@ -51,35 +52,45 @@ export default function QAndA() {
         )
     );
     let length = filteredResults.filter((val) => val !== false).length;
+    addMoreQuestionsButtonWhenSearchInput(length);
     let results = filteredResults.filter((val) => val !== false).slice(0, 2 + addQuestionsSearch);
     if (results.length) {
       if (length % 2 !== 0) {
         return (
           <div>
             {results}
-            {length > 2 && addQuestionsSearch + 1 !== length && (
-              <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
-                More Answered Questions
-              </MoreAnsweredQuestionsButton>
-            )}
             {results.length === 0 && <p>No match</p>}
           </div>
         );
       }
       if (length % 2 === 0) {
-        return (
-          <div>
-            {results}
-            {length > 2 && addQuestionsSearch + 2 !== length && (
-              <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
-                More Answered Questions
-              </MoreAnsweredQuestionsButton>
-            )}
-          </div>
-        );
+        return <div>{results}</div>;
       }
     } else {
       return <NoMatchMessage>No match</NoMatchMessage>;
+    }
+  };
+
+  const addMoreQuestionsButtonWhenSearchInput = (length) => {
+    if (length % 2 === 0) {
+      return (
+        filteredSearchLength > 2 &&
+        addQuestionsSearch + 2 !== length && (
+          <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
+            More Answered Questions
+          </MoreAnsweredQuestionsButton>
+        )
+      );
+    }
+    if (length % 2 !== 0) {
+      return (
+        filteredSearchLength > 2 &&
+        addQuestionsSearch + 1 !== length && (
+          <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
+            More Answered Questions
+          </MoreAnsweredQuestionsButton>
+        )
+      );
     }
   };
 
@@ -151,21 +162,25 @@ export default function QAndA() {
 
           {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
           {!searchTextThere && state.QA && renderWhenNoSearchInput()}
-          {!searchTextThere &&
-            state.QA &&
-            state.QA.results.length > 2 &&
-            addMoreQuestionsButtonWhenNoSearchInput()}
           {state.QA.results.length === 0 && (
             <NoMatchMessage>There are no questions here. Add one!</NoMatchMessage>
           )}
         </EntireQAndAContainer>
+
+        {!searchTextThere &&
+          state.QA &&
+          state.QA.results.length > 2 &&
+          addMoreQuestionsButtonWhenNoSearchInput()}
+        {searchTextThere && state.QA.results.length > 2 && addMoreQuestionsButtonWhenSearchInput()}
         <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
       </EntireQuestionsWrapper>
+
       {createForm && (
         <BackDrop onClick={backDropHandler}>
           <QuestionForm success={success} showForm={setCreateForm} />
         </BackDrop>
       )}
+
       {showModal && (
         <BackDrop onClick={backDropSuccessHandler}>
           <SuccessModal />
@@ -196,7 +211,8 @@ const EntireQuestionsContainer = styled.div`
 `;
 
 const EntireQAndAContainer = styled.div`
-  height: 500px;
+  height: auto;
+  max-height: 500px !important;
   overflow: auto;
 `;
 
@@ -206,7 +222,8 @@ const EntireQuestionsWrapper = styled.div`
 
 const AddQuestionButton = styled.button`
   cursor: pointer;
-  margin: 25px;
+  margin: 15px;
+  margin-bottom: 50px;
   float: left;
   font-size: 16px;
   border-radius: 5px;
@@ -219,7 +236,8 @@ const AddQuestionButton = styled.button`
 
 const MoreAnsweredQuestionsButton = styled.button`
   cursor: pointer;
-  margin: 25px;
+  margin: 15px;
+  margin-bottom: 50px;
   float: left;
   font-size: 16px;
   border-radius: 5px;
