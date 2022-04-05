@@ -43,14 +43,12 @@ export default function QAndA() {
   ///////////////////////////////////////////////////////////////////////////
   //these functions render out each question & answer and conditionally renders "more answered questions button"
   const renderWhenSearchInput = () => {
-    let filteredResults = state.QA.results
-      .sort((a, b) => b.question_helpfulness - a.question_helpfulness)
-      .map(
-        (q) =>
-          q.question_body.toLowerCase().indexOf(searchText.toLowerCase()) > -1 && (
-            <QAList key={q.question_id} q={q} />
-          )
-      );
+    let filteredResults = state.QA.results.map(
+      (q) =>
+        q.question_body.toLowerCase().indexOf(searchText.toLowerCase()) > -1 && (
+          <QAList key={q.question_id} q={q} />
+        )
+    );
     let length = filteredResults.filter((val) => val !== false).length;
     let results = filteredResults.filter((val) => val !== false).slice(0, 2 + addQuestionsSearch);
     if (results.length) {
@@ -156,7 +154,9 @@ export default function QAndA() {
           state.QA &&
           state.QA.results.length > 2 &&
           addMoreQuestionsButtonWhenNoSearchInput()}
-        {state.QA.results.length === 0 && <p>No match</p>}
+        {state.QA.results.length === 0 && (
+          <NoMatchMessage>There are no questions here. Add one!</NoMatchMessage>
+        )}
         <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
       </EntireQuestionsWrapper>
       {createForm && (

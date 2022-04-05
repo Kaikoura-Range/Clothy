@@ -14,7 +14,7 @@ export default function Questions(props) {
   const [submitHelpfulQuestionOnce, setsubmitHelpfulQuestionOnce] = useState(true);
   const [reportQuestionOnce, setreportQuestionOnce] = useState(true);
   const [showHelpfulModal, setShowHelpfulModal] = useState(false);
-  const [showReportModal, setShowReportModal] = useState(false);
+  // const [showReportModal, setShowReportModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   useEffect(() => {
     setAnswerForm(false);
@@ -52,7 +52,7 @@ export default function Questions(props) {
 
   const reportQuestionHandler = (id) => {
     setreportQuestionOnce(false);
-    setShowReportModal(true);
+    // setShowReportModal(true);
     if (reportQuestionOnce) {
       api.post.question
         .report(id)
@@ -83,9 +83,9 @@ export default function Questions(props) {
     setShowSuccess(false);
   };
 
-  const backDropReportHandler = () => {
-    setShowReportModal(false);
-  };
+  // const backDropReportHandler = () => {
+  //   setShowReportModal(false);
+  // };
 
   return (
     <QuestionsContainer data-testid='question'>
@@ -122,11 +122,11 @@ export default function Questions(props) {
         </BackDrop>
       )}
 
-      {showReportModal && (
+      {/* {showReportModal && (
         <BackDrop onClick={backDropReportHandler}>
           <ReportModal />
         </BackDrop>
-      )}
+      )} */}
     </QuestionsContainer>
   );
 }
