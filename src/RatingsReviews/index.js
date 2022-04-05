@@ -69,7 +69,7 @@ var newlist = sortedReviews;
   return (
     <>
       <div>{props.reviewData.results.length} reviews
-      <select onChange={ (e) => { 
+      <select onChange={ (e) => {
         var test = newlist.sort((a,b) => sorting(a,b,e.target.value));
         setSortedReviews(JSON.parse([JSON.stringify(test)]))
         }}>
@@ -87,7 +87,7 @@ var newlist = sortedReviews;
       setReviewCount(diplayedReviewCount +2);
     } else if( value === 1 ) {
       setReviewCount(diplayedReviewCount +1);
-    } 
+    }
   }
   function ReviewButton(){
     var value = sortedReviews.length-diplayedReviewCount;
@@ -98,12 +98,12 @@ var newlist = sortedReviews;
   function backDropHandler() {
     setOpenModal(!openModal)
   }
-  
+
   function ReviewDisplay(){
    return keyword.length <3 ? NormalReviewDisplay() : FilteredReviewDisplay()
   }
 
- 
+
 
 
   function NormalReviewDisplay() {
@@ -126,7 +126,7 @@ var newlist = sortedReviews;
   }
   function FilteredReviewDisplay(){
     var reviews = sortedReviews;
-   
+
     function filter(reviews,keyword ) {
       return reviews.filter(e => {
          const entries = Object.entries(e);
@@ -154,8 +154,8 @@ var newlist = sortedReviews;
     if(props.reviewData) {
     return (
       <div data-testid="reviews" >
-        <Rating data={props.reviewMeta}/>
-        <SortReviews/> 
+        {/* <Rating data={props.reviewMeta}/> */}
+        <SortReviews/>
         <SearchReviews type='search' value={keyword} onChange={(e)=>setKeyword(e.target.value)} placeholder='searching'/>
         <ReviewDisplay/>
         <ReviewButton/>
@@ -183,7 +183,7 @@ export const reviewStateInit = (productId) => {
 export const reviewMetaStateInit = (productId) => {
   return ['/reviews/meta', { product_id: productId }]
 }
-  
+
 
 
   const BackDrop = styled.div`

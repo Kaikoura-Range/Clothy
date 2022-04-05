@@ -4,18 +4,18 @@ import styled from 'styled-components';
 
 
 export default function Rating(props){
-    
 
+    console.log('characteristics', props.data.characteristics)
     function ratingAverage(){
         var total = 0, totalcount = 0;
 
         for(var i in props.data.ratings) {
             total += Number(props.data.ratings[i]*i);
             totalcount += Number(props.data.ratings[i]);
-           
+
         }
-       
-        return total / totalcount;  
+
+        return total / totalcount;
     }
     function recommendPercentage(){
         var numerator = Number(props.data.recommended.true);
@@ -31,7 +31,7 @@ export default function Rating(props){
                2 stars:{props.data.ratings[2]},
                1 stars:{props.data.ratings[1]}
            </div>
-       ) 
+       )
     }
     function Comfort(){
         return(
