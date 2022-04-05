@@ -17,10 +17,11 @@ export default function QAndA() {
   const [showModal, setShowModal] = useState(false);
   //////////////////////////////////////////////////////////////////////
   useEffect(() => {
+    console.log(state);
     setAddMoreQuestionsNoSearch(0);
     setAddQuestionsSearch(0);
     setCreateForm(false);
-  }, [state.currentProduct]);
+  }, [state]);
   //these functions render 2 questions at a time
   const addQuestionsNoSearchHandler = () => {
     setAddMoreQuestionsNoSearch(addMoreQuestionsNoSearch + 2);
@@ -144,19 +145,20 @@ export default function QAndA() {
           onChange={searchTextHandler}
           placeholder='Have a question? Search for answers...'
         />
+        <EntireQAndAContainer>
+          {/* RENDERS WHEN USER STARTS SEARCHING */}
+          {searchTextThere && state.QA && renderWhenSearchInput()}
 
-        {/* RENDERS WHEN USER STARTS SEARCHING */}
-        {searchTextThere && state.QA && renderWhenSearchInput()}
-
-        {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
-        {!searchTextThere && state.QA && renderWhenNoSearchInput()}
-        {!searchTextThere &&
-          state.QA &&
-          state.QA.results.length > 2 &&
-          addMoreQuestionsButtonWhenNoSearchInput()}
-        {state.QA.results.length === 0 && (
-          <NoMatchMessage>There are no questions here. Add one!</NoMatchMessage>
-        )}
+          {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
+          {!searchTextThere && state.QA && renderWhenNoSearchInput()}
+          {!searchTextThere &&
+            state.QA &&
+            state.QA.results.length > 2 &&
+            addMoreQuestionsButtonWhenNoSearchInput()}
+          {state.QA.results.length === 0 && (
+            <NoMatchMessage>There are no questions here. Add one!</NoMatchMessage>
+          )}
+        </EntireQAndAContainer>
         <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
       </EntireQuestionsWrapper>
       {createForm && (
@@ -191,6 +193,11 @@ const EntireQuestionsContainer = styled.div`
   flex-direction: column;
   margin-left: 100px;
   margin-right: 100px;
+`;
+
+const EntireQAndAContainer = styled.div`
+  height: 500px;
+  overflow: auto;
 `;
 
 const EntireQuestionsWrapper = styled.div`

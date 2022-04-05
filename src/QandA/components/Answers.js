@@ -25,7 +25,7 @@ export default function Answers(props) {
 
   useEffect(() => {
     setAddMoreAnswers(0);
-  }, [state.currentProduct]);
+  }, [state.QA]);
 
   const helpfulAnswerHandler = (id) => {
     setsubmitHelpfulAnswerOnce(false);

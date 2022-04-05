@@ -18,7 +18,7 @@ export default function Questions(props) {
   const [showErrorModal, setShowErrorModal] = useState(false);
   useEffect(() => {
     setAnswerForm(false);
-  }, [state.currentProduct]);
+  }, [state.QA]);
 
   const answerFormHandler = () => {
     setAnswerForm(!answerForm);
