@@ -1,29 +1,45 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
+
 import styled from 'styled-components';
 import moment from 'moment';
 import api from '../api/index';
 
 export default function Answers(props) {
   const [state] = useContext(StateContext);
+  const [, dispatch] = useContext(DispatchContext);
   const [addMoreAnswers, setAddMoreAnswers] = useState(0);
-  const [length, setLength] = useState(Object.keys(props.a.answers).length);
+  const [length, setLength] = useState(Object.keys(props.a).length);
   const [submitHelpfulAnswerOnce, setsubmitHelpfulAnswerOnce] = useState(true);
   const [reportAnswerOnce, setReportAnswerOnce] = useState(true);
-  const [isReported, setIsReported] = useState(false);
+
   const addMoreAnswersClickHandler = () => {
     setAddMoreAnswers(addMoreAnswers + 1);
   };
+
+  useEffect(() => {
+    setLength(Object.keys(props.a).length);
+    console.log(props.a);
+  }, [props.a]);
+
   useEffect(() => {
     setAddMoreAnswers(0);
-  }, [state.QA]);
+  }, [state.currentProduct]);
 
   const helpfulAnswerHandler = (id) => {
     setsubmitHelpfulAnswerOnce(false);
     if (submitHelpfulAnswerOnce) {
       api.post.answer
         .helpful(id)
-        .then((res) => console.log('post help question res', res))
+        .then(() => {
+          return api.get.allProductData(state.currentProduct);
+        })
+        .then((getRes) =>
+          dispatch({
+            type: 'PROD_INIT',
+            payload: getRes,
+          })
+        )
         .catch((err) => console.log('helpful question not sent!'));
     } else {
       alert('You can only mark answer as helpful once!');
@@ -33,10 +49,18 @@ export default function Answers(props) {
   const reportAnswerHandler = (id) => {
     setReportAnswerOnce(false);
     if (reportAnswerOnce) {
-      setIsReported(true);
       api.post.answer
         .report(id)
-        .then(() => alert('An admin will be notified'))
+        .then(() => alert('Reported! The answer will get deleted immediately.'))
+        .then(() => {
+          return api.get.allProductData(state.currentProduct);
+        })
+        .then((getRes) =>
+          dispatch({
+            type: 'PROD_INIT',
+            payload: getRes,
+          })
+        )
         .catch((err) => console.log('report answer not sent!'));
     } else {
       alert('You can only report this answer once!');
@@ -45,11 +69,11 @@ export default function Answers(props) {
 
   return (
     <AnswersContainer>
-      {Object.values(props.a.answers)
+      {Object.values(props.a)
         .slice(0, 1 + addMoreAnswers)
         .map((answer) => {
           return (
-            <div key={answer.id}>
+            <EachAnswerContainer key={answer.id}>
               <h3>A: {answer.body}</h3>
               {answer.photos &&
                 answer.photos.map((photo, i) => {
@@ -59,32 +83,63 @@ export default function Answers(props) {
                     </ImagesContainer>
                   );
                 })}
-              <p>
-                By: {answer.answerer_name} on: {moment(answer.date).format('MMMM Do, YYYY')}
-              </p>
-              <p>
-                Helpful Answer? <Link onClick={() => helpfulAnswerHandler(answer.id)}>Yes</Link> (
-                {answer.helpfulness}){' '}
-                <Link onClick={() => reportAnswerHandler(answer.id)}>
-                  {isReported ? 'Reported' : 'Report'}
-                </Link>
-              </p>
-            </div>
+              <AnswerAuthor>
+                By: {answer.answerer_name} | {moment(answer.date).format('MMMM Do, YYYY')}
+              </AnswerAuthor>
+              <HelpfulAnswer>
+                Helpful Answer?{' '}
+                <HelpfulLink
+                  helpful={!submitHelpfulAnswerOnce}
+                  onClick={() => helpfulAnswerHandler(answer.id)}>
+                  Yes
+                </HelpfulLink>{' '}
+                ({answer.helpfulness}) |{' '}
+                <ReportedLink onClick={() => reportAnswerHandler(answer.id)}>Report</ReportedLink>
+              </HelpfulAnswer>
+            </EachAnswerContainer>
           );
         })}
       {length > 1 && length && addMoreAnswers !== length - 1 && (
-        <p onClick={addMoreAnswersClickHandler}>Load more answers</p>
+        <LoadMoreAnswers onClick={addMoreAnswersClickHandler}>Load more answers</LoadMoreAnswers>
       )}
     </AnswersContainer>
   );
 }
 
-const Link = styled.span`
+const ReportedLink = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
+  padding-left: 1.5px;
+`;
+
+const AnswerAuthor = styled.p`
+  margin-top: 5px;
+`;
+
+const HelpfulLink = styled.span`
   text-decoration: underline;
   cursor: pointer;
 `;
 
-const AnswersContainer = styled.div``;
+const EachAnswerContainer = styled.div`
+  margin-top: 25px;
+`;
+
+const HelpfulAnswer = styled.div`
+  margin-top: 10px;
+  margin-bottom: 25px;
+`;
+
+const LoadMoreAnswers = styled.p`
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 10px;
+  margin-bottom: 25px;
+`;
+
+const AnswersContainer = styled.div`
+  margin-top: 25px;
+`;
 
 const ImagesContainer = styled.div`
   display: inline;

@@ -7,12 +7,17 @@ import Questions from './Questions';
 import api from '../api/index';
 
 export default function QAList(props) {
+  // console.log('QAList', props)
   const [state] = useContext(StateContext);
 
   return (
-    <div id={props.q.question_id}>
+    <QAndAContainer id={props.q.question_id}>
       <Questions q={props.q} />
-      <Answers a={props.q} />
-    </div>
+      <Answers a={props.q.answers} />
+    </QAndAContainer>
   );
 }
+
+const QAndAContainer = styled.div`
+  border-bottom: 0.5px solid black;
+`;

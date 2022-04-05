@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-// import { StateContext, DispatchContext } from '../appState/index.js';
+import React, { useContext, useState, useEffect } from 'react';
+import { StateContext } from '../appState/index.js';
 import styled from 'styled-components';
 
 
@@ -13,22 +13,22 @@ import Carousel from './components/Carousel.js';
 
 
 var mainRenderCount = 0;
-const RelatedProducts = ({ state, dev }) => {
-  // const [, dispatch] = useContext(DispatchContext);
-  // const [state] = useContext(StateContext);
+const RelatedProducts = () => {
+  const [state] = useContext(StateContext)
   const [relatedItemData, setRelatedItemData] = useState([]);
+  const { related, user, dev } = state;
+  const { outfit } = user
 
   if( dev.logs ) {
     mainRenderCount++;
     dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
-    dev.state && console.log('DEV  STATE   RelatedProducts: ', state)
+    dev.state && console.log('DEV  STATE   RelatedProducts: ', related)
   }
 
 
   useEffect(() => {
-    state.related && initRelatedProducts(state.related, setRelatedItemData)
-  }, [state.related])
-
+    related && initRelatedProducts(related, state.currentProduct, setRelatedItemData)
+  }, [related, state.currentProduct])
 
 
 
@@ -36,8 +36,16 @@ const RelatedProducts = ({ state, dev }) => {
   return relatedItemData.length ?
   (
     <RelatedContainer data-testid="related" >
-      <Carousel products={relatedItemData} />
+      <HeaderText>Related Products</HeaderText>
+      <CarouselContainer  >
+        <Carousel products={relatedItemData} outfit={outfit}  />
+      </CarouselContainer>
+      <HeaderText>My outfit</HeaderText>
+      <CarouselContainer >
+        <Carousel outfit={outfit} />
+      </CarouselContainer>
     </RelatedContainer>
+
   )
   :
   (
@@ -47,17 +55,28 @@ const RelatedProducts = ({ state, dev }) => {
   )
 }
 
-
 const RelatedContainer = styled.div`
   width: 100%;
   height: auto;
+  padding-top: 40px;
+  padding-bottom: 40px;
+`
+
+
+const CarouselContainer = styled.div`
+  width: 100%;
+  height: auto;
   display: flex;
-  padding-top: 15px;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   align-items: center;
   justify-content: space-evenly;
-  /* background-color: rgb(245, 245, 245); */
+`
+
+const HeaderText = styled.h1`
+  color: rgb(30, 30, 30);
+  font-size: 24px;
+  margin-left: 7.5%;
 `
 
 
@@ -69,12 +88,8 @@ const RelatedContainer = styled.div`
 
 
 
-
-
 export const relatedStateInit = (productId) => {
-  return [
-    ['related', `/products/${productId}/related/`, {}],
-  ]
+  return [`/products/${productId}/related/`, {}]
 }
 
 export default RelatedProducts

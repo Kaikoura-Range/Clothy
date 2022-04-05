@@ -1,11 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
 import styled from 'styled-components';
 import api from '../api/index';
+
 export default function QuestionForm(props) {
   const [state] = useContext(StateContext);
   const [username, setUsername] = useState('');
-  const [, dispatch] = useContext(DispatchContext);
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
   const onSubmitHandler = (e) => {
@@ -25,22 +25,13 @@ export default function QuestionForm(props) {
         setUsername('');
         setEmail('');
         setBody('');
-        return api.get.allProductData(state.currentProduct);
       })
-      .then((getRes) =>
-        dispatch({
-          type: 'PROD_INIT',
-          payload: getRes,
-        })
-      )
       .catch((err) => console.log('question not sent!'));
   };
-  const onChangeUsername = (e) => {
+  const onChangeSummary = (e) => {
     setUsername(e.target.value);
   };
-  const onChangeEmail = (e) => {
-    setEmail(e.target.value);
-  };
+ 
   const onChangeBody = (e) => {
     setBody(e.target.value);
   };
@@ -51,40 +42,32 @@ export default function QuestionForm(props) {
 
   return (
     <Modal onClick={preventBubbling}>
-      <QuestionsFormContainer>
-        <form onSubmit={onSubmitHandler}>
-          <label>Username: </label>
+      <ReviewFormContainer>
+        <form >
+          <label>Review Summary </label>
           <Input
             type='text'
-            name='username'
-            onChange={onChangeUsername}
-            placeholder='Example: jackson11!'
-            required
-          />
-          <label>Email: </label>
-          <Input
-            type='email'
-            name='email'
-            onChange={onChangeEmail}
-            placeholder='Example: abc@gmail.com'
+            name='Summary'
+            onChange={onChangeSummary}
+            placeholder='Write your Review'
             required
           />
           <TextArea
             type='text'
             name='body'
             onChange={onChangeBody}
-            placeholder='Ask a question about the product'
+            placeholder='About the [PRODUCT NAME HERE]'
             required></TextArea>
           <CenterItemsWrapper>
             <InputSubmit type='submit' />
           </CenterItemsWrapper>
         </form>
-      </QuestionsFormContainer>
+      </ReviewFormContainer>
     </Modal>
   );
 }
 
-const QuestionsFormContainer = styled.div`
+const ReviewFormContainer = styled.div`
   background-color: #f3f3f3;
   border-radius: 5px;
   padding: 20px;

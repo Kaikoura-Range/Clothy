@@ -2,13 +2,14 @@ import './App.css';
 import api from './api/index.js';
 import React, {  useContext } from 'react';
 import styled from 'styled-components';
-
+import Header from './components/Header.js'
+import Modal from './components/Modal/index'
 import { StateContext, DispatchContext } from './appState/index.js';
 import ProductDetails, { detailsStateInit } from './ProductDetails/index';
 import RatingsReviews, { reviewStateInit } from './RatingsReviews/index';
 import QAndA, { qAndAStateInit } from './QandA/index';
 import RelatedProducts, { relatedStateInit } from './RelatedProducts/index';
-import Header from './header/index.js'
+
 
 
 api.get.initProductDataFetch(
@@ -18,7 +19,9 @@ api.get.initProductDataFetch(
   relatedStateInit,
 )
 
-const maxApiRequests = 10;
+
+
+const maxApiRequests = 2;
 var renderCount = 0;
 var requestCount = 0;
 
@@ -26,6 +29,7 @@ function App() {
   const [, dispatch] = useContext(DispatchContext);
   const [state] = useContext(StateContext);
   renderCount++
+
   if( state.dev.logs ) { // Used to see preformance and data flow
     state.dev.renders && console.log('\n\nDEV  RENDER   App     number of renders: ', renderCount)
     state.dev.state && console.log('DEV  App STATE: ', state)
@@ -55,13 +59,16 @@ function App() {
     }
   } else {
     requestCount = 0
+
+
     return (
       <AppContainer className='App' data-testid="app"  >
+        <Modal />
         <Header />
         <ProductDetails />
-        <RelatedProducts state={state.related} dev={state.dev} />
+        <RelatedProducts  />
         <QAndA />
-        <RatingsReviews reviewData={state.reviews.this} dev={state.dev} />
+        <RatingsReviews reviewData={state.reviews} dev={state.dev} />
       </AppContainer>
     );
   }

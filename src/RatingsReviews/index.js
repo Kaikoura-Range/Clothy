@@ -1,7 +1,10 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
+import styled from 'styled-components';
+import ReviewForm from './ReviewForm.js';
+
 var mainRenderCount = 0;
+
 export default function RatingsReviews(props) {
   if( props.dev.logs ) {
     mainRenderCount++;
@@ -9,8 +12,23 @@ export default function RatingsReviews(props) {
     props.dev.state && console.log('DEV  STATE   RelatedProducts: ', props.reviewData)
   }
 
-  const [fullSummary, setFullSummary] = React.useState(false);
+ 
 
+  const [fullSummary, setFullSummary] = React.useState(false);
+  // const [sortedReviews, setSortedReviews] = React.useState([{date:'2022-02-21T00:00:00.000Z', helpfulness:1},
+  // {date:'2020-02-21T00:00:00.000Z',helpfulness:3},{date:'2021-02-21T00:00:00.000Z',helpfulness:2}]);
+  const [sortedReviews, setSortedReviews] = useState(props.reviewData.results);
+  const [diplayedReviewCount, setReviewCount] = useState(2);
+  const [openModal, setOpenModal] = useState(false);
+
+
+  // useEffect(() => {
+  //   props.reviewData && reviewStateInit(props.reviewData, )
+  // }, [props.reviewData])
+
+
+
+  //[{helpfulness:1},{helpfulness:2},{helpfulness:3}]
   function Recommended(props) {
     if(props.input === 'true') {
       return <div>Recommended!</div>
@@ -43,25 +61,78 @@ function SummaryBody(props) {
   )
 }
 
+function sorting(a,b,option) {
+  if(option === "helpful") {
+   return b.helpfulness - a.helpfulness;
+  } else if(option === "newest") {
+    return moment(b.date).valueOf() - moment(a.date).valueOf();
+  } else {
+    return 0
+  }
+}
+//sortedReviews.sort((a,b)=>sorting(a,b,e.target.value))
+// props.reviewData.results.sort((a,b) => sorting( a,b,e.target.value))
+
+function SortReviews() {
+var newlist = sortedReviews;
+
+  return (
+    <>
+      <div>{props.reviewData.results.length} reviews
+      <select onChange={ (e) => { setSortedReviews(newlist.sort((a,b) => sorting( a,b,e.target.value)).sort((a,b) => sorting(a,b,e.target.value))) } }>
+        <option value="newest">newest</option>
+        <option value="helpful">Helpfulness</option>
+        <option value="relevant">Relevance</option>
+      </select>
+      </div>
+    </>
+  )
+}
+  function addReviews(){
+    var value = sortedReviews.length-diplayedReviewCount;
+    if(value >= 2) {
+      setReviewCount(diplayedReviewCount +2);
+    } else if( value === 1 ) {
+      setReviewCount(diplayedReviewCount +1);
+    } 
+  }
+  function ReviewButton(){
+    var value = sortedReviews.length-diplayedReviewCount;
+    if(value > 0 ){
+      return (<button onClick={addReviews}>More Reviews</button>)
+    }
+  }
+  function backDropHandler() {
+    setOpenModal(!openModal)
+  }
+  
     if(props.reviewData) {
     return (
-        <div data-testid="reviews" >
-           {props.reviewData.results.map((review,id) => {
-            return (
-            <div key={id}>
-              <div>{moment(review.date).format("MMM Do YY")}</div>
-              <div>review name- {review.reviewer_name}</div>
-              <SummaryBody summary={review.summary} body={review.body} showFull={false}/>
-              <Recommended input={review.recommend.toString()}/>
-              <SalesResponse response={review.response}/>
-              <Images photos={review.photos}/>
-              <Star stars={review.rating}/>
-              <Helpfulness counter={review.helpfulness}/>
-            </div>
-            )
-          })}
-
-        </div>
+      <div data-testid="reviews" >
+        <SortReviews />
+        {sortedReviews.slice(0,diplayedReviewCount).map((review,id) => {
+          return (
+          <div key={id}>
+            <div>{moment(review.date).format("MMM Do YY")}</div>
+            <div>review name- {review.reviewer_name}</div>
+            <SummaryBody summary={review.summary} body={review.body} showFull={false}/>
+            <Recommended input={review.recommend.toString()}/>
+            <SalesResponse response={review.response}/>
+            <Images photos={review.photos}/>
+            <Star stars={review.rating}/>
+            <Helpfulness counter={review.helpfulness}/>
+          </div>
+          )
+        })}
+        <ReviewButton/>
+        <button onClick={() => {setOpenModal(true)}}>Add a Review</button>
+        {openModal && <ReviewForm />}
+        {openModal && (
+        <BackDrop onClick={backDropHandler}>
+          <ReviewForm />
+        </BackDrop>
+      )}
+      </div>
     )
     }
     return (
@@ -73,14 +144,20 @@ function SummaryBody(props) {
 
 
 export const reviewStateInit = (productId) => {
-    return [
-      ['this', '/reviews/', { product_id: productId, page: 1, sort: 'newest' }]
-    ]
+    return ['/reviews/', { product_id: productId, page: 1, sort: 'newest' }]
   }
 
 
 
-
+  const BackDrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1.5;
+  background: rgba(0, 0, 0, 0.75);
+`;
 
 
 
