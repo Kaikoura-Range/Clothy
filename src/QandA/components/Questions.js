@@ -122,8 +122,7 @@ export default function Questions(props) {
       )}
       {showErrorModal && (
         <BackDrop onClick={backDropErrorHandler}>
-          {' '}
-          <ErrorModal />{' '}
+          <ErrorModal />
         </BackDrop>
       )}
     </QuestionsContainer>
@@ -132,6 +131,7 @@ export default function Questions(props) {
 
 const ReportedLink = styled.span`
   text-decoration: underline;
+  margin-right: 10px;
   cursor: pointer;
   padding-left: 1.5px;
 `;
@@ -159,6 +159,7 @@ const QuestionsAuthor = styled.p`
 `;
 
 const QuestionBody = styled.h3`
+  display: inline;
   width: 70%;
 `;
 

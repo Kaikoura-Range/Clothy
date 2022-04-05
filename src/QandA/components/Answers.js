@@ -15,6 +15,7 @@ export default function Answers(props) {
   const [reportAnswerOnce, setReportAnswerOnce] = useState(true);
   const [showHelpfulModal, setShowHelpfulModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
+
   const addMoreAnswersClickHandler = () => {
     setAddMoreAnswers(addMoreAnswers + 1);
   };

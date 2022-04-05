@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import QAList from './components/QAList';
 import QuestionForm from './components/forms/QuestionForm';
 import SuccessModal from './components/modals/SuccessModal';
+
+let length;
+
 export default function QAndA() {
   //central API state
   const [state] = useContext(StateContext);
@@ -51,30 +54,24 @@ export default function QAndA() {
           <QAList key={q.question_id} q={q} />
         )
     );
-    let length = filteredResults.filter((val) => val !== false).length;
-    addMoreQuestionsButtonWhenSearchInput(length);
+    length = filteredResults.filter((val) => val !== false).length;
     let results = filteredResults.filter((val) => val !== false).slice(0, 2 + addQuestionsSearch);
     if (results.length) {
       if (length % 2 !== 0) {
-        return (
-          <div>
-            {results}
-            {results.length === 0 && <p>No match</p>}
-          </div>
-        );
+        return <>{results}</>;
       }
       if (length % 2 === 0) {
-        return <div>{results}</div>;
+        return <>{results}</>;
       }
     } else {
       return <NoMatchMessage>No match</NoMatchMessage>;
     }
   };
 
-  const addMoreQuestionsButtonWhenSearchInput = (length) => {
+  const addMoreQuestionsButtonWhenSearchInput = () => {
     if (length % 2 === 0) {
       return (
-        filteredSearchLength > 2 &&
+        length > 2 &&
         addQuestionsSearch + 2 !== length && (
           <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
             More Answered Questions
@@ -84,7 +81,7 @@ export default function QAndA() {
     }
     if (length % 2 !== 0) {
       return (
-        filteredSearchLength > 2 &&
+        length > 2 &&
         addQuestionsSearch + 1 !== length && (
           <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
             More Answered Questions
