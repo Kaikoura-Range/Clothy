@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StateContext, DispatchContext } from '../appState/index.js';
+import { StateContext, DispatchContext } from '../../appState/index.js';
 
 import styled from 'styled-components';
 import moment from 'moment';
-import api from '../api/index';
+import api from '../../api/index';
+import HelpfulModal from './modals/HelpfulModal';
 
 export default function Answers(props) {
   const [state] = useContext(StateContext);
@@ -12,14 +13,13 @@ export default function Answers(props) {
   const [length, setLength] = useState(Object.keys(props.a).length);
   const [submitHelpfulAnswerOnce, setsubmitHelpfulAnswerOnce] = useState(true);
   const [reportAnswerOnce, setReportAnswerOnce] = useState(true);
-
+  const [showHelpfulModal, setShowHelpfulModal] = useState(false);
   const addMoreAnswersClickHandler = () => {
     setAddMoreAnswers(addMoreAnswers + 1);
   };
 
   useEffect(() => {
     setLength(Object.keys(props.a).length);
-    console.log(props.a);
   }, [props.a]);
 
   useEffect(() => {
@@ -29,6 +29,7 @@ export default function Answers(props) {
   const helpfulAnswerHandler = (id) => {
     setsubmitHelpfulAnswerOnce(false);
     if (submitHelpfulAnswerOnce) {
+      setShowHelpfulModal(true);
       api.post.answer
         .helpful(id)
         .then(() => {
@@ -51,7 +52,6 @@ export default function Answers(props) {
     if (reportAnswerOnce) {
       api.post.answer
         .report(id)
-        .then(() => alert('Reported! The answer will get deleted immediately.'))
         .then(() => {
           return api.get.allProductData(state.currentProduct);
         })
@@ -65,6 +65,11 @@ export default function Answers(props) {
     } else {
       alert('You can only report this answer once!');
     }
+  };
+
+  const backDropHandler = (e) => {
+    e.stopPropagation();
+    setShowHelpfulModal(false);
   };
 
   return (
@@ -96,6 +101,11 @@ export default function Answers(props) {
                 ({answer.helpfulness}) |{' '}
                 <ReportedLink onClick={() => reportAnswerHandler(answer.id)}>Report</ReportedLink>
               </HelpfulAnswer>
+              {showHelpfulModal && (
+                <BackDrop onClick={backDropHandler}>
+                  <HelpfulModal />
+                </BackDrop>
+              )}
             </EachAnswerContainer>
           );
         })}
@@ -149,4 +159,13 @@ const Img = styled.img`
   width: 90px;
   height: 90px;
   margin: 5px;
+`;
+
+const BackDrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
 `;
