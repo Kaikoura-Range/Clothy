@@ -1,30 +1,36 @@
 import React, { useState, useContext } from 'react';
-import { StateContext, DispatchContext } from '../appState/index.js';
+import { StateContext, DispatchContext } from '../../../appState/index.js';
 import styled from 'styled-components';
-import api from '../api/index';
-export default function QuestionForm(props) {
+import api from '../../../api/index';
+import ImageForm from './ImageForm';
+export default function AnswerForm(props) {
   const [state] = useContext(StateContext);
-  const [username, setUsername] = useState('');
   const [, dispatch] = useContext(DispatchContext);
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
+  const [photos, setPhotos] = useState(null);
+  const [imageForm, setImageForm] = useState(false);
+  const [uploadImagesButton, setUploadImagesButton] = useState(true);
+
   const onSubmitHandler = (e) => {
-    e.stopPropagation();
     e.preventDefault();
-    var newQuestion = {
-      product_id: state.currentProduct,
+    props.showForm();
+    let newAnswer = {
+      photos: photos,
       body: body,
       name: username,
       email: email,
     };
     api.post
-      .question(newQuestion)
-      .then((res) => console.log('post question res', res))
+      .answer(props.id, newAnswer)
+      .then((res) => console.log('post answer res', res))
       .then(() => {
-        props.showForm(false);
         setUsername('');
         setEmail('');
         setBody('');
+        setPhotos(null);
+        setUploadImagesButton(true);
         return api.get.allProductData(state.currentProduct);
       })
       .then((getRes) =>
@@ -33,8 +39,9 @@ export default function QuestionForm(props) {
           payload: getRes,
         })
       )
-      .catch((err) => console.log('question not sent!'));
+      .catch((err) => console.log('answer not sent!'));
   };
+
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
   };
@@ -45,18 +52,32 @@ export default function QuestionForm(props) {
     setBody(e.target.value);
   };
 
+  const showImageFormHandler = (e) => {
+    e.stopPropagation();
+    setImageForm(true);
+    setUploadImagesButton(false);
+  };
+
+  const getPhotosHandler = (arrOfPhotos) => {
+    const filtered = arrOfPhotos.filter((val) => val !== '');
+    setPhotos(filtered);
+  };
+
+  const afterImageFormSubmitHandler = () => {
+    setImageForm(false);
+  };
+
   const preventBubbling = (e) => {
     e.stopPropagation();
   };
 
   return (
     <Modal onClick={preventBubbling}>
-      <QuestionsFormContainer>
+      <AnswerFormContainer>
         <form onSubmit={onSubmitHandler}>
           <label>Username: </label>
           <Input
             type='text'
-            name='username'
             onChange={onChangeUsername}
             placeholder='Example: jackson11!'
             required
@@ -64,27 +85,37 @@ export default function QuestionForm(props) {
           <label>Email: </label>
           <Input
             type='email'
-            name='email'
             onChange={onChangeEmail}
             placeholder='Example: abc@gmail.com'
             required
           />
           <TextArea
             type='text'
-            name='body'
             onChange={onChangeBody}
-            placeholder='Ask a question about the product'
+            placeholder='Add your answer to a question here...'
             required></TextArea>
           <CenterItemsWrapper>
             <InputSubmit type='submit' />
           </CenterItemsWrapper>
         </form>
-      </QuestionsFormContainer>
+        {imageForm && (
+          <ImageFormContainer>
+            <ImageForm afterSubmit={afterImageFormSubmitHandler} getPhotos={getPhotosHandler} />
+          </ImageFormContainer>
+        )}
+        {uploadImagesButton && (
+          <CenterItemsWrapper>
+            <UploadImageButton onClick={showImageFormHandler}>
+              Click to upload images
+            </UploadImageButton>
+          </CenterItemsWrapper>
+        )}
+      </AnswerFormContainer>
     </Modal>
   );
 }
 
-const QuestionsFormContainer = styled.div`
+const AnswerFormContainer = styled.div`
   background-color: #f3f3f3;
   border-radius: 5px;
   padding: 20px;
@@ -120,6 +151,19 @@ const InputSubmit = styled.input`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+`;
+
+const UploadImageButton = styled.button`
+  background-color: #ccc;
+  color: black;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+`;
+
+const ImageFormContainer = styled.div`
+  display: flex;
 `;
 
 const Modal = styled.div`

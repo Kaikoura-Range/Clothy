@@ -1,19 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StateContext, DispatchContext } from '../appState/index.js';
+import { StateContext, DispatchContext } from '../../appState/index.js';
 import styled from 'styled-components';
-import AnswerForm from './AnswerForm';
+import AnswerForm from './forms/AnswerForm';
 import moment from 'moment';
-import api from '../api/index';
+import api from '../../api/index';
+import HelpfulModal from './modals/HelpfulModal';
+import SuccessModal from './modals/SuccessModal';
+import ReportModal from './modals/ReportModal';
 export default function Questions(props) {
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
   const [answerForm, setAnswerForm] = useState(false);
   const [submitHelpfulQuestionOnce, setsubmitHelpfulQuestionOnce] = useState(true);
   const [reportQuestionOnce, setreportQuestionOnce] = useState(true);
-
+  const [showHelpfulModal, setShowHelpfulModal] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   useEffect(() => {
     setAnswerForm(false);
-  }, [state.QA]);
+  }, [state.currentProduct]);
 
   const answerFormHandler = () => {
     setAnswerForm(!answerForm);
@@ -21,12 +26,13 @@ export default function Questions(props) {
 
   const showAnswerForm = () => {
     setAnswerForm(false);
+    setShowSuccess(true);
   };
 
   const helpfulQuestionHandler = (id) => {
     setsubmitHelpfulQuestionOnce(false);
-
     if (submitHelpfulQuestionOnce) {
+      setShowHelpfulModal(true);
       api.post.question
         .helpful(id)
         .then(() => {
@@ -46,10 +52,10 @@ export default function Questions(props) {
 
   const reportQuestionHandler = (id) => {
     setreportQuestionOnce(false);
+    setShowReportModal(true);
     if (reportQuestionOnce) {
       api.post.question
         .report(id)
-        .then(() => alert('Reported! The question will get deleted immediately'))
         .then(() => {
           return api.get.allProductData(state.currentProduct);
         })
@@ -67,6 +73,18 @@ export default function Questions(props) {
 
   const backDropHandler = () => {
     setAnswerForm(false);
+  };
+
+  const backDropHelpfulHandler = () => {
+    setShowHelpfulModal(false);
+  };
+
+  const backDropSuccessHandler = () => {
+    setShowSuccess(false);
+  };
+
+  const backDropReportHandler = () => {
+    setShowReportModal(false);
   };
 
   return (
@@ -91,6 +109,22 @@ export default function Questions(props) {
       {answerForm && (
         <BackDrop onClick={backDropHandler}>
           <AnswerForm id={props.q.question_id} showForm={showAnswerForm} />
+        </BackDrop>
+      )}
+      {showHelpfulModal && (
+        <BackDrop onClick={backDropHelpfulHandler}>
+          <HelpfulModal />
+        </BackDrop>
+      )}
+      {showSuccess && (
+        <BackDrop onClick={backDropSuccessHandler}>
+          <SuccessModal />
+        </BackDrop>
+      )}
+
+      {showReportModal && (
+        <BackDrop onClick={backDropReportHandler}>
+          <ReportModal />
         </BackDrop>
       )}
     </QuestionsContainer>

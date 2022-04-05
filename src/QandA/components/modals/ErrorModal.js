@@ -4,9 +4,9 @@ import { keyframes } from 'styled-components';
 export default function ErrorModal() {
   return (
     <Modal>
-      <SuccessMessage>
+      <ErrorMessage>
         <XMark></XMark> Error! Your message has not been posted.
-      </SuccessMessage>
+      </ErrorMessage>
     </Modal>
   );
 }
@@ -29,12 +29,7 @@ const XMark = styled.div`
           56%, transparent 100%);
 `;
 
-const fadeOut = keyframes`
-0%{opacity:1;}
-100%{opacity: 0;}
-`;
-
-const successAnimation = keyframes`
+const ErrorAnimation = keyframes`
  0% {
    opacity: 0;
    transform: translateY(100px);
@@ -50,12 +45,12 @@ const successAnimation = keyframes`
  }
 `;
 
-const SuccessMessage = styled.h3`
+const ErrorMessage = styled.h3`
   background-color: #ffbaba;
   color: #d8000c;
   padding: 20px;
   border-radius: 5px;
-  /* animation: ${successAnimation} 1s ease-in-out; */
+  animation: ${ErrorAnimation} 1s ease-in-out;
 `;
 
 const Modal = styled.div`
@@ -65,5 +60,4 @@ const Modal = styled.div`
   top: 5.5vh;
   width: 50%;
   z-index: 5;
-  animation: ${fadeOut} ease 1s;
 `;
