@@ -1,7 +1,7 @@
 
 
 
-const cachedLogs = false // true will turn on all logs to the cache
+const cachedLogs = true // true will turn on all logs to the cache
 
 
 
@@ -14,12 +14,33 @@ const cleanup = (key, timeToCleanup, store) => {
 }
 
 const getKey = (options) => {
-  // console.log(options)
+
   var key = options.url;
-  if (options.params.product_id) {
+  // console.log('initkey', key)
+
+  if (options.params.product_id ) {
+    // const checkKey = /(questions)||(answers)/i
+    const found = key.includes('question') || key.includes('answer');
+    console.log('params found', found)
+    if (found) {
+      key = '/qa/questions/'
+    }
     key += options.params.product_id
+    console.log('new key', key)
   }
-  // console.log('new key', key)
+
+  if (options.data) {
+    if (options.data.product_id) {
+
+      const found = key.includes('question') || key.includes('answer') ;
+      console.log('body found', found)
+      if (found) {
+        key = '/qa/questions/'
+      }
+      key += options.data.product_id
+    }
+  }
+  //  const checkKey = /(\/reviews\/)||(\/qa\/questions)/i
   return key
 }
 
@@ -52,11 +73,12 @@ const QuickCache = (maxStoreTime = baseTime) => {
   }
 
   instance.remove = (options) => {
-    // const checkKey = /\/qa\/questions\/[0-9]+\/answers\/||\/qa\/questions/i
     // console.log(instance.store)
     // const keyMatch = key.match(checkKey)
-    // console.log(key, keyMatch)
+    console.log('POST OPTIONS', options)
     const key = getKey(options)
+    console.log(options.url)
+    console.log(key)
     delete instance.store[key]
     cachedLogs && console.log('removed from cache ', key)
     // console.log(instance.store)
