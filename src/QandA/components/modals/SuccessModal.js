@@ -5,7 +5,7 @@ export default function SuccessModal() {
   return (
     <Modal>
       <SuccessMessage>
-        <CheckMark></CheckMark> Success! Your message has been posted.
+        <CheckMark></CheckMark> Success! Message posted.
       </SuccessMessage>
     </Modal>
   );
@@ -43,11 +43,6 @@ const SuccessMessage = styled.h3`
   padding: 20px;
   border-radius: 5px;
   animation: ${successAnimation} 1s ease-in-out;
-`;
-
-const fadeOut = keyframes`
-0%{opacity:1;}
-100%{opacity: 0;}
 `;
 
 const Modal = styled.div`

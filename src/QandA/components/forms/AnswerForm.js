@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { StateContext, DispatchContext } from '../appState/index.js';
+import { StateContext, DispatchContext } from '../../../appState/index.js';
 import styled from 'styled-components';
-import api from '../api/index';
+import api from '../../../api/index';
 import ImageForm from './ImageForm';
 export default function AnswerForm(props) {
   const [state] = useContext(StateContext);
@@ -15,6 +15,7 @@ export default function AnswerForm(props) {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    props.showForm();
     let newAnswer = {
       photos: photos,
       body: body,
@@ -25,7 +26,6 @@ export default function AnswerForm(props) {
       .answer(props.id, newAnswer)
       .then((res) => console.log('post answer res', res))
       .then(() => {
-        props.showForm(false);
         setUsername('');
         setEmail('');
         setBody('');

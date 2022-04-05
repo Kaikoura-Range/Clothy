@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StateContext } from '../appState/index.js';
 import styled from 'styled-components';
-import { keyframes } from 'styled-components';
-import QAList from './QAList';
-import QuestionForm from './QuestionForm';
-import SuccessModal from './SuccessModal';
-import ErrorModal from './ErrorModal';
+import QAList from './components/QAList';
+import QuestionForm from './components/forms/QuestionForm';
+import SuccessModal from './components/modals/SuccessModal';
 export default function QAndA() {
   //central API state
   const [state] = useContext(StateContext);
@@ -134,6 +132,10 @@ export default function QAndA() {
     setShowModal(false);
   };
 
+  const success = () => {
+    setShowModal(true);
+  };
+
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <EntireQuestionsContainer data-testid='QandA'>
@@ -160,19 +162,13 @@ export default function QAndA() {
       </EntireQuestionsWrapper>
       {createForm && (
         <BackDrop onClick={backDropHandler}>
-          <QuestionForm showForm={setCreateForm} />
+          <QuestionForm success={success} showForm={setCreateForm} />
         </BackDrop>
       )}
       <button onClick={showModalHandler}>Testing Success Modal</button>
       {showModal && (
         <BackDrop onClick={backDropSuccessHandler}>
           <SuccessModal />
-        </BackDrop>
-      )}
-
-      {showModal && (
-        <BackDrop onClick={backDropSuccessHandler}>
-          <ErrorModal />
         </BackDrop>
       )}
     </EntireQuestionsContainer>

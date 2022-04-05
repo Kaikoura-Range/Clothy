@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { StateContext, DispatchContext } from '../appState/index.js';
+import { StateContext, DispatchContext } from '../../../appState/index.js';
 import styled from 'styled-components';
-import api from '../api/index';
+import api from '../../../api/index';
 export default function QuestionForm(props) {
   const [state] = useContext(StateContext);
   const [username, setUsername] = useState('');
@@ -11,6 +11,7 @@ export default function QuestionForm(props) {
   const onSubmitHandler = (e) => {
     e.stopPropagation();
     e.preventDefault();
+    props.success();
     var newQuestion = {
       product_id: state.currentProduct,
       body: body,
@@ -21,7 +22,7 @@ export default function QuestionForm(props) {
       .question(newQuestion)
       .then((res) => console.log('post question res', res))
       .then(() => {
-        props.showForm(false);
+        props.showForm();
         setUsername('');
         setEmail('');
         setBody('');

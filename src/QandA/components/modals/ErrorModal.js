@@ -29,11 +29,6 @@ const XMark = styled.div`
           56%, transparent 100%);
 `;
 
-const fadeOut = keyframes`
-0%{opacity:1;}
-100%{opacity: 0;}
-`;
-
 const ErrorAnimation = keyframes`
  0% {
    opacity: 0;
