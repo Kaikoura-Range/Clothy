@@ -165,12 +165,6 @@ export default function QAndA() {
           <QuestionForm success={success} showForm={setCreateForm} />
         </BackDrop>
       )}
-      <button onClick={showModalHandler}>Testing Success Modal</button>
-      {showModal && (
-        <BackDrop onClick={backDropSuccessHandler}>
-          <SuccessModal />
-        </BackDrop>
-      )}
     </EntireQuestionsContainer>
   );
 }

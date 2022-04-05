@@ -37,13 +37,14 @@ function reducer(state, action) {
       return newState
 
 
-    case 'ADD_PRODUCT_TO_OUTFIT':
-      newState = {...state}
-      newState.user.outfit.push(action.payload)
+    case 'SET_OUTFIT':
+      newState = { ...state }
+      newState.user.outfit = action.payload
       if (toLog) {
-        console.log('\n\nDEV  STATE-REDUCER   ADD_PRODUCT_TO_OUTFIT    added prodId: ', action.payload)
+        console.log('\n\nDEV  STATE-REDUCER   SET_OUTFIT   new Outfit: ', newState.currentProduct)
       }
       return newState
+
 
     case 'TOGGLE_MODAL':
       newState = {...state}

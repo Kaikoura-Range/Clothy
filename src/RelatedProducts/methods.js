@@ -49,8 +49,8 @@ const getRelatedEndpoints = (relatedIds) => {
 
 
 
-export const initRelatedProducts = (relatedIds, setRelatedItemData) => {
-  relatedIds = relatedIds.filter((id, ind) =>  relatedIds.slice((ind + 1)).indexOf(id) === -1)
+export const initRelatedProducts = (relatedIds, currentProduct, setRelatedItemData) => {
+  relatedIds = relatedIds.filter((id, ind) =>  relatedIds.slice((ind + 1)).indexOf(id) === -1 && id !== currentProduct)
   const endpoints = getRelatedEndpoints(relatedIds)
   api.get.all(endpoints)
     .then((getResult) => {

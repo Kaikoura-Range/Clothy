@@ -1,8 +1,7 @@
-import { initializeAppState, addProductToOutfit } from '../methods.js'
 import styled from 'styled-components';
 
 
-const RelatedCard = ({ data, dispatch }) => {
+const RelatedCard = ({ data, outfit, nav, action }) => {
   if (data.name) {
     const { name, id, photos } = data;
     var photoUrl = photos.length ? photos[0].url : null;
@@ -10,12 +9,12 @@ const RelatedCard = ({ data, dispatch }) => {
 
     return  (
       <RelatecCardContainer data-testid="RelatedCard" >
-        {photoUrl ? <CardImage src={photoUrl} ></CardImage> : <EmptyCardImage ></EmptyCardImage>}
+        {photoUrl ? <CardImage src={photoUrl} onClick={nav} data-testid="nav" ></CardImage> : <EmptyCardImage onClick={nav} data-testid="nav"  ></EmptyCardImage>}
         <CardFooter>
           <CardFooterText>{name}</CardFooterText>
           <CardFooterButtonContainer>
-            <CardFooterButton data-testid="nav" onClick={() => initializeAppState(dispatch, id)} >View product</CardFooterButton>
-            <CardFooterButton data-testid="outfit" onClick={() => addProductToOutfit(dispatch, id)} >Add to outfit</CardFooterButton>
+            {/* <CardFooterButton data-testid="nav" onClick={nav} >View product</CardFooterButton> */}
+            <CardFooterButton data-testid="outfit" onClick={outfit} >{`${action} outfit`}</CardFooterButton>
           </CardFooterButtonContainer>
         </CardFooter>
       </RelatecCardContainer>
@@ -23,9 +22,11 @@ const RelatedCard = ({ data, dispatch }) => {
   }
   return  (
     <RelatecCardContainer>
-      <p>name: </p>
-      <p>slogan: </p>
-      <p>category: </p>
+      <EmptyTextContainer>
+        <p>Dont forget </p>
+        <p>to add items </p>
+        <p>to your outfit!</p>
+      </EmptyTextContainer>
     </RelatecCardContainer>
   );
 }
@@ -47,10 +48,10 @@ const RelatecCardContainer = styled.div`
   margin-left: 5px;
   margin-right: 5px;
   border-radius: 5px;
-  width: ${cardWidth}px;
-  height: ${cardHeight}px;
   align-items: center;
   flex-direction: column;
+  width: ${cardWidth}px;
+  height: ${cardHeight}px;
   justify-content: space-evenly;
   background-color: rgb( ${mainBackground.toString()} );
 
@@ -95,8 +96,8 @@ const CardFooterText = styled.p`
 
 const buttonBackground = [217, 217, 217]
 const CardFooterButton = styled.button`
-  width: 46%;
   height: 75%;
+  padding: 7px;
   font-size: 12px;
   border-radius: 5px;
   background-color: rgb(${buttonBackground.toString()});
@@ -112,6 +113,14 @@ const CardFooterButtonContainer = styled.div`
   background-color: rgb(${mainBackground.toString()});
 `
 
+
+const EmptyTextContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+`
 
 
 export default RelatedCard
