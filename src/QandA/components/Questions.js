@@ -142,6 +142,7 @@ const HelpfulLink = styled.span`
 `;
 
 const AddAnswerLink = styled.div`
+  margin-bottom: 10px;
   width: 90px;
   display: block;
   margin-top: 10px;
@@ -158,8 +159,7 @@ const QuestionsAuthor = styled.p`
 `;
 
 const QuestionBody = styled.h3`
-  overflow-wrap: break-word;
-  display: inline;
+  width: 70%;
 `;
 
 const HelpfulReportContainer = styled.div`
