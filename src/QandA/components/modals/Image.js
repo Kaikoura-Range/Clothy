@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { StateContext, DispatchContext } from '../../../appState/index';
+import React from 'react';
 import styled from 'styled-components';
 
 export default function Image(props) {

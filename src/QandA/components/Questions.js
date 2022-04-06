@@ -12,7 +12,6 @@ export default function Questions(props) {
   const [, dispatch] = useContext(DispatchContext);
   const [answerForm, setAnswerForm] = useState(false);
   const [submitHelpfulQuestionOnce, setsubmitHelpfulQuestionOnce] = useState(true);
-  const [reportQuestionOnce, setreportQuestionOnce] = useState(true);
   const [showHelpfulModal, setShowHelpfulModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);

@@ -12,7 +12,6 @@ export default function QAndA() {
   const [state] = useContext(StateContext);
   //state for toggling how many questions get showed and what gets filtered
   const [addMoreQuestionsNoSearch, setAddMoreQuestionsNoSearch] = useState(0);
-  const [filteredSearchLength, setFilteredSearchLength] = useState(null);
   const [addQuestionsSearch, setAddQuestionsSearch] = useState(0);
   const [searchText, setSearchText] = useState('');
   const [searchTextThere, setSearchTextThere] = useState(false);

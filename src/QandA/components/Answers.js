@@ -13,7 +13,6 @@ export default function Answers(props) {
   const [addMoreAnswers, setAddMoreAnswers] = useState(0);
   const [length, setLength] = useState(Object.keys(props.a).length);
   const [submitHelpfulAnswerOnce, setsubmitHelpfulAnswerOnce] = useState(true);
-  const [reportAnswerOnce, setReportAnswerOnce] = useState(true);
   const [showHelpfulModal, setShowHelpfulModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);

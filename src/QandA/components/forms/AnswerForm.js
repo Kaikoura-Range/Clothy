@@ -12,7 +12,7 @@ export default function AnswerForm(props) {
   const [photos, setPhotos] = useState(null);
   const [imageForm, setImageForm] = useState(false);
   const [uploadImagesButton, setUploadImagesButton] = useState(true);
-  console.log(state);
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     props.showForm();
