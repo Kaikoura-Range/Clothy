@@ -77,14 +77,13 @@ const CarouselContainer = styled.div`
   display: flex;
   padding: 20px;
   overflow: auto;
-  white-space: nowrap;
-  border-radius: 7px;
   padding-top: 20px;
-  padding-bottom: 20px;
+  border-radius: 7px;
   align-items: center;
+  white-space: nowrap;
+  padding-bottom: 20px;
   background-color: var( --bgc-0);
-  /* background-color: rgb(242, 242, 242); */
-  /* background-Color: rgba(247, 193, 18, 0.8); */
+
 `
 
 // const CarouselAccent = styled.div`

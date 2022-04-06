@@ -40,11 +40,22 @@ const GlobalStyles = createGlobalStyle`
     --fs2: ${({ fs }) => `${fs['2'].toString()}rem`};
     --fs3: ${({ fs }) => `${fs['3'].toString()}rem`};
 
+    --accent-color: rgb(247, 193, 18);
+
+    --product-flex: row;
+    --product-carousel-width: 65%;
+    --product-info-width: 35%;
+
 
     @media (max-width: ${media.tablet} ) {
-      --bgc2: ${`rgb(${[170, 30, 30].toString()})`};
-      --bgc-2: ${`rgb(${[170, 30, 30].toString()})`};
+      --product-flex: column;
+      --product-carousel-width: 100%;
+      --product-info-width: 100%;
+      /* --bgc2: ${`rgb(${[170, 30, 30].toString()})`};
+      --bgc-2: ${`rgb(${[170, 30, 30].toString()})`}; */
     }
+
+
 
 
   }

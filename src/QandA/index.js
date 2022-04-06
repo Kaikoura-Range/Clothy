@@ -24,6 +24,7 @@ export default function QAndA() {
     setAddMoreQuestionsNoSearch(0);
     setAddQuestionsSearch(0);
     setCreateForm(false);
+    setSearchText('');
   }, [state.currentProduct]);
   //these functions render 2 questions at a time
   const addQuestionsNoSearchHandler = () => {
