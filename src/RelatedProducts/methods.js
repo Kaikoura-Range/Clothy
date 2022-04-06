@@ -45,9 +45,9 @@ const getProductEndpoints = (productIds) => {
 
 export const initProductsFromIds = (productIds, currentProduct, setItemData, filterCurrentProduct = true) => {
   if (filterCurrentProduct) {
-    productIds = productIds.filter((id, ind) =>  productIds.slice((ind + 1)).indexOf(id) === -1 && id !== currentProduct && id)
+    productIds = productIds.filter((id, ind) =>  productIds.slice((ind + 1)).indexOf(id) === -1 && id !== currentProduct && id  && id !== 37312)
   } else {
-    productIds = productIds.filter((id, ind) =>  productIds.slice((ind + 1)).indexOf(id) === -1 && id)
+    productIds = productIds.filter((id, ind) =>  productIds.slice((ind + 1)).indexOf(id) === -1 && id && id !== 37312)
   }
 
   const endpoints = getProductEndpoints(productIds)
