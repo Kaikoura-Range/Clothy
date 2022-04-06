@@ -12,9 +12,14 @@ export default function Image(props) {
 const ImageWrapper = styled.div`
   display: flex;
   justify-content: center;
+  object-fit: scale-down;
 `;
 
 const Img = styled.img`
   display: block;
-  width: 50%;
+  width: auto;
+  margin-top: 15%;
+  max-height: 700px;
+  max-width: 700px;
+  height: auto;
 `;

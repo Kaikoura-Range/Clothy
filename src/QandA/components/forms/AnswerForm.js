@@ -11,7 +11,6 @@ export default function AnswerForm(props) {
   const [body, setBody] = useState('');
   const [photos, setPhotos] = useState(null);
   const [imageForm, setImageForm] = useState(false);
-  const [uploadImagesButton, setUploadImagesButton] = useState(true);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -30,7 +29,6 @@ export default function AnswerForm(props) {
         setEmail('');
         setBody('');
         setPhotos(null);
-        setUploadImagesButton(true);
         return api.get.allProductData(state.currentProduct);
       })
       .then((getRes) =>
@@ -55,7 +53,6 @@ export default function AnswerForm(props) {
   const showImageFormHandler = (e) => {
     e.stopPropagation();
     setImageForm(true);
-    setUploadImagesButton(false);
   };
 
   const getPhotosHandler = (arrOfPhotos) => {
@@ -105,13 +102,11 @@ export default function AnswerForm(props) {
             <ImageForm afterSubmit={afterImageFormSubmitHandler} getPhotos={getPhotosHandler} />
           </ImageFormContainer>
         )}
-        {uploadImagesButton && (
-          <CenterItemsWrapper>
-            <UploadImageButton onClick={showImageFormHandler}>
-              Click to upload images
-            </UploadImageButton>
-          </CenterItemsWrapper>
-        )}
+        <CenterItemsWrapper>
+          <UploadImageButton onClick={showImageFormHandler}>
+            Click to upload images
+          </UploadImageButton>
+        </CenterItemsWrapper>
       </AnswerFormContainer>
     </Modal>
   );
@@ -180,7 +175,7 @@ const ImageFormContainer = styled.div`
 const Modal = styled.div`
   position: fixed;
   top: 25vh;
-  left: 15%;
-  width: 75%;
+  left: 25%;
+  width: 50%;
   z-index: 2;
 `;
