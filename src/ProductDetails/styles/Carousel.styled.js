@@ -3,7 +3,8 @@ import styled from 'styled-components';
 export const StyledCarouselContainer = styled.div`
   background-image: url(${(({ photo }) => photo ? photo.url : '')});
   background-size: cover;
-  width: 65%;
+  /* width: 65%; */
+  width: var(--product-carousel-width);
   height: 850px;
 `
 

@@ -87,10 +87,7 @@ export const RelatedCard = ({ data, outfit, nav, action }) => {
 
 
 
-const bgVar = '--bgc1:'
 
-
-const mainBackground = [240, 240, 240]
 var cardHeight = 250;
 const cardWidth = Math.round(cardHeight * 0.66).toString()
 cardHeight = cardHeight.toString()
@@ -106,18 +103,16 @@ const RelatecCardContainer = styled.div`
   width: ${cardWidth}px;
   height: ${cardHeight}px;
   justify-content: space-evenly;
-  box-shadow: 1px 1px 5px rgba(0,0,0,0.15);
   background-color: var(--bgc1);
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.15);
 
 `
-const imgBackground = [235, 235, 235]
 const CardImage = styled.img`
   height: 66%;
   display: flex;
   width: ${cardWidth}px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  /* background-color: var(${bgVar}); */
   background-color: var(--bgc1);
 
 `
@@ -128,25 +123,19 @@ const EmptyCardImage = styled.div`
   width: ${cardWidth}px;
   border-top-left-radius: 9px;
   border-top-right-radius: 9px;
-  /* background-color: var(${bgVar}); */
   background-color: var(--bgc1);
-
 `
 // 772 / 514
 
 const CardFooter = styled.div`
   height: 90px;
   display: flex;
-  width: ${cardWidth}px;
-  border-radius: ${borderRadius}px;
   align-items: center;
+  width: ${cardWidth}px;
   flex-direction: column;
   justify-content: space-around;
-  /* background-color: rgb(${mainBackground.toString()}); */
-  /* background-color: var(${bgVar}); */
   background-color: var(--bgc1);
-
-
+  border-radius: ${borderRadius}px;
 `
 
 
@@ -160,10 +149,9 @@ const CardFooterText = styled.p`
 const CardFooterButton = styled.button`
   height: 75%;
   padding: 5px;
-  font-size: var(--fs-2);
-  color: var(--fc-0);
   border-radius: 5px;
-  /* background-color: var(${bgVar}); */
+  color: var(--fc-0);
+  font-size: var(--fs-2);
   background-color: var(--bgc-1);
 
 
@@ -173,11 +161,10 @@ const CardFooterButton = styled.button`
 const ScrollButton = styled.button`
   height: 75%;
   padding: 7px;
-  font-size: var(--fs-2);
-  color: var(--fc-0);
-  border-radius: 5px;
   font-weight: bold;
-  /* background-color: var(${bgVar}); */
+  border-radius: 5px;
+  color: var(--fc-0);
+  font-size: var(--fs-2);
   background-color: var(--bgc-1);
 
 
@@ -203,9 +190,7 @@ const NoScrollButton = styled.button`
   padding: 7px;
   font-size: 12px;
   border-radius: 5px;
-  background-color: rgba(251, 123, 111, 0.7);
-  /* background-color: var(${bgVar}); */
-  /* background-color: var(--bgc1); */
+  /* background-color: rgba(251, 123, 111, 0.7); */
   background-color: var(--bgc-1);
 
 
@@ -218,8 +203,6 @@ const CardFooterButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  /* background-color: rgb(${mainBackground.toString()}); */
-  /* background-color: var(${bgVar}); */
   background-color: var(--bgc1);
 
 `
@@ -233,7 +216,6 @@ const EmptyTextContainer = styled.div`
   justify-content: center;
   font-size: var(--fs-2);
   color: var(--fc-0);
-  /* background-color: var(${bgVar}); */
   background-color: var(--bgc1);
 
 
