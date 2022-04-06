@@ -18,7 +18,7 @@ const themes = {
 }
 
 const initPageState = {
-  dev: { logs: false, renders: false, state: true, reducer: true },
+  dev: { logs: true, renders: false, state: true, reducer: true },
   modal: 'none',
   user: { cart: localStoreUser.cart || [], outfit: localStoreUser.outfit || [], theme: localStoreUser.theme || 'light' },
   currentProduct: 37311,
