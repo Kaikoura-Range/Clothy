@@ -1,12 +1,9 @@
 const setUserLocalStore = (newUserState) => {
-  // const savedToLocal = Object.keys(newUserState).reduce((memo, key) => {
-  //   const keyValue = newUserState[key];
-  //   memo[key] = keyValue.map(product => product.id)
-  //   return memo;
-  // }, {})
   console.log(`setting ${JSON.stringify(newUserState)} as localstore`);
   localStorage.setItem('user', JSON.stringify(newUserState));
 };
+
+
 
 function reducer(state, action) {
   let newState;
@@ -65,6 +62,17 @@ function reducer(state, action) {
         );
       }
       return newState;
+
+
+
+      case 'TOGGLE_THEME':
+        newState = { ...state };
+        newState.user.theme = newState.user.theme === 'light' ? 'dark' : 'light';
+        setUserLocalStore(newState.user);
+        if (toLog) {
+          console.log('\n\nDEV  STATE-REDUCER   SET_OUTFIT   new Outfit: ', newState.currentProduct);
+        }
+        return newState;
 
     default:
       console.log('\n\nDEV  STATE-REDUCER   default    prodId: ', state.currentProduct);

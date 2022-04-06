@@ -1,7 +1,7 @@
 
 
 
-const cachedLogs = true // true will turn on all logs to the cache
+const cachedLogs = false // true will turn on all logs to the cache
 
 
 
@@ -21,19 +21,19 @@ const getKey = (options) => {
   if (options.params.product_id ) {
     // const checkKey = /(questions)||(answers)/i
     const found = key.includes('question') || key.includes('answer');
-    console.log('params found', found)
+    // console.log('params found', found)
     if (found) {
       key = '/qa/questions/'
     }
     key += options.params.product_id
-    console.log('new key', key)
+    // console.log('new key', key)
   }
 
   if (options.data) {
     if (options.data.product_id) {
 
       const found = key.includes('question') || key.includes('answer') ;
-      console.log('body found', found)
+      // console.log('body found', found)
       if (found) {
         key = '/qa/questions/'
       }

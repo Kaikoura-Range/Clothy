@@ -79,7 +79,9 @@ const appBackgroundColor = [250, 250, 250]
 
 const AppContainer = styled.div`
   width: 100%;
-  background-color: rgb(${appBackgroundColor.toString()});
+  /* background-color: rgb(${appBackgroundColor.toString()}); */
+  background-color: var(--bgc2);
+
 `
 const LoadingContainer = styled.div`
   width: 100%;
@@ -87,7 +89,9 @@ const LoadingContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(${appBackgroundColor.toString()});
+  /* background-color: rgb(${appBackgroundColor.toString()}); */
+  background-color: var(--bgc2);
+
 `
 
 const loadingBackgroundColor = [240, 240, 240]
@@ -98,11 +102,13 @@ const LoadingScreen = styled.div`
   border-radius: 10px;
   align-items: center;
   justify-content: center;
-  background-color: rgb(${loadingBackgroundColor.toString()});
+  /* background-color: rgb(${loadingBackgroundColor.toString()}); */
 `
 const textColor = [60, 60, 60]
 const LoadingText = styled.h1`
-  color: rgb(${textColor.toString()});
+  /* color: rgb(${textColor.toString()}); */
+  color: var(--bgc2);
+
 `
 
 
