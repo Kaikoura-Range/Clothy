@@ -20,7 +20,7 @@ export const StyledThumbnailContainer = styled.div`
   margin-top: 30px;
   flex-direction: column;
   overflow: auto;
-  height: 420px;
+  height: 430px;
 `
 
 export const StyledArrowsContainer = styled.div`
