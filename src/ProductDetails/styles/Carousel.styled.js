@@ -11,7 +11,7 @@ export const StyledCarouselPhotos = styled.img`
   height: 70px;
   width: 70px;
   object-fit: cover;
-  border: ${({ isActive }) => isActive ? '1rem solid red' : ''};
+  border-bottom: ${({ isActive }) => isActive ? '3px solid red' : ''};
 `
 
 export const StyledArrowsContainer = styled.div`

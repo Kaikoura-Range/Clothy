@@ -19,8 +19,8 @@ function Carousel(props){
     }
   }
 
-  if (props.photos) {
-    const allPhotos = props.photos.map((photo, i) => <StyledCarouselPhotos src={ photo.thumbnail_url } alt="" key={i} width="100px" onClick={(e) => handlePhotoClick(e, i)} isActive={ photo.thumbnail_url === activePhoto['thumbnail_url'] ? true : false }/>);
+  if (props.photos && activePhoto) {
+    const allPhotos = props.photos.map((photo, i) => <StyledCarouselPhotos src={ photo.thumbnail_url } alt="" key={i} width="100px" onClick={(e) => handlePhotoClick(e, i)} isActive={ activePhoto.thumbnail_url === photo.thumbnail_url ? true : false }/>);
 
     return(<StyledCarouselContainer photo={activePhoto}>
       <FlexColumn>{allPhotos}</FlexColumn>
