@@ -82,7 +82,9 @@ export default function Questions(props) {
 
   return (
     <QuestionsContainer data-testid='question'>
-      <QuestionBody>Q: {props.q.question_body}</QuestionBody>
+      <QuestionBodyWrapper>
+        <QuestionBody>Q: {props.q.question_body}</QuestionBody>
+      </QuestionBodyWrapper>
       <HelpfulReportContainer>
         Helpful Question?{' '}
         <HelpfulLink
@@ -144,6 +146,10 @@ const AddAnswerLink = styled.div`
   cursor: pointer;
 `;
 
+const QuestionBodyWrapper = styled.div`
+  width: 65%;
+`;
+
 const QuestionsContainer = styled.div`
   margin-top: 25px;
 `;
@@ -154,7 +160,6 @@ const QuestionsAuthor = styled.p`
 
 const QuestionBody = styled.h3`
   display: inline;
-  width: 70%;
 `;
 
 const HelpfulReportContainer = styled.div`

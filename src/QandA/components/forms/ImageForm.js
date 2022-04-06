@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import ReactiveButton from 'reactive-button';
+const buttonStyle = {
+  backgroundColor: '#ccc',
+  color: 'black',
+  padding: '12px 20px',
+  border: 'none',
+  borderRadius: '4px',
+  cursor: 'pointer',
+};
+
 export default function ImageForm(props) {
   const [img1, setImg1] = useState('');
   const [img2, setImg2] = useState('');
   const [img3, setImg3] = useState('');
   const [img4, setImg4] = useState('');
   const [img5, setImg5] = useState('');
-  const [submitButton, setSubmitButton] = useState(true);
+  const [submittedPhotos, setSubmittedPhotos] = useState('idle');
   const img1Handler = (e) => {
     setImg1(e.target.value);
   };
@@ -23,9 +33,14 @@ export default function ImageForm(props) {
     setImg5(e.target.value);
   };
   const onSubmitHandler = () => {
-    props.getPhotos([img1, img2, img3, img4, img5]);
-    props.afterSubmit(false);
-    setSubmitButton(false);
+    setSubmittedPhotos('loading');
+    setTimeout(() => {
+      setSubmittedPhotos('success');
+    }, 3000);
+    setTimeout(() => {
+      props.getPhotos([img1, img2, img3, img4, img5]);
+      props.afterSubmit(false);
+    }, 3300);
   };
 
   const backDropHandler = (e) => {
@@ -41,7 +56,7 @@ export default function ImageForm(props) {
     <BackDrop onClick={backDropHandler}>
       <Modal onClick={preventBubbling}>
         <ImagesFormContainer>
-          <Title>Image Form</Title>
+          <Title>Upload Images Here</Title>
           <label>Image 1:</label>
           <Input value={img1} onChange={img1Handler} type='text' />
           <label>Image 2:</label>
@@ -53,7 +68,16 @@ export default function ImageForm(props) {
           <label>Image 5:</label>
           <Input value={img5} onChange={img5Handler} type='text' />
           <CenterItemsWrapper>
-            {submitButton && <InputSubmit onClick={onSubmitHandler}>Submit photos</InputSubmit>}
+            <ReactiveButton
+              onClick={onSubmitHandler}
+              animation={false}
+              color={'primary'}
+              buttonState={submittedPhotos}
+              outline={false}
+              shadow={false}
+              idleText={'Submit Photos'}
+              style={buttonStyle}
+            />
           </CenterItemsWrapper>
         </ImagesFormContainer>
       </Modal>
@@ -74,7 +98,7 @@ const Title = styled.h3`
 const Modal = styled.div`
   position: fixed;
   margin-left: 25%;
-  top: 30vh;
+  top: 27vh;
   left: 10%;
   width: 30%;
   z-index: 5;
@@ -96,15 +120,6 @@ const CenterItemsWrapper = styled.div`
   justify-content: center;
   margin-top: 10px;
   margin-bottom: 10px;
-`;
-
-const InputSubmit = styled.button`
-  background-color: #ccc;
-  color: black;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 `;
 
 const BackDrop = styled.div`
