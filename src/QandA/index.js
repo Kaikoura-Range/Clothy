@@ -5,7 +5,6 @@ import QAList from './components/QAList';
 import QuestionForm from './components/forms/QuestionForm';
 import SuccessModal from './components/modals/SuccessModal';
 
-
 let filteredResultslength;
 
 export default function QAndA() {
@@ -52,7 +51,7 @@ export default function QAndA() {
     let filteredResults = state.QA.results.map(
       (q) =>
         q.question_body.toLowerCase().indexOf(searchText.toLowerCase()) > -1 && (
-          <QAList key={q.question_id} q={q} />
+          <QAList highlight={searchText} key={q.question_id} q={q} />
         )
     );
 
