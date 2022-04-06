@@ -6,15 +6,17 @@ import moment from 'moment';
 import api from '../../api/index';
 import HelpfulModal from './modals/HelpfulModal';
 import ErrorModal from './modals/ErrorModal';
+import Image from './modals/Image';
 export default function Answers(props) {
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
   const [addMoreAnswers, setAddMoreAnswers] = useState(0);
   const [length, setLength] = useState(Object.keys(props.a).length);
   const [submitHelpfulAnswerOnce, setsubmitHelpfulAnswerOnce] = useState(true);
-  const [reportAnswerOnce, setReportAnswerOnce] = useState(true);
   const [showHelpfulModal, setShowHelpfulModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [imgSrc, setImgSrc] = useState(null);
   const addMoreAnswersClickHandler = () => {
     setAddMoreAnswers(addMoreAnswers + 1);
   };
@@ -49,23 +51,18 @@ export default function Answers(props) {
   };
 
   const reportAnswerHandler = (id) => {
-    setReportAnswerOnce(false);
-    if (reportAnswerOnce) {
-      api.post.answer
-        .report(id, state.currentProduct)
-        .then(() => {
-          return api.get.allProductData(state.currentProduct);
+    api.post.answer
+      .report(id, state.currentProduct)
+      .then(() => {
+        return api.get.allProductData(state.currentProduct);
+      })
+      .then((getRes) =>
+        dispatch({
+          type: 'PROD_INIT',
+          payload: getRes,
         })
-        .then((getRes) =>
-          dispatch({
-            type: 'PROD_INIT',
-            payload: getRes,
-          })
-        )
-        .catch((err) => console.log('report answer not sent!'));
-    } else {
-      alert('You can only report this answer once!');
-    }
+      )
+      .catch((err) => console.log('report answer not sent!'));
   };
 
   const backDropHandler = (e) => {
@@ -75,6 +72,15 @@ export default function Answers(props) {
 
   const backDropErrorHandler = () => {
     setShowErrorModal(false);
+  };
+
+  const onClickImageHandler = (e) => {
+    setImgSrc(e.target.src);
+    setShowImageModal(true);
+  };
+
+  const backDropImageHandler = () => {
+    setShowImageModal(false);
   };
 
   return (
@@ -89,7 +95,7 @@ export default function Answers(props) {
                 answer.photos.map((photo, i) => {
                   return (
                     <ImagesContainer key={i}>
-                      <Img alt='picture from answerer' src={photo} />
+                      <Img onClick={onClickImageHandler} alt='picture from answerer' src={photo} />
                     </ImagesContainer>
                   );
                 })}
@@ -120,6 +126,11 @@ export default function Answers(props) {
       {showErrorModal && (
         <BackDrop onClick={backDropErrorHandler}>
           <ErrorModal />
+        </BackDrop>
+      )}
+      {showImageModal && (
+        <BackDrop onClick={backDropImageHandler}>
+          <Image src={imgSrc} />
         </BackDrop>
       )}
     </AnswersContainer>
@@ -166,6 +177,7 @@ const ImagesContainer = styled.div`
 `;
 
 const Img = styled.img`
+  cursor: pointer;
   width: 90px;
   height: 90px;
   margin: 5px;

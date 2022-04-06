@@ -12,7 +12,7 @@ export default function AnswerForm(props) {
   const [photos, setPhotos] = useState(null);
   const [imageForm, setImageForm] = useState(false);
   const [uploadImagesButton, setUploadImagesButton] = useState(true);
-  console.log(state);
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     props.showForm();
@@ -130,7 +130,6 @@ const Title = styled.h3`
 const TextArea = styled.textarea`
   height: 200px;
   width: 100%;
-  text-align: center;
 `;
 
 const Input = styled.input`

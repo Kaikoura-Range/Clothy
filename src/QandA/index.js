@@ -4,12 +4,15 @@ import styled from 'styled-components';
 import QAList from './components/QAList';
 import QuestionForm from './components/forms/QuestionForm';
 import SuccessModal from './components/modals/SuccessModal';
+
+
+let filteredResultslength;
+
 export default function QAndA() {
   //central API state
   const [state] = useContext(StateContext);
   //state for toggling how many questions get showed and what gets filtered
   const [addMoreQuestionsNoSearch, setAddMoreQuestionsNoSearch] = useState(0);
-  const [filteredSearchLength, setFilteredSearchLength] = useState(null);
   const [addQuestionsSearch, setAddQuestionsSearch] = useState(0);
   const [searchText, setSearchText] = useState('');
   const [searchTextThere, setSearchTextThere] = useState(false);
@@ -51,41 +54,36 @@ export default function QAndA() {
           <QAList key={q.question_id} q={q} />
         )
     );
-    let length = filteredResults.filter((val) => val !== false).length;
-    addMoreQuestionsButtonWhenSearchInput(length);
+
+    filteredResultslength = filteredResults.filter((val) => val !== false).length;
     let results = filteredResults.filter((val) => val !== false).slice(0, 2 + addQuestionsSearch);
     if (results.length) {
-      if (length % 2 !== 0) {
-        return (
-          <div>
-            {results}
-            {results.length === 0 && <p>No match</p>}
-          </div>
-        );
+      if (filteredResultslength % 2 !== 0) {
+        return <>{results}</>;
       }
-      if (length % 2 === 0) {
-        return <div>{results}</div>;
+      if (filteredResultslength % 2 === 0) {
+        return <>{results}</>;
       }
     } else {
       return <NoMatchMessage>No match</NoMatchMessage>;
     }
   };
 
-  const addMoreQuestionsButtonWhenSearchInput = (length) => {
-    if (length % 2 === 0) {
+  const addMoreQuestionsButtonWhenSearchInput = () => {
+    if (filteredResultslength % 2 === 0) {
       return (
-        filteredSearchLength > 2 &&
-        addQuestionsSearch + 2 !== length && (
+        filteredResultslength > 2 &&
+        addQuestionsSearch + 2 !== filteredResultslength && (
           <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
             More Answered Questions
           </MoreAnsweredQuestionsButton>
         )
       );
     }
-    if (length % 2 !== 0) {
+    if (filteredResultslength % 2 !== 0) {
       return (
-        filteredSearchLength > 2 &&
-        addQuestionsSearch + 1 !== length && (
+        filteredResultslength > 2 &&
+        addQuestionsSearch + 1 !== filteredResultslength && (
           <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
             More Answered Questions
           </MoreAnsweredQuestionsButton>

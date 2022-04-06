@@ -82,7 +82,8 @@ const CarouselContainer = styled.div`
   padding-top: 20px;
   padding-bottom: 20px;
   align-items: center;
-  background-color: rgb(242, 242, 242);
+  background-color: var( --bgc-0);
+  /* background-color: rgb(242, 242, 242); */
   /* background-Color: rgba(247, 193, 18, 0.8); */
 `
 

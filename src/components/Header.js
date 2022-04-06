@@ -16,13 +16,19 @@ const Header = (props) => {
     })
   }
 
+  const toggleTheme = () => {
+    dispatch({
+      type: 'TOGGLE_THEME',
+    })
+  }
+
   return (
     <HeaderContainer data-testid="Header" >
       <HeaderLogoContainer  >
         <LogoText> Clothy </LogoText>
       </HeaderLogoContainer>
       <HeaderCartContainer >
-        <CartText> Cart: {state.user.cart.length}  </CartText>
+        <CartText onClick={toggleTheme} > Cart: {state.user.cart.length}  </CartText>
         <CartText onClick={toggleModal} > Outfit: {state.user.outfit.length}  </CartText>
       </HeaderCartContainer>
     </HeaderContainer>
@@ -31,6 +37,7 @@ const Header = (props) => {
 
 const HeaderContainer = styled.div`
   top: 0;
+  z-index: 1;
   width: 100%;
   height: 50px;
   position: sticky;

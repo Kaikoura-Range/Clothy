@@ -12,7 +12,6 @@ export default function Questions(props) {
   const [, dispatch] = useContext(DispatchContext);
   const [answerForm, setAnswerForm] = useState(false);
   const [submitHelpfulQuestionOnce, setsubmitHelpfulQuestionOnce] = useState(true);
-  const [reportQuestionOnce, setreportQuestionOnce] = useState(true);
   const [showHelpfulModal, setShowHelpfulModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
@@ -67,23 +66,18 @@ export default function Questions(props) {
   };
 
   const reportQuestionHandler = (id) => {
-    setreportQuestionOnce(false);
-    if (reportQuestionOnce) {
-      api.post.question
-        .report(id, state.currentProduct)
-        .then(() => {
-          return api.get.allProductData(state.currentProduct);
+    api.post.question
+      .report(id, state.currentProduct)
+      .then(() => {
+        return api.get.allProductData(state.currentProduct);
+      })
+      .then((getRes) =>
+        dispatch({
+          type: 'PROD_INIT',
+          payload: getRes,
         })
-        .then((getRes) =>
-          dispatch({
-            type: 'PROD_INIT',
-            payload: getRes,
-          })
-        )
-        .catch((err) => console.log('report question not sent!'));
-    } else {
-      alert('You can only report this once!');
-    }
+      )
+      .catch((err) => console.log('report question not sent!'));
   };
 
   return (
@@ -122,8 +116,7 @@ export default function Questions(props) {
       )}
       {showErrorModal && (
         <BackDrop onClick={backDropErrorHandler}>
-          {' '}
-          <ErrorModal />{' '}
+          <ErrorModal />
         </BackDrop>
       )}
     </QuestionsContainer>
@@ -132,6 +125,7 @@ export default function Questions(props) {
 
 const ReportedLink = styled.span`
   text-decoration: underline;
+  margin-right: 10px;
   cursor: pointer;
   padding-left: 1.5px;
 `;
@@ -159,6 +153,7 @@ const QuestionsAuthor = styled.p`
 `;
 
 const QuestionBody = styled.h3`
+  display: inline;
   width: 70%;
 `;
 
