@@ -16,8 +16,13 @@ function Carousel(props){
     }
   }, [props.photos])
 
-  const handlePhotoClick = (e, url) => {
-      findActivePhoto(url);
+  const handlePhotoClick = (e, photoToFind) => {
+      if (typeof photoToFind === 'string' ) {
+        findActivePhoto(photoToFind);
+      } else {
+        setPhotoIndex(photoToFind);
+        setActivePhoto(props.photos[photoToFind]);
+      }
       //setDisplayedPhotos(props.photos.slice(photoIndex, photoIndex + 7));
   }
 
