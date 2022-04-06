@@ -84,9 +84,9 @@ const CarouselContainer = styled.div`
 `
 
 const HeaderText = styled.h1`
-  font-size: 24px;
   margin-left: 7.5%;
-  color: rgb(50, 50, 50);
+  font-size: var(--fs3);
+  color: var(--fc-0);
 `
 
 

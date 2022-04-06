@@ -16,13 +16,19 @@ const Header = (props) => {
     })
   }
 
+  const toggleTheme = () => {
+    dispatch({
+      type: 'TOGGLE_THEME',
+    })
+  }
+
   return (
     <HeaderContainer data-testid="Header" >
       <HeaderLogoContainer  >
         <LogoText> Clothy </LogoText>
       </HeaderLogoContainer>
       <HeaderCartContainer >
-        <CartText> Cart: {state.user.cart.length}  </CartText>
+        <CartText onClick={toggleTheme} > Cart: {state.user.cart.length}  </CartText>
         <CartText onClick={toggleModal} > Outfit: {state.user.outfit.length}  </CartText>
       </HeaderCartContainer>
     </HeaderContainer>
