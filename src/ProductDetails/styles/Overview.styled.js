@@ -33,5 +33,5 @@ export const StyledCurrentStyle = styled.p`
 
 export const StyledCategory = styled.span`
   margin-bottom: 10px;
-  font-size: 12px;
+  font-size: var(--fs-2);
 `

@@ -3,9 +3,8 @@ import { StateContext } from './../appState/index.js';
 import Info from './components/ProductInfo.js';
 import Description from './components/ProductDesc.js';
 import Features from './components/ProductFeatures.js';
-import { FlexRow } from './styles/Flex.styled.js'
-
-
+import { FlexColumn } from './styles/Flex.styled.js'
+import { StyledDescFeaturesContainer } from './styles/DescFeatures.styled.js'
 
 function ProductDetails() {
   const [state] = useContext(StateContext);
@@ -27,10 +26,12 @@ function ProductDetails() {
   return (
     <div data-testid="details" >
       <Info product={activeProduct} styles={styles}/>
-      <FlexRow>
-        <Description product={activeProduct}/>
-        <Features product={activeProduct}/>
-      </FlexRow>
+      <StyledDescFeaturesContainer>
+        <FlexColumn>
+            <Description product={activeProduct}/>
+            <Features product={activeProduct}/>
+        </FlexColumn>
+      </StyledDescFeaturesContainer>
     </div>);
 
 }
