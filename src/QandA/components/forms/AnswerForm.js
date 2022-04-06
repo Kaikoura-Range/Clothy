@@ -179,7 +179,7 @@ const ImageFormContainer = styled.div`
 
 const Modal = styled.div`
   position: fixed;
-  top: 30vh;
+  top: 25vh;
   left: 15%;
   width: 75%;
   z-index: 2;
