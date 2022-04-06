@@ -6,7 +6,7 @@ import Questions from './Questions';
 export default function QAList(props) {
   return (
     <QAndAContainer id={props.q.question_id}>
-      <Questions q={props.q} />
+      <Questions highlight={props.highlight ? props.highlight : null} q={props.q} />
       <Answers a={props.q.answers} />
     </QAndAContainer>
   );
