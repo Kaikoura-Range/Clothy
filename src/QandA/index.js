@@ -5,6 +5,7 @@ import QAList from './components/QAList';
 import QuestionForm from './components/forms/QuestionForm';
 import SuccessModal from './components/modals/SuccessModal';
 
+
 let filteredResultslength;
 
 export default function QAndA() {
@@ -54,6 +55,7 @@ export default function QAndA() {
           <QAList key={q.question_id} q={q} />
         )
     );
+
     filteredResultslength = filteredResults.filter((val) => val !== false).length;
     let results = filteredResults.filter((val) => val !== false).slice(0, 2 + addQuestionsSearch);
     if (results.length) {

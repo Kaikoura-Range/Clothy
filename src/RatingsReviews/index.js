@@ -110,7 +110,8 @@ var newlist = sortedReviews;
     return (
       sortedReviews.slice(0,diplayedReviewCount).map((review,id) => {
         return (
-        <div key={id}>
+          <IndividualReviewContainer key={id}>
+        
           <div>{moment(review.date).format("MMM Do YY")}</div>
           <div>review name- {review.reviewer_name}</div>
           <SummaryBody summary={review.summary} body={review.body} showFull={false}/>
@@ -119,7 +120,8 @@ var newlist = sortedReviews;
           <Images photos={review.photos}/>
           <Star stars={review.rating}/>
           <Helpfulness counter={review.helpfulness}/>
-        </div>
+       
+        </IndividualReviewContainer>
         )
       })
     )
@@ -136,7 +138,7 @@ var newlist = sortedReviews;
     return (
       filter(reviews,keyword).slice(0,diplayedReviewCount).map((review,id) => {
         return (
-        <div key={id}>
+          <IndividualReviewContainer key={id}>
           <div>{moment(review.date).format("MMM Do YY")}</div>
           <div>review name- {review.reviewer_name}</div>
           <SummaryBody summary={review.summary} body={review.body} showFull={false}/>
@@ -145,7 +147,7 @@ var newlist = sortedReviews;
           <Images photos={review.photos}/>
           <Star stars={review.rating}/>
           <Helpfulness counter={review.helpfulness}/>
-        </div>
+          </IndividualReviewContainer>
         )
       })
     )
@@ -153,19 +155,25 @@ var newlist = sortedReviews;
 
     if(props.reviewData) {
     return (
-      <div data-testid="reviews" >
-         <Rating data={props.reviewMeta}/> 
+      
+       
+      <RatingsReviewsContainer data-testid="reviews" >
+        <Rating data={props.reviewMeta}/>
+        <ReviewsListContainer>
         <SortReviews/>
         <SearchReviews type='search' value={keyword} onChange={(e)=>setKeyword(e.target.value)} placeholder='searching'/>
-        <ReviewDisplay/>
-        <ReviewButton/>
+        <ReviewDisplay style={{float:'right'}}/>
+        <ReviewButton />
         <button onClick={() => {setOpenModal(true)}}>Add a Review</button>
         {openModal && (
         <BackDrop onClick={backDropHandler}>
           <ReviewForm />
         </BackDrop>
       )}
-      </div>
+      </ReviewsListContainer> 
+      </RatingsReviewsContainer>
+     
+     
     )
     }
     return (
@@ -183,9 +191,19 @@ export const reviewStateInit = (productId) => {
 export const reviewMetaStateInit = (productId) => {
   return ['/reviews/meta', { product_id: productId }]
 }
+  const IndividualReviewContainer = styled.div`
+  border-bottom: 0.5px solid black;
+  `
+  const RatingsReviewsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  `
+  const ReviewsListContainer =styled.div`
+  display: flex;
+  flex-direction: column;
 
-
-
+  `
   const BackDrop = styled.div`
   position: fixed;
   top: 0;
