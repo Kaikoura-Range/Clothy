@@ -67,23 +67,18 @@ export default function Questions(props) {
   };
 
   const reportQuestionHandler = (id) => {
-    setreportQuestionOnce(false);
-    if (reportQuestionOnce) {
-      api.post.question
-        .report(id, state.currentProduct)
-        .then(() => {
-          return api.get.allProductData(state.currentProduct);
+    api.post.question
+      .report(id, state.currentProduct)
+      .then(() => {
+        return api.get.allProductData(state.currentProduct);
+      })
+      .then((getRes) =>
+        dispatch({
+          type: 'PROD_INIT',
+          payload: getRes,
         })
-        .then((getRes) =>
-          dispatch({
-            type: 'PROD_INIT',
-            payload: getRes,
-          })
-        )
-        .catch((err) => console.log('report question not sent!'));
-    } else {
-      alert('You can only report this once!');
-    }
+      )
+      .catch((err) => console.log('report question not sent!'));
   };
 
   return (
