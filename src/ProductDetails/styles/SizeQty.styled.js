@@ -7,6 +7,7 @@ const StyledSizeQty = styled.div`
     background-color: #f1f2f6;
     margin-right: 8px;
     text-transform: uppercase;
+    background-color: #fff;
   }
 
   select {

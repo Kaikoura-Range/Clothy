@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer } from './../styles/Carousel.styled.js';
+import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer,StyledThumbnailContainer, StyledArrowButton } from './../styles/Carousel.styled.js';
 import { FlexColumn } from './../styles/Flex.styled.js';
 
 function Carousel(props){
@@ -20,13 +20,15 @@ function Carousel(props){
   }
 
   if (props.photos && activePhoto) {
-    const allPhotos = props.photos.map((photo, i) => <StyledCarouselPhotos src={ photo.thumbnail_url } alt="" key={i} width="100px" onClick={(e) => handlePhotoClick(e, i)} isActive={ activePhoto.thumbnail_url === photo.thumbnail_url ? true : false }/>);
+    const allPhotos = props.photos.map((photo, i) => <StyledCarouselPhotos src={ photo.thumbnail_url } key={i} onClick={(e) => handlePhotoClick(e, i)} isActive={ activePhoto.thumbnail_url === photo.thumbnail_url ? true : false }/>);
 
     return(<StyledCarouselContainer photo={activePhoto}>
-      <FlexColumn>{allPhotos}</FlexColumn>
+      <StyledThumbnailContainer>
+        {allPhotos}
+      </StyledThumbnailContainer>
         <StyledArrowsContainer>
-          <button onClick={(e, dir) => handlePhotoClick(e, (photoIndex - 1))} disabled={ photoIndex === 0 ? true : false }>{'<'}</button>
-          <button onClick={(e, dir) => handlePhotoClick(e, (photoIndex + 1))} disabled={ photoIndex === props.photos.length - 1 ? true : false }>{'>'}</button>
+          <StyledArrowButton onClick={(e, dir) => handlePhotoClick(e, (photoIndex - 1))} disabled={ photoIndex === 0 ? true : false }>{'<'}</StyledArrowButton>
+          <StyledArrowButton onClick={(e, dir) => handlePhotoClick(e, (photoIndex + 1))} disabled={ photoIndex === props.photos.length - 1 ? true : false }>{'>'}</StyledArrowButton>
         </StyledArrowsContainer>
       </StyledCarouselContainer>)
 

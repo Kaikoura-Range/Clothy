@@ -6,8 +6,6 @@ import Features from './components/ProductFeatures.js';
 import { FlexRow, FlexColumn } from './styles/Flex.styled.js'
 import { StyledDescFeaturesContainer } from './styles/DescFeatures.styled.js'
 
-
-
 function ProductDetails() {
   const [state] = useContext(StateContext);
   // const [, dispatch] = useContext(DispatchContext);
