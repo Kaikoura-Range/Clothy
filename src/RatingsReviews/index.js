@@ -74,12 +74,12 @@ export default function RatingsReviews(props) {
       </div>
     )
 };
-export const reviewStateInit = (productId) => {
-    return ['/reviews/', { product_id: productId, page: 1, count:20, sort: 'newest' }]
-  }
 
-export const reviewMetaStateInit = (productId) => {
-  return ['/reviews/meta', { product_id: productId }]
+export const reviewStateInit = (productId) => {
+  return {
+    'meta':['/reviews/meta', { product_id: productId }],
+    'reviews': ['/reviews/', { product_id: productId, page: 1, count:20, sort: 'newest' }]
+  }
 }
   const RatingsReviewsContainer = styled.div`
   display: flex;

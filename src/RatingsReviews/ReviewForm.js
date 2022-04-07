@@ -45,7 +45,7 @@ export default function ReviewForm(props) {
             type='text'
             name='body'
             onChange={(e) =>{setBody(e.target.value)}}
-            placeholder='About the [PRODUCT NAME HERE]'
+            placeholder='About the `[PRODUCT NAME HERE]`'
             required></TextArea>
           <CenterItemsWrapper>
             <InputSubmit type='submit' />

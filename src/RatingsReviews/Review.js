@@ -1,32 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { StateContext, DispatchContext } from '../appState/index.js';
 import moment from 'moment';
 import styled from 'styled-components';
 import Star from './Star.js';
-
+import api from '../api/index';
 
 const Review = ({review}) => {
   const [yesCounter, setYesCounter] = useState(review.helpfulness);
-  const [noCounter, setNoCounter] = useState(review.unhelpfulness||0);
   const [fullSummary, setFullSummary] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [clicked, setClicked] = useState(false);
+  const [state] = useContext(StateContext);
+  const [, dispatch] = useContext(DispatchContext);
+  
+
 
   const showImg = (photo) => {
       setOpenModal(true);
       setSelectedImage(photo.id)
   }
-  const clickedHelpful = (answer) => {
+  const clickedHelpful = (id) => {
+      console.log('before', review)
       if(!clicked) {
-          setClicked(true)
-          if(answer==='yes') setYesCounter(yesCounter+1)
-          if(answer==='no') setNoCounter(noCounter+1)
+        setClicked(true);
+        api.post.review.helpful(id)
+        .then(() => {
+            return api.get.allProductData(state.currentProduct);
+          }).then((getRes) =>{
+            getRes.currentProduct = state.currentProduct;
+          console.log('after', review);
+          dispatch({
+            type: 'PROD_INIT',
+            payload: getRes,
+          })}
+        ).then(() => setYesCounter(review.helpfulness))
+        .catch(err => console.log('problem ',err))
 
-        
+
+        // api.post.question
+        // .report(id, state.currentProduct)
+        // .then(() => {
+        //   return api.get.allProductData(state.currentProduct);
+        // })
+        // .then((getRes) =>
+        //   dispatch({
+        //     type: 'PROD_INIT',
+        //     payload: getRes,
+        //   })
+        // )
+        // .catch((err) => console.log('report question not sent!'));
+
       }
   }
   (yesCounter !== review.helpfulness) && setYesCounter(review.helpfulness);
- 
     return (
     <IndividualReviewContainer>
         <div>By: {review.reviewer_name} | {moment(review.date).format("MMM Do, YYYY")}</div>
@@ -45,7 +72,7 @@ const Review = ({review}) => {
             ) 
         })}
         <Star ratingAvg={review.rating}/>
-        <div>{clicked? <div>Thank you for the feedback!</div> : <div>Was this review helpful?</div>} <div onClick={()=> clickedHelpful('yes') }>Yes({yesCounter})</div> <div onClick={()=> clickedHelpful('no') }>No({noCounter})</div> </div>
+        <div>{clicked? <div>Thank you for the feedback!</div> : <div>Was this review helpful?</div>} <div onClick={()=> clickedHelpful(review.review_id)}>Yes({yesCounter})</div> </div>
     </IndividualReviewContainer>
     )
 }
