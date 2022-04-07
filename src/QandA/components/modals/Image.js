@@ -18,8 +18,8 @@ const ImageWrapper = styled.div`
 const Img = styled.img`
   display: block;
   width: auto;
-  margin-top: 15%;
-  max-height: 700px;
-  max-width: 700px;
+  margin-top: 7%;
+  max-height: 600px;
+  max-width: 600px;
   height: auto;
 `;
