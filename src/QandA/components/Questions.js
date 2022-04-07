@@ -197,6 +197,6 @@ const BackDrop = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 1.5;
+  z-index: 2;
   background: rgba(0, 0, 0, 0.75);
 `;

@@ -177,5 +177,5 @@ const Modal = styled.div`
   top: 25vh;
   left: 25%;
   width: 50%;
-  z-index: 2;
+  z-index: 3;
 `;

@@ -3,8 +3,6 @@ const setUserLocalStore = (newUserState) => {
   localStorage.setItem('user', JSON.stringify(newUserState));
 };
 
-
-
 function reducer(state, action) {
   let newState;
   const toLog = state.dev.logs && state.dev.reducer;
@@ -32,6 +30,15 @@ function reducer(state, action) {
           '\n\nDEV  STATE-REDUCER   ADD_PRODUCT_TO_CART    added prodId: ',
           action.payload
         );
+      }
+      return newState;
+
+    case 'SET_UPVOTED':
+      newState = { ...state };
+      newState.user.upVoted = action.payload;
+      setUserLocalStore(newState.user);
+      if (toLog) {
+        console.log('\n\nDEV  STATE-REDUCER   SET_UPVOTED   new Upvote: ', newState.currentProduct);
       }
       return newState;
 
@@ -63,16 +70,14 @@ function reducer(state, action) {
       }
       return newState;
 
-
-
-      case 'TOGGLE_THEME':
-        newState = { ...state };
-        newState.user.theme = newState.user.theme === 'light' ? 'dark' : 'light';
-        setUserLocalStore(newState.user);
-        if (toLog) {
-          console.log('\n\nDEV  STATE-REDUCER   SET_OUTFIT   new Outfit: ', newState.currentProduct);
-        }
-        return newState;
+    case 'TOGGLE_THEME':
+      newState = { ...state };
+      newState.user.theme = newState.user.theme === 'light' ? 'dark' : 'light';
+      setUserLocalStore(newState.user);
+      if (toLog) {
+        console.log('\n\nDEV  STATE-REDUCER   SET_OUTFIT   new Outfit: ', newState.currentProduct);
+      }
+      return newState;
 
     default:
       console.log('\n\nDEV  STATE-REDUCER   default    prodId: ', state.currentProduct);
