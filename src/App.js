@@ -6,7 +6,7 @@ import Header from './components/Header.js'
 import Modal from './components/Modal/index'
 import { StateContext, DispatchContext } from './appState/index.js';
 import ProductDetails, { detailsStateInit } from './ProductDetails/index';
-import RatingsReviews, { reviewStateInit, reviewMetaStateInit } from './RatingsReviews/index';
+import RatingsReviews, { reviewStateInit } from './RatingsReviews/index';
 import QAndA, { qAndAStateInit } from './QandA/index';
 import RelatedProducts, { relatedStateInit } from './RelatedProducts/index';
 
@@ -15,7 +15,6 @@ import RelatedProducts, { relatedStateInit } from './RelatedProducts/index';
 api.get.initProductDataFetch(
   detailsStateInit,
   reviewStateInit,
-  reviewMetaStateInit,
   qAndAStateInit,
   relatedStateInit,
 )
@@ -68,7 +67,7 @@ function App() {
         <ProductDetails />
         <RelatedProducts  />
         <QAndA />
-        <RatingsReviews reviewData={state.reviews} reviewMeta={state.reviewMeta} dev={state.dev} />
+        <RatingsReviews reviewData={state.reviews.reviews} reviewMeta={state.reviews.meta} dev={state.dev} />
       </AppContainer>
     );
   }

@@ -42,12 +42,12 @@ export default function RatingsReviews(props) {
 
     if(props.reviewData) {
       return (
-         
+
         <RatingsReviewsContainer data-testid="reviews" >
           <Rating data={props.reviewMeta}/>
           <ReviewsListContainer>
             <div>
-              {props.reviewData.results.length} reviews sorted by 
+              {props.reviewData.results.length} reviews sorted by
               <select value={sortSelect} onChange={sortReviews}>
                 <option value="newest">newest</option>
                 <option value="helpful">Helpfulness</option>
@@ -64,7 +64,7 @@ export default function RatingsReviews(props) {
             {(sortedReviews.length-diplayedReviewCount >0) && (<button onClick={addReviews}>More Reviews</button>)}
             <button onClick={() => {setOpenModal(true)}}>Add a Review</button>
             {openModal && (<BackDrop onClick={()=>setOpenModal(!openModal)}><ReviewForm /></BackDrop>)}
-          </ReviewsListContainer> 
+          </ReviewsListContainer>
         </RatingsReviewsContainer>
       )
     }
