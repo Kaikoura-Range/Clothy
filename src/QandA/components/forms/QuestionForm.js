@@ -137,7 +137,7 @@ const InputSubmit = styled.input`
 
 const Modal = styled.div`
   position: fixed;
-  top: 25vh;
+  top: 15vh;
   left: 25%;
   width: 50%;
   z-index: 2;

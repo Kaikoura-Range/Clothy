@@ -1,26 +1,31 @@
-
-import React, { useReducer } from "react";
+import React, { useReducer } from 'react';
 import reducer from './reducer.js';
 import ThemeProvider, { lightTheme, darkTheme } from './ThemeProvider';
-
 
 export const DispatchContext = React.createContext([null, () => {}]);
 export const StateContext = React.createContext([{}]);
 
 // localStorage.removeItem('user')
-const savedInLocal = localStorage.getItem('user')
-const localStoreUser = savedInLocal ? JSON.parse(savedInLocal) : { cart:[], outfit: [], theme: 'light' };
-console.log('User data fetched from localStorage', localStoreUser)
+const savedInLocal = localStorage.getItem('user');
+const localStoreUser = savedInLocal
+  ? JSON.parse(savedInLocal)
+  : { cart: [], outfit: [], theme: 'light', upVoted: [] };
+console.log('User data fetched from localStorage', localStoreUser);
 
 const themes = {
   light: lightTheme,
-  dark: darkTheme
-}
+  dark: darkTheme,
+};
 
 const initPageState = {
   dev: { logs: false, renders: false, state: true, reducer: true },
   modal: 'none',
-  user: { cart: localStoreUser.cart || [], outfit: localStoreUser.outfit || [], theme: localStoreUser.theme || 'light' },
+  user: {
+    cart: localStoreUser.cart || [],
+    outfit: localStoreUser.outfit || [],
+    theme: localStoreUser.theme || 'light',
+    upVoted: localStoreUser.upVoted || [],
+  },
   currentProduct: 37311,
   QA: {},
   details: {},
@@ -29,10 +34,8 @@ const initPageState = {
   reviewMeta: {},
 };
 
-
-
-const AppContextProvider = ({children, passedState}) => {
-  const initState = passedState || initPageState
+const AppContextProvider = ({ children, passedState }) => {
+  const initState = passedState || initPageState;
   const [state, dispatch] = useReducer(reducer, initState);
 
   return (
@@ -46,7 +49,4 @@ const AppContextProvider = ({children, passedState}) => {
   );
 };
 
-
-export default AppContextProvider
-
-
+export default AppContextProvider;

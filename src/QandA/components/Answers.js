@@ -12,16 +12,17 @@ export default function Answers(props) {
   const [, dispatch] = useContext(DispatchContext);
   const [addMoreAnswers, setAddMoreAnswers] = useState(0);
   const [length, setLength] = useState(Object.keys(props.a).length);
-  const [submitHelpfulAnswerOnce, setsubmitHelpfulAnswerOnce] = useState(true);
   const [showHelpfulModal, setShowHelpfulModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
   const [imgSrc, setImgSrc] = useState(null);
+
   const addMoreAnswersClickHandler = () => {
-    setAddMoreAnswers(addMoreAnswers + 1);
+    setAddMoreAnswers(addMoreAnswers + length);
   };
 
   useEffect(() => {
+    setAddMoreAnswers(0);
     setLength(Object.keys(props.a).length);
   }, [props.a]);
 
@@ -30,8 +31,14 @@ export default function Answers(props) {
   }, [state.currentProduct]);
 
   const helpfulAnswerHandler = (id) => {
-    setsubmitHelpfulAnswerOnce(false);
-    if (submitHelpfulAnswerOnce) {
+    if (state.user.upVoted.find((val) => val === id)) {
+      setShowErrorModal(true);
+    } else {
+      const newUpvoted = [...state.user.upVoted, id];
+      dispatch({
+        type: 'SET_UPVOTED',
+        payload: newUpvoted,
+      });
       setShowHelpfulModal(true);
       api.post.answer
         .helpful(id, state.currentProduct)
@@ -45,8 +52,6 @@ export default function Answers(props) {
           })
         )
         .catch((err) => console.log('helpful question not sent!'));
-    } else {
-      setShowErrorModal(true);
     }
   };
 
@@ -83,6 +88,10 @@ export default function Answers(props) {
     setShowImageModal(false);
   };
 
+  const collapseAllAnswersHandler = () => {
+    setAddMoreAnswers(0);
+  };
+
   return (
     <AnswersContainer>
       {Object.values(props.a)
@@ -104,12 +113,8 @@ export default function Answers(props) {
               </AnswerAuthor>
               <HelpfulAnswer>
                 Helpful Answer?{' '}
-                <HelpfulLink
-                  helpful={!submitHelpfulAnswerOnce}
-                  onClick={() => helpfulAnswerHandler(answer.id)}>
-                  Yes
-                </HelpfulLink>{' '}
-                ({answer.helpfulness}) |{' '}
+                <HelpfulLink onClick={() => helpfulAnswerHandler(answer.id)}>Yes</HelpfulLink> (
+                {answer.helpfulness}) |{' '}
                 <ReportedLink onClick={() => reportAnswerHandler(answer.id)}>Report</ReportedLink>
               </HelpfulAnswer>
               {showHelpfulModal && (
@@ -120,8 +125,11 @@ export default function Answers(props) {
             </EachAnswerContainer>
           );
         })}
-      {length > 1 && length && addMoreAnswers !== length - 1 && (
-        <LoadMoreAnswers onClick={addMoreAnswersClickHandler}>Load more answers</LoadMoreAnswers>
+      {length > 1 && addMoreAnswers !== length && (
+        <LoadMoreAnswers onClick={addMoreAnswersClickHandler}>Load All Answers</LoadMoreAnswers>
+      )}
+      {length > 1 && addMoreAnswers === length && (
+        <LoadMoreAnswers onClick={collapseAllAnswersHandler}>Collapse Answers</LoadMoreAnswers>
       )}
       {showErrorModal && (
         <BackDrop onClick={backDropErrorHandler}>
