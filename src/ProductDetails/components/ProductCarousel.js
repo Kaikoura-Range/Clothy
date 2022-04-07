@@ -16,14 +16,24 @@ function Carousel(props){
     }
   }, [props.photos])
 
-  const handlePhotoClick = (e, photoToFind) => {
-      if (typeof photoToFind === 'string' ) {
-        findActivePhoto(photoToFind);
+  const handlePhotoClick = (e, urlOrIndex) => {
+      if (typeof urlOrIndex === 'string' ) {
+        const url = urlOrIndex;
+        findActivePhoto(url);
       } else {
-        setPhotoIndex(photoToFind);
-        setActivePhoto(props.photos[photoToFind]);
+        const index = urlOrIndex;
+        setPhotoIndex(index);
+        setActivePhoto(props.photos[index]);
+
+        if (index <= props.photos.length - 7) {
+          setDisplayedPhotos(props.photos.slice(index, index + 7));
+          setDisplayedPhotosIndexes([index, index + 7]);
+        } else {
+          setDisplayedPhotos(props.photos.slice(props.photos.length - 7, props.photos.length));
+          setDisplayedPhotosIndexes([props.photos.length - 7, props.photos.length]);
+        }
       }
-      //setDisplayedPhotos(props.photos.slice(photoIndex, photoIndex + 7));
+
   }
 
   const findActivePhoto = (url) => {
@@ -59,11 +69,12 @@ function Carousel(props){
     const allPhotos = displayedPhotos.map((photo, i) => <StyledCarouselPhotos src={ photo.thumbnail_url } key={i} onClick={(e, url) => handlePhotoClick(e, photo.thumbnail_url)} isActive={ activePhoto.thumbnail_url === photo.thumbnail_url ? true : false }/>);
 
     return(<StyledCarouselContainer photo={activePhoto}>
-      <StyledArrowButton onClick={(e, num) => handleThumbnailArrowClick(e, -1)}>Top</StyledArrowButton>
+      <StyledArrowButton onClick={(e, num) => handleThumbnailArrowClick(e, -1)} disabled={ displayedPhotos.length < 7 ? true : false }>Top</StyledArrowButton>
+      <button>Expand</button>
       <StyledThumbnailContainer>
         {allPhotos}
       </StyledThumbnailContainer>
-      <StyledArrowButton onClick={(e, num) => handleThumbnailArrowClick(e, 1)}>Bottom</StyledArrowButton>
+      <StyledArrowButton onClick={(e, num) => handleThumbnailArrowClick(e, 1)} disabled={ displayedPhotos.length < 7 ? true : false }>Bottom</StyledArrowButton>
         <StyledArrowsContainer>
           <StyledArrowButton onClick={(e, dir) => handlePhotoClick(e, (photoIndex - 1))} disabled={ photoIndex === 0 ? true : false }>{'<'}</StyledArrowButton>
           <StyledArrowButton onClick={(e, dir) => handlePhotoClick(e, (photoIndex + 1))} disabled={ photoIndex === props.photos.length - 1 ? true : false }>{'>'}</StyledArrowButton>
