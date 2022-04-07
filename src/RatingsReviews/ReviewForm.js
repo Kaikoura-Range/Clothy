@@ -3,7 +3,7 @@ import { StateContext, DispatchContext } from '../appState/index.js';
 import styled from 'styled-components';
 import api from '../api/index';
 
-export default function QuestionForm(props) {
+export default function ReviewForm(props) {
   const [state] = useContext(StateContext);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -28,34 +28,23 @@ export default function QuestionForm(props) {
       })
       .catch((err) => console.log('question not sent!'));
   };
-  const onChangeSummary = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const onChangeBody = (e) => {
-    setBody(e.target.value);
-  };
-
-  const preventBubbling = (e) => {
-    e.stopPropagation();
-  };
-
+  
   return (
-    <Modal onClick={preventBubbling}>
+    <Modal onClick={(e)=> e.stopPropagation()}>
       <ReviewFormContainer>
         <form >
           <label>Review Summary </label>
           <Input
             type='text'
             name='Summary'
-            onChange={onChangeSummary}
+            onChange={(e)=>{setUsername(e.target.value)}}
             placeholder='Write your Review'
             required
           />
           <TextArea
             type='text'
             name='body'
-            onChange={onChangeBody}
+            onChange={(e) =>{setBody(e.target.value)}}
             placeholder='About the [PRODUCT NAME HERE]'
             required></TextArea>
           <CenterItemsWrapper>

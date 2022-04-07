@@ -14,19 +14,20 @@ export default function RatingsReviews(props) {
     props.dev.state && console.log('DEV  STATE   RelatedProducts: ', props.reviewData)
   }
 
-  const [sortSelect,setSortSelect] = useState('newest');
+  const [sortSelect,setSortSelect] = useState('relevant');
   const [sortedReviews, setSortedReviews] = useState(props.reviewData.results);
   const [diplayedReviewCount, setReviewCount] = useState(2);
   const [openModal, setOpenModal] = useState(false);
   const [keyword, setKeyword] = useState('');
 
   function addReviews() {
-    var value = sortedReviews.length-diplayedReviewCount;
-    if(value >= 2) {
-      setReviewCount(diplayedReviewCount +2);
-    } else if( value === 1 ) {
-      setReviewCount(diplayedReviewCount +1);
-    }
+    // var value = sortedReviews.length-diplayedReviewCount;
+    // if(value >= 2) {
+    //   setReviewCount(diplayedReviewCount +2);
+    // } else if( value === 1 ) {
+    //   setReviewCount(diplayedReviewCount +1);
+    // }
+    setReviewCount(sortedReviews.length)
   }
   const sortReviews = (e) => {
     setSortSelect(e.target.value);
@@ -90,6 +91,8 @@ export const reviewMetaStateInit = (productId) => {
   display: flex;
   width: 66%;
   flex-direction: column;
+  max-height: 1000px;
+  overflow: auto;
   `
   const BackDrop = styled.div`
   position: fixed;
