@@ -1,7 +1,7 @@
 
 
 
-const cachedLogs = true // true will turn on all logs to the cache
+const cachedLogs = false // true will turn on all logs to the cache
 
 
 
