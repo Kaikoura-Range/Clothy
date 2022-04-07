@@ -25,7 +25,8 @@ const Carousel = ({ products, outfit }) => {
           outfit={cardFunction(outfit, dispatch, data, ind)}
           nav={() => initializeAppState(dispatch, data.id)}
           key={data.id ? data.id : ind}
-          action={products ? "Add to" : "Remove from"}
+          // action={products ? "Add to" : "Remove from"}
+          action={products ? "Add to outfit" : "Remove"}
           />
         )
       })}
