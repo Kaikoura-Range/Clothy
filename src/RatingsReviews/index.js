@@ -8,13 +8,12 @@ import Review from './Review.js';
 var mainRenderCount = 0;
 
 export default function RatingsReviews({reviewData, reviewMeta, dev}) {
-  const {results} = reviewData;
+  const { results } = reviewData;
   if( dev.logs ) {
     mainRenderCount++;
     dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
     dev.state && console.log('DEV  STATE   RelatedProducts: ', reviewData)
   }
-  console.log(props)
 
   const [sortSelect,setSortSelect] = useState('newest');
   console.log('sort select ',sortSelect)
@@ -22,7 +21,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
   const [diplayedReviewCount, setReviewCount] = useState(2);
   const [openModal, setOpenModal] = useState(false);
   const [keyword, setKeyword] = useState('');
-  
+
   useEffect(()=> {
     var newSorted;
     if(sortSelect === "helpful") {
@@ -58,14 +57,14 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
     }
   }
 
-    if(props.reviewData) {
+    if(reviewData) {
       return (
 
         <RatingsReviewsContainer data-testid="reviews" >
-          <Rating data={props.reviewMeta}/>
+          <Rating data={reviewMeta}/>
           <ReviewsListContainer>
             <div>
-              {props.reviewData.results.length} reviews sorted by
+              {results.length} reviews sorted by
               <select value={sortSelect} onChange={sortReviews}>
                 <option value="newest">newest</option>
                 <option value="helpful">Helpfulness</option>
@@ -88,12 +87,12 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
     }
 
     return (
-        
+
       <RatingsReviewsContainer data-testid="reviews" >
         <Rating data={reviewMeta}/>
         <ReviewsListContainer>
           <div>
-            {results.length} reviews sorted by 
+            {results.length} reviews sorted by
             <select value={sortSelect} onChange={(e) => setSortSelect(e.target.value) }>
               <option value="newest">newest</option>
               <option value="helpful">Helpfulness</option>
@@ -110,7 +109,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
           {(results.length-diplayedReviewCount >0) && (<button onClick={()=> setReviewCount(results.length)}>More Reviews</button>)}
           <button onClick={() => {setOpenModal(true)}}>Add a Review</button>
           {openModal && (<BackDrop onClick={()=>setOpenModal(!openModal)}><ReviewForm /></BackDrop>)}
-        </ReviewsListContainer> 
+        </ReviewsListContainer>
       </RatingsReviewsContainer>
     )
   }
