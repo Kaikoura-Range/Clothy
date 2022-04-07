@@ -143,7 +143,7 @@ var darkBase = {
 
 var ligthBase = {
   background: {
-    color: [230,230,230]
+    color: [245,245,245]
   },
   font: {
     fontSize: {
