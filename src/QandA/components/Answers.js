@@ -92,9 +92,22 @@ export default function Answers(props) {
     setAddMoreAnswers(0);
   };
 
+  console.log(Object.values(props.a));
+
+  const sortingBySeller = (values) => {
+    let sorted = values.sort((a, b) => {
+      if (a.answerer_name !== 'seller' && b.answerer_name !== 'seller') {
+        return a.answerer_name > b.answerer_name ? 1 : -1;
+      } else {
+        return a.answerer_name !== 'seller' ? 1 : -1;
+      }
+    });
+    return sorted;
+  };
+
   return (
     <AnswersContainer>
-      {Object.values(props.a)
+      {sortingBySeller(Object.values(props.a))
         .slice(0, 1 + addMoreAnswers)
         .map((answer) => {
           return (
@@ -108,9 +121,16 @@ export default function Answers(props) {
                     </ImagesContainer>
                   );
                 })}
-              <AnswerAuthor>
-                By: {answer.answerer_name} | {moment(answer.date).format('MMMM Do, YYYY')}
-              </AnswerAuthor>
+              <Wrapper>
+                <ByP>By: </ByP>
+                <AnswerAuthor
+                  style={
+                    answer.answerer_name.toLowerCase() === 'seller' ? { fontWeight: 'bold' } : {}
+                  }>
+                  {answer.answerer_name}
+                </AnswerAuthor>
+                <AnswerDate>| {moment(answer.date).format('MMMM Do, YYYY')}</AnswerDate>
+              </Wrapper>
               <HelpfulAnswer>
                 Helpful Answer?{' '}
                 <HelpfulLink onClick={() => helpfulAnswerHandler(answer.id)}>Yes</HelpfulLink> (
@@ -153,6 +173,16 @@ const ReportedLink = styled.span`
 
 const AnswerAuthor = styled.p`
   margin-top: 5px;
+`;
+
+const ByP = styled.p`
+  margin-top: 5px;
+  margin-right: 5px;
+`;
+
+const AnswerDate = styled.p`
+  margin-top: 5px;
+  margin-left: 5px;
 `;
 
 const HelpfulLink = styled.span`
@@ -198,4 +228,8 @@ const BackDrop = styled.div`
   width: 100%;
   height: 100vh;
   background: rgba(0, 0, 0, 0.75);
+`;
+
+const Wrapper = styled.div`
+  display: flex;
 `;
