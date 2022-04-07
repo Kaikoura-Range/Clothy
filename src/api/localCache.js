@@ -25,7 +25,8 @@ const getKey = (options) => {
       key = '/qa/questions/'
     }
 
-    const foundReview = key.includes('reviews') && (!key.includes('meta'))
+
+    const foundReview = key.includes('reviews') && !key.includes('meta')
     if (foundReview) {
       key = '/reviews/'
     }
@@ -45,7 +46,7 @@ const getKey = (options) => {
       key = '/qa/questions/'
     }
 
-    const foundReview = key.includes('reviews')
+    const foundReview = key.includes('reviews') && !key.includes('meta')
     if (foundReview) {
       key = '/reviews/'
     }

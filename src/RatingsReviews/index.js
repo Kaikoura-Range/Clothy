@@ -14,6 +14,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
     dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
     dev.state && console.log('DEV  STATE   RelatedProducts: ', reviewData)
   }
+  console.log(props)
 
   const [sortSelect,setSortSelect] = useState('newest');
   console.log('sort select ',sortSelect)
