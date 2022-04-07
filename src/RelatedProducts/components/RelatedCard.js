@@ -8,17 +8,20 @@ import PhotoCarousel from './PhotoCarousel.js'
 
 export const RelatedCard = ({ data, outfit, nav, action }) => {
   data.photos = data.photos || []
-  const { name, photos } = data;
 
   if ( data.type === 'render') {
+    // console.log(data)
+    const { name, category, photos, default_price } = data;
+
 
     return  (
       <RelatecCardContainer data-testid="RelatedCard" >
         <PhotoCarousel photos={photos} nav={nav} action={action} outfit={outfit} />
         <CardFooter>
-          <CardFooterText>{name}</CardFooterText>
-          {/* <CardFooterButtonContainer>
-          </CardFooterButtonContainer> */}
+          <CardFooterText>{name} </CardFooterText>
+          <CardFooterText>{category}</CardFooterText>
+          <CardFooterText>{'$' + default_price} </CardFooterText>
+
         </CardFooter>
       </RelatecCardContainer>
     );
@@ -58,20 +61,19 @@ export const RelatedCard = ({ data, outfit, nav, action }) => {
 
 
 
-var cardHeight = 250;
-const cardWidth = Math.round(cardHeight * 0.66).toString()
+var cardHeight = 19;
+const cardWidth = Math.round(cardHeight * 0.8).toString()
 cardHeight = cardHeight.toString()
 const borderRadius = '3';
 
 const RelatecCardContainer = styled.div`
+  height: ${cardHeight}em;
   display: flex;
   margin-left: 5px;
   margin-right: 5px;
   border-radius: 5px;
   flex-direction: column;
-  width: ${cardWidth}px;
-  height: ${cardHeight}px;
-  /* align-items: center; */
+
   justify-content: space-evenly;
   background-color: var(--bgc1);
   box-shadow: 1px 1px 5px rgba(0,0,0,0.15);
@@ -80,12 +82,13 @@ const RelatecCardContainer = styled.div`
 
 
 const CardFooter = styled.div`
-  height: 40px;
+  height: 5em;
+  width: 100%;
+
   display: flex;
   align-items: center;
-  width: ${cardWidth}px;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   background-color: var(--bgc1);
   border-radius: ${borderRadius}px;
 `
@@ -93,7 +96,6 @@ const CardFooter = styled.div`
 
 const CardFooterText = styled.p`
   font-size: var(--fs-2);
-  margin-top: 7px;
   color: var(--fc-0);
 `
 
@@ -103,8 +105,9 @@ const CardFooterText = styled.p`
 
 
 const EmptyTextContainer = styled.div`
-  width: 100%;
+  width: ${cardWidth}em;
   display: flex;
+  height: ${cardHeight}em;
   align-items: center;
   flex-direction: column;
   justify-content: center;

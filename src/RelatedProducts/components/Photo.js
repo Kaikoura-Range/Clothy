@@ -51,18 +51,23 @@ const fade = keyframes`
 }
 `;
 
-var cardHeight = 250;
-const cardWidth = Math.round(cardHeight * 0.66).toString()
-cardHeight = cardHeight.toString()
+// var cardHeight = 250;
+// const cardWidth = Math.round(cardHeight * 0.66).toString()
+// cardHeight = cardHeight.toString()
+// 208 165
+
+var imgHeight = 14;
+const imgWidth = (imgHeight * 0.8).toString()
+imgHeight = imgHeight.toString()
 
 const CardImageContainer = styled.div`
-  /* top: 0px; */
-  height: 82%;
-  /* display: flex; */
+  height: ${imgHeight}em;
   position: relative;
-  width: ${cardWidth}px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  /* width: 100%; */
+  width: ${imgWidth}em;
+  /* border-top-left-radius: 5px; */
+  /* border-top-right-radius: 5px; */
+
   background-color: var(--bgc1);
   animation: ${({ animate }) => animate &&  css`${fade} ${fadeOptions}`};
 
@@ -72,9 +77,9 @@ const CardImageContainer = styled.div`
 
 const CardImage = styled.img`
   height: 100%;
-  width: ${cardWidth}px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  width: 100%;
+  /* border-top-left-radius: 5px; */
+  /* border-top-right-radius: 5px; */
   /* object-fit: none; */
   /* object-fit: fill; */
   /* object-fit: scale-down; */
@@ -89,7 +94,7 @@ const CardImage = styled.img`
 const EmptyCardImage = styled.div`
   height: 100%;
   display: flex;
-  width: ${cardWidth}px;
+  width: ${imgWidth}px;
   border-top-left-radius: 9px;
   border-top-right-radius: 9px;
   background-color: var(--bgc1);
@@ -134,11 +139,12 @@ const OutfitActionButton = styled.button`
   position: absolute;
   font-size: var(--fs-2);
 
-  /* color: var(--fc-0); */
-  /* background-color: var(--bgc-1); */
+  color: var(--fc-0);
+  background-color: var(--bgc-1);
 
-  color: var(--accent-color);
-  background-color: rgba(0, 0, 0, .75);
+  /* color: var(--accent-color);
+  background-color: rgba(0, 0, 0, .75); */
+
 
   &:hover {
     opacity: .9;
@@ -159,9 +165,11 @@ const ScrollButton = styled.button`
   border-radius: 50%;
   position: absolute;
 =  font-size: var(--fs0);
-  color: var(--accent-color);
-  /* background-color: var(--bgc-1); */
-  background-color: rgba(0, 0, 0, .75);
+  /* color: var(--accent-color); */
+  color: var(--fc-0);
+  background-color: var(--bgc-1);
+  /* background-color: rgba(0, 0, 0, .75); */
+
   left: ${({ direction }) => direction === 'left' && css`${sideMargin}em` };
   right: ${({ direction }) => direction === 'right' && css`${sideMargin}em` };
 

@@ -55,7 +55,9 @@ export const initProductsFromIds = (productIds, currentProduct, setItemData, fil
     .then((getResult) => {
       const condensed = Object.values(getResult).map((values) => {
         var photos = getPhotoUrls(values.styles)
-        return ({ ...values.product, photos, type: 'render' })
+        // return ({ ...values.product, photos, type: 'render' })
+        return ({ ...values.product, ...values.styles, photos, type: 'render' })
+
       })
       setItemData(condensed)
       })

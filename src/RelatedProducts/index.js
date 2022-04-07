@@ -69,22 +69,27 @@ const RelatedProducts = () => {
 const RelatedContainer = styled.div`
   width: 100%;
   height: auto;
+  display: flex;
   padding-top: 40px;
   padding-bottom: 40px;
+  flex-direction: column;
+  justify-content: space-evenly;
+
 `
 
 const CarouselContainer = styled.div`
   width: 100%;
   height: auto;
   display: flex;
-  padding-top: 10px;
+  padding-top: 0.6em;
   align-items: center;
-  padding-bottom: 10px;
+  padding-bottom: 1.2em;
   justify-content: space-evenly;
 `
 
 const HeaderText = styled.h1`
-  margin-left: 7.5%;
+
+  margin-left: 4em;
   font-size: var(--fs3);
   color: var(--fc-0);
 `
