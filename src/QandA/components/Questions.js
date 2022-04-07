@@ -7,6 +7,7 @@ import api from '../../api/index';
 import HelpfulModal from './modals/HelpfulModal';
 import SuccessModal from './modals/SuccessModal';
 import ErrorModal from './modals/ErrorModal';
+let newText;
 export default function Questions(props) {
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
@@ -80,10 +81,32 @@ export default function Questions(props) {
       .catch((err) => console.log('report question not sent!'));
   };
 
+  const highlight = (sentence, keyword) => {
+    let sentenceSplit = sentence.split(new RegExp(`(${keyword})`, 'gi'));
+    return (
+      <>
+        <QuestionBody>Q: </QuestionBody>
+        {sentenceSplit.map((word, i) => (
+          <QuestionBody
+            key={i}
+            style={
+              word.toLowerCase() === keyword.toLowerCase() ? { backgroundColor: 'yellow' } : {}
+            }>
+            {word}
+          </QuestionBody>
+        ))}
+      </>
+    );
+  };
+
   return (
     <QuestionsContainer data-testid='question'>
       <QuestionBodyWrapper>
-        <QuestionBody>Q: {props.q.question_body}</QuestionBody>
+        {!props.highlight ? (
+          <QuestionBody> Q: {props.q.question_body}</QuestionBody>
+        ) : (
+          highlight(props.q.question_body, props.highlight)
+        )}
       </QuestionBodyWrapper>
       <HelpfulReportContainer>
         Helpful Question?{' '}

@@ -42,6 +42,7 @@ const HeaderContainer = styled.div`
   height: 50px;
   position: sticky;
   background-Color: rgb(247, 193, 18);
+  z-index: 1;
 `
 
 const HeaderLogoContainer = styled.div`
