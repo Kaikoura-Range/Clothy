@@ -56,7 +56,7 @@ export default function ImageForm(props) {
     <BackDrop onClick={backDropHandler}>
       <Modal onClick={preventBubbling}>
         <ImagesFormContainer>
-          <Title>Upload Images Here</Title>
+          <Title>Upload Images</Title>
           <label>Image 1:</label>
           <Input value={img1} onChange={img1Handler} type='text' />
           <label>Image 2:</label>
@@ -98,7 +98,7 @@ const Title = styled.h3`
 const Modal = styled.div`
   position: fixed;
   margin-left: 25%;
-  top: 27vh;
+  top: 18vh;
   left: 10%;
   width: 30%;
   z-index: 5;
