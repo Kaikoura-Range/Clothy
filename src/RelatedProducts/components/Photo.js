@@ -67,6 +67,7 @@ const CardImageContainer = styled.div`
   width: ${imgWidth}em;
   /* border-top-left-radius: 5px; */
   /* border-top-right-radius: 5px; */
+
   background-color: var(--bgc1);
   animation: ${({ animate }) => animate &&  css`${fade} ${fadeOptions}`};
 
@@ -144,6 +145,7 @@ const OutfitActionButton = styled.button`
   /* color: var(--accent-color);
   background-color: rgba(0, 0, 0, .75); */
 
+
   &:hover {
     opacity: .9;
     cursor: pointer;
@@ -167,6 +169,7 @@ const ScrollButton = styled.button`
   color: var(--fc-0);
   background-color: var(--bgc-1);
   /* background-color: rgba(0, 0, 0, .75); */
+
   left: ${({ direction }) => direction === 'left' && css`${sideMargin}em` };
   right: ${({ direction }) => direction === 'right' && css`${sideMargin}em` };
 

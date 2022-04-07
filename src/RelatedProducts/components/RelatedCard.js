@@ -13,6 +13,7 @@ export const RelatedCard = ({ data, outfit, nav, action }) => {
     // console.log(data)
     const { name, category, photos, default_price } = data;
 
+
     return  (
       <RelatecCardContainer data-testid="RelatedCard" >
         <PhotoCarousel photos={photos} nav={nav} action={action} outfit={outfit} />
@@ -20,6 +21,7 @@ export const RelatedCard = ({ data, outfit, nav, action }) => {
           <CardFooterText>{name} </CardFooterText>
           <CardFooterText>{category}</CardFooterText>
           <CardFooterText>{'$' + default_price} </CardFooterText>
+
         </CardFooter>
       </RelatecCardContainer>
     );
@@ -71,6 +73,7 @@ const RelatecCardContainer = styled.div`
   margin-right: 5px;
   border-radius: 5px;
   flex-direction: column;
+
   justify-content: space-evenly;
   background-color: var(--bgc1);
   box-shadow: 1px 1px 5px rgba(0,0,0,0.15);
@@ -81,6 +84,7 @@ const RelatecCardContainer = styled.div`
 const CardFooter = styled.div`
   height: 5em;
   width: 100%;
+
   display: flex;
   align-items: center;
   flex-direction: column;
