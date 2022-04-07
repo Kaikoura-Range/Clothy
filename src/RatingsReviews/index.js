@@ -13,6 +13,7 @@ export default function RatingsReviews(props) {
     props.dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
     props.dev.state && console.log('DEV  STATE   RelatedProducts: ', props.reviewData)
   }
+  console.log(props)
 
   const [sortSelect,setSortSelect] = useState('relevant');
   const [sortedReviews, setSortedReviews] = useState(props.reviewData.results);
