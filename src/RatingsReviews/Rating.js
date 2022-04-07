@@ -15,7 +15,7 @@ export default function Rating({data}){
 
         }
 
-        return (Math.round(total / totalcount * 4) / 4).toFixed(2);
+        return (Math.round(total / totalcount * 4) / 4).toFixed(1);
     }
     function recommendPercentage(){
         var numerator = Number(data.recommended.true);
@@ -43,16 +43,16 @@ export default function Rating({data}){
         return Object.entries(data.characteristics).map((characteristic, id)=>{
             return (
                 <div key={id}>
-                <div key={characteristic[1].id}>{characteristic[0]}: {Number(characteristic[1].value).toFixed(2)}</div>
+                <div key={characteristic[1].id}>{characteristic[0]}: {Number(characteristic[1].value).toFixed(1)}</div>
                 
                 <div className="bar-container">
-                    <div className="bar-5" style={{'width' : `${Number(characteristic[1].value).toFixed(2)*20}%`}}></div>
+                    <div className="bar-5" style={{'width' : `${Number(characteristic[1].value).toFixed(1)*20}%`}}></div>
                 </div>
                 </div>
             )
         })
      }
-     
+
     return (
         <div>
            <div>rating: {ratingAverage()}</div>
