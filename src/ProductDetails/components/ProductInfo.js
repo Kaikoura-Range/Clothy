@@ -10,7 +10,6 @@ import _ from "underscore";
 
 function ProductInfo(props) {
   const [activeStyle, setActiveStyle] = useState({});
-  const [count, setCount] = useState(0);
   const [skus, setSkus] = useState([]);
   const [availableQty, setAvailableQty] = useState(0);
   const [isAddCartValid, setIsAddCartValid] = useState(true);
@@ -47,8 +46,8 @@ function ProductInfo(props) {
       }
       const initialSkus = handleSizeDuplicates((Object.values(props.styles.results[0].skus)));
       setSkus(Object.entries(initialSkus));
-      setCount(prev => prev + 1);
       setExpandedViewIndex(0);
+      setExpandedViewImage(props.styles.results[0].photos[0].url)
     }
   }, [props.styles])
 
@@ -151,7 +150,7 @@ function ProductInfo(props) {
 
       {/**  Carousel */}
       <FlexRow>
-      <Carousel photos={activeStyle.photos} handleExpandedView={toggleExpandedView} expandedImage={expandedViewIndex} newProduct={count}/>
+      <Carousel photos={activeStyle.photos} handleExpandedView={toggleExpandedView} expandedImage={expandedViewIndex} newProduct={[props.styles]}/>
 
       {/**  Right-side (main product info) */}
       <FlexColumn>
