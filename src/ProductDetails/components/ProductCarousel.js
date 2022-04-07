@@ -10,33 +10,26 @@ function Carousel(props){
 
   useEffect(() => {
     if (props.photos) {
-      setActivePhoto(props.photos[0]);
+      setActivePhoto(props.photos[photoIndex]);
       setDisplayedPhotos(props.photos.slice(0, 7));
       setDisplayedPhotosIndexes([0, 7])
     }
   }, [props.photos])
 
-  const handlePhotoClick = (e, urlOrIndex) => {
-      if (typeof urlOrIndex === 'string' ) {
-        const url = urlOrIndex;
-        findActivePhoto(url);
-      } else {
-        const index = urlOrIndex;
-        setPhotoIndex(index);
-        setActivePhoto(props.photos[index]);
+  const handleMainArrowClick = (e, index) => {
+    setPhotoIndex(index);
+    setActivePhoto(props.photos[index]);
 
-        if (index <= props.photos.length - 7) {
-          setDisplayedPhotos(props.photos.slice(index, index + 7));
-          setDisplayedPhotosIndexes([index, index + 7]);
-        } else {
-          setDisplayedPhotos(props.photos.slice(props.photos.length - 7, props.photos.length));
-          setDisplayedPhotosIndexes([props.photos.length - 7, props.photos.length]);
-        }
-      }
-
+    if (index <= props.photos.length - 7) {
+      setDisplayedPhotos(props.photos.slice(index, index + 7));
+      setDisplayedPhotosIndexes([index, index + 7]);
+    } else {
+      setDisplayedPhotos(props.photos.slice(props.photos.length - 7, props.photos.length));
+      setDisplayedPhotosIndexes([props.photos.length - 7, props.photos.length]);
+    }
   }
 
-  const findActivePhoto = (url) => {
+  const handlePhotoClick = (e, url) => {
     props.photos.forEach((photo, index) => {
       if (photo.thumbnail_url === url) {
         setActivePhoto(photo);
@@ -69,15 +62,15 @@ function Carousel(props){
     const allPhotos = displayedPhotos.map((photo, i) => <StyledCarouselPhotos src={ photo.thumbnail_url } key={i} onClick={(e, url) => handlePhotoClick(e, photo.thumbnail_url)} isActive={ activePhoto.thumbnail_url === photo.thumbnail_url ? true : false }/>);
 
     return(<StyledCarouselContainer photo={activePhoto}>
-      <StyledArrowButton onClick={(e, num) => handleThumbnailArrowClick(e, -1)} disabled={ displayedPhotos.length < 7 ? true : false }>Top</StyledArrowButton>
+      <StyledArrowButton onClick={(e, num) => handleThumbnailArrowClick(e, -1)} disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === 0 ? true : false }>Top</StyledArrowButton>
       <button>Expand</button>
       <StyledThumbnailContainer>
         {allPhotos}
       </StyledThumbnailContainer>
-      <StyledArrowButton onClick={(e, num) => handleThumbnailArrowClick(e, 1)} disabled={ displayedPhotos.length < 7 ? true : false }>Bottom</StyledArrowButton>
+      <StyledArrowButton onClick={(e, num) => handleThumbnailArrowClick(e, 1)} disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === props.photos.length - 7 ? true : false }>Bottom</StyledArrowButton>
         <StyledArrowsContainer>
-          <StyledArrowButton onClick={(e, dir) => handlePhotoClick(e, (photoIndex - 1))} disabled={ photoIndex === 0 ? true : false }>{'<'}</StyledArrowButton>
-          <StyledArrowButton onClick={(e, dir) => handlePhotoClick(e, (photoIndex + 1))} disabled={ photoIndex === props.photos.length - 1 ? true : false }>{'>'}</StyledArrowButton>
+          <StyledArrowButton onClick={(e, dir) => handleMainArrowClick(e, (photoIndex - 1))} disabled={ photoIndex === 0 ? true : false }>{'<'}</StyledArrowButton>
+          <StyledArrowButton onClick={(e, dir) => handleMainArrowClick(e, (photoIndex + 1))} disabled={ photoIndex === props.photos.length - 1 ? true : false }>{'>'}</StyledArrowButton>
         </StyledArrowsContainer>
       </StyledCarouselContainer>)
 
