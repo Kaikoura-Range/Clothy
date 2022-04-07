@@ -5,16 +5,22 @@ import { FlexRow, FlexColumn } from './../styles/Flex.styled.js'
 import { StylesImages, StylesContainer } from './../styles/Styles.styled.js'
 import StyledSizeQty from './../styles/SizeQty.styled.js'
 import { StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory } from './../styles/Overview.styled.js'
+import { StyledExpandedViewContainer, StyledExpandedViewModal, StyledDotImage, ZoomedImage } from './../styles/ExpandedCarouselView.styled.js';
 import _ from "underscore";
 
 function ProductInfo(props) {
   const [activeStyle, setActiveStyle] = useState({});
+  const [count, setCount] = useState(0);
   const [skus, setSkus] = useState([]);
   const [availableQty, setAvailableQty] = useState(0);
   const [isAddCartValid, setIsAddCartValid] = useState(true);
   const [salePrice, setSalePrice] = useState(null);
   const selectedSize = useRef('default');
   const selectedQuantity = useRef(0);
+  const [expandedViewImage, setExpandedViewImage] = useState(null);
+  const [expandedViewIndex, setExpandedViewIndex] = useState(null);
+  const [showExpandedView, setShowExpandedView] = useState(false);
+  const [zoomView, setZoomView] = useState(false);
   const [, dispatch] = useContext(DispatchContext);
 
   const handleSizeDuplicates = (originalSkus) => {
@@ -41,6 +47,8 @@ function ProductInfo(props) {
       }
       const initialSkus = handleSizeDuplicates((Object.values(props.styles.results[0].skus)));
       setSkus(Object.entries(initialSkus));
+      setCount(prev => prev + 1);
+      setExpandedViewIndex(0);
     }
   }, [props.styles])
 
@@ -53,6 +61,12 @@ function ProductInfo(props) {
       setSalePrice( activeStyle.sale_price || null );
     }
   }, [activeStyle])
+
+  useEffect(() => {
+    if (activeStyle.photos) {
+      setExpandedViewImage(activeStyle.photos[expandedViewIndex]['url']);
+    }
+  }, [expandedViewIndex])
 
 
   if (activeStyle.name) {
@@ -104,8 +118,42 @@ function ProductInfo(props) {
       }
     }
 
-    return(<FlexRow>
-      <Carousel photos={activeStyle.photos}/>
+    const toggleExpandedView = (e, index) => {
+      setExpandedViewIndex(index);
+      setShowExpandedView(!showExpandedView);
+    }
+
+    const handleArrowsClickExpandedView = (e, num) => {
+      const currentIndex = expandedViewIndex;
+      const allPhotos = activeStyle.photos.length - 1;
+      if (currentIndex + num < 0) {
+        setExpandedViewIndex(allPhotos);
+      } else if (currentIndex + num > allPhotos) {
+        setExpandedViewIndex(0);
+      } else {
+        setExpandedViewIndex(prev => prev + num);
+      }
+    }
+
+    const expandedViewDots = activeStyle.photos.map((dot, index) => <StyledDotImage activeDot={expandedViewIndex === index ? true : false } key={index}/>)
+
+    return(<>
+      {/**  Expanded View (Modal) */}
+      {showExpandedView ?
+      <StyledExpandedViewModal onClick={(e) => toggleExpandedView(e, expandedViewIndex)}>
+        <StyledExpandedViewContainer bgImg={expandedViewImage} onClick={(e) =>{ setZoomView(!zoomView); e.stopPropagation()}}>
+          { zoomView ? <ZoomedImage src={expandedViewImage}/> : ''}
+          { !zoomView ? <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}>Previous</button> : ''}
+          { !zoomView ? expandedViewDots : ''}
+          { !zoomView ? <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}>Next</button> : ''}
+        </StyledExpandedViewContainer>
+      </StyledExpandedViewModal> : '' }
+
+      {/**  Carousel */}
+      <FlexRow>
+      <Carousel photos={activeStyle.photos} handleExpandedView={toggleExpandedView} expandedImage={expandedViewIndex} newProduct={count}/>
+
+      {/**  Right-side (main product info) */}
       <FlexColumn>
         <StyledOverviewContainer>
           <StyledCategory>{category}</StyledCategory>
@@ -131,7 +179,7 @@ function ProductInfo(props) {
             <button>Star</button>
           </StyledSizeQty>
       </FlexColumn>
-    </FlexRow>)
+    </FlexRow></>)
   } else {
     return <p>loading</p>
   }
