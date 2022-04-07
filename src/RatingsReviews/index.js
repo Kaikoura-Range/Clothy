@@ -34,7 +34,58 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
     setSortedReviews([...newSorted])
   },[sortSelect, results ])
 
+
   if(reviewData) {
+
+  function addReviews() {
+    // var value = sortedReviews.length-diplayedReviewCount;
+    // if(value >= 2) {
+    //   setReviewCount(diplayedReviewCount +2);
+    // } else if( value === 1 ) {
+    //   setReviewCount(diplayedReviewCount +1);
+    // }
+    setReviewCount(sortedReviews.length)
+  }
+  const sortReviews = (e) => {
+    setSortSelect(e.target.value);
+    if(e.target.value === "helpful") {
+      setSortedReviews(sortedReviews.sort((a,b) => b.helpfulness - a.helpfulness));
+    } else if(e.target.value === "newest") {
+      setSortedReviews(sortedReviews.sort((a,b) => new moment(b.date).valueOf() - new moment(a.date).valueOf()));
+    } else {
+      setSortedReviews(sortedReviews.sort((a,b) => new moment(b.date).valueOf() - new moment(a.date).valueOf()).sort((a,b) => b.helpfulness - a.helpfulness));
+    }
+  }
+
+    if(props.reviewData) {
+      return (
+
+        <RatingsReviewsContainer data-testid="reviews" >
+          <Rating data={props.reviewMeta}/>
+          <ReviewsListContainer>
+            <div>
+              {props.reviewData.results.length} reviews sorted by
+              <select value={sortSelect} onChange={sortReviews}>
+                <option value="newest">newest</option>
+                <option value="helpful">Helpfulness</option>
+                <option value="relevant">Relevance</option>
+              </select>
+            </div>
+            <SearchReviews type='search' value={keyword} onChange={(e)=>{setKeyword(e.target.value)}} placeholder='Search For a Review'/>
+            {sortedReviews.filter(item => {
+              if(keyword.length >= 3) {
+                const entries = Object.entries(item);
+                return entries.some(entry=>entry[1]?entry[1].toString().toLowerCase().includes(keyword.toLowerCase()):false);
+              } else return item
+            }).slice(0,diplayedReviewCount).map((review,id) => {return (<Review key={id} review={review}/>)})}
+            {(sortedReviews.length-diplayedReviewCount >0) && (<button onClick={addReviews}>More Reviews</button>)}
+            <button onClick={() => {setOpenModal(true)}}>Add a Review</button>
+            {openModal && (<BackDrop onClick={()=>setOpenModal(!openModal)}><ReviewForm /></BackDrop>)}
+          </ReviewsListContainer>
+        </RatingsReviewsContainer>
+      )
+    }
+
     return (
         
       <RatingsReviewsContainer data-testid="reviews" >
