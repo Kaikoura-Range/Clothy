@@ -4,6 +4,14 @@ export const StyledCarouselContainer = styled.div`
   background-image: url(${(({ photo }) => photo ? photo.url : '')});
   background-size: cover;
   width: 65%;
+
+  &:hover {
+    cursor: zoom-in;
+  }
+
+  button:hover {
+    cursor: pointer;
+  }
 `
 
 export const StyledCarouselPhotos = styled.span`
@@ -21,6 +29,11 @@ export const StyledThumbnailContainer = styled.div`
   flex-direction: column;
   overflow: auto;
   height: 430px;
+  width: 60px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 export const StyledArrowsContainer = styled.div`
@@ -36,6 +49,7 @@ export const StyledArrowsContainer = styled.div`
     border-radius: 50%;
     margin: 30px 30px 20px;
   }
+
 `
 export const StyledArrowButton = styled.button`
   visibility: ${({disabled}) => disabled ? 'hidden' : 'visible'}
