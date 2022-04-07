@@ -23,6 +23,20 @@ export const StyledExpandedViewContainer = styled.div`
   background-image: url(${({bgImg}) => bgImg });
   background-size: cover;
   border-radius: 0.5%;
+  overflow: hidden;
+`
+
+export const ZoomedImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .1s;
+
+  &:hover {
+    -ms-transform: scale(2.5) translate(30px);
+    -webkit-transform: scale(2.5) translate(30px);
+    transform: scale(2.5) translate(30px);
+  }
 `
 
 export const StyledDotImage = styled.div`

@@ -30,7 +30,9 @@ function Carousel(props){
       setPhotoIndex(props.expandedImage);
       setActivePhoto(props.photos[props.expandedImage]);
 
-      indexesInRightRange(props.expandedImage);
+      if (props.photos.length > 7 ) {
+        indexesInRightRange(props.expandedImage);
+      }
     }
   }, [props.expandedImage])
 
@@ -92,7 +94,7 @@ function Carousel(props){
         {/** Thumbnails buttons and images */}
         <StyledArrowButton onClick={(e, num) => {handleThumbnailArrowClick(e, -1); e.stopPropagation()}} disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === 0 ? true : false }>Top</StyledArrowButton>
 
-        <button onClick={(e, index) => props.handleExpandedView(e, activePhoto, photoIndex)}>Expand</button>
+        <button onClick={(e, index) => props.handleExpandedView(e, photoIndex)}>Expand</button>
 
         <StyledThumbnailContainer>
           {allPhotos}

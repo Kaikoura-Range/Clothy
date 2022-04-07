@@ -5,7 +5,7 @@ import { FlexRow, FlexColumn } from './../styles/Flex.styled.js'
 import { StylesImages, StylesContainer } from './../styles/Styles.styled.js'
 import StyledSizeQty from './../styles/SizeQty.styled.js'
 import { StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory } from './../styles/Overview.styled.js'
-import { StyledExpandedViewContainer, StyledExpandedViewModal, StyledDotImage } from './../styles/ExpandedCarouselView.styled.js';
+import { StyledExpandedViewContainer, StyledExpandedViewModal, StyledDotImage, ZoomedImage } from './../styles/ExpandedCarouselView.styled.js';
 import _ from "underscore";
 
 function ProductInfo(props) {
@@ -20,6 +20,7 @@ function ProductInfo(props) {
   const [expandedViewImage, setExpandedViewImage] = useState(null);
   const [expandedViewIndex, setExpandedViewIndex] = useState(null);
   const [showExpandedView, setShowExpandedView] = useState(false);
+  const [zoomView, setZoomView] = useState(false);
   const [, dispatch] = useContext(DispatchContext);
 
   const handleSizeDuplicates = (originalSkus) => {
@@ -118,8 +119,8 @@ function ProductInfo(props) {
     }
 
     const toggleExpandedView = (e, index) => {
-      setExpandedViewIndex(prev => index || prev);
-      setShowExpandedView(prev => !prev);
+      setExpandedViewIndex(index);
+      setShowExpandedView(!showExpandedView);
     }
 
     const handleArrowsClickExpandedView = (e, num) => {
@@ -139,11 +140,12 @@ function ProductInfo(props) {
     return(<>
       {/**  Expanded View (Modal) */}
       {showExpandedView ?
-      <StyledExpandedViewModal onClick={(e) => toggleExpandedView(e, '')}>
-        <StyledExpandedViewContainer bgImg={expandedViewImage} onClick={(e) => e.stopPropagation()}>
-          <button onClick={(e, num) => handleArrowsClickExpandedView(e, -1)}>Previous</button>
-          {expandedViewDots}
-          <button onClick={(e, num) => handleArrowsClickExpandedView(e, +1)}>Next</button>
+      <StyledExpandedViewModal onClick={(e) => toggleExpandedView(e, expandedViewIndex)}>
+        <StyledExpandedViewContainer bgImg={expandedViewImage} onClick={(e) =>{ setZoomView(!zoomView); e.stopPropagation()}}>
+          { zoomView ? <ZoomedImage src={expandedViewImage}/> : ''}
+          { !zoomView ? <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}>Previous</button> : ''}
+          { !zoomView ? expandedViewDots : ''}
+          { !zoomView ? <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}>Next</button> : ''}
         </StyledExpandedViewContainer>
       </StyledExpandedViewModal> : '' }
 
