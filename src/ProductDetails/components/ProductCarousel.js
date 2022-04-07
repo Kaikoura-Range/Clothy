@@ -30,13 +30,7 @@ function Carousel(props){
       setPhotoIndex(props.expandedImage);
       setActivePhoto(props.photos[props.expandedImage]);
 
-      if (props.photos.length > 7) {
-        if (props.expandedImage <= props.photos.length - 7) {
-          setDisplayedPhotosIndexes([props.expandedImage, props.expandedImage + 7]);
-        } else {
-          setDisplayedPhotosIndexes([props.photos.length - 7, props.photos.length]);
-        }
-      }
+      indexesInRightRange(props.expandedImage);
     }
   }, [props.expandedImage])
 
@@ -48,11 +42,13 @@ function Carousel(props){
     setPhotoIndex(index);
     setActivePhoto(props.photos[index]);
 
+    indexesInRightRange(index);
+  }
+
+  const indexesInRightRange = (index) => {
     if (index <= props.photos.length - 7) {
-      setDisplayedPhotos(props.photos.slice(index, index + 7));
       setDisplayedPhotosIndexes([index, index + 7]);
     } else {
-      setDisplayedPhotos(props.photos.slice(props.photos.length - 7, props.photos.length));
       setDisplayedPhotosIndexes([props.photos.length - 7, props.photos.length]);
     }
   }
@@ -94,19 +90,20 @@ function Carousel(props){
     return(<StyledCarouselContainer photo={activePhoto} onClick={(e, index) => props.handleExpandedView(e, photoIndex)}>
 
         {/** Thumbnails buttons and images */}
-        <StyledArrowButton onClick={(e, num) => handleThumbnailArrowClick(e, -1)} disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === 0 ? true : false }>Top</StyledArrowButton>
-        <button onClick={(e, img, index) => props.handleExpandedView(e, activePhoto, photoIndex)}>Expand</button>
+        <StyledArrowButton onClick={(e, num) => {handleThumbnailArrowClick(e, -1); e.stopPropagation()}} disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === 0 ? true : false }>Top</StyledArrowButton>
+
+        <button onClick={(e, index) => props.handleExpandedView(e, activePhoto, photoIndex)}>Expand</button>
 
         <StyledThumbnailContainer>
           {allPhotos}
         </StyledThumbnailContainer>
 
-        <StyledArrowButton onClick={(e, num) => handleThumbnailArrowClick(e, 1)} disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === props.photos.length - 7 ? true : false }>Bottom</StyledArrowButton>
+        <StyledArrowButton onClick={(e, num) => {handleThumbnailArrowClick(e, 1); e.stopPropagation()}} disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === props.photos.length - 7 ? true : false }>Bottom</StyledArrowButton>
 
         {/** Main image */}
         <StyledArrowsContainer>
-          <StyledArrowButton onClick={(e, dir) => handleMainArrowClick(e, (photoIndex - 1))} disabled={ photoIndex === 0 ? true : false }>{'<'}</StyledArrowButton>
-          <StyledArrowButton onClick={(e, dir) => handleMainArrowClick(e, (photoIndex + 1))} disabled={ photoIndex === props.photos.length - 1 ? true : false }>{'>'}</StyledArrowButton>
+          <StyledArrowButton onClick={(e, dir) => {handleMainArrowClick(e, (photoIndex - 1)); e.stopPropagation();}} disabled={ photoIndex === 0 ? true : false }>{'<'}</StyledArrowButton>
+          <StyledArrowButton onClick={(e, dir) => {handleMainArrowClick(e, (photoIndex + 1)); e.stopPropagation()}} disabled={ photoIndex === props.photos.length - 1 ? true : false }>{'>'}</StyledArrowButton>
         </StyledArrowsContainer>
       </StyledCarouselContainer>)
 

@@ -118,7 +118,6 @@ function ProductInfo(props) {
     }
 
     const toggleExpandedView = (e, index) => {
-      // setExpandedViewImage(img.url);
       setExpandedViewIndex(prev => index || prev);
       setShowExpandedView(prev => !prev);
     }
