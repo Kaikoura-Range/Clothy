@@ -14,7 +14,6 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
     dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
     dev.state && console.log('DEV  STATE   RelatedProducts: ', reviewData)
   }
-  console.log(props)
 
   const [sortSelect,setSortSelect] = useState('newest');
   console.log('sort select ',sortSelect)
@@ -58,14 +57,14 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
     }
   }
 
-    if(props.reviewData) {
+    if(reviewData) {
       return (
 
         <RatingsReviewsContainer data-testid="reviews" >
-          <Rating data={props.reviewMeta}/>
+          <Rating data={reviewMeta}/>
           <ReviewsListContainer>
             <div>
-              {props.reviewData.results.length} reviews sorted by
+              {reviewData.results.length} reviews sorted by
               <select value={sortSelect} onChange={sortReviews}>
                 <option value="newest">newest</option>
                 <option value="helpful">Helpfulness</option>
