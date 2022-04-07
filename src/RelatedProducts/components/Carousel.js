@@ -76,13 +76,13 @@ const CarouselContainer = styled.div`
   width: 85%;
   height: auto;
   display: flex;
-  padding: 20px;
+  padding: 2em;
   overflow: auto;
-  padding-top: 20px;
-  border-radius: 7px;
+  padding-top: 2em;
+  /* padding-bottom: 2em; */
+  /* border-radius: 7px; */
   align-items: center;
   white-space: nowrap;
-  padding-bottom: 20px;
   background-color: var( --bgc-0);
 
 `

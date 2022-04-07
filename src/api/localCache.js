@@ -1,7 +1,7 @@
 
 
 
-const cachedLogs = false // true will turn on all logs to the cache
+const cachedLogs = true // true will turn on all logs to the cache
 
 
 
@@ -20,26 +20,45 @@ const getKey = (options) => {
 
   if (options.params.product_id ) {
     // const checkKey = /(questions)||(answers)/i
-    const found = key.includes('question') || key.includes('answer');
-    // console.log('params found', found)
-    if (found) {
+    const foundQA = key.includes('question') || key.includes('answer');
+    if (foundQA) {
       key = '/qa/questions/'
     }
-    key += options.params.product_id
-    // console.log('new key', key)
-  }
 
-  if (options.data) {
-    if (options.data.product_id) {
-
-      const found = key.includes('question') || key.includes('answer') ;
-      // console.log('body found', found)
-      if (found) {
-        key = '/qa/questions/'
-      }
-      key += options.data.product_id
+    const foundReview = key.includes('reviews')
+    if (foundReview) {
+      key = '/reviews/'
     }
+
+    const foundMeta = key.includes('meta')
+    if (foundMeta) {
+      key = '/reviews/meta/'
+    }
+
+    key += options.params.product_id
   }
+
+  if (options.data && options.data.product_id) {
+
+    const foundQA = key.includes('question') || key.includes('answer') ;
+    if (foundQA) {
+      key = '/qa/questions/'
+    }
+
+    const foundReview = key.includes('reviews')
+    if (foundReview) {
+      key = '/reviews/'
+    }
+
+    const foundMeta = key.includes('meta')
+    if (foundMeta) {
+      key = '/reviews/meta/'
+    }
+
+
+    key += options.data.product_id
+  }
+
   //  const checkKey = /(\/reviews\/)||(\/qa\/questions)/i
   return key
 }
@@ -75,10 +94,10 @@ const QuickCache = (maxStoreTime = baseTime) => {
   instance.remove = (options) => {
     // console.log(instance.store)
     // const keyMatch = key.match(checkKey)
-    console.log('POST OPTIONS', options)
+    // console.log('POST OPTIONS', options)
     const key = getKey(options)
-    console.log(options.url)
-    console.log(key)
+    // console.log(options.url)
+    // console.log(key)
     delete instance.store[key]
     cachedLogs && console.log('removed from cache ', key)
     // console.log(instance.store)
