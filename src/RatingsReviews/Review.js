@@ -9,9 +9,24 @@ const Review = ({review}) => {
   const [noCounter, setNoCounter] = useState(review.unhelpfulness||0);
   const [fullSummary, setFullSummary] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [clicked, setClicked] = useState(false);
 
+  const showImg = (photo) => {
+      setOpenModal(true);
+      setSelectedImage(photo.id)
+  }
+  const clickedHelpful = (answer) => {
+      if(!clicked) {
+          setClicked(true)
+          if(answer==='yes') setYesCounter(yesCounter+1)
+          if(answer==='no') setNoCounter(noCounter+1)
 
-
+        
+      }
+  }
+  (yesCounter !== review.helpfulness) && setYesCounter(review.helpfulness);
+ 
     return (
     <IndividualReviewContainer>
         <div>By: {review.reviewer_name} | {moment(review.date).format("MMM Do, YYYY")}</div>
@@ -24,13 +39,13 @@ const Review = ({review}) => {
         {review.response && <div>Seller Response: {review.response}</div>}
         {review.photos.map((photo) => {
             return(<>
-                <img key={photo.id} src={photo.url} alt='' height="50" width="50" onClick={() => {setOpenModal(true)}}/> 
-                {openModal && (<BackDrop onClick={()=>setOpenModal(!openModal)}>  <ImageContainer src={photo.url} alt='' /> </BackDrop>)}
+                <img key={photo.id} src={photo.url} alt='' height="50" width="50" onClick={() => {showImg(photo)}}/> 
+                {(openModal && photo.id===selectedImage)&& (<BackDrop onClick={()=>setOpenModal(!openModal)}>  <ImageContainer src={photo.url} alt=''/> </BackDrop>)}
                 </>
             ) 
         })}
         <Star ratingAvg={review.rating}/>
-        <div>Was this review helpful? <div onClick={()=> setYesCounter(yesCounter+1) }>Yes({yesCounter})</div> <div onClick={()=> setNoCounter(noCounter+1) }>No({noCounter})</div> </div>
+        <div>{clicked? <div>Thank you for the feedback!</div> : <div>Was this review helpful?</div>} <div onClick={()=> clickedHelpful('yes') }>Yes({yesCounter})</div> <div onClick={()=> clickedHelpful('no') }>No({noCounter})</div> </div>
     </IndividualReviewContainer>
     )
 }
@@ -44,7 +59,8 @@ const IndividualReviewContainer = styled.div`
 border-bottom: 0.5px solid black;
 `
 const ImageContainer = styled.img`
-object-position: 50% 50%;
+max-width: 90%;
+max-height: 90%;
 `
 
 const BackDrop = styled.div`
