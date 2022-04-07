@@ -30,8 +30,7 @@ const initPageState = {
   QA: {},
   details: {},
   related: {},
-  reviews: {},
-  reviewMeta: {},
+  reviews: {}
 };
 
 const AppContextProvider = ({ children, passedState }) => {

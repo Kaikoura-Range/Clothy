@@ -16,7 +16,7 @@ const cleanup = (key, timeToCleanup, store) => {
 const getKey = (options) => {
 
   var key = options.url;
-  // console.log('initkey', key)
+
 
   if (options.params.product_id ) {
     // const checkKey = /(questions)||(answers)/i
@@ -25,7 +25,7 @@ const getKey = (options) => {
       key = '/qa/questions/'
     }
 
-    const foundReview = key.includes('reviews')
+    const foundReview = key.includes('reviews') && (!key.includes('meta'))
     if (foundReview) {
       key = '/reviews/'
     }
