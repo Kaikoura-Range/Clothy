@@ -65,7 +65,7 @@ function ProductInfo(props) {
     if (activeStyle.photos) {
       setExpandedViewImage(activeStyle.photos[expandedViewIndex]['url']);
     }
-  }, [expandedViewIndex])
+  }, [expandedViewIndex, activeStyle])
 
 
   if (activeStyle.name) {
@@ -141,16 +141,17 @@ function ProductInfo(props) {
       {showExpandedView ?
       <StyledExpandedViewModal onClick={(e) => toggleExpandedView(e, expandedViewIndex)}>
         <StyledExpandedViewContainer bgImg={expandedViewImage} onClick={(e) =>{ setZoomView(!zoomView); e.stopPropagation()}}>
-          { zoomView ? <ZoomedImage src={expandedViewImage}/> : ''}
-          { !zoomView ? <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}>Previous</button> : ''}
-          { !zoomView ? expandedViewDots : ''}
-          { !zoomView ? <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}>Next</button> : ''}
+          { !zoomView ? <>
+            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}>Previous</button>
+            {expandedViewDots}
+            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}>Next</button>
+          </> : <ZoomedImage/>}
         </StyledExpandedViewContainer>
       </StyledExpandedViewModal> : '' }
 
       {/**  Carousel */}
       <FlexRow>
-      <Carousel photos={activeStyle.photos} handleExpandedView={toggleExpandedView} expandedImage={expandedViewIndex} newProduct={[props.styles]}/>
+      <Carousel photos={activeStyle.photos} handleExpandedView={toggleExpandedView} expandedImage={expandedViewIndex} newProduct={props.styles}/>
 
       {/**  Right-side (main product info) */}
       <FlexColumn>

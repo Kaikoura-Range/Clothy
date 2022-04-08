@@ -8,7 +8,7 @@ export const StyledExpandedViewModal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 2;
   position: fixed;
   background-color: rgba(0, 0, 0, 0.35);
 `
@@ -22,23 +22,26 @@ export const StyledExpandedViewContainer = styled.div`
   background-color: #fff;
   background-image: url(${({bgImg}) => bgImg });
   background-size: cover;
+  background-position: center;
   border-radius: 0.5%;
   overflow: hidden;
 `
 
-export const ZoomedImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform .1s;
-
-  &:hover {
-    -ms-transform: scale(2.5) translate(30px);
-    -webkit-transform: scale(2.5) translate(30px);
-    transform: scale(2.5) translate(30px);
-  }
+export const ZoomedImage = styled.div`
+  width: 150px;
+  height: 150px;
+  border: 0.2em solid red;
+  position: absolute;
 `
 
+// object-fit: cover;
+//   transition: transform .1s;
+
+//   &:hover {
+//     -ms-transform: scale(2.5) translate(30px);
+//     -webkit-transform: scale(2.5) translate(30px);
+//     transform: scale(2.5) translate(30px);
+//   }
 export const StyledDotImage = styled.div`
   width: 1em;
   height: 1em;
