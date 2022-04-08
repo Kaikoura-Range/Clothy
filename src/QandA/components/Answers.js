@@ -22,7 +22,7 @@ export default function Answers(props) {
   };
 
   useEffect(() => {
-    setAddMoreAnswers(0);
+    // setAddMoreAnswers(0);
     setLength(Object.keys(props.a).length);
   }, [props.a]);
 
@@ -138,11 +138,6 @@ export default function Answers(props) {
                 {answer.helpfulness}) |{' '}
                 <ReportedLink onClick={() => reportAnswerHandler(answer.id)}>Report</ReportedLink>
               </HelpfulAnswer>
-              {showHelpfulModal && (
-                <BackDrop onClick={backDropHandler}>
-                  <HelpfulModal />
-                </BackDrop>
-              )}
             </EachAnswerContainer>
           );
         })}
@@ -151,6 +146,11 @@ export default function Answers(props) {
       )}
       {length > 1 && addMoreAnswers === length && (
         <LoadMoreAnswers onClick={collapseAllAnswersHandler}>Collapse Answers</LoadMoreAnswers>
+      )}
+      {showHelpfulModal && (
+        <BackDrop onClick={backDropHandler}>
+          <HelpfulModal />
+        </BackDrop>
       )}
       {showErrorModal && (
         <BackDrop onClick={backDropErrorHandler}>
@@ -174,10 +174,6 @@ const ReportedLink = styled.span`
 
 const AnswerAuthor = styled.p`
   margin-top: 5px;
-`;
-
-const AnswerBody = styled.h3`
-  font-size: 1.2rem;
 `;
 
 const ByP = styled.p`
@@ -213,6 +209,7 @@ const LoadMoreAnswers = styled.p`
 
 const AnswersContainer = styled.div`
   margin-top: 25px;
+  width: 60%;
 `;
 
 const ImagesContainer = styled.div`
@@ -232,10 +229,14 @@ const BackDrop = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 2;
+  z-index: 1;
   background: rgba(0, 0, 0, 0.75);
 `;
 
 const Wrapper = styled.div`
   display: flex;
+`;
+
+const AnswerBody = styled.h3`
+  font-size: var(--body-fs);
 `;
