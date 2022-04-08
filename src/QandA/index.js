@@ -46,7 +46,7 @@ export default function QAndA() {
   };
   ///////////////////////////////////////////////////////////////////////////
   //these functions render out each question & answer and conditionally renders "more answered questions button"
-
+  console.log(state);
   const renderWhenSearchInput = () => {
     let filteredResults = state.QA.results.map(
       (q) =>
@@ -195,7 +195,7 @@ export const qAndAStateInit = (productId) => {
 const QAHeader = styled.h1`
   font-size: var(--fs3);
   color: var(--header-fc);
-`
+`;
 
 const SearchBar = styled.input`
   border: 2px solid black;
@@ -213,6 +213,7 @@ const EntireQuestionsContainer = styled.div`
   align-items: center;
   padding-top: 2em;
   padding-bottom: 4em;
+
   /* margin-left: 100px;
   margin-right: 100px; */
   /* margin-left: 7.5%;
@@ -224,19 +225,19 @@ const EntireQAndAContainer = styled.div`
   height: auto;
   max-height: 500px !important;
   overflow: auto;
+  position: relative;
 `;
 
 const EntireQuestionsWrapper = styled.div`
   display: inline;
   width: var(--module-width);
-  padding: 2em;
+  padding: 1em;
   background-color: var(--contain-bgc);
 `;
 
 const AddQuestionButton = styled.button`
   cursor: pointer;
   margin: 15px;
-  margin-bottom: 50px;
   float: left;
   font-size: 16px;
   border-radius: 5px;
@@ -250,7 +251,6 @@ const AddQuestionButton = styled.button`
 const MoreAnsweredQuestionsButton = styled.button`
   cursor: pointer;
   margin: 15px;
-  margin-bottom: 50px;
   float: left;
   font-size: 16px;
   border-radius: 5px;

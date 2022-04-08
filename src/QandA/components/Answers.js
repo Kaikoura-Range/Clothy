@@ -22,7 +22,7 @@ export default function Answers(props) {
   };
 
   useEffect(() => {
-    setAddMoreAnswers(0);
+    // setAddMoreAnswers(0);
     setLength(Object.keys(props.a).length);
   }, [props.a]);
 
@@ -92,14 +92,15 @@ export default function Answers(props) {
     setAddMoreAnswers(0);
   };
 
-  console.log(Object.values(props.a));
-
   const sortingBySeller = (values) => {
     let sorted = values.sort((a, b) => {
-      if (a.answerer_name !== 'seller' && b.answerer_name !== 'seller') {
+      if (
+        a.answerer_name.toLowerCase() !== 'seller' &&
+        b.answerer_name.toLowerCase() !== 'seller'
+      ) {
         return a.answerer_name > b.answerer_name ? 1 : -1;
       } else {
-        return a.answerer_name !== 'seller' ? 1 : -1;
+        return a.answerer_name.toLowerCase() !== 'seller' ? 1 : -1;
       }
     });
     return sorted;
@@ -137,11 +138,6 @@ export default function Answers(props) {
                 {answer.helpfulness}) |{' '}
                 <ReportedLink onClick={() => reportAnswerHandler(answer.id)}>Report</ReportedLink>
               </HelpfulAnswer>
-              {showHelpfulModal && (
-                <BackDrop onClick={backDropHandler}>
-                  <HelpfulModal />
-                </BackDrop>
-              )}
             </EachAnswerContainer>
           );
         })}
@@ -150,6 +146,11 @@ export default function Answers(props) {
       )}
       {length > 1 && addMoreAnswers === length && (
         <LoadMoreAnswers onClick={collapseAllAnswersHandler}>Collapse Answers</LoadMoreAnswers>
+      )}
+      {showHelpfulModal && (
+        <BackDrop onClick={backDropHandler}>
+          <HelpfulModal />
+        </BackDrop>
       )}
       {showErrorModal && (
         <BackDrop onClick={backDropErrorHandler}>
@@ -208,6 +209,7 @@ const LoadMoreAnswers = styled.p`
 
 const AnswersContainer = styled.div`
   margin-top: 25px;
+  width: 60%;
 `;
 
 const ImagesContainer = styled.div`
@@ -227,6 +229,7 @@ const BackDrop = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
+  z-index: 1;
   background: rgba(0, 0, 0, 0.75);
 `;
 
@@ -234,8 +237,6 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-
 const AnswerBody = styled.h3`
-
   font-size: var(--body-fs);
-`
+`;
