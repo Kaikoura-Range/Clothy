@@ -3,7 +3,9 @@ import styled from 'styled-components';
 export const StyledCarouselContainer = styled.div`
   background-image: url(${(({ photo }) => photo ? photo.url : '')});
   background-size: cover;
-  width: 65%;
+  background-repeat: no-repeat;
+  /* width: 65%; */
+  width: var(--product-carousel-width);
 
   &:hover {
     cursor: zoom-in;
@@ -16,9 +18,9 @@ export const StyledCarouselContainer = styled.div`
 
 export const StyledCarouselPhotos = styled.span`
   background-image: url(${({src}) => src});
+  background-size: cover;
   min-height: 60px;
   max-width: 60px;
-  background-size: cover;
   border-bottom: ${({ isActive }) => isActive ? '3px solid rgb(247,193,18);' : ''};
 `
 

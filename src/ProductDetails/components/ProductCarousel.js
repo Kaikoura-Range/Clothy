@@ -26,14 +26,10 @@ function Carousel(props){
   }, [props.newProduct])
 
   useEffect(() => {
-    if (props.expandedImage) {
-      setPhotoIndex(props.expandedImage);
-      setActivePhoto(props.photos[props.expandedImage]);
+    setPhotoIndex(props.expandedImage);
+    setActivePhoto(props.photos[props.expandedImage]);
 
-      if (props.photos.length > 7 ) {
-        indexesInRightRange(props.expandedImage);
-      }
-    }
+    indexesInRightRange(props.expandedImage);
   }, [props.expandedImage])
 
   useEffect(() => {
@@ -48,10 +44,12 @@ function Carousel(props){
   }
 
   const indexesInRightRange = (index) => {
-    if (index <= props.photos.length - 7) {
-      setDisplayedPhotosIndexes([index, index + 7]);
-    } else {
-      setDisplayedPhotosIndexes([props.photos.length - 7, props.photos.length]);
+    if (props.photos.length > 7) {
+      if (index <= props.photos.length - 7) {
+        setDisplayedPhotosIndexes([index, index + 7]);
+      } else {
+        setDisplayedPhotosIndexes([props.photos.length - 7, props.photos.length]);
+      }
     }
   }
 
