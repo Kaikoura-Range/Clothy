@@ -48,7 +48,7 @@ export default function Stars({ratingAvg}) {
                 return (
                     <div className="single-star-container" key={i}>
                         <div className="single-star-fill" style={{"width" : `${parseInt(item*31)}px`}}>
-                            <img className="single-star-outline" src="https://raw.githubusercontent.com/psfonseka/five-stars/master/dist/star.png" alt="stars alt"></img>
+                            <img id={i} className="single-star-outline" src="https://raw.githubusercontent.com/psfonseka/five-stars/master/dist/star.png" alt="stars alt" onClick={()=>{}}></img>
                         </div>
                     </div>
                 )
