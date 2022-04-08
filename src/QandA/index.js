@@ -231,14 +231,13 @@ const EntireQAndAContainer = styled.div`
 const EntireQuestionsWrapper = styled.div`
   display: inline;
   width: var(--module-width);
-  padding: 2em;
+  padding: 1em;
   background-color: var(--contain-bgc);
 `;
 
 const AddQuestionButton = styled.button`
   cursor: pointer;
   margin: 15px;
-  margin-bottom: 50px;
   float: left;
   font-size: 16px;
   border-radius: 5px;
@@ -252,7 +251,6 @@ const AddQuestionButton = styled.button`
 const MoreAnsweredQuestionsButton = styled.button`
   cursor: pointer;
   margin: 15px;
-  margin-bottom: 50px;
   float: left;
   font-size: 16px;
   border-radius: 5px;
