@@ -5,7 +5,8 @@ export const StyledCarouselContainer = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 65%;
+  /* width: 65%; */
+  width: var(--product-carousel-width);
 
   &:hover {
     cursor: zoom-in;

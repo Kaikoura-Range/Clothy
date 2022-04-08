@@ -182,7 +182,9 @@ const QuestionsAuthor = styled.p`
 `;
 
 const QuestionBody = styled.h3`
-  display: inline;
+  display: inline-block;
+  font-size: var(--body-fs);
+
 `;
 
 const HelpfulReportContainer = styled.div`

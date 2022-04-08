@@ -75,7 +75,7 @@ const RelatecCardContainer = styled.div`
   flex-direction: column;
 
   justify-content: space-evenly;
-  background-color: var(--bgc1);
+  background-color: var(--element-bgc);
   box-shadow: 1px 1px 5px rgba(0,0,0,0.15);
 `
 
@@ -89,14 +89,14 @@ const CardFooter = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: space-evenly;
-  background-color: var(--bgc1);
+  /* background-color: var(--element-bgc); */
   border-radius: ${borderRadius}px;
 `
 
 
 const CardFooterText = styled.p`
-  font-size: var(--fs-2);
-  color: var(--fc-0);
+  font-size: var(--body-fs);
+  color: var(--body-fc);
 `
 
 
@@ -111,9 +111,9 @@ const EmptyTextContainer = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  font-size: var(--fs-2);
-  color: var(--fc-0);
-  background-color: var(--bgc1);
+  font-size: var(--body-fs);
+  color: var(--body-fc);
+  background-color: var(--element-bgc);
 
 
 `

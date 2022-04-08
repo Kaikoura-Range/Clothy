@@ -112,7 +112,7 @@ export default function Answers(props) {
         .map((answer) => {
           return (
             <EachAnswerContainer key={answer.id}>
-              <h3>A: {answer.body}</h3>
+              <AnswerBody>A: {answer.body}</AnswerBody>
               {answer.photos &&
                 answer.photos.map((photo, i) => {
                   return (
@@ -233,3 +233,9 @@ const BackDrop = styled.div`
 const Wrapper = styled.div`
   display: flex;
 `;
+
+
+const AnswerBody = styled.h3`
+
+  font-size: var(--body-fs);
+`
