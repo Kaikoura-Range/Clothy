@@ -92,14 +92,15 @@ export default function Answers(props) {
     setAddMoreAnswers(0);
   };
 
-  console.log(Object.values(props.a));
-
   const sortingBySeller = (values) => {
     let sorted = values.sort((a, b) => {
-      if (a.answerer_name !== 'seller' && b.answerer_name !== 'seller') {
+      if (
+        a.answerer_name.toLowerCase() !== 'seller' &&
+        b.answerer_name.toLowerCase() !== 'seller'
+      ) {
         return a.answerer_name > b.answerer_name ? 1 : -1;
       } else {
-        return a.answerer_name !== 'seller' ? 1 : -1;
+        return a.answerer_name.toLowerCase() !== 'seller' ? 1 : -1;
       }
     });
     return sorted;
@@ -112,7 +113,7 @@ export default function Answers(props) {
         .map((answer) => {
           return (
             <EachAnswerContainer key={answer.id}>
-              <h3>A: {answer.body}</h3>
+              <AnswerBody>A: {answer.body}</AnswerBody>
               {answer.photos &&
                 answer.photos.map((photo, i) => {
                   return (
@@ -175,6 +176,10 @@ const AnswerAuthor = styled.p`
   margin-top: 5px;
 `;
 
+const AnswerBody = styled.h3`
+  font-size: 1.2rem;
+`;
+
 const ByP = styled.p`
   margin-top: 5px;
   margin-right: 5px;
@@ -227,6 +232,7 @@ const BackDrop = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
+  z-index: 2;
   background: rgba(0, 0, 0, 0.75);
 `;
 

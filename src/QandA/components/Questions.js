@@ -7,7 +7,7 @@ import api from '../../api/index';
 import HelpfulModal from './modals/HelpfulModal';
 import SuccessModal from './modals/SuccessModal';
 import ErrorModal from './modals/ErrorModal';
-let newText;
+
 export default function Questions(props) {
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
@@ -183,6 +183,7 @@ const QuestionsAuthor = styled.p`
 
 const QuestionBody = styled.h3`
   display: inline;
+  font-size: 1.2rem;
 `;
 
 const HelpfulReportContainer = styled.div`
