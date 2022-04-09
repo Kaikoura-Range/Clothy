@@ -34,7 +34,7 @@ function ProductDetails() {
       <Info product={activeProduct} styles={allStyles} reviews={totalReviews} rating={reviews.meta.ratings}/>
       <StyledDescFeaturesContainer>
         <FlexRow>
-            <h1>Product Description |</h1>
+            <h2>Product Description</h2>
             <Description product={activeProduct}/>
             <Features product={activeProduct}/>
         </FlexRow>

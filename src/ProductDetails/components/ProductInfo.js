@@ -13,6 +13,7 @@ import Stars from './../styles/Star.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartArrowDown, faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import Magnifier from "react-magnifier";
 
 function ProductInfo(props) {
   const [activeStyle, setActiveStyle] = useState({});
@@ -179,7 +180,7 @@ function ProductInfo(props) {
           { !zoomView ? <>
             <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}>{'<'}</button>
             {expandedViewDots}
-            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}>{'>'}</button> </> : '' }
+            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}>{'>'}</button> </> : <Magnifier src={expandedViewImage} width={container.offsetWidth} zoomFactor={2.5}/> }
           </StyledExpandedViewContainer>
       </StyledExpandedViewModal> : '' }
 

@@ -23,6 +23,7 @@ export const StyledExpandedViewContainer = styled.div`
   overflow: hidden;
   background-image: url(${({bgImg}) => bgImg });
   background-size: cover;
+  background-position: bottom;
   position: absolute;
   cursor: crosshair;
 

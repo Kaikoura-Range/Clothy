@@ -4,6 +4,7 @@ export const StyledCarouselContainer = styled.div`
   background-image: url(${(({ photo }) => photo ? photo.url : '')});
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: bottom;
   /* width: 65%; */
   width: var(--product-carousel-width);
 
@@ -19,6 +20,7 @@ export const StyledCarouselContainer = styled.div`
 export const StyledCarouselPhotos = styled.span`
   background-image: url(${({src}) => src});
   background-size: cover;
+  background-position: bottom;
   min-height: 60px;
   max-width: 60px;
   border-bottom: ${({ isActive }) => isActive ? '3px solid rgb(247,193,18);' : ''};

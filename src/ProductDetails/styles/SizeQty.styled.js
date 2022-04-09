@@ -18,6 +18,10 @@ const StyledSizeQty = styled.div`
     appearance:none;
   }
 
+  select:hover {
+    background-color: var(--accent-color);
+  }
+
   p {
     color: red;
     font-size: 14px;
