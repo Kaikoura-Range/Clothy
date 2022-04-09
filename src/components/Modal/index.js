@@ -26,10 +26,10 @@ const Modal = ({ children }) => {
   }, [toShow, modalOpen])
 
   const modalToggle = toShow ? () => toggleModal(dispatch) : () => toggleModal(dispatch, 'compare')
-  return Child && (
+  return (
     <ModalContainer open={modalOpen}  show={toShow} onClick={modalToggle} data-testid="Modal" >
       <ModalContent show={toShow} onClick={(e) => e.stopPropagation()} >
-        <Child { ...state.modal.props } />
+        { Child && <Child { ...state.modal.props } />}
       </ModalContent>
     </ModalContainer>
   )
