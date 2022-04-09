@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
 import styled from 'styled-components';
 import api from '../api/index';
@@ -31,6 +31,7 @@ const cSelector = {
   const onSubmitHandler = (e) => {
     e.stopPropagation();
     e.preventDefault();
+    // eslint-disable-next-line no-useless-escape
     const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     if(!overallRating) {
       alert('choose a star rating')
