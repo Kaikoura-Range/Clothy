@@ -13,6 +13,7 @@ export default function QuestionForm(props) {
     e.stopPropagation();
     e.preventDefault();
     props.success();
+    props.showForm();
     var newQuestion = {
       product_id: state.currentProduct,
       body: body,
@@ -23,7 +24,6 @@ export default function QuestionForm(props) {
       .question(newQuestion)
       .then((res) => console.log('post question res', res))
       .then(() => {
-        props.showForm();
         setUsername('');
         setEmail('');
         setBody('');
@@ -149,6 +149,6 @@ const Modal = styled.div`
   top: 15vh;
   left: 25%;
   width: 50%;
-  z-index: 2;
+  z-index: 3;
   animation: ${fadeIn} ${time};
 `;
