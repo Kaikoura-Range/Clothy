@@ -21,13 +21,13 @@ export default function Stars({ratingAvg}) {
                     stars.push(0);
                     break;
                 case quart: 
-                    stars.push(0.28);
+                    stars.push(0.25);
                     break;
                 case half: 
                     stars.push(0.5);
                     break;
                 case three: 
-                    stars.push(0.72);
+                    stars.push(0.75);
                     break;
                 case full: 
                     stars.push(1.0);

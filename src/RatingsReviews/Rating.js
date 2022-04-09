@@ -30,11 +30,11 @@ export default function Rating({data}){
         }
         return Object.values(data.ratings).map((rating,id) =>{
            return (
-            <div key={id}>{id+1} STAR: {rating}
+            <span key={id}>{id+1} STAR: {rating}
             <div className="bar-container" style={{'backgroundColor' : 'gray'}}>
                 <div className="bar-5" style={{'width' : `${Number(rating)/total *100}%`}}></div>
             </div>
-            </div>
+            </span>
            ) 
         });
     }
