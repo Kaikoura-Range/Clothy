@@ -1,8 +1,7 @@
 
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { initializeAppState } from '../methods.js'
-
+import api from '../../api/index'
 import { DispatchContext } from '../../appState/index.js';
 import { RelatedCard } from './RelatedCard.js'
 
@@ -24,7 +23,7 @@ const Carousel = ({ products, outfit }) => {
           <RelatedCard
           data={data}
           outfit={cardFunction(outfit, dispatch, data, ind)}
-          nav={() => initializeAppState(dispatch, data.id)}
+          nav={() => api.load.newProduct(data.id, dispatch)}
           key={data.id ? data.id : ind}
           // action={products ? "Add to" : "Remove from"}
           action={products ? "Compare" : "Remove"}

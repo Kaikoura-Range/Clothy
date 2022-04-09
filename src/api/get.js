@@ -43,45 +43,14 @@ const getAll = (allGetOptions) => {
       })
 }
 
-
-
-
-const initProductDataFetch = (detailsGets, reviewsGets, QAGets, relatedGets ) => {
-  const initStateEndpoints = {
-    details: detailsGets,
-    reviews: reviewsGets,
-    QA: QAGets,
-    related: relatedGets,
-  }
-  get.allProductDataEndpoints = (productId) => {
-    return Object.keys(initStateEndpoints).reduce((memo, key) => {
-      let keyEndpoints = initStateEndpoints[key]
-      memo[key] = keyEndpoints(productId)
-      return memo
-    }, {})
-  }
-}
-
+const allEndpoints = ['details', 'reviews', 'QA', 'related'].join(';')
 const getAllProductData = (productId) => {
-
-  if (get.allProductDataEndpoints) {
-    let newEndpoints = get.allProductDataEndpoints(productId)
-    return getAll(newEndpoints)
-  } else {
-    return new Promise((rej, res) => {
-      console.log('Inital endpoints not given. get.allProductDataEndpoints function is undefined')
-      rej(null)
-    })
-  }
-
+  return get('product/data', { productId, endpoints: allEndpoints })
 }
-
 
 
 get.all = getAll
-get.initProductDataFetch = initProductDataFetch
 get.allProductData = getAllProductData
-
 
 
 export default get;

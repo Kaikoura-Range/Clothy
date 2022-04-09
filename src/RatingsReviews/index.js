@@ -20,7 +20,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
   const [diplayedReviewCount, setReviewCount] = useState(2);
   const [openModal, setOpenModal] = useState(false);
   const [keyword, setKeyword] = useState('');
-  
+
   useEffect(()=> {
     var newSorted;
     if(sortSelect === "helpful") {
@@ -46,7 +46,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
         <Rating data={reviewMeta}/>
         <ReviewsListContainer>
           <div>
-            {results.length} reviews sorted by 
+            {results.length} reviews sorted by
             <select value={sortSelect} onChange={(e) => setSortSelect(e.target.value) }>
               <option value="newest">newest</option>
               <option value="helpful">Helpfulness</option>
@@ -65,7 +65,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
           {(results.length-diplayedReviewCount >0) && (<button onClick={()=> setReviewCount(results.length)}>More Reviews</button>)}
           <button onClick={() => {setOpenModal(true)}}>Add a Review</button>
           {openModal && (<BackDrop onClick={()=>setOpenModal(!openModal)}><ReviewForm /></BackDrop>)}
-        </ReviewsListContainer> 
+        </ReviewsListContainer>
       </RatingsReviewsContainer>
     )
   }
@@ -76,12 +76,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
   )
 }
 
-export const reviewStateInit = (productId) => {
-  return {
-    'meta':['/reviews/meta', { product_id: productId }],
-    'reviews': ['/reviews/', { product_id: productId, page: 1, count:20, sort: 'newest' }]
-  }
-}
+
   const RatingsReviewsContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -119,13 +114,3 @@ const SearchReviews = styled.input`
   width: 50%;
   font-size: 20px;
 `
-// POST METHODS
-
-    // api.post.review( { product_id: state.currentProduct,  })
-    //   .then(res => console.log('post review res', res))
-
-    // api.post.review.helpful('reviewId')
-    //   .then(res => console.log('post help review res', res))
-
-    // api.post.review.report('reviewId')
-    //   .then(res => console.log('post report review res', res))
