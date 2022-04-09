@@ -3,7 +3,6 @@ import React, {  useContext } from 'react';
 import styled from 'styled-components';
 import Header from './components/Header.js'
 import Modal from './components/Modal/index'
-import CompareModal from './RelatedProducts/components/CompareModal'
 import { StateContext, DispatchContext } from './appState/index.js';
 import ProductDetails, { detailsStateInit } from './ProductDetails/index';
 import RatingsReviews, { reviewStateInit } from './RatingsReviews/index';
@@ -62,8 +61,7 @@ function App() {
 
     return (
       <AppContainer className='App' data-testid="app"  >
-        {/* <Modal /> */}
-        {/* <CompareModal currentProductData={state.details.product}  /> */}
+        <Modal />
         <Header />
         <ProductDetails />
         <RelatedProducts  />

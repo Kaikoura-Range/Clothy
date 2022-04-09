@@ -95,7 +95,8 @@ const CardFooter = styled.div`
 
 
 const CardFooterText = styled.p`
-  font-size: var(--body-fs);
+  font-size: var(--fs-1);
+  /* font-size: var(--body-fs); */
   color: var(--body-fc);
 `
 

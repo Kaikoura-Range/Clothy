@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import { initProductsFromIds } from './methods.js'
 import Carousel from './components/Carousel.js';
-import CompareModal from './components/CompareModal.js'
 
 
 
@@ -48,13 +47,9 @@ const RelatedProducts = () => {
     }
   }, [outfit, currentProduct, state.currentProduct])
 
-  const test = () => {
-    const compare = document.getElementById("CompareModal");
-    compare.showModal()
-  }
 
   return (
-    <RelatedContainer data-testid="related" onClick={test} >
+    <RelatedContainer data-testid="related">
       <HeaderText>Related Products</HeaderText>
       <CarouselContainer  >
         <Carousel products={relatedItemData} outfit={outFitItemData}  />

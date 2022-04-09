@@ -9,10 +9,16 @@ const Header = (props) => {
 
 
   const toggleModal = () => {
-    const next = state.modal === 'none' ? 'compare' : 'none'
+    const next = state.modal.name === 'none' ? 'compare' : 'none'
+    console.log('next', next)
     dispatch({
       type: 'TOGGLE_MODAL',
-      payload: next
+      payload: {
+        name: next,
+        props: {
+          currentProduct: state.details.product
+        }
+      }
     })
   }
 
