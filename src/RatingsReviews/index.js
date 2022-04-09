@@ -16,7 +16,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
     dev.state && console.log('DEV  STATE   RelatedProducts: ', reviewData)
   }
 
-  const [sortSelect,setSortSelect] = useState('newest');
+  const [sortSelect,setSortSelect] = useState('relevant');
   const [sortedReviews, setSortedReviews] = useState(results);
   const [diplayedReviewCount, setReviewCount] = useState(2);
   const [openModal, setOpenModal] = useState(false);

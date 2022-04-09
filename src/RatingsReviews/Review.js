@@ -11,6 +11,7 @@ const Review = ({review}) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [clicked, setClicked] = useState(false);
   const [state] = useContext(StateContext);
+  const [notH,setNotH] = useState(0);
   const [, dispatch] = useContext(DispatchContext);
   
   const showImg = (photo) => {
@@ -35,6 +36,10 @@ const Review = ({review}) => {
         .catch(err => console.log('problem ',err))
       }
   }
+  const clickedNotHelpful = () => {
+      setClicked(true);
+      setNotH(1);
+  }
     return (
     <IndividualReviewContainer>
         <div>By: {review.reviewer_name} | {moment(review.date).format("MMM Do, YYYY")}</div>
@@ -55,7 +60,8 @@ const Review = ({review}) => {
         <Star ratingAvg={review.rating}/>
         <div>
             {clicked? <div>Thank you for the feedback!</div> : <div>Was this review helpful?</div>}
-            <div onClick={()=> clickedHelpful(review.review_id)}>Yes({review.helpfulness})</div>
+            <span onClick={()=> clickedHelpful(review.review_id)}>Yes({review.helpfulness}) | </span>
+            <span onClick={()=> clickedNotHelpful()}>No({notH}) | </span>
         </div>
     </IndividualReviewContainer>
     )
