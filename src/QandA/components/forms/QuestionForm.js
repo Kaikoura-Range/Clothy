@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StateContext, DispatchContext } from '../../../appState/index.js';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import api from '../../../api/index';
 export default function QuestionForm(props) {
   const [state] = useContext(StateContext);
@@ -135,10 +135,20 @@ const InputSubmit = styled.input`
   cursor: pointer;
 `;
 
+const fadeIn = keyframes`
+ from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1
+  }`;
+const time = `300ms linear forwards`;
+
 const Modal = styled.div`
   position: fixed;
   top: 15vh;
   left: 25%;
   width: 50%;
   z-index: 2;
+  animation: ${fadeIn} ${time};
 `;
