@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
 import moment from 'moment';
 import styled from 'styled-components';
@@ -11,6 +11,7 @@ const Review = ({review}) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [clicked, setClicked] = useState(false);
   const [state] = useContext(StateContext);
+  const [notH,setNotH] = useState(0);
   const [, dispatch] = useContext(DispatchContext);
 
   const showImg = (photo) => {
@@ -25,6 +26,10 @@ const Review = ({review}) => {
         .then(() => api.load.newProduct(state.currentProduct, dispatch))
         .catch(err => console.log('problem ',err))
       }
+  }
+  const clickedNotHelpful = () => {
+      setClicked(true);
+      setNotH(1);
   }
     return (
     <IndividualReviewContainer>
@@ -46,7 +51,8 @@ const Review = ({review}) => {
         <Star ratingAvg={review.rating}/>
         <div>
             {clicked? <div>Thank you for the feedback!</div> : <div>Was this review helpful?</div>}
-            <div onClick={()=> clickedHelpful(review.review_id)}>Yes({review.helpfulness})</div>
+            <span onClick={()=> clickedHelpful(review.review_id)}>Yes({review.helpfulness}) | </span>
+            <span onClick={()=> clickedNotHelpful()}>No({notH}) | </span>
         </div>
     </IndividualReviewContainer>
     )

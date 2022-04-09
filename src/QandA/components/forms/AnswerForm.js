@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StateContext, DispatchContext } from '../../../appState/index.js';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import api from '../../../api/index';
 import ImageForm from './ImageForm';
 export default function AnswerForm(props) {
@@ -9,7 +9,7 @@ export default function AnswerForm(props) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
-  const [photos, setPhotos] = useState(null);
+  const [photos, setPhotos] = useState([]);
   const [imageForm, setImageForm] = useState(false);
 
   const onSubmitHandler = (e) => {
@@ -62,6 +62,14 @@ export default function AnswerForm(props) {
     e.stopPropagation();
   };
 
+  const previewPhotos = photos.map((photo, i) => (
+    <img
+      key={i}
+      style={{ width: '90px', height: '90px', marginRight: '7px', marginTop: '10px' }}
+      src={photo}
+    />
+  ));
+
   return (
     <Modal onClick={preventBubbling}>
       <AnswerFormContainer>
@@ -97,10 +105,14 @@ export default function AnswerForm(props) {
           </ImageFormContainer>
         )}
         <CenterItemsWrapper>
-          <UploadImageButton onClick={showImageFormHandler}>
-            Click to upload images
-          </UploadImageButton>
+          {photos.length < 5 && (
+            <UploadImageButton onClick={showImageFormHandler}>
+              Click to upload images
+            </UploadImageButton>
+          )}
         </CenterItemsWrapper>
+        {photos.length >= 1 && <p>Images Preview: </p>}
+        {photos.length >= 1 && previewPhotos}
       </AnswerFormContainer>
     </Modal>
   );
@@ -166,10 +178,24 @@ const ImageFormContainer = styled.div`
   display: flex;
 `;
 
+const fadeIn = keyframes`
+ from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1
+  }`;
+const time = `300ms linear forwards`;
+
 const Modal = styled.div`
   position: fixed;
   top: 15vh;
   left: 25%;
   width: 50%;
   z-index: 3;
+  animation: ${fadeIn} ${time};
+`;
+
+const ImagesPreview = styled.p`
+  text-align: center;
 `;
