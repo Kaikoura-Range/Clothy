@@ -8,6 +8,9 @@ import { StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategor
 import { StyledExpandedViewContainer, StyledExpandedViewModal, StyledDotImage, ZoomedImage, ExpandedViewImage } from './../styles/ExpandedCarouselView.styled.js';
 import './../styles/magnifier.css';
 import _ from 'underscore';
+import { GlassMagnifier, Magnifier, MOUSE_ACTIVATION,
+  TOUCH_ACTIVATION, SideBySideMagnifier, MagnifierContainer, MagnifierPreview, MagnifierZoom } from 'react-image-magnifiers';
+import ReactImageMagnify from 'react-image-magnify';
 
 function ProductInfo(props) {
   const [activeStyle, setActiveStyle] = useState({});
@@ -160,13 +163,28 @@ function ProductInfo(props) {
       <StyledExpandedViewModal onClick={(e) => toggleExpandedView(e, expandedViewIndex)}>
         <StyledExpandedViewContainer onClick={(e) =>{ setZoomView(!zoomView); e.stopPropagation()}} bgImg={expandedViewImage} id="container">
           { !zoomView ? <>
-            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}>Previous</button>
+            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}>{'<'}</button>
             {expandedViewDots}
-            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}>Next</button> </> :
-            <div id="image" style={{backgroundImage: 'url(' + expandedViewImage + ')', backgroundSize: container.offsetWidth || 0 + 'px auto'}} onMouseMove={handleZoom}>
-              <div id="glass" style={{backgroundImage: 'url(' + expandedViewImage + ')'}}></div>
-            </div>}
-        </StyledExpandedViewContainer>
+            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}>{'>'}</button> </> :
+            <>
+            <Magnifier
+            imageSrc={expandedViewImage}
+            imageAlt="Example2"
+            style={{opacity: 0}}
+            mouseActivation={MOUSE_ACTIVATION.DOUBLE_CLICK} // Optional
+            touchActivation={TOUCH_ACTIVATION.DOUBLE_TAP}
+            />
+            <GlassMagnifier
+            imageSrc={expandedViewImage}
+            imageAlt="Example"
+            magnifierOffsetX={0}
+            magnifierOffsetY={0}
+            magnifierSize={"100px"}
+            square={true}
+            style={{width: '100%', position: 'absolute'}}
+             // Optional
+            /></>}
+          </StyledExpandedViewContainer>
       </StyledExpandedViewModal> : '' }
 
       {/**  Carousel */}

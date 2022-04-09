@@ -23,24 +23,37 @@ export const StyledExpandedViewContainer = styled.div`
   overflow: hidden;
   background-image: url(${({bgImg}) => bgImg });
   background-size: cover;
-  position: relative;
-  cursor: crosshair;
-`
-
-export const ZoomedImage = styled.div`
-  width: 150px;
-  height: 150px;
-  border: 0.2em solid red;
   position: absolute;
-  background-image: url(${({bgImg}) => bgImg });
-  background-size: ${({dim}) => dim[0] + 'px ' + dim[1] + 'px'};
+  cursor: crosshair;
+
+  button {
+    width: 1.8em;
+    height: 1.8em;
+    font-size: var(--fs-2);
+    font-weight: 400;
+    border-radius: 50%;
+    margin: 1.2em;
+    opacity: 0.8;
+    transition: opacity 0.4s ease-in-out
+  }
+
+  button:last-of-type {
+    margin-left: 0.5em;
+  }
+
+  button:hover {
+    opacity: 1;
+  }
+
 `
 
 export const StyledDotImage = styled.div`
-  width: 1em;
-  height: 1em;
+  width: 0.5em;
+  height: 0.5em;
+  border: 0.15em solid ${({activeDot}) => activeDot ? 'var(--accent-color)' : 'var(--bgc-1)' };;
+  opacity: ${({activeDot}) => activeDot ? '1' : '0.5' };
   border-radius: 50%;
   margin-right: 8px;
   margin-bottom: 20px;
-  background-color: ${({activeDot}) => activeDot ? 'red' : '#fff' };
+  background-color: ${({activeDot}) => activeDot ? 'var(--accent-color)' : 'var(--bgc-1)' };
 `

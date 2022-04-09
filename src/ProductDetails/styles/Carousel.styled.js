@@ -43,14 +43,19 @@ export const StyledArrowsContainer = styled.div`
   margin-top: 15%;
 
   button {
-    width: 30px;
-    height: 30px;
+    width: 2.3em;
+    height: 2.3em;
     font-size: var(--fs-2);
     font-weight: 400;
     border-radius: 50%;
-    margin: 30px 30px 20px;
+    margin: 2em;
+    opacity: 0.8;
+    transition: opacity 0.4s ease-in-out;
   }
 
+  button:hover {
+    opacity: 1;
+  }
 `
 export const StyledArrowButton = styled.button`
   visibility: ${({disabled}) => disabled ? 'hidden' : 'visible'}
