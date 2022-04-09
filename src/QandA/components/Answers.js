@@ -92,7 +92,6 @@ export default function Answers(props) {
     setAddMoreAnswers(0);
   };
 
-  
   const sortingBySeller = (values) => {
     let sorted = values.sort((a, b) => {
       if (

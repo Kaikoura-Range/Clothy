@@ -16,6 +16,7 @@ export default function Questions(props) {
   const [showHelpfulModal, setShowHelpfulModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
+
   useEffect(() => {
     setAnswerForm(false);
   }, [state.QA]);
@@ -82,8 +83,8 @@ export default function Questions(props) {
   };
 
   const highlight = (sentence, keyword) => {
-
-    const splitValue = keyword.includes('?') && keyword.length === 1 ? /(\?)/gi : new RegExp(`(${keyword})`, 'gi')
+    const splitValue =
+      keyword.includes('?') && keyword.length === 1 ? /(\?)/gi : new RegExp(`(${keyword})`, 'gi');
     let sentenceSplit = sentence.split(splitValue);
     return (
       <>
