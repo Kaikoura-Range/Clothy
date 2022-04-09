@@ -1,7 +1,8 @@
 
-import get from './get.js'
-import methods from './post.js'
-const { post, report, upvote } = methods
+
+const { get } = require('./get.js')
+const { post } = require('./post.js')
+
 
 
 Promise.all.obj = (asyncObj) => {
@@ -22,30 +23,8 @@ Promise.all.obj = (asyncObj) => {
 }
 
 
-const loadNewProduct = (productId, dispatch) => {
-  get.allProductData(productId)
-  .then((response) => {
-    response.currentProduct = productId
-    dispatch({
-      type: 'PROD_INIT',
-      payload: response,
-    });
-  })
-  .catch((err) => {
-    console.log('Data init fetch error: ', err)
-    dispatch({ type: '' }) //sets state so that the app rerenders and trys again.
-  })
-}
 
-const load = {
-  newProduct: loadNewProduct
-}
-
-const api = { get, post, load, report, upvote };
-
-
-export default api;
-
+module.exports = { get, post };
 
 
 

@@ -187,9 +187,7 @@ export default function QAndA() {
   );
 }
 
-export const qAndAStateInit = (productId) => {
-  return ['/qa/questions/', { product_id: productId, count: 500 }];
-};
+
 
 const QAHeader = styled.h1`
   font-size: var(--fs3);

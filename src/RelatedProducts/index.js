@@ -50,7 +50,7 @@ const RelatedProducts = () => {
 
   return (
     <RelatedContainer data-testid="related">
-      <HeaderText>Related Products</HeaderText>
+      <HeaderText>Related test sdfsdfsdfs Products</HeaderText>
       <CarouselContainer  >
         <Carousel products={relatedItemData} outfit={outFitItemData}  />
       </CarouselContainer>
@@ -94,16 +94,5 @@ const HeaderText = styled.h1`
 `
 
 
-
-
-
-
-
-
-
-
-export const relatedStateInit = (productId) => {
-  return [`/products/${productId}/related/`, {}]
-}
 
 export default RelatedProducts

@@ -22,21 +22,15 @@ export default function AnswerForm(props) {
       email: email,
     };
     api.post
-      .answer(props.id, newAnswer, state.currentProduct)
+      .answer({ typeId: props.id, post:newAnswer, productId: state.currentProduct })
       .then((res) => console.log('post answer res', res))
       .then(() => {
         setUsername('');
         setEmail('');
         setBody('');
         setPhotos(null);
-        return api.get.allProductData(state.currentProduct);
+        api.load.newProduct(state.currentProduct, dispatch);
       })
-      .then((getRes) =>
-        dispatch({
-          type: 'PROD_INIT',
-          payload: getRes,
-        })
-      )
       .catch((err) => console.log('answer not sent!'));
   };
 

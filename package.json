@@ -8,6 +8,9 @@
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.1",
+    "cors": "^2.8.5",
+    "env-cmd": "^10.1.0",
+    "express": "^4.17.3",
     "moment": "^2.29.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -19,9 +22,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "react-scripts build --watch src/",
+    "build:staging": "env-cmd -f .env.staging npm run build",
+    "server:dev": "env-cmd -f .env.staging  npx nodemon --watch server/  node server/app.js",
+    "server:start": "env-cmd -f .env.staging  node server/app.js"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +43,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
   }
 }

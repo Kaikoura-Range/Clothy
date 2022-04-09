@@ -13,6 +13,7 @@ export default function ReviewForm(props) {
   const [starClicked,setStarClicked] = useState(false);
   const [minChar,setMinChar] = useState(0);
   const [img, setImg] = useState();
+  const [,dispatch] = useContext(DispatchContext)
 
 const starDescription = ['Poor','Fair','Average','Good','Great']
 const characteristicSelector = {
@@ -27,20 +28,21 @@ const characteristicSelector = {
   const onSubmitHandler = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    var newQuestion = {
+    var newReview = {
       product_id: state.currentProduct,
       body: body,
       name: username,
       email: email,
     };
     api.post
-      .question(newQuestion)
+      .review({ typeId: props.id, post:newReview, productId: state.currentProduct })
       .then((res) => console.log('post question res', res))
       .then(() => {
         props.showForm(false);
         setUsername('');
         setEmail('');
         setBody('');
+        api.load.newProduct(state.currentProduct, dispatch)
       })
       .catch((err) => console.log('question not sent!'));
   };
@@ -48,7 +50,7 @@ const characteristicSelector = {
     setOverallRating(Number(e.target.id)+1)
     setStarClicked(true)
   }
- 
+
   const onImageChange = (e) => {
     if (e.target.files.length > 5) {
       alert("Only up to 5 files accepted.");
@@ -58,10 +60,10 @@ const characteristicSelector = {
     }else {
       setImg(Object.entries(e.target.files).map((file) => {
         return URL.createObjectURL(file[1])
-      })) 
+      }))
     }
   }
-  
+
   return (
     <Modal onClick={(e)=> e.stopPropagation()}>
       <ReviewFormContainer>
@@ -76,7 +78,7 @@ const characteristicSelector = {
             <input type="radio" name={`recommend`} id='yes' value='yes'/>Yes
             <input type="radio" name={`recommend`} id="no" value='no'/>No
           </div>
-          <CharacteristicsContainer>Characteristics: 
+          <CharacteristicsContainer>Characteristics:
             {Object.entries(state.reviews.meta.characteristics).map((characteristic,id) => {
               return (
                 <div key={id}>{characteristic[0]}
@@ -110,11 +112,11 @@ const characteristicSelector = {
             <ReviewSummaryTextContainer type='text' placeholder='Example: Best purchase ever!' maxlength='60'/>
             <ReviewBodyContainer placeholder="Why did you like the product or not?" minlength="50" maxlength='1000' onChange={(e)=>setMinChar(e.target.value.length)}/>
           </ReviewTextContainer>
-          
+
           {minChar >= 50 ? <div>Minimum Reached</div> : <div>Minimum required characters left: {50-minChar}</div>}
-            
-            
-         
+
+
+
         </form>
       </ReviewFormContainer>
     </Modal>

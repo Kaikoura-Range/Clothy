@@ -12,33 +12,24 @@ const Review = ({review}) => {
   const [clicked, setClicked] = useState(false);
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
-  
+
   const showImg = (photo) => {
       setOpenModal(true);
       setSelectedImage(photo.id)
   }
   const clickedHelpful = (id) => {
-     
+
       if(!clicked) {
         setClicked(true);
-        api.post.review.helpful(id,state.currentProduct)
-        .then(() => {
-            return api.get.allProductData(state.currentProduct);
-          }).then((getRes) =>{
-            getRes.currentProduct = state.currentProduct;
-          
-          dispatch({
-            type: 'PROD_INIT',
-            payload: getRes,
-          })}
-        )
+        api.upvote.review({ typeId: id, productId: state.currentProduct })
+        .then(() => api.load.newProduct(state.currentProduct, dispatch))
         .catch(err => console.log('problem ',err))
       }
   }
     return (
     <IndividualReviewContainer>
         <div>By: {review.reviewer_name} | {moment(review.date).format("MMM Do, YYYY")}</div>
-        <SummaryContainer>  
+        <SummaryContainer>
             <b>{review.summary.substr(0,60)}</b>
             <div>{fullSummary ? review.body : (review.body.substr(0,250))}</div>
             <button hidden={fullSummary || review.body.length <250} onClick={()=>setFullSummary(true)}>show more</button>
@@ -47,10 +38,10 @@ const Review = ({review}) => {
         {review.response && <div>Seller Response: {review.response}</div>}
         {review.photos.map((photo, id) => {
             return(<span key={id}>
-                <img key={photo.id} src={photo.url} alt='' height="50" width="50" onClick={() => {showImg(photo)}}/> 
+                <img key={photo.id} src={photo.url} alt='' height="50" width="50" onClick={() => {showImg(photo)}}/>
                 {(openModal && photo.id===selectedImage)&& (<BackDrop onClick={()=>setOpenModal(!openModal)}>  <ImageContainer src={photo.url} alt=''/> </BackDrop>)}
                 </span>
-            ) 
+            )
         })}
         <Star ratingAvg={review.rating}/>
         <div>
@@ -60,7 +51,7 @@ const Review = ({review}) => {
     </IndividualReviewContainer>
     )
 }
-   
+
 
 const SummaryContainer = styled.div`
     margin-left: 30px;
@@ -86,4 +77,3 @@ background: rgba(0, 0, 0, 0.90);
 export default Review;
 
 
-      

@@ -20,21 +20,15 @@ export default function QuestionForm(props) {
       email: email,
     };
     api.post
-      .question(newQuestion)
+      .question({ typeId: props.id, post:newQuestion, productId: state.currentProduct })
       .then((res) => console.log('post question res', res))
       .then(() => {
         props.showForm();
         setUsername('');
         setEmail('');
         setBody('');
-        return api.get.allProductData(state.currentProduct);
+        api.load.newProduct(state.currentProduct, dispatch);
       })
-      .then((getRes) =>
-        dispatch({
-          type: 'PROD_INIT',
-          payload: getRes,
-        })
-      )
       .catch((err) => console.log('question not sent!'));
   };
   const onChangeUsername = (e) => {
