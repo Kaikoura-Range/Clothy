@@ -1,3 +1,4 @@
+import React from  'react';
 import styled from 'styled-components';
 import Stars from './Star.js';
 
@@ -28,14 +29,10 @@ export default function Rating({data}){
                 <StarBarContainer key={id}>
                     {id+1} Star  
                     <BarContainer style={{'backgroundColor' : 'gray'}}>
-                        <BarContainer5 className="bar-5" style={{'width' : `${Number(rating)/total *100}%`}}></BarContainer5>
+                        <BarContainer5 className="bar-5" style={{'width' : `${Number(rating)/total *100}%`}}></BarContainer5> 
                     </BarContainer>
                     {rating}
-                    
-                    
                 </StarBarContainer>
-                   
-          
            ) 
         });
     }
@@ -61,9 +58,7 @@ export default function Rating({data}){
             </OverallRatingContainer>
               
            <div>{recommendPercentage()}% of reviews recommend this product</div>
-           <Characteristics />
-           {/* <Stars ratingAvg={ratingAverage()}/> */}
-
+        
            <StarBars/>
      
            <Characteristics />
@@ -89,6 +84,7 @@ width: 300px;
 background-color: #f1f1f1;
 text-align: center;
 color: white;
+border-radius: 25px;
 `
 const BarContainer5 = styled.div`
 height: 18px;
