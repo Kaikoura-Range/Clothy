@@ -24,6 +24,7 @@ export const StyledCarouselPhotos = styled.span`
   min-height: 60px;
   max-width: 60px;
   border-bottom: ${({ isActive }) => isActive ? '3px solid rgb(247,193,18);' : ''};
+  margin-bottom: 0.1em;
 `
 
 export const StyledThumbnailContainer = styled.div`
@@ -34,6 +35,7 @@ export const StyledThumbnailContainer = styled.div`
   overflow: auto;
   height: 430px;
   width: 60px;
+  box-shadow: 1px 1px 5px rgba(0,1em,1em,0.5);
 
   &:hover {
     cursor: pointer;

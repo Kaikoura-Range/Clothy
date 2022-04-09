@@ -96,8 +96,10 @@ function ProductInfo(props) {
       if (selectedSizeIndex === -1) {
         setAvailableQty(0);
       } else if (skus[selectedSizeIndex][1] > 15) {
+        setIsAddCartValid(true);
         setAvailableQty(15);
       } else {
+        setIsAddCartValid(true);
         setAvailableQty(skus[selectedSizeIndex][1]);
       }
     }
