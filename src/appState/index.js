@@ -19,14 +19,14 @@ const themes = {
 
 const initPageState = {
   dev: { logs: false, renders: false, state: true, reducer: true },
-  modal: 'none',
+  modal: { name: 'none', props: {}},
   user: {
     cart: localStoreUser.cart || [],
     outfit: localStoreUser.outfit || [],
     theme: localStoreUser.theme || 'light',
     upVoted: localStoreUser.upVoted || [],
   },
-  currentProduct: 37311,
+  currentProduct: 37317,
   QA: {},
   details: {},
   related: {},

@@ -9,8 +9,6 @@ const ThemeProvider = ({ STYLES }) => {
 
 
 const media = {
-  /* mobileS: '320px',
-  mobileM: '375px', */
   mobile: '425px',
   tablet: '768px',
   laptop: '1024px',
@@ -20,11 +18,13 @@ const media = {
 
 const GlobalStyles = createGlobalStyle`
   html {
+    --bgc-3: ${({ bgc }) => `rgb(${bgc['-3'].toString()})`};
     --bgc-2: ${({ bgc }) => `rgb(${bgc['-2'].toString()})`};
     --bgc-1: ${({ bgc }) => `rgb(${bgc['-1'].toString()})`};
     --bgc-0: ${({ bgc }) => `rgb(${bgc['0'].toString()})`};
     --bgc1: ${({ bgc }) => `rgb(${bgc['1'].toString()})`};
     --bgc2: ${({ bgc }) => `rgb(${bgc['2'].toString()})`};
+    --bgc3: ${({ bgc }) => `rgb(${bgc['3'].toString()})`};
 
     --fc-2: ${({ fc }) => `rgb(${fc['-2'].toString()})`};
     --fc-1: ${({ fc }) => `rgb(${fc['-1'].toString()})`};
@@ -32,32 +32,47 @@ const GlobalStyles = createGlobalStyle`
     --fc1: ${({ fc }) => `rgb(${fc['1'].toString()})`};
     --fc2: ${({ fc }) => `rgb(${fc['2'].toString()})`};
 
-    --fs-3: ${({ fs }) => `${fs['-3'].toString()}rem`};
-    --fs-2: ${({ fs }) => `${fs['-2'].toString()}rem`};
-    --fs-1: ${({ fs }) => `${fs['-1'].toString()}rem`};
-    --fs-0: ${({ fs }) => `${fs['0'].toString()}rem`};
-    --fs1: ${({ fs }) => `${fs['1'].toString()}rem`};
-    --fs2: ${({ fs }) => `${fs['2'].toString()}rem`};
-    --fs3: ${({ fs }) => `${fs['3'].toString()}rem`};
+    --fs-3: ${({ fs }) => `${fs['-3'].toString()}em`};
+    --fs-2: ${({ fs }) => `${fs['-2'].toString()}em`};
+    --fs-1: ${({ fs }) => `${fs['-1'].toString()}em`};
+    --fs-0: ${({ fs }) => `${fs['0'].toString()}em`};
+    --fs1: ${({ fs }) => `${fs['1'].toString()}em`};
+    --fs2: ${({ fs }) => `${fs['2'].toString()}em`};
+    --fs3: ${({ fs }) => `${fs['3'].toString()}em`};
 
     --accent-color: rgb(247, 193, 18);
+    --main-bgc: var(--bgc3);
+    --contain-bgc: var(--bgc1);
+    --element-bgc: var(--bgc2);
 
-    --product-flex: row;
-    --product-carousel-width: 65%;
-    --product-info-width: 35%;
+    --body-fc: var(--fc-0);
+    --header-fc: var(--fc-2);
+
+    --body-fs: var(--fs-1);
+    --header-fs: var(--fs1);
+
+    --module-width: 95%;
+
+    --product-flex: column;
+    --product-carousel-width: 100%;
+    --product-info-width: 100%;
+    --searchBar-width: 80%;
+    color: var(--body-fc);
 
 
-    @media (max-width: ${media.tablet} ) {
-      --product-flex: column;
-      --product-carousel-width: 100%;
-      --product-info-width: 100%;
-      /* --bgc2: ${`rgb(${[170, 30, 30].toString()})`};
-      --bgc-2: ${`rgb(${[170, 30, 30].toString()})`}; */
+    @media (min-width: ${media.tablet} ) {
+      --body-fs: var(--fs-0);
+      --header-fs: var(--fs2);
+      --product-flex: row;
+      --product-carousel-width: 65%;
+      --product-info-width: 35%;
+      --searchBar-width: 50%;
     }
 
-
-
-
+    @media (min-width: ${media.laptop} ) {
+     --body-fs: var(--fs1);
+     --header-fs: var(--fs3);
+    }
   }
 `
 
@@ -109,11 +124,12 @@ var createTheme = (baseValues) => {
 var darkBase = {
   background: {
     color: [30,30,30],
-    change: [-5, -5, -5]
+    change: [-5, -5, -5],
+    range: 3,
   },
   font: {
     fontSize: {
-      value: 1,
+      value: 1.1,
       range: 3,
       change: [.1]
     },
@@ -143,7 +159,8 @@ var darkBase = {
 
 var ligthBase = {
   background: {
-    color: [245,245,245]
+    color: [240,240,240],
+    range: 3,
   },
   font: {
     fontSize: {

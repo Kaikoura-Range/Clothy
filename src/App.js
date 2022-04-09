@@ -1,4 +1,3 @@
-import './App.css';
 import api from './api/index.js';
 import React, {  useContext } from 'react';
 import styled from 'styled-components';
@@ -74,12 +73,10 @@ function App() {
 
 }
 
-const appBackgroundColor = [250, 250, 250]
 
 const AppContainer = styled.div`
   width: 100%;
-  /* background-color: rgb(${appBackgroundColor.toString()}); */
-  background-color: var(--bgc2);
+  background-color: var(--main-bgc);
 
 `
 const LoadingContainer = styled.div`
@@ -88,12 +85,10 @@ const LoadingContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: rgb(${appBackgroundColor.toString()}); */
-  background-color: var(--bgc2);
+  background-color: var(--contain-bgc);
 
 `
 
-const loadingBackgroundColor = [240, 240, 240]
 const LoadingScreen = styled.div`
   width: 50%;
   height: 50%;
@@ -101,12 +96,11 @@ const LoadingScreen = styled.div`
   border-radius: 10px;
   align-items: center;
   justify-content: center;
-  /* background-color: rgb(${loadingBackgroundColor.toString()}); */
+  background-color: var(--main-bgc);
+
 `
-const textColor = [60, 60, 60]
 const LoadingText = styled.h1`
-  /* color: rgb(${textColor.toString()}); */
-  color: var(--bgc2);
+  /* color: var(--bgc2); */
 
 `
 

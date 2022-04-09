@@ -12,9 +12,10 @@ import { RelatedCard } from './RelatedCard.js'
 const Carousel = ({ products, outfit }) => {
   var rendered = products || outfit
   const [, dispatch] = useContext(DispatchContext);
-  var cardFunction = products ? getAddProductToOutfit : getRemoveProductFromOutfit
+  var cardFunction = products ? compareToCurrent : getRemoveProductFromOutfit
 
-  // console.log('rendered', rendered)
+
+
   return (
     <CarouselContainer data-testid={'carousel'} >
       {rendered.map((data, ind) => {
@@ -26,7 +27,7 @@ const Carousel = ({ products, outfit }) => {
           nav={() => initializeAppState(dispatch, data.id)}
           key={data.id ? data.id : ind}
           // action={products ? "Add to" : "Remove from"}
-          action={products ? "Add to outfit" : "Remove"}
+          action={products ? "Compare" : "Remove"}
           />
         )
       })}
@@ -36,6 +37,32 @@ const Carousel = ({ products, outfit }) => {
 
 
 
+
+const compareToCurrent = (outfit, dispatch, productData, index) => {
+  return () => {
+      dispatch({
+        type: 'TOGGLE_MODAL',
+        payload: {
+          name: 'compare',
+          props: {
+            newProduct: productData
+          }
+        },
+      })
+  }
+}
+
+
+const getRemoveProductFromOutfit = (outfit, dispatch, productData, index) => {
+  return () => {
+    const newOutfit = [...outfit.map(product => product.id)]
+    newOutfit.splice(index, 1)
+    dispatch({
+      type: 'SET_OUTFIT',
+      payload: newOutfit
+    })
+  }
+}
 
 
 const getAddProductToOutfit = (outfit, dispatch, productData, index) => {
@@ -59,21 +86,8 @@ const getAddProductToOutfit = (outfit, dispatch, productData, index) => {
 }
 
 
-const getRemoveProductFromOutfit = (outfit, dispatch, productData, index) => {
-  return () => {
-    const newOutfit = [...outfit.map(product => product.id)]
-    newOutfit.splice(index, 1)
-    dispatch({
-      type: 'SET_OUTFIT',
-      payload: newOutfit
-    })
-  }
-}
-
-
-
 const CarouselContainer = styled.div`
-  width: 85%;
+  width: var(--module-width);
   height: auto;
   display: flex;
   padding: 2em;
@@ -83,23 +97,14 @@ const CarouselContainer = styled.div`
   /* border-radius: 7px; */
   align-items: center;
   white-space: nowrap;
-  background-color: var( --bgc-0);
+  background-color: var( --contain-bgc);
 
 `
 
-// const CarouselAccent = styled.div`
-//   width: 90%;
-//   height: auto;
-//   padding: 5px;
-//   display: flex;
-//   padding: 6px;
-//   /* padding-bottom: 5px; */
-//   align-items: center;
-//   border-radius: 7px;
-//   justify-content: center;
-//   background-Color: rgb(247, 193, 18);
-// `
 
 
 export default Carousel;
+
+
+
 
