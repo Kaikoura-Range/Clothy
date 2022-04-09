@@ -65,7 +65,7 @@ export default function ReviewForm(props) {
         .then((res) => console.log('post question res', res))
         .then(() => {
           props.showForm(false);
-          setUsername('');
+          setName('');
           setEmail('');
           setBody('');
           api.load.newProduct(state.currentProduct, dispatch);

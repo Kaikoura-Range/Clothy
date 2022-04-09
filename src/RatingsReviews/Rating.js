@@ -1,3 +1,4 @@
+import React from  'react';
 import styled from 'styled-components';
 import Stars from './Star.js';
 import React from 'react';
@@ -19,10 +20,22 @@ export default function Rating({ data }) {
     return Math.round((numerator / (numerator + denominator)) * 100);
   }
 
-  function StarBars() {
-    var total = 0;
-    for (var i in data.ratings) {
-      total += Number(data.ratings[i]);
+    function StarBars() {
+        var total = 0;
+        for(var i in data.ratings) {
+            total += Number(data.ratings[i]);
+        }
+        return Object.values(data.ratings).map((rating,id) =>{
+           return (
+                <StarBarContainer key={id}>
+                    {id+1} Star
+                    <BarContainer style={{'backgroundColor' : 'gray'}}>
+                        <BarContainer5 className="bar-5" style={{'width' : `${Number(rating)/total *100}%`}}></BarContainer5>
+                    </BarContainer>
+                    {rating}
+                </StarBarContainer>
+           )
+        });
     }
     return Object.values(data.ratings).map((rating, id) => {
       return (
@@ -58,18 +71,22 @@ export default function Rating({ data }) {
     });
   }
 
-  return (
-    <div>
-      <OverallRatingContainer>
-        <span>rating: {ratingAverage()}</span>
-        <Stars ratingAvg={ratingAverage()} />
-      </OverallRatingContainer>
+    return (
+        <div>
+            <OverallRatingContainer>
+                <span>rating: {ratingAverage()}</span>
+                <Stars ratingAvg={ratingAverage()}/>
+            </OverallRatingContainer>
 
-      <div>{recommendPercentage()}% of reviews recommend this product</div>
-      <Characteristics />
-      {/* <Stars ratingAvg={ratingAverage()}/> */}
+           <div>{recommendPercentage()}% of reviews recommend this product</div>
 
-      <StarBars />
+           <StarBars/>
+
+           <Characteristics />
+
+        </div>
+    )
+}
 
       <Characteristics />
     </div>
@@ -88,11 +105,12 @@ const StarBarContainer = styled.div`
   font-size: 13px;
 `;
 const BarContainer = styled.div`
-  width: 300px;
-  background-color: #f1f1f1;
-  text-align: center;
-  color: white;
-`;
+width: 300px;
+background-color: #f1f1f1;
+text-align: center;
+color: white;
+border-radius: 25px;
+`
 const BarContainer5 = styled.div`
   height: 18px;
   background-color: #04aa6d;
