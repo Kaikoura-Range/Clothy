@@ -59,14 +59,14 @@ const cSelector = {
       .then((res) => console.log('post question res', res))
       .then(() => {
         props.showForm(false);
-        setUsername('');
+        setName('');
         setEmail('');
         setBody('');
         api.load.newProduct(state.currentProduct, dispatch)
       })
       .catch((err) => console.log('question not sent!'));
   };
-
+  }
   const setStars =(e) => {
     setOverallRating(Number(e.target.id)+1)
     setStarClicked(true)
@@ -164,7 +164,7 @@ const ReviewFormContainer = styled.div`
   background-color: #f3f3f3;
   border-radius: 5px;
   padding: 20px;
-`;
+`
 const OverallRatingContainer = styled.div`
 display: flex;
 flex-direction: row;
@@ -213,4 +213,4 @@ const CenterItemsWrapper = styled.div`
   justify-content: center;
   margin-top: 10px;
   margin-bottom: 10px;
-`;
+`
