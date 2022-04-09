@@ -46,7 +46,6 @@ export default function QAndA() {
   };
   ///////////////////////////////////////////////////////////////////////////
   //these functions render out each question & answer and conditionally renders "more answered questions button"
-  console.log(state);
   const renderWhenSearchInput = () => {
     let filteredResults = state.QA.results.map(
       (q) =>

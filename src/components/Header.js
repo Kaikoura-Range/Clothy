@@ -8,19 +8,6 @@ const Header = (props) => {
   const [, dispatch] = useContext(DispatchContext)
 
 
-  const toggleModal = () => {
-    const next = state.modal.name === 'none' ? 'compare' : 'none'
-    console.log('next', next)
-    dispatch({
-      type: 'TOGGLE_MODAL',
-      payload: {
-        name: next,
-        props: {
-          currentProduct: state.details.product
-        }
-      }
-    })
-  }
 
   const toggleTheme = () => {
     dispatch({
@@ -35,7 +22,7 @@ const Header = (props) => {
       </HeaderLogoContainer>
       <HeaderCartContainer >
         <CartText onClick={toggleTheme} > Cart: {state.user.cart.length}  </CartText>
-        <CartText onClick={toggleModal} > Outfit: {state.user.outfit.length}  </CartText>
+        <CartText> Outfit: {state.user.outfit.length}  </CartText>
       </HeaderCartContainer>
     </HeaderContainer>
   )
