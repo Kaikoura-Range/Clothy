@@ -13,6 +13,7 @@ export default function QuestionForm(props) {
     e.stopPropagation();
     e.preventDefault();
     props.success();
+    props.showForm();
     var newQuestion = {
       product_id: state.currentProduct,
       body: body,
@@ -20,21 +21,14 @@ export default function QuestionForm(props) {
       email: email,
     };
     api.post
-      .question(newQuestion)
+      .question({ typeId: props.id, post:newQuestion, productId: state.currentProduct })
       .then((res) => console.log('post question res', res))
       .then(() => {
-        props.showForm();
         setUsername('');
         setEmail('');
         setBody('');
-        return api.get.allProductData(state.currentProduct);
+        api.load.newProduct(state.currentProduct, dispatch);
       })
-      .then((getRes) =>
-        dispatch({
-          type: 'PROD_INIT',
-          payload: getRes,
-        })
-      )
       .catch((err) => console.log('question not sent!'));
   };
   const onChangeUsername = (e) => {
@@ -149,6 +143,6 @@ const Modal = styled.div`
   top: 15vh;
   left: 25%;
   width: 50%;
-  z-index: 2;
+  z-index: 3;
   animation: ${fadeIn} ${time};
 `;

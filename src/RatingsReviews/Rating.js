@@ -17,7 +17,7 @@ export default function Rating({data}){
         var denominator = Number(data.recommended.false);
         return Math.round((numerator /(numerator+denominator))*100);
     }
-   
+
     function StarBars() {
         var total = 0;
         for(var i in data.ratings) {
@@ -61,6 +61,9 @@ export default function Rating({data}){
             </OverallRatingContainer>
               
            <div>{recommendPercentage()}% of reviews recommend this product</div>
+           <Characteristics />
+           {/* <Stars ratingAvg={ratingAverage()}/> */}
+
            <StarBars/>
      
            <Characteristics />

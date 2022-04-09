@@ -40,33 +40,15 @@ export default function Answers(props) {
         payload: newUpvoted,
       });
       setShowHelpfulModal(true);
-      api.post.answer
-        .helpful(id, state.currentProduct)
-        .then(() => {
-          return api.get.allProductData(state.currentProduct);
-        })
-        .then((getRes) =>
-          dispatch({
-            type: 'PROD_INIT',
-            payload: getRes,
-          })
-        )
+      api.upvote.answer({ typeId: id, productId: state.currentProduct })
+        .then(() =>  api.load.newProduct(state.currentProduct, dispatch))
         .catch((err) => console.log('helpful question not sent!'));
     }
   };
 
   const reportAnswerHandler = (id) => {
-    api.post.answer
-      .report(id, state.currentProduct)
-      .then(() => {
-        return api.get.allProductData(state.currentProduct);
-      })
-      .then((getRes) =>
-        dispatch({
-          type: 'PROD_INIT',
-          payload: getRes,
-        })
-      )
+    api.report.answer({ typeId: id, productId: state.currentProduct })
+      .then(() =>  api.load.newProduct(state.currentProduct, dispatch))
       .catch((err) => console.log('report answer not sent!'));
   };
 
@@ -91,6 +73,7 @@ export default function Answers(props) {
   const collapseAllAnswersHandler = () => {
     setAddMoreAnswers(0);
   };
+
 
   const sortingBySeller = (values) => {
     let sorted = values.sort((a, b) => {

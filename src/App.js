@@ -4,19 +4,10 @@ import styled from 'styled-components';
 import Header from './components/Header.js'
 import Modal from './components/Modal/index'
 import { StateContext, DispatchContext } from './appState/index.js';
-import ProductDetails, { detailsStateInit } from './ProductDetails/index';
-import RatingsReviews, { reviewStateInit } from './RatingsReviews/index';
-import QAndA, { qAndAStateInit } from './QandA/index';
-import RelatedProducts, { relatedStateInit } from './RelatedProducts/index';
-
-
-
-api.get.initProductDataFetch(
-  detailsStateInit,
-  reviewStateInit,
-  qAndAStateInit,
-  relatedStateInit,
-)
+import ProductDetails from './ProductDetails/index';
+import RatingsReviews from './RatingsReviews/index';
+import QAndA from './QandA/index';
+import RelatedProducts from './RelatedProducts/index';
 
 
 
@@ -39,7 +30,7 @@ function App() {
   if (!state.details.product) {
     if (maxApiRequests > requestCount) {
       requestCount++
-      initializeAppState(state.currentProduct, dispatch)
+      api.load.newProduct(state.currentProduct, dispatch)
       return (
         <LoadingContainer className='App' data-testid="app"  >
           <LoadingScreen>
@@ -103,23 +94,6 @@ const LoadingText = styled.h1`
   /* color: var(--bgc2); */
 
 `
-
-
-
-const initializeAppState = (productId, dispatch) => {
-  return api.get.allProductData(productId)
-    .then((response) => {
-      response.currentProduct = productId
-      dispatch({
-        type: 'PROD_INIT',
-        payload: response,
-      });
-    })
-    .catch((err) => {
-      console.log('Data init fetch error: ', err)
-      dispatch({ type: '' }) //sets state so that the app rerenders and trys again.
-    })
-}
 
 
 export default App;

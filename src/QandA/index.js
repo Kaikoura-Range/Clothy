@@ -187,9 +187,7 @@ export default function QAndA() {
   );
 }
 
-export const qAndAStateInit = (productId) => {
-  return ['/qa/questions/', { product_id: productId, count: 500 }];
-};
+
 
 const QAHeader = styled.h1`
   font-size: var(--fs3);
@@ -266,6 +264,7 @@ const BackDrop = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
+  z-index: 1;
   background: rgba(0, 0, 0, 0.75);
 `;
 

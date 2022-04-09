@@ -45,4 +45,4 @@ const format = {
   }
 };
 
-export default format;
+module.exports = { format }

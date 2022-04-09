@@ -107,4 +107,4 @@ const QuickCache = (maxStoreTime = baseTime) => {
   return instance;
 }
 
-export default QuickCache;
+module.exports = { QuickCache }

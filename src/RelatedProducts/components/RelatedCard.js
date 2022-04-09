@@ -1,4 +1,4 @@
-// import { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PhotoCarousel from './PhotoCarousel.js'
 
