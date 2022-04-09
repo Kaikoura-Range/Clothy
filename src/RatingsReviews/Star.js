@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import moment from 'moment';
 import styled from 'styled-components';
-import "./styles.css";
 
 export default function Stars({ratingAvg}) {
     let rating = ratingAvg || 0;
@@ -21,19 +18,18 @@ export default function Stars({ratingAvg}) {
                     stars.push(0);
                     break;
                 case quart: 
-                    stars.push(0.28);
+                    stars.push(0.25);
                     break;
                 case half: 
                     stars.push(0.5);
                     break;
                 case three: 
-                    stars.push(0.72);
+                    stars.push(0.75);
                     break;
                 case full: 
                     stars.push(1.0);
                     break;
                 default: 
-                    console.log("OOPS");
                     stars.push(0);
                     break;
             }
@@ -46,14 +42,30 @@ export default function Stars({ratingAvg}) {
         <div>
             {stars.map((item, i) => {
                 return (
-                    <div className="single-star-container" key={i}>
-                        <div className="single-star-fill" style={{"width" : `${parseInt(item*31)}px`}}>
-                            <img id={i} className="single-star-outline" src="https://raw.githubusercontent.com/psfonseka/five-stars/master/dist/star.png" alt="stars alt" onClick={()=>{}}></img>
-                        </div>
-                    </div>
+                    <SingleStarContainer key={i}>
+                        <SingleStarFill style={{"width" : `${parseInt(item*31)}px`}}>
+                            <SingleStarOutline id={i} src="https://raw.githubusercontent.com/psfonseka/five-stars/master/dist/star.png" alt="stars alt" onClick={()=>{}}></SingleStarOutline>
+                        </SingleStarFill>
+                    </SingleStarContainer> 
                 )
             })}
         </div>
     )
     
  };
+
+ const SingleStarOutline = styled.img`
+    height: 36px; 
+    width: 31px;
+  `
+  const SingleStarFill = styled.div`
+    position: relative;
+    display: inline-block;
+    height: 36px; 
+    background-color: #333333;
+  `
+  const SingleStarContainer =styled.div`
+    height: 36px; 
+    width: 31px;
+    display: inline-block;
+  `

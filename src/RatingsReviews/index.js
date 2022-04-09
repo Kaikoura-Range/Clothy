@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import ReviewForm from './ReviewForm.js';
 import Rating from './Rating.js';
 import Review from './Review.js';
-import { getByDisplayValue } from '@testing-library/react';
 
 var mainRenderCount = 0;
 
@@ -16,7 +15,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
     dev.state && console.log('DEV  STATE   RelatedProducts: ', reviewData)
   }
 
-  const [sortSelect,setSortSelect] = useState('newest');
+  const [sortSelect,setSortSelect] = useState('relevant');
   const [sortedReviews, setSortedReviews] = useState(results);
   const [diplayedReviewCount, setReviewCount] = useState(2);
   const [openModal, setOpenModal] = useState(false);
@@ -55,12 +54,14 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
             </select>
           </div>
           <SearchReviews type='search' value={keyword} onChange={(e)=>{setKeyword(e.target.value)}} placeholder='Search For a Review'/>
+          <InnerListContainer>
           {sortedReviews.filter(item => {
             if(keyword.length >= 3) {
               const entries = Object.entries(item);
               return entries.some(entry=>entry[1]?entry[1].toString().toLowerCase().includes(keyword.toLowerCase()):false);
             } else return item
           }).slice(0,diplayedReviewCount).map((review,id) => {return (<Review key={id} review={review}/>)})}
+         </InnerListContainer>
           {(results.length-diplayedReviewCount >0) && (<button onClick={()=> setReviewCount(results.length)}>More Reviews</button>)}
           <button onClick={() => {setOpenModal(true)}}>Add a Review</button>
           {openModal && (<BackDrop onClick={()=>setOpenModal(!openModal)}><ReviewForm /></BackDrop>)}
@@ -91,9 +92,15 @@ export const reviewStateInit = (productId) => {
   display: flex;
   width: 66%;
   flex-direction: column;
-  max-height: 800px;
+  max-height: 600px;
+  padding-bottom:2%;
+  `
+  const InnerListContainer=styled.div`
+  display: flex;
+
+  flex-direction: column;
   overflow: auto;
-  padding: 7%;
+
   `
   const BackDrop = styled.div`
   position: fixed;
