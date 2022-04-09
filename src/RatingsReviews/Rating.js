@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
-import "./styles.css";
-import Stars from './Star.js';
+// import Stars from './Star.js';
 
 
 export default function Rating({data}){
@@ -22,7 +21,7 @@ export default function Rating({data}){
         var denominator = Number(data.recommended.false);
         return Math.round((numerator /(numerator+denominator))*100);
     }
-   
+
     function StarBars() {
         var total = 0;
         for(var i in data.ratings) {
@@ -35,7 +34,7 @@ export default function Rating({data}){
                 <div className="bar-5" style={{'width' : `${Number(rating)/total *100}%`}}></div>
             </div>
             </div>
-           ) 
+           )
         });
     }
 
@@ -44,7 +43,7 @@ export default function Rating({data}){
             return (
                 <div key={id}>
                 <div key={characteristic[1].id}>{characteristic[0]}: {Number(characteristic[1].value).toFixed(1)}</div>
-                
+
                 <div className="bar-container" style={{'backgroundColor' : 'gray'}}>
                     <div className="bar-5" style={{'width' : `${Number(characteristic[1].value).toFixed(1)*20}%`}}></div>
                 </div>
@@ -58,7 +57,7 @@ export default function Rating({data}){
            <div>rating: {ratingAverage()}</div>
            <div>{recommendPercentage()}% of reviews recommend this product</div>
            <Characteristics />
-           <Stars ratingAvg={ratingAverage()}/>
+           {/* <Stars ratingAvg={ratingAverage()}/> */}
            <StarBars/>
         </div>
     )

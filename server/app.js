@@ -2,30 +2,35 @@ const express = require('express');
 const cors = require('cors');
 const path = require("path");
 
-console.log('CORS_ORIGIN', process.env.CORS_ORIGIN)
-console.log('PORT', process.env.PORT)
-const PORT = process.env.PORT || 3000;
 
+const PORT = process.env.PORT || 3000;
+const ORIGIN = process.env.CORS_ORIGIN || `http://localhost:${PORT}`
+console.log('CORS_ORIGIN', ORIGIN)
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || `http://localhost:${PORT}`,
+  // origin: ORIGIN,
   optionsSuccessStatus: 200
 }
 
 const app = express();
 app.use(cors(corsOptions))
 app.use(express.json())
-app.use(express.static(path.join(__dirname, "../build")));
+// app.use(express.static(path.join(__dirname, "../build")));
+app.use(express.static(path.join(__dirname, "../dist")));
 
 
 const api = require('./api/index.js');
 
+app.get('', (req, res) => {
+  res.send('index.html')
+})
+
 
 app.get('/product/data', (req, res) => {
-  console.log('GET REQUEST at /product/data', req.url)
+  console.log('GET req at /product/data', req.url)
   // console.log(req.query)
+
   const newId = req.query.productId || null;
   const endpoints = req.query.endpoints ? req.query.endpoints.split(';') : null;
-  // console.log(endpoints)
   if (newId && endpoints) {
     api.get.productData(newId, endpoints)
       .then(productRes => res.status(200).send(productRes))
@@ -39,16 +44,11 @@ app.get('/product/data', (req, res) => {
 
 
 app.post('/new',  (req, res) => {
-  console.log('POST REQUEST at /new', req.url)
-  console.log('query', req.query)
-  console.log('body', req.body)
+  console.log('\nPOST req at /new', req.url)
+  // console.log('query', req.query)
+  // console.log('body', req.body)
 
   const { typeId, productId, type, post } = req.body;
-  console.log('newType', type)
-  console.log('typeId', typeId)
-  console.log('productId', productId)
-  console.log('post', post)
-
   if (type && post) {
     api.post[type](post, productId, typeId)
       .then(postRes => res.status(204).send('created'))
@@ -60,14 +60,11 @@ app.post('/new',  (req, res) => {
 
 
 app.post('/report',  (req, res) => {
-  console.log('REPORT req at /report', req.url)
-  console.log('query', req.query)
-  console.log('body', req.body)
+  console.log('\nREPORT req at /report', req.url)
+  // console.log('query', req.query)
+  // console.log('body', req.body)
 
   const { typeId, productId, type } = req.body;
-  console.log('newType', type)
-  console.log('typeId', typeId)
-  console.log('productId', productId)
   if (type && typeId) {
     api.post[type].report(typeId, productId)
       .then(postRes => res.status(204).send('created'))
@@ -78,14 +75,11 @@ app.post('/report',  (req, res) => {
 })
 
 app.post('/upvote',  (req, res) => {
-  console.log('POST REQUEST at /upvote', req.url)
-  console.log('query', req.query)
-  console.log('body', req.body)
+  console.log('\nUPVOTE req at /upvote', req.url)
+  // console.log('query', req.query)
+  // console.log('body', req.body)
 
   const { typeId, productId, type } = req.body;
-  console.log('type', type)
-  console.log('typeId', typeId)
-  console.log('productId', productId)
   if (type && typeId) {
     api.post[type].helpful(typeId, productId)
       .then(postRes => res.status(204).send('created'))

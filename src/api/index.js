@@ -48,23 +48,3 @@ export default api;
 
 
 
-
-
-
-// const productId = 37311;
-// const testObj = {
-//   product: [`/products/${productId}`, {}],
-//   styles: [`/products/${productId}/styles`, {}]
-// }
-// const testArray = [
-//    [`/products/${productId}`, {}],
-//    [`/products/${productId}/styles`, {}]
-// ]
-
-
-
-// get.all(testObj)
-// .then(objRes => console.log('objRes', objRes))
-
-// get.all(testArray)
-// .then(ArrayRes => console.log('ArrayRes', ArrayRes))

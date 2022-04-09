@@ -50,7 +50,7 @@ const RelatedProducts = () => {
 
   return (
     <RelatedContainer data-testid="related">
-      <HeaderText>Related test sdfsdfsdfs Products</HeaderText>
+      <HeaderText>Related Products</HeaderText>
       <CarouselContainer  >
         <Carousel products={relatedItemData} outfit={outFitItemData}  />
       </CarouselContainer>

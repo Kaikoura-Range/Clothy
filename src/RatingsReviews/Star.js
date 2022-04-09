@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
-import "./styles.css";
 
 export default function Stars({ratingAvg}) {
     let rating = ratingAvg || 0;
@@ -17,22 +16,22 @@ export default function Stars({ratingAvg}) {
             let full = Math.abs(1 - rating);
             let closest = Math.min(empty, quart, half, three, full);
             switch (closest) {
-                case (empty): 
+                case (empty):
                     stars.push(0);
                     break;
-                case quart: 
+                case quart:
                     stars.push(0.28);
                     break;
-                case half: 
+                case half:
                     stars.push(0.5);
                     break;
-                case three: 
+                case three:
                     stars.push(0.72);
                     break;
-                case full: 
+                case full:
                     stars.push(1.0);
                     break;
-                default: 
+                default:
                     console.log("OOPS");
                     stars.push(0);
                     break;
@@ -55,5 +54,5 @@ export default function Stars({ratingAvg}) {
             })}
         </div>
     )
-    
+
  };
