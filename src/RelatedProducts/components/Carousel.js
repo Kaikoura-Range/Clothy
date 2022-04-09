@@ -12,7 +12,7 @@ import { RelatedCard } from './RelatedCard.js'
 const Carousel = ({ products, outfit }) => {
   var rendered = products || outfit
   const [, dispatch] = useContext(DispatchContext);
-  var cardFunction = products ? getAddProductToOutfit : getRemoveProductFromOutfit
+  var cardFunction = products ? compareToCurrent : getRemoveProductFromOutfit
 
 
 
@@ -27,7 +27,7 @@ const Carousel = ({ products, outfit }) => {
           nav={() => initializeAppState(dispatch, data.id)}
           key={data.id ? data.id : ind}
           // action={products ? "Add to" : "Remove from"}
-          action={products ? "Add to outfit" : "Remove"}
+          action={products ? "Compare" : "Remove"}
           />
         )
       })}
@@ -36,6 +36,33 @@ const Carousel = ({ products, outfit }) => {
 }
 
 
+
+
+const compareToCurrent = (outfit, dispatch, productData, index) => {
+  return () => {
+      dispatch({
+        type: 'TOGGLE_MODAL',
+        payload: {
+          name: 'compare',
+          props: {
+            newProduct: productData
+          }
+        },
+      })
+  }
+}
+
+
+const getRemoveProductFromOutfit = (outfit, dispatch, productData, index) => {
+  return () => {
+    const newOutfit = [...outfit.map(product => product.id)]
+    newOutfit.splice(index, 1)
+    dispatch({
+      type: 'SET_OUTFIT',
+      payload: newOutfit
+    })
+  }
+}
 
 
 const getAddProductToOutfit = (outfit, dispatch, productData, index) => {
@@ -59,19 +86,6 @@ const getAddProductToOutfit = (outfit, dispatch, productData, index) => {
 }
 
 
-const getRemoveProductFromOutfit = (outfit, dispatch, productData, index) => {
-  return () => {
-    const newOutfit = [...outfit.map(product => product.id)]
-    newOutfit.splice(index, 1)
-    dispatch({
-      type: 'SET_OUTFIT',
-      payload: newOutfit
-    })
-  }
-}
-
-
-
 const CarouselContainer = styled.div`
   width: var(--module-width);
   height: auto;
@@ -90,4 +104,7 @@ const CarouselContainer = styled.div`
 
 
 export default Carousel;
+
+
+
 

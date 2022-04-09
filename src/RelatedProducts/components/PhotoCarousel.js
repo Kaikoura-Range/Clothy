@@ -59,10 +59,8 @@ const PhotoCarousel = ({ photos, nav, action, outfit }) => {
       onClick={nav}
       action={action}
       animate={animate}
-      scrollDown={scrollDown}
-      scrollUp={scrollUp}
-      canScrollUp={canScrollUp}
-      canScrollDown={canScrollDown}
+      scrollDown={canScrollDown && scrollDown}
+      scrollUp={canScrollUp && scrollUp}
       outfit={outfit}
     />
   )

@@ -53,7 +53,7 @@ function reducer(state, action) {
 
     case 'TOGGLE_MODAL':
       newState = { ...state };
-      newState.modal = action.payload || 'none';
+      newState.modal = action.payload && action.payload;
       if (toLog) {
         console.log('\n\nDEV  STATE-REDUCER   TOGGLE_MODAL    changed modal: ', action.payload);
       }

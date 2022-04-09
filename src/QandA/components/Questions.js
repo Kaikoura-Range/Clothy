@@ -82,7 +82,11 @@ export default function Questions(props) {
   };
 
   const highlight = (sentence, keyword) => {
-    let sentenceSplit = sentence.split(new RegExp(`(${keyword})`, 'gi'));
+    console.log(sentence)
+    console.log(keyword)
+    const splitValue = keyword.includes('?') && keyword.length === 1 ? /(\?)/gi : new RegExp(`(${keyword})`, 'gi')
+    console.log(splitValue)
+    let sentenceSplit = sentence.split(splitValue);
     return (
       <>
         <QuestionBody>Q: </QuestionBody>
