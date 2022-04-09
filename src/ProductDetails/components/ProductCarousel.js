@@ -26,12 +26,10 @@ function Carousel(props){
   }, [props.newProduct])
 
   useEffect(() => {
-    if (props.expandedImage) {
-      setPhotoIndex(props.expandedImage);
-      setActivePhoto(props.photos[props.expandedImage]);
+    setPhotoIndex(props.expandedImage);
+    setActivePhoto(props.photos[props.expandedImage]);
 
-      indexesInRightRange(props.expandedImage);
-    }
+    indexesInRightRange(props.expandedImage);
   }, [props.expandedImage])
 
   useEffect(() => {

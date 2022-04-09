@@ -5,8 +5,9 @@ import { FlexRow, FlexColumn } from './../styles/Flex.styled.js'
 import { StylesImages, StylesContainer } from './../styles/Styles.styled.js'
 import StyledSizeQty from './../styles/SizeQty.styled.js'
 import { StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory } from './../styles/Overview.styled.js'
-import { StyledExpandedViewContainer, StyledExpandedViewModal, StyledDotImage, ZoomedImage } from './../styles/ExpandedCarouselView.styled.js';
-import _ from "underscore";
+import { StyledExpandedViewContainer, StyledExpandedViewModal, StyledDotImage, ZoomedImage, ExpandedViewImage } from './../styles/ExpandedCarouselView.styled.js';
+import './../styles/magnifier.css';
+import _ from 'underscore';
 
 function ProductInfo(props) {
   const [activeStyle, setActiveStyle] = useState({});
@@ -120,6 +121,9 @@ function ProductInfo(props) {
     const toggleExpandedView = (e, index) => {
       setExpandedViewIndex(index);
       setShowExpandedView(!showExpandedView);
+      if (!showExpandedView) {
+        setZoomView(false);
+      }
     }
 
     const handleArrowsClickExpandedView = (e, num) => {
@@ -136,16 +140,32 @@ function ProductInfo(props) {
 
     const expandedViewDots = activeStyle.photos.map((dot, index) => <StyledDotImage activeDot={expandedViewIndex === index ? true : false } key={index}/>)
 
+    const container = document.getElementById('container');
+
+    const handleZoom = (e) => {
+      const zoomScale = 2.5;
+      const glass = document.getElementById('glass');
+
+      glass.style.left = e.clientX - (e.clientX * 30/100) + 'px';
+      glass.style.top = e.clientY - (e.clientY * 30/100)+ 'px';
+      glass.style.backgroundSize = (container.offsetWidth * zoomScale) + 'px';
+      glass.style.backgroundPosition = (-glass.offsetLeft * zoomScale - 120) + 'px '
+        + (-glass.offsetTop * zoomScale - 120) + 'px';
+    }
+
+
     return(<>
       {/**  Expanded View (Modal) */}
       {showExpandedView ?
       <StyledExpandedViewModal onClick={(e) => toggleExpandedView(e, expandedViewIndex)}>
-        <StyledExpandedViewContainer bgImg={expandedViewImage} onClick={(e) =>{ setZoomView(!zoomView); e.stopPropagation()}}>
+        <StyledExpandedViewContainer onClick={(e) =>{ setZoomView(!zoomView); e.stopPropagation()}} bgImg={expandedViewImage} id="container">
           { !zoomView ? <>
             <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}>Previous</button>
             {expandedViewDots}
-            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}>Next</button>
-          </> : <ZoomedImage/>}
+            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}>Next</button> </> :
+            <div id="image" style={{backgroundImage: 'url(' + expandedViewImage + ')', backgroundSize: container.offsetWidth || 0 + 'px auto'}} onMouseMove={handleZoom}>
+              <div id="glass" style={{backgroundImage: 'url(' + expandedViewImage + ')'}}></div>
+            </div>}
         </StyledExpandedViewContainer>
       </StyledExpandedViewModal> : '' }
 

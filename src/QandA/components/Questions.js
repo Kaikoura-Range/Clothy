@@ -7,7 +7,7 @@ import api from '../../api/index';
 import HelpfulModal from './modals/HelpfulModal';
 import SuccessModal from './modals/SuccessModal';
 import ErrorModal from './modals/ErrorModal';
-let newText;
+
 export default function Questions(props) {
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
@@ -105,26 +105,28 @@ export default function Questions(props) {
 
   return (
     <QuestionsContainer data-testid='question'>
-      <QuestionBodyWrapper>
-        {!props.highlight ? (
-          <QuestionBody> Q: {props.q.question_body}</QuestionBody>
-        ) : (
-          highlight(props.q.question_body, props.highlight)
-        )}
-      </QuestionBodyWrapper>
-      <HelpfulReportContainer>
-        Helpful Question?{' '}
-        <HelpfulLink
-          helpful={!submitHelpfulQuestionOnce}
-          onClick={() => helpfulQuestionHandler(props.q.question_id)}>
-          Yes
-        </HelpfulLink>{' '}
-        ({props.q.question_helpfulness}) |{'  '}
-        <ReportedLink onClick={() => reportQuestionHandler(props.q.question_id)}>
-          Report
-        </ReportedLink>
-        <AddAnswerLink onClick={answerFormHandler}>Add Answer</AddAnswerLink>
-      </HelpfulReportContainer>
+      <QuestionBodyHelpfulQuestionWrapper>
+        <QuestionBodyWrapper>
+          {!props.highlight ? (
+            <QuestionBody>Q: {props.q.question_body}</QuestionBody>
+          ) : (
+            highlight(props.q.question_body, props.highlight)
+          )}
+        </QuestionBodyWrapper>
+        <HelpfulReportContainer>
+          Helpful Question?{' '}
+          <HelpfulLink
+            helpful={!submitHelpfulQuestionOnce}
+            onClick={() => helpfulQuestionHandler(props.q.question_id)}>
+            Yes
+          </HelpfulLink>{' '}
+          ({props.q.question_helpfulness}) |{'  '}
+          <ReportedLink onClick={() => reportQuestionHandler(props.q.question_id)}>
+            Report
+          </ReportedLink>
+          <AddAnswerLink onClick={answerFormHandler}>Add Answer</AddAnswerLink>
+        </HelpfulReportContainer>
+      </QuestionBodyHelpfulQuestionWrapper>
       <QuestionsAuthor>
         By: {props.q.asker_name} | {moment(props.q.question_date).format('MMMM Do, YYYY')}
       </QuestionsAuthor>
@@ -164,21 +166,27 @@ const HelpfulLink = styled.span`
   cursor: pointer;
 `;
 
-const AddAnswerLink = styled.div`
+const AddAnswerLink = styled.span`
   margin-bottom: 10px;
   width: 90px;
-  display: block;
   margin-top: 10px;
+  display: block;
   text-decoration: underline;
   cursor: pointer;
 `;
 
 const QuestionBodyWrapper = styled.div`
-  width: 65%;
+  flex: 1;
+`;
+
+const QuestionBodyHelpfulQuestionWrapper = styled.div`
+  display: flex;
 `;
 
 const QuestionsContainer = styled.div`
   margin-top: 25px;
+  width: 60%;
+  display: inline-block;
 `;
 
 const QuestionsAuthor = styled.p`
@@ -186,15 +194,13 @@ const QuestionsAuthor = styled.p`
 `;
 
 const QuestionBody = styled.h3`
-  display: inline-block;
+  display: inline;
   font-size: var(--body-fs);
-
 `;
 
 const HelpfulReportContainer = styled.div`
-  display: inline;
-  float: right;
-  vertical-align: top;
+  position: absolute;
+  left: 70%;
 `;
 
 const BackDrop = styled.div`
@@ -203,6 +209,6 @@ const BackDrop = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 2;
+  z-index: 1;
   background: rgba(0, 0, 0, 0.75);
 `;
