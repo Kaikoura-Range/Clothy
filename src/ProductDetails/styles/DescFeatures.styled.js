@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const StyledDescFeaturesContainer = styled.div`
-  margin: 40px 100px;
+  background-color: #2f3640;
+  padding: 2.5em 6em;
+  color: #fff;
 `
-
 

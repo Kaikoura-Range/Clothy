@@ -1,15 +1,16 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 
 function ProductFeatures(props) {
   if (props.product) {
     if (props.product.features) {
-      const features = props.product.features.map((feature, index) => <p key={index}>{feature.feature}:
-        {feature.value}</p>
+      const features = props.product.features.map((feature, index) => <p key={index}><FontAwesomeIcon icon={faCircleCheck} /> {feature.feature }:
+        {feature.value.toLowerCase()}</p>
       )
 
       return(<div>
         <aside>
-          <h3>Features:</h3>
           {features}
         </aside>
       </div>)
