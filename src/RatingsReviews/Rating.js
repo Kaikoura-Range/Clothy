@@ -17,7 +17,7 @@ export default function Rating({data}){
         var denominator = Number(data.recommended.false);
         return Math.round((numerator /(numerator+denominator))*100);
     }
-   
+
     function StarBars() {
         var total = 0;
         for(var i in data.ratings) {
@@ -39,7 +39,7 @@ export default function Rating({data}){
             return (
                 <div key={id}>
                 <div key={characteristic[1].id}>{characteristic[0]}: {Number(characteristic[1].value).toFixed(1)}</div>
-                
+
                 
                 <BarContainer style={{'backgroundColor' : 'gray'}}>
                     <BarContainer5 className="bar-5" style={{'width' : `${Number(characteristic[1].value).toFixed(1)*20}%`}}></BarContainer5>
@@ -54,7 +54,7 @@ export default function Rating({data}){
            <div>rating: {ratingAverage()}</div>
            <div>{recommendPercentage()}% of reviews recommend this product</div>
            <Characteristics />
-           <Stars ratingAvg={ratingAverage()}/>
+           {/* <Stars ratingAvg={ratingAverage()}/> */}
            <StarBars/>
         </div>
     )

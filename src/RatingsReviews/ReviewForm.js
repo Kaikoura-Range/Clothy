@@ -31,6 +31,7 @@ const cSelector = {
   const onSubmitHandler = (e) => {
     e.stopPropagation();
     e.preventDefault();
+
     // eslint-disable-next-line no-useless-escape
     const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     if(!overallRating) {
@@ -53,29 +54,24 @@ const cSelector = {
       photos: img,
       characteristics: c
     };
-    api.post.review(newReview).then((res) => console.log('Posted Review', res)).then(() => {
-      setOverallRating(null)
-      setStarClicked(false)
-      setSummary('')
-      setImg(null)
-      setRecommend(null)
-      setC({})
-      setEmail('')
-      setBody('')
-      setName('')
-      return api.get.allProductData(state.currentProduct);
-    }).then((getRes) =>
-    dispatch({
-      type: 'PROD_INIT',
-      payload: getRes,
-    })).catch((err) => console.log('problem with sending'));
-    }
-  }
+    api.post
+      .review({ typeId: props.id, post:newReview, productId: state.currentProduct })
+      .then((res) => console.log('post question res', res))
+      .then(() => {
+        props.showForm(false);
+        setUsername('');
+        setEmail('');
+        setBody('');
+        api.load.newProduct(state.currentProduct, dispatch)
+      })
+      .catch((err) => console.log('question not sent!'));
+  };
+
   const setStars =(e) => {
     setOverallRating(Number(e.target.id)+1)
     setStarClicked(true)
   }
- 
+
   const onImageChange = (e) => {
     if (e.target.files.length > 5) {
       alert("Only up to 5 files accepted.");
@@ -85,9 +81,10 @@ const cSelector = {
     }else {
       setImg(Object.entries(e.target.files).map((file) => {
         return URL.createObjectURL(file[1])
-      })) 
+      }))
     }
   }
+
   const onCChange = (char, value) => {
     var obj = c
     obj[char] = value
@@ -107,6 +104,7 @@ const cSelector = {
             <input type="radio" name={`recommend`} value='off' onChange={(e)=>setRecommend(true)}/>Yes
             <input type="radio" name={`recommend`} value='off' onChange={(e)=>setRecommend(false)}/>No
           </div>
+
           <div>Characteristics</div>
           <CharacteristicsContainer>
             {Object.entries(state.reviews.meta.characteristics).map((characteristic,id) => {
@@ -149,6 +147,7 @@ const cSelector = {
             <ReviewSummaryTextContainer type='text' placeholder='Example: Best purchase ever!' value={summary} maxlength='60' onChange={(e)=>setSummary(e.target.value)} required/>
             <ReviewBodyContainer placeholder="Why did you like the product or not?" value={body} minlength='50' maxlength='1000' onChange={(e)=>setBody(e.target.value)} required/>
           </ReviewTextContainer>
+
           
           {body.length >= 50 ? <div>Minimum Reached</div> : <div>Minimum required characters left: {50-body.length}</div>}
           <CenterItemsWrapper>
