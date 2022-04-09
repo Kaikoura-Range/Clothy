@@ -25,11 +25,17 @@ export default function Rating({data}){
         }
         return Object.values(data.ratings).map((rating,id) =>{
            return (
-            <span key={id}>{id+1} STAR: {rating}
-            <BarContainer style={{'backgroundColor' : 'gray'}}>
-                <BarContainer5 className="bar-5" style={{'width' : `${Number(rating)/total *100}%`}}></BarContainer5>
-            </BarContainer>
-            </span>
+                <StarBarContainer key={id}>
+                    {id+1} Star  
+                    <BarContainer style={{'backgroundColor' : 'gray'}}>
+                        <BarContainer5 className="bar-5" style={{'width' : `${Number(rating)/total *100}%`}}></BarContainer5>
+                    </BarContainer>
+                    {rating}
+                    
+                    
+                </StarBarContainer>
+                   
+          
            ) 
         });
     }
@@ -39,8 +45,6 @@ export default function Rating({data}){
             return (
                 <div key={id}>
                 <div key={characteristic[1].id}>{characteristic[0]}: {Number(characteristic[1].value).toFixed(1)}</div>
-
-                
                 <BarContainer style={{'backgroundColor' : 'gray'}}>
                     <BarContainer5 className="bar-5" style={{'width' : `${Number(characteristic[1].value).toFixed(1)*20}%`}}></BarContainer5>
                 </BarContainer>
@@ -51,16 +55,35 @@ export default function Rating({data}){
 
     return (
         <div>
-           <div>rating: {ratingAverage()}</div>
+            <OverallRatingContainer>
+                <span>rating: {ratingAverage()}</span>
+                <Stars ratingAvg={ratingAverage()}/>
+            </OverallRatingContainer>
+              
            <div>{recommendPercentage()}% of reviews recommend this product</div>
            <Characteristics />
            {/* <Stars ratingAvg={ratingAverage()}/> */}
+
            <StarBars/>
+     
+           <Characteristics />
+           
         </div>
     )
 }
 
 
+const OverallRatingContainer =styled.div`
+    display: flex;
+    flex-direction: row;
+    padding:5px;
+`
+const StarBarContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    padding:5px;
+    font-size: 13px;
+`
 const BarContainer = styled.div`
 width: 300px;
 background-color: #f1f1f1;

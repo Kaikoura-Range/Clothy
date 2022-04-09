@@ -66,7 +66,7 @@ export default function Stars({ratingAvg}) {
     position: relative;
     display: inline-block;
     height: 36px; 
-    background-color: #333333;
+    background-color: rgb(247, 193, 18);
   `
   const SingleStarContainer =styled.div`
     height: 36px; 

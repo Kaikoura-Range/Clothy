@@ -60,7 +60,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
               const entries = Object.entries(item);
               return entries.some(entry=>entry[1]?entry[1].toString().toLowerCase().includes(keyword.toLowerCase()):false);
             } else return item
-          }).slice(0,diplayedReviewCount).map((review,id) => {return (<Review key={id} review={review}/>)})}
+          }).slice(0,diplayedReviewCount).map((review,id) => {return (<Review key={id} review={review} />)})}
          </InnerListContainer>
           {(results.length-diplayedReviewCount >0) && (<button onClick={()=> setReviewCount(results.length)}>More Reviews</button>)}
           <button onClick={() => {setOpenModal(true)}}>Add a Review</button>
