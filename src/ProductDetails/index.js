@@ -43,15 +43,4 @@ function ProductDetails() {
 
 }
 
-// When page is loaded, call the API on a default product
-const detailsStateInit = (productId) => {
-  return {
-    // API GET request on key, endpoint, params
-    product: [`/products/${productId}`, {}],
-    styles: [`/products/${productId}/styles`, {}],
-    reviews: ['/reviews/', { product_id : productId }]
-  }
-}
-
 export default ProductDetails;
-export {detailsStateInit};

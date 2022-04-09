@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StateContext, DispatchContext } from '../../../appState/index.js';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import api from '../../../api/index';
 export default function QuestionForm(props) {
   const [state] = useContext(StateContext);
@@ -13,6 +13,7 @@ export default function QuestionForm(props) {
     e.stopPropagation();
     e.preventDefault();
     props.success();
+    props.showForm();
     var newQuestion = {
       product_id: state.currentProduct,
       body: body,
@@ -20,21 +21,14 @@ export default function QuestionForm(props) {
       email: email,
     };
     api.post
-      .question(newQuestion)
+      .question({ typeId: props.id, post:newQuestion, productId: state.currentProduct })
       .then((res) => console.log('post question res', res))
       .then(() => {
-        props.showForm();
         setUsername('');
         setEmail('');
         setBody('');
-        return api.get.allProductData(state.currentProduct);
+        api.load.newProduct(state.currentProduct, dispatch);
       })
-      .then((getRes) =>
-        dispatch({
-          type: 'PROD_INIT',
-          payload: getRes,
-        })
-      )
       .catch((err) => console.log('question not sent!'));
   };
   const onChangeUsername = (e) => {
@@ -135,10 +129,20 @@ const InputSubmit = styled.input`
   cursor: pointer;
 `;
 
+const fadeIn = keyframes`
+ from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1
+  }`;
+const time = `300ms linear forwards`;
+
 const Modal = styled.div`
   position: fixed;
   top: 15vh;
   left: 25%;
   width: 50%;
-  z-index: 2;
+  z-index: 3;
+  animation: ${fadeIn} ${time};
 `;

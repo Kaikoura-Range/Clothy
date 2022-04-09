@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { StateContext, DispatchContext } from '../../appState/index';
 import styled, { css } from 'styled-components';
 import { toggleModal } from './methods.js'
@@ -15,24 +15,27 @@ const CompareModal = ({ newProduct }) => {
   const currentProduct = { ...state.details.product, ...state.details.styles };
   const renderData = getRenderedValues(currentProduct, newProduct)
   const names = [currentProduct.name, 'vs', newProduct.name]
-  const allRendered = [ names, ...renderData]
-  const longestFeature = findLongestFeature( allRendered )
+  const longestFeature = findLongestFeature( [ names, ...renderData] )
   const longestFeatures = [longestFeature, '-', longestFeature]
-  const columns = ['flex-start', 'center', 'flex-end']
+  const columnAlign = ['flex-start', 'center', 'flex-end']
 
   return (
     <CompareContainer>
       <ColumnContainer>
-        {columns.map((position, ind) => (
+        {columnAlign.map((position, ind) => (
         <CompareColumn key={position}  position={position} >
-          <CompareColumnName> {names[ind]} </CompareColumnName>
-          <CompareColumnEqualizers>{longestFeatures[ind]}</CompareColumnEqualizers>
+          <CompareColumnName>
+            {names[ind]}
+          </CompareColumnName>
+          <CompareColumnEqualizers>
+            {longestFeatures[ind]}
+          </CompareColumnEqualizers>
           {renderData.map((data, jInd) => <CompareBody key={jInd} > {data[ind] ? data[ind] : '-' } </CompareBody>)}
         </CompareColumn>
         ))}
       </ColumnContainer>
       <CompareFooter>
-      <FooterButton
+        <FooterButton
           onClick={curProductAction}
           >{curProductActionText}
         </FooterButton>

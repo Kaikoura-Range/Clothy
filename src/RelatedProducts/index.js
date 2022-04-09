@@ -95,15 +95,4 @@ const HeaderText = styled.h1`
 
 
 
-
-
-
-
-
-
-
-export const relatedStateInit = (productId) => {
-  return [`/products/${productId}/related/`, {}]
-}
-
 export default RelatedProducts
