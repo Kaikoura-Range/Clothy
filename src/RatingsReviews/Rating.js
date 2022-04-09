@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import moment from 'moment';
 import styled from 'styled-components';
-import "./styles.css";
 import Stars from './Star.js';
 
 
@@ -12,9 +9,7 @@ export default function Rating({data}){
         for(var i in data.ratings) {
             total += Number(data.ratings[i]*i);
             totalcount += Number(data.ratings[i]);
-
         }
-
         return (Math.round(total / totalcount * 4) / 4).toFixed(1);
     }
     function recommendPercentage(){
@@ -31,9 +26,9 @@ export default function Rating({data}){
         return Object.values(data.ratings).map((rating,id) =>{
            return (
             <span key={id}>{id+1} STAR: {rating}
-            <div className="bar-container" style={{'backgroundColor' : 'gray'}}>
-                <div className="bar-5" style={{'width' : `${Number(rating)/total *100}%`}}></div>
-            </div>
+            <BarContainer style={{'backgroundColor' : 'gray'}}>
+                <BarContainer5 className="bar-5" style={{'width' : `${Number(rating)/total *100}%`}}></BarContainer5>
+            </BarContainer>
             </span>
            ) 
         });
@@ -45,9 +40,10 @@ export default function Rating({data}){
                 <div key={id}>
                 <div key={characteristic[1].id}>{characteristic[0]}: {Number(characteristic[1].value).toFixed(1)}</div>
                 
-                <div className="bar-container" style={{'backgroundColor' : 'gray'}}>
-                    <div className="bar-5" style={{'width' : `${Number(characteristic[1].value).toFixed(1)*20}%`}}></div>
-                </div>
+                
+                <BarContainer style={{'backgroundColor' : 'gray'}}>
+                    <BarContainer5 className="bar-5" style={{'width' : `${Number(characteristic[1].value).toFixed(1)*20}%`}}></BarContainer5>
+                </BarContainer>
                 </div>
             )
         })
@@ -64,3 +60,14 @@ export default function Rating({data}){
     )
 }
 
+
+const BarContainer = styled.div`
+width: 300px;
+background-color: #f1f1f1;
+text-align: center;
+color: white;
+`
+const BarContainer5 = styled.div`
+height: 18px;
+background-color: #04AA6D;
+`
