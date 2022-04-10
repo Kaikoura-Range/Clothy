@@ -1,7 +1,17 @@
-import styled from 'styled-components';
-import React from  'react';
+import styled, { css } from 'styled-components';
+import React, { useState, useEffect } from  'react';
 
-export default function Stars({ratingAvg}) {
+export default function Stars({ratingAvg, theme}) {
+    // theme = theme || 'light'
+    console.log('props', theme)
+    // const [currentTheme, setCurrentTheme] = useState(theme)
+
+    // useEffect(() => {
+    //     if (typeof(theme) === 'string') {
+    //         setCurrentTheme(theme)
+    //     }
+    // }, [theme])
+
     let rating = ratingAvg || 0;
     let stars = [];
     while (stars.length < 5) {
@@ -19,21 +29,21 @@ export default function Stars({ratingAvg}) {
                     stars.push(0);
                     break;
 
-                case quart: 
+                case quart:
                     stars.push(0.25);
                     break;
                 case half:
                     stars.push(0.5);
                     break;
 
-                case three: 
+                case three:
                     stars.push(0.75);
                     break;
                 case full:
                     stars.push(1.0);
                     break;
 
-                default: 
+                default:
                     stars.push(0);
                     break;
             }
@@ -48,29 +58,35 @@ export default function Stars({ratingAvg}) {
                 return (
                     <SingleStarContainer key={i}>
                         <SingleStarFill style={{"width" : `${parseInt(item*31)}px`}}>
-                            <SingleStarOutline id={i} src="https://raw.githubusercontent.com/psfonseka/five-stars/master/dist/star.png" alt="stars alt" onClick={()=>{}}></SingleStarOutline>
+                            <SingleStarOutline theme={theme} id={i} src="https://raw.githubusercontent.com/psfonseka/five-stars/master/dist/star.png" alt="stars alt" onClick={()=>{}}></SingleStarOutline>
                         </SingleStarFill>
-                    </SingleStarContainer> 
+                    </SingleStarContainer>
                 )
             })}
         </div>
     )
 
-    
+
  };
 
  const SingleStarOutline = styled.img`
-    height: 36px; 
+    height: 36px;
     width: 31px;
+    filter: ${(props => {
+        console.log('theme', props)
+        if (typeof(props.theme) === 'string') {
+            return props.theme === 'dark' ? css`invert(93%);` : css`invert(0%);`
+        }
+    })};
   `
   const SingleStarFill = styled.div`
     position: relative;
     display: inline-block;
-    height: 36px; 
+    height: 36px;
     background-color: rgb(247, 193, 18);
   `
   const SingleStarContainer =styled.div`
-    height: 36px; 
+    height: 36px;
     width: 31px;
     display: inline-block;
   `

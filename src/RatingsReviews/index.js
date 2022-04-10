@@ -7,7 +7,7 @@ import Review from './Review.js';
 
 var mainRenderCount = 0;
 
-export default function RatingsReviews({reviewData, reviewMeta, dev}) {
+export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   const {results} = reviewData;
   if( dev.logs ) {
     mainRenderCount++;
@@ -43,7 +43,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev}) {
   if(reviewData) {
     return (
       <RatingsReviewsContainer data-testid="reviews" >
-        <Rating data={reviewMeta}/>
+        <Rating theme={theme} data={reviewMeta}/>
         <ReviewsListContainer>
           <div>
             {results.length} reviews sorted by

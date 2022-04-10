@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Stars from './Star.js';
 
 
-export default function Rating({data}){
+export default function Rating({data, theme}){
     function ratingAverage(){
         var total = 0, totalcount = 0;
 
@@ -27,13 +27,13 @@ export default function Rating({data}){
         return Object.values(data.ratings).map((rating,id) =>{
            return (
                 <StarBarContainer key={id}>
-                    {id+1} Star  
+                    {id+1} Star
                     <BarContainer style={{'backgroundColor' : 'gray'}}>
-                        <BarContainer5 className="bar-5" style={{'width' : `${Number(rating)/total *100}%`}}></BarContainer5> 
+                        <BarContainer5 className="bar-5" style={{'width' : `${Number(rating)/total *100}%`}}></BarContainer5>
                     </BarContainer>
                     {rating}
                 </StarBarContainer>
-           ) 
+           )
         });
     }
 
@@ -54,15 +54,15 @@ export default function Rating({data}){
         <div>
             <OverallRatingContainer>
                 <span>rating: {ratingAverage()}</span>
-                <Stars ratingAvg={ratingAverage()}/>
+                <Stars theme={theme} ratingAvg={ratingAverage()}/>
             </OverallRatingContainer>
-              
+
            <div>{recommendPercentage()}% of reviews recommend this product</div>
-        
+
            <StarBars/>
-     
+
            <Characteristics />
-           
+
         </div>
     )
 }
