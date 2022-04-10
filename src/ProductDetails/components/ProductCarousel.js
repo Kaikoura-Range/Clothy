@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer,StyledThumbnailContainer, StyledArrowButton } from './../styles/Carousel.styled.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExpand } from '@fortawesome/free-solid-svg-icons'
 // import { FlexColumn } from './../styles/Flex.styled.js';
 
 function Carousel(props){
@@ -10,7 +12,11 @@ function Carousel(props){
 
   useEffect(() => {
     if (props.photos) {
-      setActivePhoto(props.photos[photoIndex]);
+      if (props.photos.length - 1 >= photoIndex) {
+        setActivePhoto(props.photos[photoIndex]);
+      } else {
+        setActivePhoto(props.photos[0])
+      }
       setDisplayedPhotos(props.photos.slice(0, 7));
       setDisplayedPhotosIndexes([0, 7])
     }
@@ -92,7 +98,7 @@ function Carousel(props){
         {/** Thumbnails buttons and images */}
         <StyledArrowButton onClick={(e, num) => {handleThumbnailArrowClick(e, -1); e.stopPropagation()}} disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === 0 ? true : false }>Top</StyledArrowButton>
 
-        <button onClick={(e, index) => props.handleExpandedView(e, photoIndex)}>Expand</button>
+        <button onClick={(e, index) => props.handleExpandedView(e, photoIndex)} style={{backgroundColor: 'none'}}>Expand</button>
 
         <StyledThumbnailContainer>
           {allPhotos}
