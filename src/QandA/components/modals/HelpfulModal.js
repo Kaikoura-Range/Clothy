@@ -1,10 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { keyframes } from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 export default function HelpfulModal() {
   return (
     <Modal>
-      <HelpfulMessage>You marked this as helpful!</HelpfulMessage>
+      <HelpfulMessage>
+        <FontAwesomeIcon icon={faThumbsUp} style={{ marginRight: '7px' }} />
+        You marked this as helpful!
+      </HelpfulMessage>
     </Modal>
   );
 }

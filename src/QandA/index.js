@@ -187,8 +187,6 @@ export default function QAndA() {
   );
 }
 
-
-
 const QAHeader = styled.h1`
   font-size: var(--fs3);
   color: var(--header-fc);
@@ -243,6 +241,10 @@ const AddQuestionButton = styled.button`
   &:active {
     transform: translateY(4px);
   }
+  &:hover {
+    background-color: #b5b5b5;
+    transition: 0.7s ease-in-out;
+  }
 `;
 
 const MoreAnsweredQuestionsButton = styled.button`
@@ -255,6 +257,10 @@ const MoreAnsweredQuestionsButton = styled.button`
   text-align: center;
   &:active {
     transform: translateY(4px);
+  }
+  &:hover {
+    background-color: #b5b5b5;
+    transition: 0.7s ease-in-out;
   }
 `;
 
