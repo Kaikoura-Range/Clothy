@@ -97,7 +97,7 @@ const cSelector = {
           <h1>Write your Review </h1>
           <h2>{`About the ${state.details.product.name}`}</h2>
           <OverallRatingContainer onClick={setStars}>Overall Rating:
-            <Stars ratingAvg={overallRating}/>
+            <Stars theme={state.user.theme} ratingAvg={overallRating}/>
             {starClicked && <p>{overallRating} star: {starDescription[overallRating-1]} </p>}
           </OverallRatingContainer>
           <div>Do you recommend the Product?
@@ -124,7 +124,7 @@ const cSelector = {
                   </div>
                   <div>
                     <input type="radio" name={`${characteristic[0]}`} value='off' onChange={()=>onCChange(characteristic[1].id,5)}/>{cSelector[characteristic[0]][4]}
-                  </div>       
+                  </div>
                 </div>
               )
             })}
@@ -135,11 +135,11 @@ const cSelector = {
               <img key={id} src={photo} height="50" width="50" alt="" />
             )
           }))}
-          <div>User nickname: 
+          <div>User nickname:
             <TextContainer type='text' placeholder='Example: jackson11!' value={name} maxlength='60' onChange={(e)=>setName(e.target.value)} required/>
             <p>For privacy reasons, do not use your full name or email address</p>
           </div>
-          <div>User e-mail: 
+          <div>User e-mail:
             <TextContainer type='text' placeholder='Example: jackson11@gmail.com' value={email} maxlength='60' onChange={(e)=>setEmail(e.target.value)} required/>
             <p>For authentication reasons, you will not be emailed</p>
           </div>
@@ -148,12 +148,12 @@ const cSelector = {
             <ReviewBodyContainer placeholder="Why did you like the product or not?" value={body} minlength='50' maxlength='1000' onChange={(e)=>setBody(e.target.value)} required/>
           </ReviewTextContainer>
 
-          
+
           {body.length >= 50 ? <div>Minimum Reached</div> : <div>Minimum required characters left: {50-body.length}</div>}
           <CenterItemsWrapper>
             <InputSubmit type='submit' />
-          </CenterItemsWrapper>  
-          
+          </CenterItemsWrapper>
+
         </form>
       </ReviewFormContainer>
     </Modal>

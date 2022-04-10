@@ -57,7 +57,7 @@ function App() {
         <ProductDetails />
         <RelatedProducts  />
         <QAndA />
-        <RatingsReviews reviewData={state.reviews.reviews} reviewMeta={state.reviews.meta} dev={state.dev} />
+        <RatingsReviews reviewData={state.reviews.reviews} reviewMeta={state.reviews.meta} dev={state.dev} theme={state.user.theme}/>
       </AppContainer>
     );
   }

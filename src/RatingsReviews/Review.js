@@ -48,7 +48,7 @@ const Review = ({review}) => {
                 </span>
             )
         })}
-        <Star ratingAvg={review.rating}/>
+        <Star theme={state.user.theme} ratingAvg={review.rating}/>
         <div>
             {clicked? <div>Thank you for the feedback!</div> : <div>Was this review helpful?</div>}
             <span onClick={()=> clickedHelpful(review.review_id)}>Yes({review.helpfulness}) | </span>
