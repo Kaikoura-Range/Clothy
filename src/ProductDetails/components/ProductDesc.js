@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyledDescriptionContainer } from './../styles/DescFeatures.styled.js'
 
 function ProductDescription(props) {
   if (props.product) {
@@ -6,10 +7,10 @@ function ProductDescription(props) {
       const slogan = props.product.slogan || 'Description'
       const description = props.product.description || ''
 
-      return(<div>
+      return(<StyledDescriptionContainer>
         <h3>{slogan}</h3>
         <p>{description}</p>
-      </div>)
+      </StyledDescriptionContainer>)
 
   } else {
     return <p>loading</p>
