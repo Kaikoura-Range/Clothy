@@ -187,8 +187,6 @@ export default function QAndA() {
   );
 }
 
-
-
 const QAHeader = styled.h1`
   font-size: var(--fs3);
   color: var(--header-fc);
@@ -210,12 +208,6 @@ const EntireQuestionsContainer = styled.div`
   align-items: center;
   padding-top: 2em;
   padding-bottom: 4em;
-
-  /* margin-left: 100px;
-  margin-right: 100px; */
-  /* margin-left: 7.5%;
-  margin-right: 7.5%; */
-  /* background-color: var(--main-bgc); */
 `;
 
 const EntireQAndAContainer = styled.div`
@@ -241,7 +233,11 @@ const AddQuestionButton = styled.button`
   padding: 15px;
   text-align: center;
   &:active {
-    transform: translateY(4px);
+    transform: translateY(6px);
+  }
+  &:hover {
+    background-color: #b5b5b5;
+    transition: 0.7s ease-in-out;
   }
 `;
 
@@ -254,7 +250,11 @@ const MoreAnsweredQuestionsButton = styled.button`
   padding: 15px;
   text-align: center;
   &:active {
-    transform: translateY(4px);
+    transform: translateY(6px);
+  }
+  &:hover {
+    background-color: #b5b5b5;
+    transition: 0.7s ease-in-out;
   }
 `;
 

@@ -50,8 +50,9 @@ export default function Questions(props) {
     setsubmitHelpfulQuestionOnce(false);
     if (submitHelpfulQuestionOnce) {
       setShowHelpfulModal(true);
-      api.upvote.question({ typeId: id, productId: state.currentProduct })
-        .then(() =>  api.load.newProduct(state.currentProduct, dispatch))
+      api.upvote
+        .question({ typeId: id, productId: state.currentProduct })
+        .then(() => api.load.newProduct(state.currentProduct, dispatch))
         .catch((err) => console.log('helpful question not sent!'));
     } else {
       setShowErrorModal(true);
@@ -59,8 +60,9 @@ export default function Questions(props) {
   };
 
   const reportQuestionHandler = (id) => {
-    api.report.question({ typeId: id, productId: state.currentProduct })
-      .then(() =>  api.load.newProduct(state.currentProduct, dispatch))
+    api.report
+      .question({ typeId: id, productId: state.currentProduct })
+      .then(() => api.load.newProduct(state.currentProduct, dispatch))
       .catch((err) => console.log('report question not sent!'));
   };
 
