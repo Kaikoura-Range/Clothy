@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const StyledOverviewContainer = styled.div`
   margin: 0 0 0.6em 7em;
-  background-color: #fff;
 
   span {
     display: inline-block;

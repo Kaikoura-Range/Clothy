@@ -12,7 +12,11 @@ function Carousel(props){
 
   useEffect(() => {
     if (props.photos) {
-      setActivePhoto(props.photos[photoIndex]);
+      if (props.photos.length - 1 >= photoIndex) {
+        setActivePhoto(props.photos[photoIndex]);
+      } else {
+        setActivePhoto(props.photos[0])
+      }
       setDisplayedPhotos(props.photos.slice(0, 7));
       setDisplayedPhotosIndexes([0, 7])
     }
