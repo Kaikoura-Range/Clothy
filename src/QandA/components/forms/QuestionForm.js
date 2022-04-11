@@ -21,7 +21,7 @@ export default function QuestionForm(props) {
       email: email,
     };
     api.post
-      .question({ typeId: props.id, post: newQuestion, productId: state.currentProduct })
+      .question({ typeId: props.id, post:newQuestion, productId: state.currentProduct })
       .then((res) => console.log('post question res', res))
       .then(() => {
         setUsername('');
@@ -132,11 +132,9 @@ const InputSubmit = styled.input`
 const fadeIn = keyframes`
  from {
     opacity: 0;
-    transform: translateY(-100%)
   }
   to {
     opacity: 1
-    transform: translateY(0)
   }`;
 const time = `300ms linear forwards`;
 

@@ -22,7 +22,7 @@ export default function Questions(props) {
   }, [state.QA]);
 
   const answerFormHandler = () => {
-    setAnswerForm(true);
+    setAnswerForm(!answerForm);
   };
 
   const showAnswerForm = () => {
