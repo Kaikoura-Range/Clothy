@@ -11,9 +11,9 @@ export default function AnswerForm(props) {
   const [body, setBody] = useState('');
   const [photos, setPhotos] = useState([]);
   const [imageForm, setImageForm] = useState(false);
-
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    setAnswerForm(1);
     props.showForm();
     let newAnswer = {
       photos: photos,
@@ -22,7 +22,7 @@ export default function AnswerForm(props) {
       email: email,
     };
     api.post
-      .answer({ typeId: props.id, post:newAnswer, productId: state.currentProduct })
+      .answer({ typeId: props.id, post: newAnswer, productId: state.currentProduct })
       .then((res) => console.log('post answer res', res))
       .then(() => {
         setUsername('');
@@ -71,7 +71,7 @@ export default function AnswerForm(props) {
   ));
 
   return (
-    <Modal onClick={preventBubbling}>
+    <Modal form={answerForm} onClick={preventBubbling}>
       <AnswerFormContainer>
         <Title>Submit Answer About Product:</Title>
         <ProductName>{state.details.product.name}</ProductName>
@@ -178,14 +178,17 @@ const ImageFormContainer = styled.div`
   display: flex;
 `;
 
+const time = `300ms linear forwards`;
+
 const fadeIn = keyframes`
  from {
     opacity: 0;
+    transform: translateY(-100%)
   }
   to {
     opacity: 1
+    transform: translateY(0)
   }`;
-const time = `300ms linear forwards`;
 
 const Modal = styled.div`
   position: fixed;
