@@ -71,7 +71,7 @@ export default function AnswerForm(props) {
   ));
 
   return (
-    <Modal form={answerForm} onClick={preventBubbling}>
+    <Modal onClick={preventBubbling}>
       <AnswerFormContainer>
         <Title>Submit Answer About Product:</Title>
         <ProductName>{state.details.product.name}</ProductName>

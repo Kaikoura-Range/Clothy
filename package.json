@@ -19,7 +19,6 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "client:dev": "npx webpack --watch ./src",
     "build:dev": "webpack --config webpack.dev.js --watch ./src",
     "build:prod": "webpack --config webpack.prod.js",
     "build:staging": "env-cmd -f .env.staging npm run build:prod"
