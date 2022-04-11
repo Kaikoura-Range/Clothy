@@ -31,7 +31,7 @@ function ProductDetails() {
 
   return (
     <div data-testid="details" >
-      <Info product={activeProduct} styles={allStyles} reviews={totalReviews} rating={reviews.meta.ratings}/>
+      <Info product={activeProduct} styles={allStyles} reviews={totalReviews} rating={reviews.meta.ratings} theme={state.user.theme}/>
       <StyledDescFeaturesContainer>
         <h2>Product Description</h2>
         <Description product={activeProduct}/>

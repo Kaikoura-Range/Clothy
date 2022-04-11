@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Stars from './Star.js';
 
 
-export default function Rating({data, theme}){
+export default function Rating({data, theme, filter}){
     const[starColor,setStarColor] = useState('rgb(247, 153, 18)');
 
     function ratingAverage(){

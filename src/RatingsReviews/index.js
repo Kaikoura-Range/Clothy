@@ -15,15 +15,13 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
     dev.state && console.log('DEV  STATE   RelatedProducts: ', reviewData)
   }
 
-  const [sortSelect,setSortSelect] = useState('relevant');
-  const [sortedReviews, setSortedReviews] = useState(results);
-  
-  const [diplayedReviewCount, setReviewCount] = useState(2);
-  const [openModal, setOpenModal] = useState(false);
-  const [keyword, setKeyword] = useState('');
-  const [starcount, setStarCount] = useState(5);
-  const [clicked, setClicked] = useState(false);
-  const [notH,setNotH] = useState(false);
+  const [sortSelect,setSortSelect] = useState('relevant')
+  const [sortedReviews, setSortedReviews] = useState(results)
+  const [diplayedReviewCount, setReviewCount] = useState(2)
+  const [openModal, setOpenModal] = useState(false)
+  const [keyword, setKeyword] = useState('')
+  const [starcount, setStarCount] = useState(5)
+  const [filtered, setFiltered] = useState(false)
 
   useEffect(()=> {
     var newSorted;
@@ -44,14 +42,14 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
     } else return cmp;
   }
   const setStarFilter = (e) => {
-    setStarCount(Number(e.target.id)+1)
+    Number(e.target.id)+1 ===starcount ? (setFiltered(false), setStarCount(5)): (setStarCount(Number(e.target.id)+1), setFiltered(true))
   }
 
   if(reviewData) {
     return (
       <RatingsReviewsContainer data-testid="reviews" >
         <div onClick={setStarFilter}>
-        <Rating theme={theme} data={reviewMeta}/>
+        <Rating theme={theme} data={reviewMeta} filter={filtered}/>
         </div>
         <ReviewsListContainer>
           <div>
@@ -100,7 +98,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   display: flex;
   width: 66%;
   flex-direction: column;
-  max-height: 600px;
+  height: 600px;
   padding-bottom:2%;
   `
   const InnerListContainer=styled.div`

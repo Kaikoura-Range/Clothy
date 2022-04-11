@@ -54,6 +54,7 @@ const cSelector = {
       photos: img,
       characteristics: c
     };
+    
     api.post
       .review({ typeId: props.id, post:newReview, productId: state.currentProduct })
       .then((res) => console.log('post question res', res))
