@@ -1,18 +1,18 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
-import { StyledFeaturesContainer } from './../styles/DescFeatures.styled.js'
 
 function ProductFeatures(props) {
   if (props.product) {
     if (props.product.features) {
-      const features = props.product.features.map((feature, index) => <p key={index}><FontAwesomeIcon icon={faCircleCheck} style={{paddingRight: '1em'}}/> <strong>{feature.feature}</strong>:
-        {' ' + feature.value.toLowerCase()}</p>
+      const features = props.product.features.map((feature, index) => <p key={index}>{feature.feature}:
+        {feature.value}</p>
       )
 
-      return(<StyledFeaturesContainer>
+      return(<div>
+        <aside>
+          <h3>Features:</h3>
           {features}
-      </StyledFeaturesContainer>)
+        </aside>
+      </div>)
     }
 
   } else {

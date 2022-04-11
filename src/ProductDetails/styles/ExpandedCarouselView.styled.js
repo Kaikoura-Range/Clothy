@@ -23,8 +23,7 @@ export const StyledExpandedViewContainer = styled.div`
   overflow: hidden;
   background-image: url(${({bgImg}) => bgImg });
   background-size: cover;
-  background-position: bottom;
-  position: absolute;
+  position: relative;
   cursor: crosshair;
 
   button {
@@ -47,12 +46,10 @@ export const StyledExpandedViewContainer = styled.div`
 `
 
 export const StyledDotImage = styled.div`
-  width: 0.5em;
-  height: 0.5em;
-  border: 0.15em solid ${({activeDot}) => activeDot ? 'var(--accent-color)' : 'var(--bgc-1)' };;
-  opacity: ${({activeDot}) => activeDot ? '1' : '0.5' };
+  width: 1em;
+  height: 1em;
   border-radius: 50%;
   margin-right: 8px;
   margin-bottom: 20px;
-  background-color: ${({activeDot}) => activeDot ? 'var(--accent-color)' : 'var(--bgc-1)' };
+  background-color: ${({activeDot}) => activeDot ? 'red' : '#fff' };
 `

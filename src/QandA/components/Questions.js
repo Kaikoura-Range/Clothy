@@ -16,7 +16,6 @@ export default function Questions(props) {
   const [showHelpfulModal, setShowHelpfulModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
-
   useEffect(() => {
     setAnswerForm(false);
   }, [state.QA]);
@@ -50,8 +49,17 @@ export default function Questions(props) {
     setsubmitHelpfulQuestionOnce(false);
     if (submitHelpfulQuestionOnce) {
       setShowHelpfulModal(true);
-      api.upvote.question({ typeId: id, productId: state.currentProduct })
-        .then(() =>  api.load.newProduct(state.currentProduct, dispatch))
+      api.post.question
+        .helpful(id, state.currentProduct)
+        .then(() => {
+          return api.get.allProductData(state.currentProduct);
+        })
+        .then((getRes) =>
+          dispatch({
+            type: 'PROD_INIT',
+            payload: getRes,
+          })
+        )
         .catch((err) => console.log('helpful question not sent!'));
     } else {
       setShowErrorModal(true);
@@ -59,14 +67,23 @@ export default function Questions(props) {
   };
 
   const reportQuestionHandler = (id) => {
-    api.report.question({ typeId: id, productId: state.currentProduct })
-      .then(() =>  api.load.newProduct(state.currentProduct, dispatch))
+    api.post.question
+      .report(id, state.currentProduct)
+      .then(() => {
+        return api.get.allProductData(state.currentProduct);
+      })
+      .then((getRes) =>
+        dispatch({
+          type: 'PROD_INIT',
+          payload: getRes,
+        })
+      )
       .catch((err) => console.log('report question not sent!'));
   };
 
   const highlight = (sentence, keyword) => {
-    const splitValue =
-      keyword.includes('?') && keyword.length === 1 ? /(\?)/gi : new RegExp(`(${keyword})`, 'gi');
+
+    const splitValue = keyword.includes('?') && keyword.length === 1 ? /(\?)/gi : new RegExp(`(${keyword})`, 'gi')
     let sentenceSplit = sentence.split(splitValue);
     return (
       <>

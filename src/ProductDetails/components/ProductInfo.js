@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useRef, useContext} from "react";
-// import { Link, BrowserRouter } from 'react-router-dom';
-import Carousel from './ProductCarousel.js';
+import Carousel from "./ProductCarousel.js";
 import { DispatchContext } from './../../appState/index.js';
 import { FlexRow } from './../styles/Flex.styled.js'
 import { StylesImages, StylesContainer } from './../styles/Styles.styled.js'
@@ -88,7 +87,7 @@ function ProductInfo(props) {
     }
 
     const allStyles = props.styles.results.map(style =>
-      <StylesImages src={style.photos[0].thumbnail_url} alt={style.name} key={style.style_id} active={style.name === activeStyle.name} onClick={(e) => handleSelectedStyle(e, style)}/>
+      <StylesImages src={style.photos[0].thumbnail_url} alt={style.name} key={style.style_id} onClick={(e) => handleSelectedStyle(e, style)}/>
     )
 
     const availableSizes = skus.map((sku, index) =>
@@ -101,10 +100,8 @@ function ProductInfo(props) {
       if (selectedSizeIndex === -1) {
         setAvailableQty(0);
       } else if (skus[selectedSizeIndex][1] > 15) {
-        setIsAddCartValid(true);
         setAvailableQty(15);
       } else {
-        setIsAddCartValid(true);
         setAvailableQty(skus[selectedSizeIndex][1]);
       }
     }
@@ -202,14 +199,10 @@ function ProductInfo(props) {
       {/**  Right-side (main product info) */}
       <ProductInfoContainer>
         <StyledOverviewContainer>
-          <FlexRow>
-            <Stars ratingAvg={ratingAverage()}/>
-            <StyledReviews href="/#ratings">Read all {props.reviews} reviews</StyledReviews>
-          </FlexRow>
           <StyledCategory>{category}</StyledCategory>
           <h1>{name}</h1>
           <StyledPrice salePrice={ salePrice ? true : false }><span>${ salePrice ? salePrice  : activeStyle.original_price }</span><span>{ salePrice ? '$' + activeStyle.original_price  : '' }</span></StyledPrice>
-          <StyledCurrentStyle><span>style</span> {activeStyle.name}</StyledCurrentStyle>
+          <StyledCurrentStyle><span>style ></span> {activeStyle.name}</StyledCurrentStyle>
         </StyledOverviewContainer>
         <StylesContainer>
           {allStyles}
@@ -225,8 +218,8 @@ function ProductInfo(props) {
                 {selectedSize.current.value === 'default' ? defaultQty : availableQuantities}
               </select>
             </FlexRow>
-            <button onClick={handleAddToCart}><FontAwesomeIcon icon={faCartArrowDown} size='xl' style={{'marginRight': '0.7em'}} />Add to cart</button>
-            <button><FontAwesomeIcon icon={farHeart} size='xl'/></button>
+            <button onClick={handleAddToCart}>Add to cart</button>
+            <button>Star</button>
           </StyledSizeQty>
           <SocialMediaShareContainer>
             <SocialMediaShareButton onClick={(e, url) => handleSocialMediaClick(e, `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`)}><FontAwesomeIcon icon={faFacebook} size='xl' /></SocialMediaShareButton>

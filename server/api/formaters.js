@@ -1,4 +1,41 @@
+const dataForms = require('./dataForms.js')
 
+const extend = (src, desinationt = {}) => {
+  // console.log('\nsrc', src)
+  // console.log('desinationt', desinationt)
+  return Object.keys(src).reduce((memo, key) => {
+    const formatted = src[key]
+    if (typeof(formatted) !== 'object') {
+      memo[key] = memo[key] || formatted
+    }
+    else {
+      if (Array.isArray(formatted)) {
+
+        const defaultVal = formatted[0]
+        memo[key] = memo[key] || [defaultVal]
+        memo[key].map(val =>  {
+          var formattedVal;
+          if (typeof(defaultVal) !== 'object') {
+            formattedVal = val || defaultVal
+          } else {
+            formattedVal = val || extend(defaultVal, val)
+          }
+          return formattedVal
+        })
+
+      }
+      else {
+        memo[key] = extend(formatted, memo[key])
+      }
+    }
+    return memo
+  }, desinationt)
+}
+
+const formatApiGet = (apiData, key) => {
+  const dataForm = dataForms[key];
+  return extend(dataForm, apiData)
+}
 
 
 
@@ -42,7 +79,8 @@ const format = {
     review: formatReview,
     question: formatQuestion,
     answer: formatAnswer
-  }
+  },
+  get: formatApiGet
 };
 
 module.exports = { format }

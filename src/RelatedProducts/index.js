@@ -11,7 +11,7 @@ import Carousel from './components/Carousel.js';
 
 
 
-var mainRenderCount = 0;
+var renderCount = 0;
 const RelatedProducts = () => {
   const [state] = useContext(StateContext)
   const { related, user, dev, currentProduct } = state;
@@ -24,10 +24,10 @@ const RelatedProducts = () => {
   const outfitInit = outfit.length ? Array(outfit.length).fill({}) : [ { type: 'emptyOutfit', id: state.currentProduct } ];
   const [outFitItemData, setOutfitItemData] = useState(outfitInit);
 
-  if( dev.logs ) {
-    mainRenderCount++;
-    dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
-    dev.state && console.log('DEV  STATE   RelatedProducts: ', related)
+  if( dev.logs ) { // Used to see preformance and data flow
+    renderCount++
+    dev.renders.mod.related && console.log('\nDEV-RENDER   related   renderCount: ', renderCount, '\n')
+    dev.state.mod.related && console.log('\nDEV-STATE    related:', related, '\n')
   }
 
   useEffect(() => {

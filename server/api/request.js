@@ -22,7 +22,7 @@ const checkCache = (options) => {
 // var numCached = 0;
 
 
-const startRequest = (options) => {
+const startRequest = (options, formatKey) => {
   const cached = checkCache(options)
   if (cached) {
     // numCached++
@@ -36,7 +36,11 @@ const startRequest = (options) => {
   return axios(options)
     .then((res) => {
       if (options.method.toUpperCase() === 'GET') {
+        // console.log('\n\nformat key', formatKey)
+        // console.log('pre format', res.data)
         const value = res.data;
+        // const value = formatKey ? format.get(res.data, formatKey) :  res.data;
+        // formatKey ? console.log('post format', value) : console.log('no format key', formatKey)
         cache.add(options, value)
         return value
       }
@@ -75,8 +79,8 @@ const buildPostOptions = (endpoint, params = {}, data = {}, method = 'POST') => 
 };
 
 
-const getReqest = ((endpoint, params) => {
-  return startRequest(buildGetOptions(endpoint, params))
+const getReqest = ((endpoint, params, formatKey) => {
+  return startRequest(buildGetOptions(endpoint, params), formatKey)
 });
 
 
