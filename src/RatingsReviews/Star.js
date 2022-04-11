@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import moment from 'moment';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import React, { useState, useEffect } from  'react';
 
-export default function Stars({ratingAvg}) {
+export default function Stars({ratingAvg, theme, starColor}) {
     let rating = ratingAvg || 0;
     let stars = [];
     while (stars.length < 5) {
@@ -19,20 +18,22 @@ export default function Stars({ratingAvg}) {
                 case (empty):
                     stars.push(0);
                     break;
+
                 case quart:
-                    stars.push(0.28);
+                    stars.push(0.25);
                     break;
                 case half:
                     stars.push(0.5);
                     break;
+
                 case three:
-                    stars.push(0.72);
+                    stars.push(0.75);
                     break;
                 case full:
                     stars.push(1.0);
                     break;
+
                 default:
-                    console.log("OOPS");
                     stars.push(0);
                     break;
             }
@@ -45,14 +46,39 @@ export default function Stars({ratingAvg}) {
         <div>
             {stars.map((item, i) => {
                 return (
-                    <div className="single-star-container" key={i}>
-                        <div className="single-star-fill" style={{"width" : `${parseInt(item*31)}px`}}>
-                            <img id={i} className="single-star-outline" src="https://raw.githubusercontent.com/psfonseka/five-stars/master/dist/star.png" alt="stars alt" onClick={()=>{}}></img>
-                        </div>
-                    </div>
+                    <SingleStarContainer key={i} onMouseOver={()=>{}}>
+                        <SingleStarFill style={{"width" : `${parseInt(item*31)}px`}} starColor={starColor}>
+                            <SingleStarOutline theme={theme} id={i} src="https://raw.githubusercontent.com/psfonseka/five-stars/master/dist/star.png" alt="stars alt" onClick={()=>{}}></SingleStarOutline>
+                        </SingleStarFill>
+                    </SingleStarContainer>
                 )
             })}
         </div>
     )
 
+
  };
+
+ const SingleStarOutline = styled.img`
+    height: 36px;
+    width: 31px;
+    filter: ${(props => {
+        if (typeof(props.theme) === 'string') {
+            return props.theme === 'dark' ? css`invert(93%);` : css`invert(0%);`
+        }
+    })};
+  `
+  const SingleStarFill = styled.div`
+    position: relative;
+    display: inline-block;
+    height: 36px;
+    background-color: ${props => props.starColor ? props.starColor : 'rgb(247, 193, 18)'};
+  `
+  const SingleStarContainer =styled.div`
+    height: 36px;
+    width: 31px;
+    display: inline-block;
+  `
+
+
+//   
