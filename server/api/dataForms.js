@@ -28,7 +28,15 @@ const QAform = {
 
 
 
+
+
+
+
 const relatedForm = [defaultProductId]
+
+
+
+
 
 
 
@@ -76,6 +84,13 @@ const detailsForm = {
 }
 
 
+
+
+
+
+
+
+
 const reviewForm = {
   body: "none",
   date: "2022-02-16T00:00:00.000Z",
@@ -108,13 +123,8 @@ const reviewsForm = {
 
 
 module.exports = {
-  // reviews: reviewsForm,
-  // details: detailsForm,
-  QA: QAform,
-  // related: relatedForm
   ...reviewsForm,
   ...detailsForm,
-  // ...QAform,
   QA: QAform,
   related: relatedForm
 }

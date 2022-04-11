@@ -10,7 +10,7 @@ const savedInLocal = localStorage.getItem('user');
 const localStoreUser = savedInLocal
   ? JSON.parse(savedInLocal)
   : { cart: [], outfit: [], theme: 'light', upVoted: [] };
-console.log('User data fetched from localStorage', localStoreUser);
+// console.log('User data fetched from localStorage', localStoreUser);
 
 const themes = {
   light: lightTheme,
@@ -43,7 +43,7 @@ const logRenders = {
 }
 
 const initPageState = {
-  dev: { logs: true, renders: logRenders, state: logState, reducer: true },
+  dev: { logs: false, renders: logRenders, state: logState, reducer: true },
   media: { width: mediaWidth, height: mediaHeight },
   img: { type: imgType },
   modal: { name: 'none', props: {}},

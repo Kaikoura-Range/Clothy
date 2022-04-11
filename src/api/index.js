@@ -43,8 +43,8 @@ const load = {
 
 const search = (event, searchBy = 'category') => {
   const term = event.target.value;
-  console.log('seraching ', term)
-  console.log('seraching ', term.length)
+  // console.log('seraching ', term)
+  // console.log('seraching ', term.length)
   if(term.length) {
     return get('/products/search', { term, searchBy })
   } else {

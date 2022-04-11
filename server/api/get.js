@@ -12,10 +12,10 @@ const getAllObj = (allGetOptions) => {
   }, {})
 
   return Promise.all.obj(Promisified)
-    .then(res => {
-      console.log('Promise.all.obj res', res)
-      return res
-    })
+    // .then(res => {
+    //   console.log('Promise.all.obj res', res)
+    //   return res
+    // })
     .catch(err => {
       console.log('GET getAllObj fetch err ', err)
       console.log('input obj ', allGetOptions)

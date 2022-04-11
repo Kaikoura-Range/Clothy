@@ -6,6 +6,9 @@ const { checkForHydration } = require('./hydrate.js')
 mongoose.connect('mongodb://localhost/fec_dev')
 //{ autoIndex: false }
 
+// const { ProductsSchema } = require('./schemes');\
+
+
 const ProductsSchema = new Schema({
   id: {
     type: Number,
@@ -35,6 +38,8 @@ const ProductsSchema = new Schema({
     type: String,
     default: null
   },
+
+
   created_at: {
     type: Date,
     default: Date.now
@@ -44,7 +49,6 @@ const ProductsSchema = new Schema({
     default: Date.now
   }
 })
-
 
 const Products = mongoose.model('Products', ProductsSchema);
 

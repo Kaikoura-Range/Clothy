@@ -5,7 +5,7 @@ const { get } = request;
 
 
 const pageCount = 100;
-const apiGracePeriod = 1500//ms
+const apiGracePeriod = 1500//ms dont want to spam api calls
 
 const getAllProducts = (page) => {
   return get('/products', { page, count: pageCount })

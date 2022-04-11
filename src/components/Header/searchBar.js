@@ -7,13 +7,16 @@ import SearchBarDropDown from './SearchBarDropDown.js'
 const SearchBar = (props) => {
   const [searchedProducts, setSearchedProducts] = useState([]);
   const [searchValue, setSearchValue] = useState('')
-  const [searchMethod, setSearchMethod] = useState('name')
+  const [searchMethod, setSearchMethod] = useState('category')
 
 
   const handleSearch = (e) => {
     setSearchValue(e.target.value)
     api.search(e, searchMethod)
-      .then(res => setSearchedProducts(res))
+      .then(res => {
+        // console.log('search res', res)
+        setSearchedProducts(res)
+      })
   }
 
   const onLoad = (newValue) => {
