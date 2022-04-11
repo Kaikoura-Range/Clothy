@@ -12,6 +12,7 @@ export const StylesImages = styled.img`
 
   &:hover {
     opacity: 1;
+    cursor: pointer;
   }
 
   &:active {
@@ -22,6 +23,6 @@ export const StylesImages = styled.img`
 export const StylesContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 0 4.2em 1.3em 6.5em;
+  margin: 0 4.2em 1.3em 0;
   width: 340px;
 `

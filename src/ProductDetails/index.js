@@ -33,11 +33,9 @@ function ProductDetails() {
     <div data-testid="details" >
       <Info product={activeProduct} styles={allStyles} reviews={totalReviews} rating={reviews.meta.ratings}/>
       <StyledDescFeaturesContainer>
-        <FlexRow>
-            <h2>Product Description</h2>
-            <Description product={activeProduct}/>
-            <Features product={activeProduct}/>
-        </FlexRow>
+        <h2>Product Description</h2>
+        <Description product={activeProduct}/>
+        <Features product={activeProduct}/>
       </StyledDescFeaturesContainer>
     </div>);
 

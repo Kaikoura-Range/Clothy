@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledSizeQty = styled.div`
-  margin: 0.3em 0 0 7em;
+  margin-top: 0.3em;
 
   select, button {
     background-color: #f1f2f6;
@@ -9,6 +9,10 @@ const StyledSizeQty = styled.div`
     text-transform: uppercase;
     background-color: var(--bgc-0);
     box-shadow: 0.5px 0.5px 0.5px rgba(0,0,0,0.08);
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   select {
