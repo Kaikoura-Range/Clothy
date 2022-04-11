@@ -203,7 +203,7 @@ function ProductInfo(props) {
       <ProductInfoContainer>
         <StyledOverviewContainer>
           <FlexRow>
-            <Stars ratingAvg={ratingAverage()}/>
+            <Stars theme={props.theme} ratingAvg={ratingAverage()} />
             <StyledReviews href="/#ratings">Read all {props.reviews} reviews</StyledReviews>
           </FlexRow>
           <StyledCategory>{category}</StyledCategory>
