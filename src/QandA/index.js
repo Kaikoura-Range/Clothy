@@ -187,6 +187,10 @@ export default function QAndA() {
   );
 }
 
+export const qAndAStateInit = (productId) => {
+  return ['/qa/questions/', { product_id: productId, count: 500 }];
+};
+
 const QAHeader = styled.h1`
   font-size: var(--fs3);
   color: var(--header-fc);
@@ -241,10 +245,6 @@ const AddQuestionButton = styled.button`
   &:active {
     transform: translateY(4px);
   }
-  &:hover {
-    background-color: #b5b5b5;
-    transition: 0.7s ease-in-out;
-  }
 `;
 
 const MoreAnsweredQuestionsButton = styled.button`
@@ -258,10 +258,6 @@ const MoreAnsweredQuestionsButton = styled.button`
   &:active {
     transform: translateY(4px);
   }
-  &:hover {
-    background-color: #b5b5b5;
-    transition: 0.7s ease-in-out;
-  }
 `;
 
 const BackDrop = styled.div`
@@ -270,7 +266,6 @@ const BackDrop = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 1;
   background: rgba(0, 0, 0, 0.75);
 `;
 

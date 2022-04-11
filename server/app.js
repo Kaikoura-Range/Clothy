@@ -1,33 +1,49 @@
 const express = require('express');
 const cors = require('cors');
 const path = require("path");
-
+const compression = require('compression');
 
 const PORT = process.env.PORT || 3000;
 const ORIGIN = process.env.CORS_ORIGIN || `http://localhost:${PORT}`
 console.log('CORS_ORIGIN', ORIGIN)
 const corsOptions = {
-  // origin: ORIGIN,
+  origin: ORIGIN,
   optionsSuccessStatus: 200
 }
 
 const app = express();
+app.use(compression())
 app.use(cors(corsOptions))
 app.use(express.json())
-// app.use(express.static(path.join(__dirname, "../build")));
 app.use(express.static(path.join(__dirname, "../dist")));
 
 
 const api = require('./api/index.js');
+const db = require('./db/index.js')
 
-app.get('', (req, res) => {
-  res.send('index.html')
-})
+const requestLogs = true
+let numRequests = 0;
+
+if (requestLogs) {
+  console.log('requestLogs: ', requestLogs)
+  const logInterval = 10000//ms
+  let upTime = 0;
+  setInterval(() =>{
+    upTime += logInterval
+    const seconds = Math.round(upTime/1000)
+    var reqPerSec = ( numRequests / seconds )
+    reqPerSec = +reqPerSec.toFixed(2);
+    console.log(`\nSTATUS update:\n  number of requests: ${numRequests}\n  uptime (seconds): ${seconds} \n  requests/second: ${reqPerSec}`)
+  }, logInterval)
+}
+
 
 
 app.get('/product/data', (req, res) => {
-  console.log('GET req at /product/data', req.url)
-  // console.log(req.query)
+  if (requestLogs) {
+    numRequests++
+    console.log('\nGET DATA req:  params', req.query)
+  }
 
   const newId = req.query.productId || null;
   const endpoints = req.query.endpoints ? req.query.endpoints.split(';') : null;
@@ -41,12 +57,31 @@ app.get('/product/data', (req, res) => {
 })
 
 
+app.get('/products/search', (req, res) => {
+  if (requestLogs) {
+    numRequests++
+    console.log('\nGET SEARCH req:  params', req.query)
+  }
+
+  const { term, searchBy } = req.query || { term: null, searchBy: null };
+  if (term) {
+    db.search.then(func => func(term, searchBy))
+      .then(productRes => res.status(200).send(productRes))
+      .catch(err => {
+        console.log('api.search err', err)
+        res.status(500).send(null)
+      })
+  } else {
+    res.status(406).send('No product id attached')
+  }
+})
 
 
 app.post('/new',  (req, res) => {
-  console.log('\nPOST req at /new', req.url)
-  // console.log('query', req.query)
-  // console.log('body', req.body)
+  if (requestLogs) {
+    numRequests++
+    console.log('\nPOST NEW req:  body keys', Object.keys(req.body))
+  }
 
   const { typeId, productId, type, post } = req.body;
   if (type && post) {
@@ -60,9 +95,10 @@ app.post('/new',  (req, res) => {
 
 
 app.post('/report',  (req, res) => {
-  console.log('\nREPORT req at /report', req.url)
-  // console.log('query', req.query)
-  // console.log('body', req.body)
+  if (requestLogs) {
+    numRequests++
+    console.log('\nPOST REPORT req:  body keys', Object.keys(req.body))
+  }
 
   const { typeId, productId, type } = req.body;
   if (type && typeId) {
@@ -75,9 +111,10 @@ app.post('/report',  (req, res) => {
 })
 
 app.post('/upvote',  (req, res) => {
-  console.log('\nUPVOTE req at /upvote', req.url)
-  // console.log('query', req.query)
-  // console.log('body', req.body)
+  if (requestLogs) {
+    numRequests++
+    console.log('\nPOST UPVOTE req:  body keys', Object.keys(req.body))
+  }
 
   const { typeId, productId, type } = req.body;
   if (type && typeId) {

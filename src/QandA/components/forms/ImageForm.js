@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import ReactiveButton from 'reactive-button';
 const buttonStyle = {
   backgroundColor: '#ccc',
@@ -40,7 +40,7 @@ export default function ImageForm(props) {
     setTimeout(() => {
       props.getPhotos([img1, img2, img3, img4, img5]);
       props.afterSubmit(false);
-    }, 4000);
+    }, 3300);
   };
 
   const backDropHandler = (e) => {
@@ -95,15 +95,6 @@ const Title = styled.h3`
   text-align: center;
 `;
 
-const fadeIn = keyframes`
- from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1
-  }`;
-const time = `300ms linear forwards`;
-
 const Modal = styled.div`
   position: fixed;
   margin-left: 25%;
@@ -111,7 +102,6 @@ const Modal = styled.div`
   left: 10%;
   width: 30%;
   z-index: 5;
-  animation: ${fadeIn} ${time};
 `;
 
 const Input = styled.input`

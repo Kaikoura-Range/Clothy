@@ -1,4 +1,4 @@
-
+const db = require('../db/index.js');
 
 const { get } = require('./get.js')
 const { post } = require('./post.js')
@@ -24,26 +24,10 @@ Promise.all.obj = (asyncObj) => {
 
 
 
+
+
 module.exports = { get, post };
 
 
 
 
-
-// const productId = 37311;
-// const testObj = {
-//   product: [`/products/${productId}`, {}],
-//   styles: [`/products/${productId}/styles`, {}]
-// }
-// const testArray = [
-//    [`/products/${productId}`, {}],
-//    [`/products/${productId}/styles`, {}]
-// ]
-
-
-
-// get.all(testObj)
-// .then(objRes => console.log('objRes', objRes))
-
-// get.all(testArray)
-// .then(ArrayRes => console.log('ArrayRes', ArrayRes))

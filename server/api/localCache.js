@@ -93,12 +93,7 @@ const QuickCache = (maxStoreTime = baseTime) => {
   }
 
   instance.remove = (options) => {
-    // console.log(instance.store)
-    // const keyMatch = key.match(checkKey)
-    // console.log('POST OPTIONS', options)
     const key = getKey(options)
-    // console.log(options.url)
-    // console.log(key)
     delete instance.store[key]
     cachedLogs && console.log('removed from cache ', key)
     // console.log(instance.store)
