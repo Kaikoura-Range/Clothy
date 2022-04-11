@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer,StyledThumbnailContainer, StyledArrowButton, LoadingStyledCarouselContainer } from './../styles/Carousel.styled.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExpand } from '@fortawesome/free-solid-svg-icons'
+import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer,StyledThumbnailContainer, StyledArrowButton } from './../styles/Carousel.styled.js';
 // import { FlexColumn } from './../styles/Flex.styled.js';
 
 function Carousel(props){
@@ -12,11 +10,7 @@ function Carousel(props){
 
   useEffect(() => {
     if (props.photos) {
-      if (props.photos.length - 1 >= photoIndex) {
-        setActivePhoto(props.photos[photoIndex]);
-      } else {
-        setActivePhoto(props.photos[0])
-      }
+      setActivePhoto(props.photos[photoIndex]);
       setDisplayedPhotos(props.photos.slice(0, 7));
       setDisplayedPhotosIndexes([0, 7])
     }
@@ -90,7 +84,7 @@ function Carousel(props){
 
   if (props.photos && activePhoto) {
 
-    const allPhotos = displayedPhotos.map((photo, i) => <StyledCarouselPhotos src={ photo.thumbnail_url } alt={'../../assets/clothyAlt.jpeg'} key={i} onClick={(e, url) => {handlePhotoClick(e, photo.thumbnail_url); e.stopPropagation()}} isActive={ activePhoto.thumbnail_url === photo.thumbnail_url ? true : false }/>);
+    const allPhotos = displayedPhotos.map((photo, i) => <StyledCarouselPhotos src={ photo.thumbnail_url } key={i} onClick={(e, url) => {handlePhotoClick(e, photo.thumbnail_url); e.stopPropagation()}} isActive={ activePhoto.thumbnail_url === photo.thumbnail_url ? true : false }/>);
 
 
     return(<StyledCarouselContainer photo={activePhoto} onClick={(e, index) => props.handleExpandedView(e, photoIndex)}>
@@ -98,7 +92,7 @@ function Carousel(props){
         {/** Thumbnails buttons and images */}
         <StyledArrowButton onClick={(e, num) => {handleThumbnailArrowClick(e, -1); e.stopPropagation()}} disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === 0 ? true : false }>Top</StyledArrowButton>
 
-        <button onClick={(e, index) => props.handleExpandedView(e, photoIndex)} style={{backgroundColor: 'none'}}>Expand</button>
+        <button onClick={(e, index) => props.handleExpandedView(e, photoIndex)}>Expand</button>
 
         <StyledThumbnailContainer>
           {allPhotos}
@@ -114,9 +108,7 @@ function Carousel(props){
       </StyledCarouselContainer>)
 
   } else {
-    return (<LoadingStyledCarouselContainer>
-        <p>loading</p>
-  </LoadingStyledCarouselContainer>)
+    return <p>loading</p>
   }
 
 }

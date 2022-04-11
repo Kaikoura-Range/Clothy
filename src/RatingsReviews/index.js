@@ -5,18 +5,17 @@ import ReviewForm from './ReviewForm.js';
 import Rating from './Rating.js';
 import Review from './Review.js';
 
-var renderCount = 0;
+var mainRenderCount = 0;
 
-export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
+export default function RatingsReviews({reviewData, reviewMeta, dev}) {
   const {results} = reviewData;
-
-  if( dev.logs ) { // Used to see preformance and data flow
-    renderCount++
-    dev.renders.mod.reviews && console.log('\nDEV-RENDER   reviews   renderCount: ', renderCount, '\n')
-    dev.state.mod.reviews && console.log('\nDEV-STATE    reviews:', reviewData, reviewMeta, '\n')
+  if( dev.logs ) {
+    mainRenderCount++;
+    dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
+    dev.state && console.log('DEV  STATE   RelatedProducts: ', reviewData)
   }
 
-  const [sortSelect,setSortSelect] = useState('relevant');
+  const [sortSelect,setSortSelect] = useState('newest');
   const [sortedReviews, setSortedReviews] = useState(results);
   const [diplayedReviewCount, setReviewCount] = useState(2);
   const [openModal, setOpenModal] = useState(false);
@@ -44,7 +43,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   if(reviewData) {
     return (
       <RatingsReviewsContainer data-testid="reviews" >
-        <Rating theme={theme} data={reviewMeta}/>
+        <Rating data={reviewMeta}/>
         <ReviewsListContainer>
           <div>
             {results.length} reviews sorted by
@@ -55,14 +54,12 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
             </select>
           </div>
           <SearchReviews type='search' value={keyword} onChange={(e)=>{setKeyword(e.target.value)}} placeholder='Search For a Review'/>
-          <InnerListContainer>
           {sortedReviews.filter(item => {
             if(keyword.length >= 3) {
               const entries = Object.entries(item);
               return entries.some(entry=>entry[1]?entry[1].toString().toLowerCase().includes(keyword.toLowerCase()):false);
             } else return item
-          }).slice(0,diplayedReviewCount).map((review,id) => {return (<Review key={id} review={review} />)})}
-         </InnerListContainer>
+          }).slice(0,diplayedReviewCount).map((review,id) => {return (<Review key={id} review={review}/>)})}
           {(results.length-diplayedReviewCount >0) && (<button onClick={()=> setReviewCount(results.length)}>More Reviews</button>)}
           <button onClick={() => {setOpenModal(true)}}>Add a Review</button>
           {openModal && (<BackDrop onClick={()=>setOpenModal(!openModal)}><ReviewForm /></BackDrop>)}
@@ -77,7 +74,12 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   )
 }
 
-
+export const reviewStateInit = (productId) => {
+  return {
+    'meta':['/reviews/meta', { product_id: productId }],
+    'reviews': ['/reviews/', { product_id: productId, page: 1, count:20, sort: 'newest' }]
+  }
+}
   const RatingsReviewsContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -88,15 +90,9 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   display: flex;
   width: 66%;
   flex-direction: column;
-  max-height: 600px;
-  padding-bottom:2%;
-  `
-  const InnerListContainer=styled.div`
-  display: flex;
-
-  flex-direction: column;
+  max-height: 800px;
   overflow: auto;
-
+  padding: 7%;
   `
   const BackDrop = styled.div`
   position: fixed;
@@ -115,3 +111,13 @@ const SearchReviews = styled.input`
   width: 50%;
   font-size: 20px;
 `
+// POST METHODS
+
+    // api.post.review( { product_id: state.currentProduct,  })
+    //   .then(res => console.log('post review res', res))
+
+    // api.post.review.helpful('reviewId')
+    //   .then(res => console.log('post help review res', res))
+
+    // api.post.review.report('reviewId')
+    //   .then(res => console.log('post report review res', res))

@@ -6,15 +6,10 @@ import QuestionForm from './components/forms/QuestionForm';
 import SuccessModal from './components/modals/SuccessModal';
 
 let filteredResultslength;
-let renderCount = 0;
+
 export default function QAndA() {
   //central API state
   const [state] = useContext(StateContext);
-  if( state.dev.logs ) { // Used to see preformance and data flow
-    renderCount++
-    state.dev.renders.mod.QA && console.log('\nDEV-RENDER   QA     renderCount: ', renderCount, '\n')
-    state.dev.state.mod.QA && console.log('\nDEV-STATE  QA:', state.QA, '\n')
-  }
   //state for toggling how many questions get showed and what gets filtered
   const [addMoreQuestionsNoSearch, setAddMoreQuestionsNoSearch] = useState(0);
   const [addQuestionsSearch, setAddQuestionsSearch] = useState(0);
@@ -192,6 +187,10 @@ export default function QAndA() {
   );
 }
 
+export const qAndAStateInit = (productId) => {
+  return ['/qa/questions/', { product_id: productId, count: 500 }];
+};
+
 const QAHeader = styled.h1`
   font-size: var(--fs3);
   color: var(--header-fc);
@@ -246,10 +245,6 @@ const AddQuestionButton = styled.button`
   &:active {
     transform: translateY(4px);
   }
-  &:hover {
-    background-color: #b5b5b5;
-    transition: 0.7s ease-in-out;
-  }
 `;
 
 const MoreAnsweredQuestionsButton = styled.button`
@@ -263,10 +258,6 @@ const MoreAnsweredQuestionsButton = styled.button`
   &:active {
     transform: translateY(4px);
   }
-  &:hover {
-    background-color: #b5b5b5;
-    transition: 0.7s ease-in-out;
-  }
 `;
 
 const BackDrop = styled.div`
@@ -275,7 +266,6 @@ const BackDrop = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 1;
   background: rgba(0, 0, 0, 0.75);
 `;
 

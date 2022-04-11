@@ -40,15 +40,33 @@ export default function Answers(props) {
         payload: newUpvoted,
       });
       setShowHelpfulModal(true);
-      api.upvote.answer({ typeId: id, productId: state.currentProduct })
-        .then(() =>  api.load.newProduct(state.currentProduct, dispatch))
+      api.post.answer
+        .helpful(id, state.currentProduct)
+        .then(() => {
+          return api.get.allProductData(state.currentProduct);
+        })
+        .then((getRes) =>
+          dispatch({
+            type: 'PROD_INIT',
+            payload: getRes,
+          })
+        )
         .catch((err) => console.log('helpful question not sent!'));
     }
   };
 
   const reportAnswerHandler = (id) => {
-    api.report.answer({ typeId: id, productId: state.currentProduct })
-      .then(() =>  api.load.newProduct(state.currentProduct, dispatch))
+    api.post.answer
+      .report(id, state.currentProduct)
+      .then(() => {
+        return api.get.allProductData(state.currentProduct);
+      })
+      .then((getRes) =>
+        dispatch({
+          type: 'PROD_INIT',
+          payload: getRes,
+        })
+      )
       .catch((err) => console.log('report answer not sent!'));
   };
 
@@ -74,7 +92,7 @@ export default function Answers(props) {
     setAddMoreAnswers(0);
   };
 
-
+  
   const sortingBySeller = (values) => {
     let sorted = values.sort((a, b) => {
       if (
@@ -101,7 +119,7 @@ export default function Answers(props) {
                 answer.photos.map((photo, i) => {
                   return (
                     <ImagesContainer key={i}>
-                      <Img onClick={onClickImageHandler} alt='picture from answerer' src={photo}  alt={'../../assets/clothyAlt.jpeg'} />
+                      <Img onClick={onClickImageHandler} alt='picture from answerer' src={photo} />
                     </ImagesContainer>
                   );
                 })}

@@ -14,9 +14,3 @@ export const FlexColumn = styled.div`
   margin: 0;
   justify-content: center;
 `
-
-export const DetailsContainer = styled.div`
-  width: 100%;
-  height: var(--main-Photo-heigth);
-
-`

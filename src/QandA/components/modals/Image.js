@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export default function Image(props) {
   return (
     <ImageWrapper>
-      <Img src={props.src} alt={'../../assets/clothyAlt.jpeg'} />
+      <Img src={props.src} />
     </ImageWrapper>
   );
 }

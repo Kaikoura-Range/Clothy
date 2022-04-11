@@ -1,19 +1,12 @@
 import React, {useState, useEffect, useRef, useContext} from "react";
-// import { Link, BrowserRouter } from 'react-router-dom';
-import Carousel from './ProductCarousel.js';
+import Carousel from "./ProductCarousel.js";
 import { DispatchContext } from './../../appState/index.js';
-import { FlexRow, FlexColumn, DetailsContainer} from './../styles/Flex.styled.js'
+import { FlexRow, FlexColumn } from './../styles/Flex.styled.js'
 import { StylesImages, StylesContainer } from './../styles/Styles.styled.js'
 import StyledSizeQty from './../styles/SizeQty.styled.js'
-import { StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory, StyledReviews } from './../styles/Overview.styled.js'
+import { StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory } from './../styles/Overview.styled.js'
 import { StyledExpandedViewContainer, StyledExpandedViewModal, StyledDotImage, ZoomedImage, ExpandedViewImage } from './../styles/ExpandedCarouselView.styled.js';
-// import './../styles/magnifier.css';
 import _ from 'underscore';
-import Stars from './../styles/Star.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartArrowDown, faAngleDown } from '@fortawesome/free-solid-svg-icons'
-import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
-import Magnifier from "react-magnifier";
 
 function ProductInfo(props) {
   const [activeStyle, setActiveStyle] = useState({});
@@ -28,7 +21,6 @@ function ProductInfo(props) {
   const [showExpandedView, setShowExpandedView] = useState(false);
   const [zoomView, setZoomView] = useState(false);
   const [, dispatch] = useContext(DispatchContext);
-  const imgType = props.img.type || 'url';
 
   const handleSizeDuplicates = (originalSkus) => {
     const sizeDuplicates = originalSkus.reduce((allSkus, currentSku) => {
@@ -56,9 +48,8 @@ function ProductInfo(props) {
       setSkus(Object.entries(initialSkus));
       setExpandedViewIndex(0);
       setExpandedViewImage(props.styles.results[0].photos[0].url)
-      // setExpandedViewImage(props.styles.results[0].photos[0][imgType])
     }
-  }, [props.styles, imgType])
+  }, [props.styles])
 
   // Triggered when the active style changes
   useEffect(() => {
@@ -72,10 +63,9 @@ function ProductInfo(props) {
 
   useEffect(() => {
     if (activeStyle.photos) {
-      setExpandedViewImage(activeStyle.photos[expandedViewIndex][imgType]);
-      // setExpandedViewImage(activeStyle.photos[expandedViewIndex].url);
+      setExpandedViewImage(activeStyle.photos[expandedViewIndex]['url']);
     }
-  }, [expandedViewIndex, activeStyle, imgType])
+  }, [expandedViewIndex, activeStyle])
 
 
   if (activeStyle.name) {
@@ -86,7 +76,7 @@ function ProductInfo(props) {
     }
 
     const allStyles = props.styles.results.map(style =>
-      <StylesImages src={style.photos[0].thumbnail_url} alt={style.name} key={style.style_id} active={style.name === activeStyle.name} onClick={(e) => handleSelectedStyle(e, style)}/>
+      <StylesImages src={style.photos[0].thumbnail_url} alt={style.name} key={style.style_id} onClick={(e) => handleSelectedStyle(e, style)}/>
     )
 
     const availableSizes = skus.map((sku, index) =>
@@ -99,10 +89,8 @@ function ProductInfo(props) {
       if (selectedSizeIndex === -1) {
         setAvailableQty(0);
       } else if (skus[selectedSizeIndex][1] > 15) {
-        setIsAddCartValid(true);
         setAvailableQty(15);
       } else {
-        setIsAddCartValid(true);
         setAvailableQty(skus[selectedSizeIndex][1]);
       }
     }
@@ -164,18 +152,6 @@ function ProductInfo(props) {
         + (-glass.offsetTop * zoomScale - 120) + 'px';
     }
 
-    const ratingAverage = () => {
-      var total = 0, totalcount = 0;
-
-      for(var i in props.rating) {
-        total += Number(props.rating[i]*i);
-        totalcount += Number(props.rating[i]);
-
-      }
-
-      return (Math.round(total / totalcount * 4) / 4).toFixed(1);
-    }
-
 
     return(<>
       {/**  Expanded View (Modal) */}
@@ -183,10 +159,13 @@ function ProductInfo(props) {
       <StyledExpandedViewModal onClick={(e) => toggleExpandedView(e, expandedViewIndex)}>
         <StyledExpandedViewContainer onClick={(e) =>{ setZoomView(!zoomView); e.stopPropagation()}} bgImg={expandedViewImage} id="container">
           { !zoomView ? <>
-            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}>{'<'}</button>
+            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}>Previous</button>
             {expandedViewDots}
-            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}>{'>'}</button> </> : <Magnifier src={expandedViewImage} width={container.offsetWidth} zoomFactor={2.5}/> }
-          </StyledExpandedViewContainer>
+            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}>Next</button> </> :
+            <div id="image" style={{backgroundImage: 'url(' + expandedViewImage + ')', backgroundSize: container.offsetWidth || 0 + 'px auto'}} onMouseMove={handleZoom}>
+              <div id="glass" style={{backgroundImage: 'url(' + expandedViewImage + ')'}}></div>
+            </div>}
+        </StyledExpandedViewContainer>
       </StyledExpandedViewModal> : '' }
 
       {/**  Carousel */}
@@ -196,14 +175,10 @@ function ProductInfo(props) {
       {/**  Right-side (main product info) */}
       <FlexColumn>
         <StyledOverviewContainer>
-          <FlexRow>
-            <Stars ratingAvg={ratingAverage()}/>
-            <StyledReviews href="/#ratings">Read all {props.reviews} reviews</StyledReviews>
-          </FlexRow>
           <StyledCategory>{category}</StyledCategory>
           <h1>{name}</h1>
           <StyledPrice salePrice={ salePrice ? true : false }><span>${ salePrice ? salePrice  : activeStyle.original_price }</span><span>{ salePrice ? '$' + activeStyle.original_price  : '' }</span></StyledPrice>
-          <StyledCurrentStyle><span>style</span> {activeStyle.name}</StyledCurrentStyle>
+          <StyledCurrentStyle><span>style ></span> {activeStyle.name}</StyledCurrentStyle>
         </StyledOverviewContainer>
         <StylesContainer>
           {allStyles}
@@ -219,18 +194,13 @@ function ProductInfo(props) {
                 {selectedSize.current.value === 'default' ? defaultQty : availableQuantities}
               </select>
             </FlexRow>
-            <button onClick={handleAddToCart}><FontAwesomeIcon icon={faCartArrowDown} size='xl' style={{'marginRight': '0.7em'}} />Add to cart</button>
-            <button><FontAwesomeIcon icon={farHeart} size='xl'/></button>
+            <button onClick={handleAddToCart}>Add to cart</button>
+            <button>Star</button>
           </StyledSizeQty>
       </FlexColumn>
     </FlexRow></>)
   } else {
-    return (
-     <>
-      <DetailsContainer>
-        <p>Loading</p>
-      </DetailsContainer>
-    </>)
+    return <p>loading</p>
   }
 }
 

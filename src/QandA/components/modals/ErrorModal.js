@@ -5,7 +5,7 @@ export default function ErrorModal() {
   return (
     <Modal>
       <ErrorMessage>
-        <XMark></XMark> You cannot mark this more than once!
+        <XMark></XMark> Error! Your cannot mark this more than once!
       </ErrorMessage>
     </Modal>
   );

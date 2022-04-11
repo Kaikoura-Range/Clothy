@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledOverviewContainer = styled.div`
-  margin: 0 0 0.6em 7em;
+  margin: 0 0 10px 77px;
 
   span {
     display: inline-block;
@@ -11,7 +11,7 @@ export const StyledOverviewContainer = styled.div`
 
 export const StyledPrice = styled.p`
   span {
-    margin: 0.5em 0.7em 0 0;
+    margin: 8px 10px 0 0;
   }
 
   span:last-child {
@@ -26,30 +26,12 @@ export const StyledPrice = styled.p`
 export const StyledCurrentStyle = styled.p`
   span {
     text-transform: uppercase;
-    font-weight: 900;
-    margin-top: 2em;
-    margin-right: 0.2em;
-    background-color: var(--accent-color);
-    border-radius: 1em;
-    padding: 0 0.6em;
-    font-size: var(--fs-1);
+    font-weight: 700;
+    margin-top: 30px;
   }
 `
 
 export const StyledCategory = styled.span`
-  margin-top: 2em;
-  margin-bottom: 0.2em;
+  margin-bottom: 10px;
   font-size: var(--fs-2);
-`
-
-export const StyledReviews = styled.a`
-  &:active, &:hover {
-    text-decoration: underline;
-  }
-
-  padding: 0.1em 1em;
-
-  text-decoration: none;
-  font-size: var(--fs-2);
-  color: var(--fc-0);
 `
