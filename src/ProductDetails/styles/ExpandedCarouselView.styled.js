@@ -30,8 +30,6 @@ export const StyledExpandedViewContainer = styled.div`
   button {
     width: 1.8em;
     height: 1.8em;
-    font-size: var(--fs-2);
-    font-weight: 400;
     border-radius: 50%;
     margin: 1.2em;
     opacity: 0.8;

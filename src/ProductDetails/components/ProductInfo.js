@@ -2,17 +2,19 @@ import React, {useState, useEffect, useRef, useContext} from "react";
 // import { Link, BrowserRouter } from 'react-router-dom';
 import Carousel from './ProductCarousel.js';
 import { DispatchContext } from './../../appState/index.js';
-import { FlexRow, FlexColumn } from './../styles/Flex.styled.js'
+import { FlexRow } from './../styles/Flex.styled.js'
 import { StylesImages, StylesContainer } from './../styles/Styles.styled.js'
 import StyledSizeQty from './../styles/SizeQty.styled.js'
-import { StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory, StyledReviews } from './../styles/Overview.styled.js'
+import { StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory, StyledReviews, ProductInfoContainer } from './../styles/Overview.styled.js'
 import { StyledExpandedViewContainer, StyledExpandedViewModal, StyledDotImage, ZoomedImage, ExpandedViewImage } from './../styles/ExpandedCarouselView.styled.js';
+import { SocialMediaShareContainer, SocialMediaShareButton } from './../styles/SocialMedia.styled.js'
 // import './../styles/magnifier.css';
 import _ from 'underscore';
 import Stars from './../styles/Star.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartArrowDown, faAngleDown } from '@fortawesome/free-solid-svg-icons'
+import { faCartArrowDown, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import { faFacebook, faTwitter, faPinterest } from '@fortawesome/free-brands-svg-icons';
 import Magnifier from "react-magnifier";
 
 function ProductInfo(props) {
@@ -28,6 +30,9 @@ function ProductInfo(props) {
   const [showExpandedView, setShowExpandedView] = useState(false);
   const [zoomView, setZoomView] = useState(false);
   const [, dispatch] = useContext(DispatchContext);
+
+  const socialMessage = `Just disovered this website and love their ${props.category}. Check this one out!`;
+  const pageUrl = document.location.href;
 
   const handleSizeDuplicates = (originalSkus) => {
     const sizeDuplicates = originalSkus.reduce((allSkus, currentSku) => {
@@ -173,6 +178,10 @@ function ProductInfo(props) {
       return (Math.round(total / totalcount * 4) / 4).toFixed(1);
     }
 
+    const handleSocialMediaClick = (e, url) => {
+      window.open(url, 'blank');
+    }
+
 
     return(<>
       {/**  Expanded View (Modal) */}
@@ -180,9 +189,9 @@ function ProductInfo(props) {
       <StyledExpandedViewModal onClick={(e) => toggleExpandedView(e, expandedViewIndex)}>
         <StyledExpandedViewContainer onClick={(e) =>{ setZoomView(!zoomView); e.stopPropagation()}} bgImg={expandedViewImage} id="container">
           { !zoomView ? <>
-            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}>{'<'}</button>
+            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}><FontAwesomeIcon icon={faAngleLeft} /></button>
             {expandedViewDots}
-            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}>{'>'}</button> </> : <Magnifier src={expandedViewImage} width={container.offsetWidth} zoomFactor={2.5}/> }
+            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}><FontAwesomeIcon icon={faAngleRight} /></button> </> : <Magnifier src={expandedViewImage} width={container.offsetWidth} zoomFactor={2.5}/> }
           </StyledExpandedViewContainer>
       </StyledExpandedViewModal> : '' }
 
@@ -191,7 +200,7 @@ function ProductInfo(props) {
       <Carousel photos={activeStyle.photos} handleExpandedView={toggleExpandedView} expandedImage={expandedViewIndex} newProduct={props.styles}/>
 
       {/**  Right-side (main product info) */}
-      <FlexColumn>
+      <ProductInfoContainer>
         <StyledOverviewContainer>
           <FlexRow>
             <Stars ratingAvg={ratingAverage()}/>
@@ -219,7 +228,13 @@ function ProductInfo(props) {
             <button onClick={handleAddToCart}><FontAwesomeIcon icon={faCartArrowDown} size='xl' style={{'marginRight': '0.7em'}} />Add to cart</button>
             <button><FontAwesomeIcon icon={farHeart} size='xl'/></button>
           </StyledSizeQty>
-      </FlexColumn>
+          <SocialMediaShareContainer>
+            <SocialMediaShareButton onClick={(e, url) => handleSocialMediaClick(e, `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`)}><FontAwesomeIcon icon={faFacebook} size='xl' /></SocialMediaShareButton>
+            <SocialMediaShareButton onClick={(e, url) => handleSocialMediaClick(e, `https://twitter.com/intent/tweet?text=${pageUrl}.${socialMessage}`)}><FontAwesomeIcon icon={faTwitter} size='xl' /></SocialMediaShareButton>
+            <SocialMediaShareButton><FontAwesomeIcon icon={faPinterest} size='xl' onClick={(e, url) => handleSocialMediaClick(e, `https://pinterest.com/pin/create/bookmarklet/?media=${activeStyle.thumbnail_url}&url=${pageUrl}&description=${socialMessage}`)}/></SocialMediaShareButton>
+          </SocialMediaShareContainer>
+          <p style={{fontSize: 'var(--fs-2)'}}>Share on Social Media</p><br/>
+      </ProductInfoContainer>
     </FlexRow></>)
   } else {
     return <p>loading</p>

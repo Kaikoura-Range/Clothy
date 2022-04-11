@@ -36,11 +36,16 @@ const CompareModal = ({ newProduct }) => {
       </ColumnContainer>
       <CompareFooter>
         <FooterButton
+          aria-label={newProductActionText}
           onClick={curProductAction}
           >{curProductActionText}
         </FooterButton>
-        <FooterButton onClick={(e) => toggleModal(dispatch)} >close</FooterButton>
         <FooterButton
+          onClick={(e) => toggleModal(dispatch)}
+          aria-label="close modal"
+          >close</FooterButton>
+        <FooterButton
+          aria-label={newProductActionText}
           onClick={newProductAction}
           >{newProductActionText}
         </FooterButton>

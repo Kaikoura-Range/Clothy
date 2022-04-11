@@ -1,7 +1,7 @@
 import api from './api/index.js';
 import React, {  useContext } from 'react';
 import styled from 'styled-components';
-import Header from './components/Header.js'
+import Header from './components/Header/index.js'
 import Modal from './components/Modal/index'
 import { StateContext, DispatchContext } from './appState/index.js';
 import ProductDetails from './ProductDetails/index';
@@ -15,14 +15,15 @@ const maxApiRequests = 2;
 var renderCount = 0;
 var requestCount = 0;
 
+
 function App() {
   const [, dispatch] = useContext(DispatchContext);
   const [state] = useContext(StateContext);
-  renderCount++
 
   if( state.dev.logs ) { // Used to see preformance and data flow
-    state.dev.renders && console.log('\n\nDEV  RENDER   App     number of renders: ', renderCount)
-    state.dev.state && console.log('DEV  App STATE: ', state)
+    renderCount++
+    state.dev.renders.mod.main && console.log('\nDEV-RENDER   App   renderCount: ', renderCount, '\n')
+    state.dev.state.mod.main && console.log('\nDEV-STATE  App: \n', state, '\n')
   }
   if (state.dev.test) { // Gives tests access to state while running
     state.dev.get(state)
@@ -61,7 +62,6 @@ function App() {
       </AppContainer>
     );
   }
-
 }
 
 

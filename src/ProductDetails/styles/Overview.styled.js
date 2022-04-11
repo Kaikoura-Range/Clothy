@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 
+export const ProductInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 7em;
+  justify-content: center;
+`
+
 export const StyledOverviewContainer = styled.div`
-  margin: 0 0 0.6em 7em;
+  margin-bottom: 0.3em;
 
   span {
     display: inline-block;
