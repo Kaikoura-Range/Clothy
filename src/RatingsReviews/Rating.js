@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import moment from 'moment';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import Stars from './Star.js';
 
 
-export default function Rating({data}){
+export default function Rating({data, theme}){
+    const[starColor,setStarColor] = useState('rgb(247, 153, 18)');
+
     function ratingAverage(){
         var total = 0, totalcount = 0;
 
         for(var i in data.ratings) {
             total += Number(data.ratings[i]*i);
             totalcount += Number(data.ratings[i]);
-
         }
-
         return (Math.round(total / totalcount * 4) / 4).toFixed(1);
     }
     function recommendPercentage(){
@@ -29,11 +28,13 @@ export default function Rating({data}){
         }
         return Object.values(data.ratings).map((rating,id) =>{
            return (
-            <div key={id}>{id+1} STAR: {rating}
-            <div className="bar-container" style={{'backgroundColor' : 'gray'}}>
-                <div className="bar-5" style={{'width' : `${Number(rating)/total *100}%`}}></div>
-            </div>
-            </div>
+                <StarBarContainer key={id}>
+                    {id+1} Star
+                    <BarContainer style={{'backgroundColor' : 'gray'}}>
+                        <BarContainer5 className="bar-5" style={{'width' : `${Number(rating)/total *100}%`}}></BarContainer5>
+                    </BarContainer>
+                    {rating}
+                </StarBarContainer>
            )
         });
     }
@@ -43,23 +44,53 @@ export default function Rating({data}){
             return (
                 <div key={id}>
                 <div key={characteristic[1].id}>{characteristic[0]}: {Number(characteristic[1].value).toFixed(1)}</div>
-
-                <div className="bar-container" style={{'backgroundColor' : 'gray'}}>
-                    <div className="bar-5" style={{'width' : `${Number(characteristic[1].value).toFixed(1)*20}%`}}></div>
-                </div>
+                <BarContainer style={{'backgroundColor' : 'gray'}}>
+                    <BarContainer5 className="bar-5" style={{'width' : `${Number(characteristic[1].value).toFixed(1)*20}%`}}></BarContainer5>
+                </BarContainer>
                 </div>
             )
         })
      }
 
+    
     return (
         <div>
-           <div>rating: {ratingAverage()}</div>
+            <OverallRatingContainer onMouseOver={()=>{setStarColor('rgb(147, 193, 118)')}} onMouseLeave={()=>{setStarColor('rgb(247, 193, 18)')}}>
+                <span>rating: {ratingAverage()}</span>
+                <Stars theme={theme} ratingAvg={ratingAverage()} starColor={starColor} />
+            </OverallRatingContainer>
+
            <div>{recommendPercentage()}% of reviews recommend this product</div>
-           <Characteristics />
-           <Stars ratingAvg={ratingAverage()}/>
+
            <StarBars/>
+
+           <Characteristics />
+
         </div>
     )
 }
 
+
+const OverallRatingContainer =styled.div`
+    display: flex;
+    flex-direction: row;
+    padding:5px;
+`
+const StarBarContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    padding:5px;
+    font-size: 13px;
+`
+const BarContainer = styled.div`
+width: 300px;
+background-color: #f1f1f1;
+text-align: center;
+color: white;
+border-radius: 25px;
+`
+const BarContainer5 = styled.div`
+height: 18px;
+background-color: #04AA6D;
+border-radius: 25px
+`
