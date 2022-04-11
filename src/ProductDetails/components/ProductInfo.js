@@ -1,12 +1,21 @@
 import React, {useState, useEffect, useRef, useContext} from "react";
-import Carousel from "./ProductCarousel.js";
+// import { Link, BrowserRouter } from 'react-router-dom';
+import Carousel from './ProductCarousel.js';
 import { DispatchContext } from './../../appState/index.js';
-import { FlexRow, FlexColumn } from './../styles/Flex.styled.js'
+import { FlexRow } from './../styles/Flex.styled.js'
 import { StylesImages, StylesContainer } from './../styles/Styles.styled.js'
 import StyledSizeQty from './../styles/SizeQty.styled.js'
-import { StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory } from './../styles/Overview.styled.js'
+import { StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory, StyledReviews, ProductInfoContainer } from './../styles/Overview.styled.js'
 import { StyledExpandedViewContainer, StyledExpandedViewModal, StyledDotImage, ZoomedImage, ExpandedViewImage } from './../styles/ExpandedCarouselView.styled.js';
+import { SocialMediaShareContainer, SocialMediaShareButton } from './../styles/SocialMedia.styled.js'
+// import './../styles/magnifier.css';
 import _ from 'underscore';
+import Stars from './../styles/Star.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartArrowDown, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import { faFacebook, faTwitter, faPinterest } from '@fortawesome/free-brands-svg-icons';
+import Magnifier from "react-magnifier";
 
 function ProductInfo(props) {
   const [activeStyle, setActiveStyle] = useState({});
@@ -21,6 +30,9 @@ function ProductInfo(props) {
   const [showExpandedView, setShowExpandedView] = useState(false);
   const [zoomView, setZoomView] = useState(false);
   const [, dispatch] = useContext(DispatchContext);
+
+  const socialMessage = `Just disovered this website and love their ${props.category}. Check this one out!`;
+  const pageUrl = document.location.href;
 
   const handleSizeDuplicates = (originalSkus) => {
     const sizeDuplicates = originalSkus.reduce((allSkus, currentSku) => {
@@ -76,7 +88,7 @@ function ProductInfo(props) {
     }
 
     const allStyles = props.styles.results.map(style =>
-      <StylesImages src={style.photos[0].thumbnail_url} alt={style.name} key={style.style_id} onClick={(e) => handleSelectedStyle(e, style)}/>
+      <StylesImages src={style.photos[0].thumbnail_url} alt={style.name} key={style.style_id} active={style.name === activeStyle.name} onClick={(e) => handleSelectedStyle(e, style)}/>
     )
 
     const availableSizes = skus.map((sku, index) =>
@@ -89,8 +101,10 @@ function ProductInfo(props) {
       if (selectedSizeIndex === -1) {
         setAvailableQty(0);
       } else if (skus[selectedSizeIndex][1] > 15) {
+        setIsAddCartValid(true);
         setAvailableQty(15);
       } else {
+        setIsAddCartValid(true);
         setAvailableQty(skus[selectedSizeIndex][1]);
       }
     }
@@ -152,6 +166,22 @@ function ProductInfo(props) {
         + (-glass.offsetTop * zoomScale - 120) + 'px';
     }
 
+    const ratingAverage = () => {
+      var total = 0, totalcount = 0;
+
+      for(var i in props.rating) {
+        total += Number(props.rating[i]*i);
+        totalcount += Number(props.rating[i]);
+
+      }
+
+      return (Math.round(total / totalcount * 4) / 4).toFixed(1);
+    }
+
+    const handleSocialMediaClick = (e, url) => {
+      window.open(url, 'blank');
+    }
+
 
     return(<>
       {/**  Expanded View (Modal) */}
@@ -159,13 +189,10 @@ function ProductInfo(props) {
       <StyledExpandedViewModal onClick={(e) => toggleExpandedView(e, expandedViewIndex)}>
         <StyledExpandedViewContainer onClick={(e) =>{ setZoomView(!zoomView); e.stopPropagation()}} bgImg={expandedViewImage} id="container">
           { !zoomView ? <>
-            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}>Previous</button>
+            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}><FontAwesomeIcon icon={faAngleLeft} /></button>
             {expandedViewDots}
-            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}>Next</button> </> :
-            <div id="image" style={{backgroundImage: 'url(' + expandedViewImage + ')', backgroundSize: container.offsetWidth || 0 + 'px auto'}} onMouseMove={handleZoom}>
-              <div id="glass" style={{backgroundImage: 'url(' + expandedViewImage + ')'}}></div>
-            </div>}
-        </StyledExpandedViewContainer>
+            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}><FontAwesomeIcon icon={faAngleRight} /></button> </> : <Magnifier src={expandedViewImage} width={container.offsetWidth} zoomFactor={2.5}/> }
+          </StyledExpandedViewContainer>
       </StyledExpandedViewModal> : '' }
 
       {/**  Carousel */}
@@ -173,12 +200,16 @@ function ProductInfo(props) {
       <Carousel photos={activeStyle.photos} handleExpandedView={toggleExpandedView} expandedImage={expandedViewIndex} newProduct={props.styles}/>
 
       {/**  Right-side (main product info) */}
-      <FlexColumn>
+      <ProductInfoContainer>
         <StyledOverviewContainer>
+          <FlexRow>
+            <Stars ratingAvg={ratingAverage()}/>
+            <StyledReviews href="/#ratings">Read all {props.reviews} reviews</StyledReviews>
+          </FlexRow>
           <StyledCategory>{category}</StyledCategory>
           <h1>{name}</h1>
           <StyledPrice salePrice={ salePrice ? true : false }><span>${ salePrice ? salePrice  : activeStyle.original_price }</span><span>{ salePrice ? '$' + activeStyle.original_price  : '' }</span></StyledPrice>
-          <StyledCurrentStyle><span>style ></span> {activeStyle.name}</StyledCurrentStyle>
+          <StyledCurrentStyle><span>style</span> {activeStyle.name}</StyledCurrentStyle>
         </StyledOverviewContainer>
         <StylesContainer>
           {allStyles}
@@ -194,10 +225,16 @@ function ProductInfo(props) {
                 {selectedSize.current.value === 'default' ? defaultQty : availableQuantities}
               </select>
             </FlexRow>
-            <button onClick={handleAddToCart}>Add to cart</button>
-            <button>Star</button>
+            <button onClick={handleAddToCart}><FontAwesomeIcon icon={faCartArrowDown} size='xl' style={{'marginRight': '0.7em'}} />Add to cart</button>
+            <button><FontAwesomeIcon icon={farHeart} size='xl'/></button>
           </StyledSizeQty>
-      </FlexColumn>
+          <SocialMediaShareContainer>
+            <SocialMediaShareButton onClick={(e, url) => handleSocialMediaClick(e, `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`)}><FontAwesomeIcon icon={faFacebook} size='xl' /></SocialMediaShareButton>
+            <SocialMediaShareButton onClick={(e, url) => handleSocialMediaClick(e, `https://twitter.com/intent/tweet?text=${pageUrl}.${socialMessage}`)}><FontAwesomeIcon icon={faTwitter} size='xl' /></SocialMediaShareButton>
+            <SocialMediaShareButton><FontAwesomeIcon icon={faPinterest} size='xl' onClick={(e, url) => handleSocialMediaClick(e, `https://pinterest.com/pin/create/bookmarklet/?media=${activeStyle.thumbnail_url}&url=${pageUrl}&description=${socialMessage}`)}/></SocialMediaShareButton>
+          </SocialMediaShareContainer>
+          <p style={{fontSize: 'var(--fs-2)'}}>Share on Social Media</p><br/>
+      </ProductInfoContainer>
     </FlexRow></>)
   } else {
     return <p>loading</p>

@@ -3,3 +3,4 @@ src/config/config.js
 build
 .env.staging
 dist/bundle.js
+.DS_Store

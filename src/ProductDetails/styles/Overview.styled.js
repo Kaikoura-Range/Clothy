@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 
+export const ProductInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 7em;
+  justify-content: center;
+`
+
 export const StyledOverviewContainer = styled.div`
-  margin: 0 0 10px 77px;
+  margin-bottom: 0.3em;
 
   span {
     display: inline-block;
@@ -11,7 +18,7 @@ export const StyledOverviewContainer = styled.div`
 
 export const StyledPrice = styled.p`
   span {
-    margin: 8px 10px 0 0;
+    margin: 0.5em 0.7em 0 0;
   }
 
   span:last-child {
@@ -26,12 +33,30 @@ export const StyledPrice = styled.p`
 export const StyledCurrentStyle = styled.p`
   span {
     text-transform: uppercase;
-    font-weight: 700;
-    margin-top: 30px;
+    font-weight: 900;
+    margin-top: 2em;
+    margin-right: 0.2em;
+    background-color: var(--accent-color);
+    border-radius: 1em;
+    padding: 0 0.6em;
+    font-size: var(--fs-1);
   }
 `
 
 export const StyledCategory = styled.span`
-  margin-bottom: 10px;
+  margin-top: 2em;
+  margin-bottom: 0.2em;
   font-size: var(--fs-2);
+`
+
+export const StyledReviews = styled.a`
+  &:active, &:hover {
+    text-decoration: underline;
+  }
+
+  padding: 0.1em 1em;
+
+  text-decoration: none;
+  font-size: var(--fs-2);
+  color: var(--fc-0);
 `
