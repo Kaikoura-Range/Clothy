@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const StylesImages = styled.img`
-  width: 60px;
-  height: 60px;
+  width: 4em;
+  height: 4em;
   object-fit: cover;
   border-radius: 50%;
   margin: 5px;

@@ -4,6 +4,7 @@ export const StyledCarouselContainer = styled.div`
   background-image: url(${(({ photo }) => photo ? photo.url : '')});
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: bottom;
   /* width: 65%; */
   width: var(--product-carousel-width);
 
@@ -56,6 +57,7 @@ box-shadow: 1px 1px 5px rgba(0,1em,1em,0.5);
 export const StyledCarouselPhotos = styled.span`
   background-image: url(${({src}) => src});
   background-size: cover;
+  background-position: bottom;
   min-height: 60px;
   max-width: 60px;
   border-bottom: ${({ isActive }) => isActive ? '3px solid rgb(247,193,18);' : ''};
@@ -69,8 +71,8 @@ export const StyledArrowsContainer = styled.div`
   margin-top: 15%;
 
   button {
-    width: 30px;
-    height: 30px;
+    width: 2.3em;
+    height: 2.3em;
     font-size: var(--fs-2);
     font-weight: 400;
     border-radius: 50%;
@@ -79,6 +81,9 @@ export const StyledArrowsContainer = styled.div`
     transition: opacity 0.4s ease-in-out;
   }
 
+  button:hover {
+    opacity: 1;
+  }
 `
 export const StyledArrowButton = styled.button`
   visibility: ${({disabled}) => disabled ? 'hidden' : 'visible'}
