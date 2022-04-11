@@ -101,7 +101,7 @@ export default function Answers(props) {
                 answer.photos.map((photo, i) => {
                   return (
                     <ImagesContainer key={i}>
-                      <Img onClick={onClickImageHandler} alt='picture from answerer' src={photo} />
+                      <Img onClick={onClickImageHandler} alt='picture from answerer' src={photo}  alt={'../../assets/clothyAlt.jpeg'} />
                     </ImagesContainer>
                   );
                 })}

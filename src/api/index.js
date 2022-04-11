@@ -41,7 +41,18 @@ const load = {
   newProduct: loadNewProduct
 }
 
-const api = { get, post, load, report, upvote };
+const search = (event, searchBy = 'category') => {
+  const term = event.target.value;
+  console.log('seraching ', term)
+  console.log('seraching ', term.length)
+  if(term.length) {
+    return get('/products/search', { term, searchBy })
+  } else {
+    return new Promise((res, rej) => res([]))
+  }
+}
+
+const api = { get, post, load, report, upvote, search };
 
 
 export default api;

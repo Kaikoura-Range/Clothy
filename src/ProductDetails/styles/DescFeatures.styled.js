@@ -7,6 +7,8 @@ export const StyledDescFeaturesContainer = styled.div`
   align-items: center;
   justify-content: center;
   display: flex;
+  min-width: 100%;
+  min-height: 20em;
 
   h2 {
     background-color: #2f3640;
@@ -21,10 +23,12 @@ export const StyledDescFeaturesContainer = styled.div`
 `
 // #2f3640;
 export const StyledFeaturesContainer = styled.div`
+  min-width: 30%;
+
 `
 
 export const StyledDescriptionContainer = styled.div`
-  width: 30%;
+  min-width: 30%;
   margin-left: 3em;
   margin-right: 3em;
 `

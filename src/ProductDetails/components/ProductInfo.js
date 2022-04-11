@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef, useContext} from "react";
 // import { Link, BrowserRouter } from 'react-router-dom';
 import Carousel from './ProductCarousel.js';
 import { DispatchContext } from './../../appState/index.js';
-import { FlexRow, FlexColumn } from './../styles/Flex.styled.js'
+import { FlexRow, FlexColumn, DetailsContainer} from './../styles/Flex.styled.js'
 import { StylesImages, StylesContainer } from './../styles/Styles.styled.js'
 import StyledSizeQty from './../styles/SizeQty.styled.js'
 import { StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory, StyledReviews } from './../styles/Overview.styled.js'
@@ -28,6 +28,7 @@ function ProductInfo(props) {
   const [showExpandedView, setShowExpandedView] = useState(false);
   const [zoomView, setZoomView] = useState(false);
   const [, dispatch] = useContext(DispatchContext);
+  const imgType = props.img.type || 'url';
 
   const handleSizeDuplicates = (originalSkus) => {
     const sizeDuplicates = originalSkus.reduce((allSkus, currentSku) => {
@@ -55,8 +56,9 @@ function ProductInfo(props) {
       setSkus(Object.entries(initialSkus));
       setExpandedViewIndex(0);
       setExpandedViewImage(props.styles.results[0].photos[0].url)
+      // setExpandedViewImage(props.styles.results[0].photos[0][imgType])
     }
-  }, [props.styles])
+  }, [props.styles, imgType])
 
   // Triggered when the active style changes
   useEffect(() => {
@@ -70,9 +72,10 @@ function ProductInfo(props) {
 
   useEffect(() => {
     if (activeStyle.photos) {
-      setExpandedViewImage(activeStyle.photos[expandedViewIndex]['url']);
+      setExpandedViewImage(activeStyle.photos[expandedViewIndex][imgType]);
+      // setExpandedViewImage(activeStyle.photos[expandedViewIndex].url);
     }
-  }, [expandedViewIndex, activeStyle])
+  }, [expandedViewIndex, activeStyle, imgType])
 
 
   if (activeStyle.name) {
@@ -222,7 +225,12 @@ function ProductInfo(props) {
       </FlexColumn>
     </FlexRow></>)
   } else {
-    return <p>loading</p>
+    return (
+     <>
+      <DetailsContainer>
+        <p>Loading</p>
+      </DetailsContainer>
+    </>)
   }
 }
 

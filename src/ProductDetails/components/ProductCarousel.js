@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer,StyledThumbnailContainer, StyledArrowButton } from './../styles/Carousel.styled.js';
+import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer,StyledThumbnailContainer, StyledArrowButton, LoadingStyledCarouselContainer } from './../styles/Carousel.styled.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExpand } from '@fortawesome/free-solid-svg-icons'
 // import { FlexColumn } from './../styles/Flex.styled.js';
@@ -90,7 +90,7 @@ function Carousel(props){
 
   if (props.photos && activePhoto) {
 
-    const allPhotos = displayedPhotos.map((photo, i) => <StyledCarouselPhotos src={ photo.thumbnail_url } key={i} onClick={(e, url) => {handlePhotoClick(e, photo.thumbnail_url); e.stopPropagation()}} isActive={ activePhoto.thumbnail_url === photo.thumbnail_url ? true : false }/>);
+    const allPhotos = displayedPhotos.map((photo, i) => <StyledCarouselPhotos src={ photo.thumbnail_url } alt={'../../assets/clothyAlt.jpeg'} key={i} onClick={(e, url) => {handlePhotoClick(e, photo.thumbnail_url); e.stopPropagation()}} isActive={ activePhoto.thumbnail_url === photo.thumbnail_url ? true : false }/>);
 
 
     return(<StyledCarouselContainer photo={activePhoto} onClick={(e, index) => props.handleExpandedView(e, photoIndex)}>
@@ -114,7 +114,9 @@ function Carousel(props){
       </StyledCarouselContainer>)
 
   } else {
-    return <p>loading</p>
+    return (<LoadingStyledCarouselContainer>
+        <p>loading</p>
+  </LoadingStyledCarouselContainer>)
   }
 
 }

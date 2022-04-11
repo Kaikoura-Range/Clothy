@@ -13,6 +13,7 @@ const Review = ({review}) => {
   const [state] = useContext(StateContext);
   const [notH,setNotH] = useState(0);
   const [, dispatch] = useContext(DispatchContext);
+  const imgSrcType = 'thumbnail_url';
 
   const showImg = (photo) => {
       setOpenModal(true);
@@ -43,8 +44,8 @@ const Review = ({review}) => {
         {review.response && <div>Seller Response: {review.response}</div>}
         {review.photos.map((photo, id) => {
             return(<span key={id}>
-                <img key={photo.id} src={photo.url} alt='' height="50" width="50" onClick={() => {showImg(photo)}}/>
-                {(openModal && photo.id===selectedImage)&& (<BackDrop onClick={()=>setOpenModal(!openModal)}>  <ImageContainer src={photo.url} alt=''/> </BackDrop>)}
+                <img key={photo.id} src={photo[imgSrcType]} alt='' height="50" width="50" onClick={() => {showImg(photo)}}/>
+                {(openModal && photo.id===selectedImage)&& (<BackDrop onClick={()=>setOpenModal(!openModal)}>  <ImageContainer loading="lazy" src={photo.url} alt=''/> </BackDrop>)}
                 </span>
             )
         })}

@@ -6,7 +6,8 @@ export const StyledCarouselContainer = styled.div`
   background-repeat: no-repeat;
   background-position: bottom;
   /* width: 65%; */
-  width: var(--product-carousel-width);
+  width: var(--main-Photo-width);
+  height: var(--main-Photo-heigth);
 
   &:hover {
     cursor: zoom-in;
@@ -63,5 +64,13 @@ export const StyledArrowsContainer = styled.div`
   }
 `
 export const StyledArrowButton = styled.button`
-  visibility: ${({disabled}) => disabled ? 'hidden' : 'visible'}
+  visibility: ${({disabled}) => disabled ? 'hidden' : 'visible'};
+`
+
+
+
+export const LoadingStyledCarouselContainer = styled.div`
+  width: var(--main-Photo-width);
+  height: var(--main-Photo-heigth);
+  background-color: var(--bgc1);
 `

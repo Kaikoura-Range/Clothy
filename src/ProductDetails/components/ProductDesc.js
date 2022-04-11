@@ -13,7 +13,10 @@ function ProductDescription(props) {
       </StyledDescriptionContainer>)
 
   } else {
-    return <p>loading</p>
+    return(<StyledDescriptionContainer>
+      <h3>Loading</h3>
+      <p>..</p>
+    </StyledDescriptionContainer>)
   }
 }
 

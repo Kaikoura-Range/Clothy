@@ -5,14 +5,15 @@ import ReviewForm from './ReviewForm.js';
 import Rating from './Rating.js';
 import Review from './Review.js';
 
-var mainRenderCount = 0;
+var renderCount = 0;
 
 export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   const {results} = reviewData;
-  if( dev.logs ) {
-    mainRenderCount++;
-    dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
-    dev.state && console.log('DEV  STATE   RelatedProducts: ', reviewData)
+
+  if( dev.logs ) { // Used to see preformance and data flow
+    renderCount++
+    dev.renders.mod.reviews && console.log('\nDEV-RENDER   reviews   renderCount: ', renderCount, '\n')
+    dev.state.mod.reviews && console.log('\nDEV-STATE    reviews:', reviewData, reviewMeta, '\n')
   }
 
   const [sortSelect,setSortSelect] = useState('relevant');

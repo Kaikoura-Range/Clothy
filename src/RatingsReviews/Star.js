@@ -1,16 +1,7 @@
 import styled, { css } from 'styled-components';
-import React, { useState, useEffect } from  'react';
+import React from  'react';
 
 export default function Stars({ratingAvg, theme}) {
-    // theme = theme || 'light'
-    console.log('props', theme)
-    // const [currentTheme, setCurrentTheme] = useState(theme)
-
-    // useEffect(() => {
-    //     if (typeof(theme) === 'string') {
-    //         setCurrentTheme(theme)
-    //     }
-    // }, [theme])
 
     let rating = ratingAvg || 0;
     let stars = [];
@@ -72,12 +63,7 @@ export default function Stars({ratingAvg, theme}) {
  const SingleStarOutline = styled.img`
     height: 36px;
     width: 31px;
-    filter: ${(props => {
-        console.log('theme', props)
-        if (typeof(props.theme) === 'string') {
-            return props.theme === 'dark' ? css`invert(93%);` : css`invert(0%);`
-        }
-    })};
+    filter: ${(props => props.theme === 'dark' ? css`invert(93%);` : css`invert(0%);`)};
   `
   const SingleStarFill = styled.div`
     position: relative;

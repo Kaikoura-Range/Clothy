@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require("path");
-
+const compression = require('compression');
 
 const PORT = process.env.PORT || 3000;
 const ORIGIN = process.env.CORS_ORIGIN || `http://localhost:${PORT}`
@@ -12,6 +12,7 @@ const corsOptions = {
 }
 
 const app = express();
+app.use(compression())
 app.use(cors(corsOptions))
 app.use(express.json())
 // app.use(express.static(path.join(__dirname, "../build")));
@@ -19,15 +20,16 @@ app.use(express.static(path.join(__dirname, "../dist")));
 
 
 const api = require('./api/index.js');
+const db = require('./db/index.js')
 
-app.get('', (req, res) => {
-  res.send('index.html')
-})
+// app.get('', (req, res) => {
+//   res.send('index.html')
+// })
 
 
 app.get('/product/data', (req, res) => {
   console.log('GET req at /product/data', req.url)
-  // console.log(req.query)
+  console.log('headers', req.headers)
 
   const newId = req.query.productId || null;
   const endpoints = req.query.endpoints ? req.query.endpoints.split(';') : null;
@@ -41,6 +43,22 @@ app.get('/product/data', (req, res) => {
 })
 
 
+app.get('/products/search', (req, res) => {
+  console.log('GET req at /products/name', req.url)
+  // console.log('headers', req.headers)
+
+  const { term, searchBy } = req.query || { term: null, searchBy: null };
+  if (term) {
+    db.search.then(func => func(term, searchBy))
+      .then(productRes => res.status(200).send(productRes))
+      .catch(err => {
+        console.log('api.search err', err)
+        res.status(500).send(null)
+      })
+  } else {
+    res.status(406).send('No product id attached')
+  }
+})
 
 
 app.post('/new',  (req, res) => {

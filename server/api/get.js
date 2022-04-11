@@ -1,20 +1,21 @@
-
-
 const { request } = require('./request')
-
-const get = request.get
+const { get } = request
 
 
 const getAllObj = (allGetOptions) => {
 
   const Promisified = Object.keys(allGetOptions).reduce((memo, key) => {
     let getOptions = allGetOptions[key];
-    let newPromise = Array.isArray(getOptions) ? get(...getOptions) : getAllObj(getOptions)
+    let newPromise = Array.isArray(getOptions) ? get(...getOptions, key) : getAllObj(getOptions)
     memo[key] =  newPromise
     return memo
   }, {})
 
   return Promise.all.obj(Promisified)
+    .then(res => {
+      console.log('Promise.all.obj res', res)
+      return res
+    })
     .catch(err => {
       console.log('GET getAllObj fetch err ', err)
       console.log('input obj ', allGetOptions)
@@ -42,18 +43,6 @@ const getAll = (allGetOptions) => {
       })
 }
 
-
-
-// related [`/products/${productId}/related/`, {}]
-// rating {
-//     'meta':['/reviews/meta', { product_id: productId }],
-//     'reviews': ['/reviews/', { product_id: productId, page: 1, count:20, sort: 'newest' }]
-//   }
-// QA ['/qa/questions/', { product_id: productId, count: 500 }]
-// details  {
-//     product: [`/products/${productId}`, {}],
-//     styles: [`/products/${productId}/styles`, {}]
-//   }
 
 
 

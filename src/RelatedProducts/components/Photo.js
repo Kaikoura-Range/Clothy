@@ -6,18 +6,20 @@ const fadeTime = 400;
 
 
 const Photo = ({ src, onClick, animate, scrollDown, scrollUp, action, outfit }) => {
-
-   return src ? (
+  const usedSrc = src.thumbnail_url || src.url;
+   return usedSrc ? (
     <CardImageContainer animate={animate} >
       <CardImage
-        src={src}
+        src={usedSrc}
         data-testid="nav"
         decoding="async"
         onClick={onClick}
+        loading="lazy"
+        alt='Clothing styles'
       />
-      <OutfitActionButton data-testid="outfit" onClick={outfit} >{`${action}`}</OutfitActionButton>
-      {scrollDown ? <ScrollButton data-testid="scroll" direction="left"  onClick={scrollDown} >{`<`}</ScrollButton> :  <HiddenScroll>{'<'}</HiddenScroll>}
-      {scrollUp ? <ScrollButton  data-testid="scroll" direction="right"  onClick={scrollUp} >{`>`}</ScrollButton> : <HiddenScroll>{'>'}</HiddenScroll>}
+      <OutfitActionButton aria-label={action} data-testid="outfit" onClick={outfit} >{`${action}`}</OutfitActionButton>
+      {scrollDown ? <ScrollButton aria-label="scroll image" data-testid="scroll" direction="left"  onClick={scrollDown} >{`<`}</ScrollButton> :  <HiddenScroll>{'<'}</HiddenScroll>}
+      {scrollUp ? <ScrollButton aria-label="scroll image" data-testid="scroll" direction="right"  onClick={scrollUp} >{`>`}</ScrollButton> : <HiddenScroll>{'>'}</HiddenScroll>}
     </CardImageContainer>
 
     )
@@ -71,7 +73,7 @@ const CardImage = styled.img`
 `
 
 const EmptyCardImage = styled.div`
-  height: 100%;
+  height: ${imgHeight}em;
   display: flex;
   width: ${imgWidth}px;
   border-top-left-radius: 9px;
