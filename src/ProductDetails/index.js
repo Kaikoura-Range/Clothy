@@ -4,11 +4,10 @@ import Info from './components/ProductInfo.js';
 import Description from './components/ProductDesc.js';
 import Features from './components/ProductFeatures.js';
 import { FlexRow } from './styles/Flex.styled.js'
-import { StyledDescFeaturesContainer } from './styles/DescFeatures.styled.js'
+import { StyledDescFeaturesContainer, DescriptionHeader } from './styles/DescFeatures.styled.js'
 
-function ProductDetails() {
+function ProductDetails({reviewSection}) {
   const [state] = useContext(StateContext);
-  // const [, dispatch] = useContext(DispatchContext);
   const { details, currentProduct, reviews } = state;
   const { product, styles } = state.details;
   const [activeProduct, setActiveProduct] = useState(product);
@@ -22,7 +21,6 @@ function ProductDetails() {
   useEffect(() => {
     setActiveProduct(product);
     setAllStyles(styles);
-    console.log(reviews);
     if (reviews.reviews.results !== undefined) {
       setTotalReviews(reviews.reviews.results.length)
     }

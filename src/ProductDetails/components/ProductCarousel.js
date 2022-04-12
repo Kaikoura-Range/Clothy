@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer, StyledThumbnailContainer, StyledArrowButton, StyledExpandButton, ExpandButtonContainer, ThumbnailCarouselContainer } from './../styles/Carousel.styled.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faAngleUp, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
-// import { FlexColumn } from './../styles/Flex.styled.js';
 
 function Carousel(props){
   const [activePhoto, setActivePhoto] = useState(null);
@@ -32,14 +31,18 @@ function Carousel(props){
   }, [props.newProduct])
 
   useEffect(() => {
-    setPhotoIndex(props.expandedImage);
-    setActivePhoto(props.photos[props.expandedImage]);
+    if (props.photos) {
+      setPhotoIndex(props.expandedImage);
+      setActivePhoto(props.photos[props.expandedImage]);
 
-    indexesInRightRange(props.expandedImage);
+      indexesInRightRange(props.expandedImage);
+    }
   }, [props.expandedImage])
 
   useEffect(() => {
-    setDisplayedPhotos(props.photos.slice(displayedPhotosIndexes[0], displayedPhotosIndexes[1]));
+    if (props.photos) {
+      setDisplayedPhotos(props.photos.slice(displayedPhotosIndexes[0], displayedPhotosIndexes[1]));
+    }
   }, [displayedPhotosIndexes]);
 
   const handleMainArrowClick = (e, index) => {
@@ -90,33 +93,56 @@ function Carousel(props){
 
   if (props.photos && activePhoto) {
 
-    const allPhotos = displayedPhotos.map((photo, i) => <StyledCarouselPhotos src={ photo.thumbnail_url } key={i} onClick={(e, url) => {handlePhotoClick(e, photo.thumbnail_url); e.stopPropagation()}} isActive={ activePhoto.thumbnail_url === photo.thumbnail_url ? true : false }/>);
+    const allPhotos = displayedPhotos.map((photo, i) =>
+      <StyledCarouselPhotos
+        src={ photo.thumbnail_url } key={i}
+        onClick={(e, url) => {handlePhotoClick(e, photo.thumbnail_url); e.stopPropagation()}}
+        isActive={ activePhoto.thumbnail_url === photo.thumbnail_url ? true : false }/>);
 
 
-    return(<StyledCarouselContainer photo={activePhoto} onClick={(e, index) => props.handleExpandedView(e, photoIndex)}>
+    return(
+      <StyledCarouselContainer
+        photo={activePhoto}
+        onClick={(e, index) => props.handleExpandedView(e, photoIndex)}>
 
         {/** Thumbnails buttons and images */}
-
         <ExpandButtonContainer>
-          <StyledExpandButton onClick={(e, index) => props.handleExpandedView(e, photoIndex)}>Expand</StyledExpandButton>
+          <StyledExpandButton
+            onClick={(e, index) => props.handleExpandedView(e, photoIndex)}>Expand</StyledExpandButton>
         </ExpandButtonContainer>
 
+        {/** Thumbnail carousel */}
         <ThumbnailCarouselContainer>
-          <StyledArrowButton onClick={(e, num) => {handleThumbnailArrowClick(e, -1); e.stopPropagation()}} disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === 0 ? true : false }><FontAwesomeIcon icon={faAngleUp} /></StyledArrowButton>
+          <StyledArrowButton
+            onClick={(e, num) => {handleThumbnailArrowClick(e, -1); e.stopPropagation()}}
+            disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === 0 ? true : false }><FontAwesomeIcon icon={faAngleUp} /></StyledArrowButton>
           <StyledThumbnailContainer>
             {allPhotos}
           </StyledThumbnailContainer>
-          <StyledArrowButton onClick={(e, num) => {handleThumbnailArrowClick(e, 1); e.stopPropagation()}} disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === props.photos.length - 7 ? true : false }><FontAwesomeIcon icon={faAngleDown} /></StyledArrowButton>
+          <StyledArrowButton
+            onClick={(e, num) => {handleThumbnailArrowClick(e, 1); e.stopPropagation()}}
+            disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === props.photos.length - 7 ? true : false }>
+            <FontAwesomeIcon icon={faAngleDown} /></StyledArrowButton>
         </ThumbnailCarouselContainer>
+
         {/** Main image */}
         <StyledArrowsContainer>
-          <StyledArrowButton onClick={(e, dir) => {handleMainArrowClick(e, (photoIndex - 1)); e.stopPropagation();}} disabled={ photoIndex === 0 ? true : false }><FontAwesomeIcon icon={faAngleLeft} /></StyledArrowButton>
-          <StyledArrowButton onClick={(e, dir) => {handleMainArrowClick(e, (photoIndex + 1)); e.stopPropagation()}} disabled={ photoIndex === props.photos.length - 1 ? true : false }><FontAwesomeIcon icon={faAngleRight} /></StyledArrowButton>
+          <StyledArrowButton
+            className="animate"
+            onClick={(e, dir) => {handleMainArrowClick(e, (photoIndex - 1)); e.stopPropagation();}}
+            disabled={ photoIndex === 0 ? true : false }>
+            <FontAwesomeIcon icon={faAngleLeft} /></StyledArrowButton>
+          <StyledArrowButton
+            className="animate"
+            onClick={(e, dir) => {handleMainArrowClick(e, (photoIndex + 1)); e.stopPropagation()}}
+            disabled={ photoIndex === props.photos.length - 1 ? true : false }>
+            <FontAwesomeIcon icon={faAngleRight} /></StyledArrowButton>
         </StyledArrowsContainer>
+
       </StyledCarouselContainer>)
 
   } else {
-    return <p>loading</p>
+    return <StyledCarouselContainer/>
   }
 
 }
