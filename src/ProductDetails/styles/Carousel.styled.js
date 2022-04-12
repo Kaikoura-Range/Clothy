@@ -86,6 +86,7 @@ export const StyledArrowsContainer = styled.div`
   }
 `
 export const StyledArrowButton = styled.button`
+  animation: 3s slidein;
   visibility: ${({disabled}) => disabled ? 'hidden' : 'visible'}
 `
 

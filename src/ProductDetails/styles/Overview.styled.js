@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+export const ProductOverviewContainer = styled.div`
+  display: flex;
+  flex-direction: var(--product-flex);
+`
+
 export const ProductInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -14,6 +19,11 @@ export const StyledOverviewContainer = styled.div`
     display: inline-block;
     text-transform: uppercase;
   }
+`
+
+export const StarsReviewContainer = styled.div`
+  display: flex;
+  margin-top: 2em;
 `
 
 export const StyledPrice = styled.p`
@@ -49,7 +59,7 @@ export const StyledCategory = styled.span`
   font-size: var(--fs-2);
 `
 
-export const StyledReviews = styled.a`
+export const StyledReviews = styled.p`
   &:active, &:hover {
     text-decoration: underline;
   }

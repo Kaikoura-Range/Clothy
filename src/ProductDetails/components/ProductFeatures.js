@@ -8,8 +8,9 @@ function ProductFeatures(props) {
     if (props.product.features) {
       const features = props.product.features.map((feature, index) => (
         <p key={index}>
-          <FontAwesomeIcon icon={faCircleCheck} style={{ paddingRight: '1em' }} />{' '}
-          <strong>{feature.feature}</strong>:{feature.value && ' ' + feature.value.toLowerCase()}
+          <FontAwesomeIcon icon={faCircleCheck} style={{ paddingRight: '1em' }} />
+          <strong>{feature.feature}</strong>
+          {feature && feature.value ? ': ' + feature.value.toLowerCase() : ''}
         </p>
       ));
 

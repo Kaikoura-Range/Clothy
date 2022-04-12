@@ -55,8 +55,6 @@ export default function Stars({ratingAvg, theme, starColor}) {
             })}
         </div>
     )
-
-
  };
 
  const SingleStarOutline = styled.img`
@@ -72,7 +70,7 @@ export default function Stars({ratingAvg, theme, starColor}) {
     position: relative;
     display: inline-block;
     height: 36px;
-    background-color: ${props => props.starColor ? props.starColor : 'rgb(247, 193, 18)'};
+    background-color: ${props => props.starColor ? props.starColor : '#2f3640'};
   `
   const SingleStarContainer =styled.div`
     height: 36px;
@@ -81,7 +79,7 @@ export default function Stars({ratingAvg, theme, starColor}) {
   `
 
 
-//   
+//
 
 
 
