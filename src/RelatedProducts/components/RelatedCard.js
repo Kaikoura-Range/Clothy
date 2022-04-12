@@ -16,7 +16,7 @@ export const RelatedCard = ({ data, outfit, nav, action, dispatch }) => {
 
 
     return  (
-      <RelatecCardContainer data-testid="RelatedCard"  onClick={tracker('RelatedCard-Related-' + data.id, dispatch)}  >
+      <RelatecCardContainer data-testid="RelatedCard"  onClick={tracker(dispatch, 'RelatedCard', 'Related', data.id)}  >
         <PhotoCarousel photos={photos} nav={nav} action={action} outfit={outfit} />
         <CardFooter>
           <CardFooterText>{name} </CardFooterText>
@@ -68,7 +68,7 @@ cardHeight = cardHeight.toString()
 const borderRadius = '3';
 
 const RelatecCardContainer = styled.div`
-  height: ${cardHeight}em;
+  /* height: ${cardHeight}em; */
   display: flex;
   margin-left: 5px;
   margin-right: 5px;
