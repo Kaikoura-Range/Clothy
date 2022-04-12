@@ -57,15 +57,15 @@ export default function ImageForm(props) {
       <Modal onClick={preventBubbling}>
         <ImagesFormContainer>
           <Title>Upload Images</Title>
-          <label>Image 1:</label>
+          <label style={{ color: 'black' }}>Image 1:</label>
           <Input value={img1} onChange={img1Handler} type='text' />
-          <label>Image 2:</label>
+          <label style={{ color: 'black' }}>Image 2:</label>
           <Input value={img2} onChange={img2Handler} type='text' />
-          <label>Image 3:</label>
+          <label style={{ color: 'black' }}>Image 3:</label>
           <Input value={img3} onChange={img3Handler} type='text' />
-          <label>Image 4:</label>
+          <label style={{ color: 'black' }}>Image 4:</label>
           <Input value={img4} onChange={img4Handler} type='text' />
-          <label>Image 5:</label>
+          <label style={{ color: 'black' }}>Image 5:</label>
           <Input value={img5} onChange={img5Handler} type='text' />
           <CenterItemsWrapper>
             <ReactiveButton
@@ -93,6 +93,7 @@ const ImagesFormContainer = styled.div`
 
 const Title = styled.h3`
   text-align: center;
+  color: black;
 `;
 
 const fadeIn = keyframes`
