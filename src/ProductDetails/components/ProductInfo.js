@@ -5,7 +5,7 @@ import { DispatchContext } from './../../appState/index.js';
 import { FlexRow } from './../styles/Flex.styled.js'
 import { StylesImages, StylesContainer } from './../styles/Styles.styled.js'
 import StyledSizeQty from './../styles/SizeQty.styled.js'
-import { StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory, StyledReviews, ProductInfoContainer } from './../styles/Overview.styled.js'
+import { ProductOverviewContainer, StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory, StyledReviews, ProductInfoContainer, StarsReviewContainer } from './../styles/Overview.styled.js'
 import { StyledExpandedViewContainer, StyledExpandedViewModal, StyledDotImage, ZoomedImage, ExpandedViewImage } from './../styles/ExpandedCarouselView.styled.js';
 import { SocialMediaShareContainer, SocialMediaShareButton } from './../styles/SocialMedia.styled.js';
 import _ from 'underscore';
@@ -169,6 +169,10 @@ function ProductInfo(props) {
       window.open(url, 'blank');
     }
 
+    const scrollToReviews = (e) => {
+
+    }
+
 
     return(<>
       {/**  Expanded View (Modal) */}
@@ -183,16 +187,16 @@ function ProductInfo(props) {
       </StyledExpandedViewModal> : '' }
 
       {/**  Carousel */}
-      <FlexRow>
+      <ProductOverviewContainer>
       <Carousel photos={activeStyle.photos} handleExpandedView={toggleExpandedView} expandedImage={expandedViewIndex} newProduct={props.styles}/>
 
       {/**  Right-side (main product info) */}
       <ProductInfoContainer>
         <StyledOverviewContainer>
-          <FlexRow>
+          <StarsReviewContainer>
             <Stars theme={props.theme} ratingAvg={ratingAverage()} />
-            <StyledReviews href="/#ratings">Read all {props.reviews} reviews</StyledReviews>
-          </FlexRow>
+            <StyledReviews onClick={scrollToReviews}>Read all {props.reviews} reviews</StyledReviews>
+          </StarsReviewContainer>
           <StyledCategory>{category}</StyledCategory>
           <h1>{name}</h1>
           <StyledPrice salePrice={ salePrice ? true : false }><span>${ salePrice ? salePrice  : activeStyle.original_price }</span><span>{ salePrice ? '$' + activeStyle.original_price  : '' }</span></StyledPrice>
@@ -222,9 +226,12 @@ function ProductInfo(props) {
           </SocialMediaShareContainer>
           <p style={{fontSize: 'var(--fs-2)'}}>Share on Social Media</p><br/>
       </ProductInfoContainer>
-    </FlexRow></>)
+    </ProductOverviewContainer></>)
   } else {
-    return <p>loading</p>
+    return (<ProductOverviewContainer>
+      <Carousel/>
+      <ProductInfoContainer/>
+    </ProductOverviewContainer>)
   }
 }
 

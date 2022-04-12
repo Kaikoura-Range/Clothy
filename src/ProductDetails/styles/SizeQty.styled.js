@@ -9,6 +9,8 @@ const StyledSizeQty = styled.div`
     background-color: var(--bgc-0);
     box-shadow: 0.5px 0.5px 0.5px rgba(0,0,0,0.08);
     color: var(--fc0);
+    max-width: 20em;
+    margin-top: 0.5em;
 
     &:hover {
       cursor: pointer;

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer, StyledThumbnailContainer, StyledArrowButton, StyledExpandButton, ExpandButtonContainer, ThumbnailCarouselContainer } from './../styles/Carousel.styled.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faAngleUp, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
-// import { FlexColumn } from './../styles/Flex.styled.js';
 
 function Carousel(props){
   const [activePhoto, setActivePhoto] = useState(null);
@@ -32,14 +31,18 @@ function Carousel(props){
   }, [props.newProduct])
 
   useEffect(() => {
-    setPhotoIndex(props.expandedImage);
-    setActivePhoto(props.photos[props.expandedImage]);
+    if (props.photos) {
+      setPhotoIndex(props.expandedImage);
+      setActivePhoto(props.photos[props.expandedImage]);
 
-    indexesInRightRange(props.expandedImage);
+      indexesInRightRange(props.expandedImage);
+    }
   }, [props.expandedImage])
 
   useEffect(() => {
-    setDisplayedPhotos(props.photos.slice(displayedPhotosIndexes[0], displayedPhotosIndexes[1]));
+    if (props.photos) {
+      setDisplayedPhotos(props.photos.slice(displayedPhotosIndexes[0], displayedPhotosIndexes[1]));
+    }
   }, [displayedPhotosIndexes]);
 
   const handleMainArrowClick = (e, index) => {
@@ -139,7 +142,7 @@ function Carousel(props){
       </StyledCarouselContainer>)
 
   } else {
-    return <p>loading</p>
+    return <StyledCarouselContainer/>
   }
 
 }

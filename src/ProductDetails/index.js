@@ -6,7 +6,7 @@ import Features from './components/ProductFeatures.js';
 import { FlexRow } from './styles/Flex.styled.js'
 import { StyledDescFeaturesContainer, DescriptionHeader } from './styles/DescFeatures.styled.js'
 
-function ProductDetails() {
+function ProductDetails({reviewSection}) {
   const [state] = useContext(StateContext);
   const { details, currentProduct, reviews } = state;
   const { product, styles } = state.details;
@@ -21,7 +21,6 @@ function ProductDetails() {
   useEffect(() => {
     setActiveProduct(product);
     setAllStyles(styles);
-    console.log(reviews);
     if (reviews.reviews.results !== undefined) {
       setTotalReviews(reviews.reviews.results.length)
     }

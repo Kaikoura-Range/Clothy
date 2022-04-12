@@ -7,6 +7,7 @@ export const StyledDescFeaturesContainer = styled.div`
   align-items: center;
   justify-content: center;
   display: flex;
+  flex-direction: var(--product-flex);
 
   h2 {
     background-color: #2f3640;
