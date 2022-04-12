@@ -8,7 +8,7 @@ import { RelatedCard } from './RelatedCard.js'
 
 
 
-const Carousel = ({ products, outfit }) => {
+const Carousel = ({ products, outfit, track }) => {
   var rendered = products || outfit
   const [, dispatch] = useContext(DispatchContext);
   var cardFunction = products ? compareToCurrent : getRemoveProductFromOutfit
@@ -21,10 +21,12 @@ const Carousel = ({ products, outfit }) => {
         cardFunction = data.type !== 'emptyOutfit' ? cardFunction : getAddProductToOutfit
         return (
           <RelatedCard
+          track={track}
           data={data}
           outfit={cardFunction(outfit, dispatch, data, ind)}
           nav={() => api.load.newProduct(data.id, dispatch)}
           key={data.id ? data.id : ind}
+          dispatch={dispatch}
           // action={products ? "Add to" : "Remove from"}
           action={products ? "Compare" : "Remove"}
           />
