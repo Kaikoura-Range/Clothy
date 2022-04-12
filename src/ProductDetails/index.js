@@ -22,7 +22,7 @@ function ProductDetails({reviewSection}) {
     setActiveProduct(product);
     setAllStyles(styles);
     if (reviews.reviews.results !== undefined) {
-      setTotalReviews(reviews.reviews.results.length)
+      setTotalReviews(reviews.reviews.results.length);
     }
   }, [details, currentProduct, reviews])
 

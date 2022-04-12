@@ -11,6 +11,7 @@ const StyledSizeQty = styled.div`
     color: var(--fc0);
     max-width: 20em;
     margin-top: 0.5em;
+    transition: background-color 0.3s ease-in
 
     &:hover {
       cursor: pointer;
@@ -22,6 +23,7 @@ const StyledSizeQty = styled.div`
     -moz-appearance:none;
     -webkit-appearance:none;
     appearance:none;
+    transition: background-color 0.3s ease-in
   }
 
   select:hover {
@@ -54,6 +56,10 @@ const StyledSizeQty = styled.div`
 
   button:last-child {
     padding: 1.1em 1.35em;
+
+    &:hover {
+      color: var(--accent-color);
+    }
   }
 `
 
