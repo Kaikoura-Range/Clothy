@@ -4,11 +4,11 @@ const StyledSizeQty = styled.div`
   margin-top: 0.3em;
 
   select, button {
-    background-color: #f1f2f6;
     margin-right: 0.5em;
     text-transform: uppercase;
     background-color: var(--bgc-0);
     box-shadow: 0.5px 0.5px 0.5px rgba(0,0,0,0.08);
+    color: var(--fc0);
 
     &:hover {
       cursor: pointer;
