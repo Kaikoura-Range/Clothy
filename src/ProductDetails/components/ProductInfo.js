@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef, useContext} from "react";
-// import { Link, BrowserRouter } from 'react-router-dom';
+import { StateContext } from './../../appState/index.js';
 import Carousel from './ProductCarousel.js';
 import { DispatchContext } from './../../appState/index.js';
 import { FlexRow } from './../styles/Flex.styled.js'
@@ -11,12 +11,13 @@ import { SocialMediaShareContainer, SocialMediaShareButton } from './../styles/S
 import _ from 'underscore';
 import Stars from './../styles/Star.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartArrowDown, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import { faCartArrowDown, faAngleRight, faAngleLeft, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import { faFacebook, faTwitter, faPinterest } from '@fortawesome/free-brands-svg-icons';
 import Magnifier from "react-magnifier";
 
 function ProductInfo(props) {
+  const [state] = useContext(StateContext);
   const [activeStyle, setActiveStyle] = useState({});
   const [skus, setSkus] = useState([]);
   const [availableQty, setAvailableQty] = useState(0);
@@ -29,6 +30,7 @@ function ProductInfo(props) {
   const [showExpandedView, setShowExpandedView] = useState(false);
   const [zoomView, setZoomView] = useState(false);
   const [, dispatch] = useContext(DispatchContext);
+  const [notInOutfit, setNotInOutfit] = useState(true);
 
   const handleSizeDuplicates = (originalSkus) => {
     const sizeDuplicates = originalSkus.reduce((allSkus, currentSku) => {
@@ -49,19 +51,22 @@ function ProductInfo(props) {
   useEffect(() => {
     if (props.styles) {
       setActiveStyle(props.styles.results[0]);
-      if (!props.styles.results.skus) {
+      setNotInOutfit(state.user.outfit.length ?  state.user.outfit.every(product => state.currentProduct !== product) : true);
+      if (props.styles.results.length === 0) {
         setSkus(['OUT OF STOCK']);
+      } else {
+        const initialSkus = handleSizeDuplicates((Object.values(props.styles.results[0].skus)));
+        setSkus(Object.entries(initialSkus));
+        setExpandedViewIndex(0);
+        setExpandedViewImage(props.styles.results[0].photos[0].url)
       }
-      const initialSkus = handleSizeDuplicates((Object.values(props.styles.results[0].skus)));
-      setSkus(Object.entries(initialSkus));
-      setExpandedViewIndex(0);
-      setExpandedViewImage(props.styles.results[0].photos[0].url)
     }
   }, [props.styles])
 
   // Triggered when the active style changes
   useEffect(() => {
-    if (activeStyle.name) {
+    if (activeStyle && activeStyle.name) {
+
       const newSkus = handleSizeDuplicates((Object.values(activeStyle.skus)));
       setSkus(Object.entries(newSkus));
 
@@ -70,13 +75,13 @@ function ProductInfo(props) {
   }, [activeStyle])
 
   useEffect(() => {
-    if (activeStyle.photos) {
+    if (activeStyle && activeStyle.photos) {
       setExpandedViewImage(activeStyle.photos[expandedViewIndex]['url']);
     }
   }, [expandedViewIndex, activeStyle])
 
 
-  if (activeStyle.name) {
+  if (activeStyle && activeStyle.name) {
     const {name, category} = props.product;
 
     const socialMessage = `Just discovered this website and love their ${category}. Check this one out!`;
@@ -173,6 +178,26 @@ function ProductInfo(props) {
 
     }
 
+    const addProductToOutfit = (e, outfit, productData) => {
+      if (notInOutfit) {
+        const newOutfit = [productData, ...outfit.map(product => product) ]
+        dispatch({
+          type: 'SET_OUTFIT',
+          payload: newOutfit,
+        })
+
+      } else {
+        const newOutfit = [...outfit.map(product => product)]
+        const index = outfit.indexOf(productData);
+        newOutfit.splice(index, 1)
+        dispatch({
+          type: 'SET_OUTFIT',
+          payload: newOutfit
+        })
+      }
+      setNotInOutfit(!notInOutfit);
+    }
+
 
     return(<>
       {/**  Expanded View (Modal) */}
@@ -217,7 +242,7 @@ function ProductInfo(props) {
               </select>
             </FlexRow>
             <button onClick={handleAddToCart}><FontAwesomeIcon icon={faCartArrowDown} size='xl' style={{'marginRight': '0.7em'}} />Add to cart</button>
-            <button><FontAwesomeIcon icon={farHeart} size='xl'/></button>
+            <button onClick={(e, outfit, prod) => addProductToOutfit(e, state.user.outfit, state.currentProduct)}>{ notInOutfit ? <FontAwesomeIcon icon={farHeart} size='xl'/> : <FontAwesomeIcon icon={faHeart} size='xl'/>}</button>
           </StyledSizeQty>
           <SocialMediaShareContainer>
             <SocialMediaShareButton onClick={(e, url) => handleSocialMediaClick(e, `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`)}><FontAwesomeIcon icon={faFacebook} size='xl' /></SocialMediaShareButton>
