@@ -3,8 +3,16 @@ import styled from 'styled-components';
 import Stars from './Star.js';
 
 
-export default function Rating({data, theme, filter}){
+export default function Rating({data, theme, filter,test,remove,starcount}){
     const[starColor,setStarColor] = useState('rgb(247, 153, 18)');
+    const cSelector = {
+        'Fit': ['Runs tight','Runs slightly tight','Perfect','Runs slightly long','Runs long'],
+        'Size': ['A size too small', '½ a size too small', 'Perfect', '½ a size too big', 'A size too wide'],
+        'Width': ['Too narrow','Slightly narrow','Perfect','Slightly wide', 'Too Wide'],
+        'Comfort': ['Uncomfortable','Slightly uncomfortable','Ok','Comfortable','Perfect'],
+        'Quality': ['Poor','Below average','What I expected','Pretty great','Perfect'],
+        'Length': ['Runs Short','Runs slightly short','Perfect','Runs slightly long','Runs long']
+    }
 
     function ratingAverage(){
         var total = 0, totalcount = 0;
@@ -42,35 +50,64 @@ export default function Rating({data, theme, filter}){
     function Characteristics() {
         return Object.entries(data.characteristics).map((characteristic, id)=>{
             return (
-                <div key={id}>
-                <div key={characteristic[1].id}>{characteristic[0]}: {Number(characteristic[1].value).toFixed(1)}</div>
-                <BarContainer style={{'backgroundColor' : 'gray'}}>
-                    <BarContainer5 className="bar-5" style={{'width' : `${Number(characteristic[1].value).toFixed(1)*20}%`}}></BarContainer5>
-                </BarContainer>
-                </div>
+                <OverallContainer key={id}>
+                    <div key={characteristic[1].id}>{characteristic[0]}: {Number(characteristic[1].value).toFixed(1)}</div>
+                    <BarContainer style={{'backgroundColor' : 'gray'}}>
+                        <BarContainer5 className="bar-5" style={{'width' : `${Number(characteristic[1].value).toFixed(1)*20}%`}}></BarContainer5>
+                    </BarContainer>
+                    <CharacteristicsContainer>
+                        <LeftChar>{cSelector[characteristic[0]][0]}</LeftChar>
+                        <RightChar>{cSelector[characteristic[0]][4]}</RightChar>
+                    </CharacteristicsContainer>
+                </OverallContainer>
             )
         })
      }
 
     
     return (
-        <div>
-            <OverallRatingContainer onMouseOver={()=>{setStarColor('rgb(147, 193, 118)')}} onMouseLeave={()=>{setStarColor('rgb(247, 193, 18)')}}>
+        <NewOverallContainer>
+            <OverallRatingContainer onMouseOver={()=>{setStarColor('rgb(147, 193, 118)')}} onMouseLeave={()=>{setStarColor('rgb(247, 193, 18)')}} >
                 <span>rating: {ratingAverage()}</span>
-                <Stars theme={theme} ratingAvg={ratingAverage()} starColor={starColor} />
+                <span onClick={(e)=>test(e)}>
+                <Stars theme={theme} ratingAvg={ratingAverage()} starColor={starColor} onClick={(e)=>test(e)}/>
+                </span>
             </OverallRatingContainer>
-
+            {filter && (<div>{starcount} and below star filter applied<div onClick={remove}>Click to Remove</div></div>)}
            <div>{recommendPercentage()}% of reviews recommend this product</div>
-
+           
            <StarBars/>
-
-           <Characteristics />
-
-        </div>
+        
+            <Characteristics />
+            
+        </NewOverallContainer>
     )
 }
+const NewOverallContainer = styled.div`
+display: flex;
+flex-direction: column;
+width: 320px;
+`
+const OverallContainer= styled.div`
+display: flex;
+width: 100%;
+padding: 10px;
+flex-direction: column;
+`
+const LeftChar=styled.div`
 
+`
+const RightChar=styled.div`
 
+`
+const CharacteristicsContainer=styled.div`
+display: flex;
+flex-direction: row;
+width: 100%;
+justify-content: space-between;
+padding: 5px;
+
+`
 const OverallRatingContainer =styled.div`
     display: flex;
     flex-direction: row;
@@ -83,11 +120,12 @@ const StarBarContainer = styled.div`
     font-size: 13px;
 `
 const BarContainer = styled.div`
-width: 300px;
+width: 100%;
 background-color: #f1f1f1;
 text-align: center;
 color: white;
 border-radius: 25px;
+height: 18px;
 `
 const BarContainer5 = styled.div`
 height: 18px;

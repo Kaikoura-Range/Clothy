@@ -1,44 +1,63 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StateContext, DispatchContext } from '../appState/index.js';
 import moment from 'moment';
 import styled from 'styled-components';
 import Star from './Star.js';
 import api from '../api/index';
 
-const Review = ({review, notHelpful,isHelpful, sorted}) => {
+const Review = ({review}) => {
   const [fullSummary, setFullSummary] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [clicked, setClicked] = useState(sorted);
+  const [clicked, setClicked] = useState(false);
   const [state] = useContext(StateContext);
   const [notH,setNotH] = useState(0);
   const [clickedReviews, setClickedReviews] = useState([]);
   const [, dispatch] = useContext(DispatchContext);
+
+  useEffect(()=> {
+    //   var test = clickedReviews.includes(review.review_id)
+    // clickedReviews.includes(review.review_id)? setClicked(true) : setClicked(false)
+    //console.log(clickedReviews)
+  },[clickedReviews])
 
   const showImg = (photo) => {
       setOpenModal(true);
       setSelectedImage(photo.id)
   }
   const clickedHelpful = (id) => {
+    if(!clicked && !clickedReviews.includes(id)) {
+    setClicked(true);
+    setClickedReviews(clickedReview.concat(id))
 
-      if(!clicked && !clickedReviews.includes(id)) {
-        setClicked(true);
-        setClickedReviews(clickedReviews.push(id))
-        api.upvote.review({ typeId: id, productId: state.currentProduct })
-        .then(() => api.load.newProduct(state.currentProduct, dispatch))
-        .catch(err => console.log('problem ',err))
-      }
+    api.upvote.review({ typeId: id, productId: state.currentProduct })
+    .then(() => api.load.newProduct(state.currentProduct, dispatch))
+    .catch(err => console.log('problem ',err))
+    }
   }
   const clickedNotHelpful = (id) => {
-      if(!clicked && !clickedReviews.includes(id)) {
-          setClickedReviews(clickedReviews.push(id))
-        setClicked(true);
-        setNotH(1);
-      }
+    if(!clicked && !clickedReviews.includes(id)) {
+    const newArray = clickedReviews.concat(id)
+    console.log(newArray);
+    setClickedReviews(clickedReviews.concat(id))
+    setClicked(true);
+    setNotH(1);
+    }
   }
-  //var showFeedback = clickedReviews.includes(review.review_id);
+
+    const {photos} = review 
+  const nonDups = photos.reduce((memo, photo, ind) => {
+    const nextSlice = ind + 1;
+    const checkedphotos = photos.slice(nextSlice);
+    const found = checkedphotos.some(otherphotos => otherphotos.url === photo.url)
+    if(!found) {
+      memo.push(photo)
+    } 
+    return memo
+  }, [])
+
     return (
-    <IndividualReviewContainer>
+    <IndividualReviewContainer className='Individual Review'>
         <div>By: {review.reviewer_name} | {moment(review.date).format("MMM Do, YYYY")}</div>
         <SummaryContainer>
             <b>{review.summary.substr(0,60)}</b>
@@ -47,7 +66,7 @@ const Review = ({review, notHelpful,isHelpful, sorted}) => {
         </SummaryContainer>
         {review.recommend.toString() && <div>I recommend this product! &#10003;</div>}
         {review.response && <div>Seller Response: {review.response}</div>}
-        {review.photos.map((photo, id) => {
+        {nonDups.map((photo, id) => {
             return(<span key={id}>
                 <img key={photo.id} src={photo.url} alt='' height="50" width="50" onClick={() => {showImg(photo)}}/>
                 {(openModal && photo.id===selectedImage)&& (<BackDrop onClick={()=>setOpenModal(!openModal)}>  <ImageContainer src={photo.url} alt=''/> </BackDrop>)}
@@ -58,7 +77,7 @@ const Review = ({review, notHelpful,isHelpful, sorted}) => {
         <div>
             {clicked? <div>Thank you for the feedback!</div> : <div>Was this review helpful?</div>}
             <span onClick={()=> clickedHelpful(review.review_id)}>Yes({review.helpfulness}) | </span>
-            <span onClick={()=> clickedNotHelpful(review.review_id)}>No({notH}) | </span>
+            <span onClick={()=> clickedNotHelpful(review.review_id)}>No({notH}) </span>
         </div>
     </IndividualReviewContainer>
     )
