@@ -7,7 +7,6 @@ import api from '../../api/index';
 import HelpfulModal from './modals/HelpfulModal';
 import ErrorModal from './modals/ErrorModal';
 import Image from './modals/Image';
-
 export default function Answers(props) {
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
@@ -41,17 +40,15 @@ export default function Answers(props) {
         payload: newUpvoted,
       });
       setShowHelpfulModal(true);
-      api.upvote
-        .answer({ typeId: id, productId: state.currentProduct })
-        .then(() => api.load.newProduct(state.currentProduct, dispatch))
+      api.upvote.answer({ typeId: id, productId: state.currentProduct })
+        .then(() =>  api.load.newProduct(state.currentProduct, dispatch))
         .catch((err) => console.log('helpful question not sent!'));
     }
   };
 
   const reportAnswerHandler = (id) => {
-    api.report
-      .answer({ typeId: id, productId: state.currentProduct })
-      .then(() => api.load.newProduct(state.currentProduct, dispatch))
+    api.report.answer({ typeId: id, productId: state.currentProduct })
+      .then(() =>  api.load.newProduct(state.currentProduct, dispatch))
       .catch((err) => console.log('report answer not sent!'));
   };
 
@@ -76,6 +73,7 @@ export default function Answers(props) {
   const collapseAllAnswersHandler = () => {
     setAddMoreAnswers(0);
   };
+
 
   const sortingBySeller = (values) => {
     let sorted = values.sort((a, b) => {
