@@ -44,17 +44,21 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   const setStarFilter = (e) => {
     Number(e.target.id)+1 ===starcount ? (setFiltered(false), setStarCount(5)): (setStarCount(Number(e.target.id)+1), setFiltered(true))
   }
+  const removeFilter = () =>{
+    setFiltered(false)
+    setStarCount(5)
+  }
 
   if(reviewData) {
     return (
-      <RatingsReviewsContainer data-testid="reviews" >
-        <div onClick={setStarFilter}>
-        <Rating theme={theme} data={reviewMeta} filter={filtered}/>
-        </div>
-        <ReviewsListContainer>
-          <div>
+      <RatingsReviewsContainer data-testid="reviews" className='reviews'>
+        {/* <div onClick={setStarFilter}> */}
+        <Rating theme={theme} data={reviewMeta} filter={filtered} test={setStarFilter} remove={removeFilter} starcount={starcount}/>
+        {/* </div> */}
+        <ReviewsListContainer className='Reviews list'>
+          <div className='review list selector'>
             {results.length} reviews sorted by
-            <select value={sortSelect} onChange={(e) => {setSortSelect(e.target.value) }}>
+            <select className='sort selector' value={sortSelect} onChange={(e) => {setSortSelect(e.target.value) }}>
               <option value="newest">newest</option>
               <option value="helpful">Helpfulness</option>
               <option value="relevant">Relevance</option>
@@ -74,7 +78,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
          </InnerListContainer>
           {(results.length-diplayedReviewCount >0) && (<button onClick={()=> setReviewCount(results.length)}>More Reviews</button>)}
           <button onClick={() => {setOpenModal(true)}}>Add a Review</button>
-          {openModal && (<BackDrop onClick={()=>setOpenModal(!openModal)}><ReviewForm /></BackDrop>)}
+          {openModal && (<BackDrop className='Back drop' onClick={()=>setOpenModal(!openModal)}><ReviewForm className='Review form'/></BackDrop>)}
         </ReviewsListContainer>
       </RatingsReviewsContainer>
     )
