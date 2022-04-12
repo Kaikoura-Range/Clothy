@@ -37,9 +37,11 @@ export default function AnswerForm(props) {
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
   };
+
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
   };
+
   const onChangeBody = (e) => {
     setBody(e.target.value);
   };
