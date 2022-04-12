@@ -120,7 +120,7 @@ function ProductInfo(props) {
 
     const defaultQty = <option value="none">-</option>;
 
-    const handleAddToCart = () => {
+    const handleAddToCart = (e) => {
       if (selectedSize.current.value !== 'default') {
         dispatch({
           type: 'ADD_PRODUCT_TO_CART',
@@ -210,7 +210,7 @@ function ProductInfo(props) {
           { !zoomView ? <>
             <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}><FontAwesomeIcon icon={faAngleLeft} /></button>
             {expandedViewDots}
-            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}><FontAwesomeIcon icon={faAngleRight} /></button> </> : <Magnifier src={expandedViewImage} width={container.offsetWidth} zoomFactor={2.5}/> }
+            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}><FontAwesomeIcon icon={faAngleRight} /></button> </> : <Magnifier src={expandedViewImage} width={container.offsetWidth} zoomFactor={2.5} style={{cursor: 'zoom-out'}}/> }
           </StyledExpandedViewContainer>
       </StyledExpandedViewModal> : '' }
 
