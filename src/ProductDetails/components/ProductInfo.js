@@ -52,6 +52,7 @@ function ProductInfo(props) {
     if (props.styles) {
       setActiveStyle(props.styles.results[0]);
       setNotInOutfit(state.user.outfit.length ?  state.user.outfit.every(product => state.currentProduct !== product) : true);
+      console.log(document.getElementById('reviewSection'));
       if (props.styles.results.length === 0) {
         setSkus(['OUT OF STOCK']);
       } else {
@@ -175,7 +176,9 @@ function ProductInfo(props) {
     }
 
     const scrollToReviews = (e) => {
-
+      // window.scrollTo(0, document.body.clientHeight * 3);
+      const top = document.body.clientHeight * 10;
+      window.scroll({top, left: 0, behavior: 'smooth'});
     }
 
     const addProductToOutfit = (e, outfit, productData) => {
