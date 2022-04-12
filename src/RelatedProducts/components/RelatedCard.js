@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import PhotoCarousel from './PhotoCarousel.js'
+import tracker from '../../components/Tracker'
 
 // const fadeTime = 400;
 // const splitFade = Math.round(fadeTime / 2) - Math.round(fadeTime * 0.15)
 
 
-export const RelatedCard = ({ data, outfit, nav, action }) => {
+export const RelatedCard = ({ data, outfit, nav, action, dispatch }) => {
   data.photos = data.photos || []
 
   if ( data.type === 'render') {
@@ -15,7 +16,7 @@ export const RelatedCard = ({ data, outfit, nav, action }) => {
 
 
     return  (
-      <RelatecCardContainer data-testid="RelatedCard" >
+      <RelatecCardContainer data-testid="RelatedCard"  onClick={tracker('RelatedCard-Related-' + data.id, dispatch)}  >
         <PhotoCarousel photos={photos} nav={nav} action={action} outfit={outfit} />
         <CardFooter>
           <CardFooterText>{name} </CardFooterText>
@@ -28,7 +29,7 @@ export const RelatedCard = ({ data, outfit, nav, action }) => {
   }
   if (data.type === 'emptyOutfit') {
     return  (
-      <RelatecCardContainer data-testid="RelatedCard" onClick={outfit} >
+      <RelatecCardContainer data-testid="RelatedCard"  id="RelatedCard"  onClick={outfit} >
         <EmptyTextContainer>
           <p>Click to add </p>
           <p>the viewed item </p>
@@ -39,7 +40,7 @@ export const RelatedCard = ({ data, outfit, nav, action }) => {
   }
   if (data.type === 'emptyRelated') {
     return  (
-      <RelatecCardContainer data-testid="RelatedCard"  >
+      <RelatecCardContainer data-testid="RelatedCard" id="RelatedCard"   >
         <EmptyTextContainer>
           <p>Sorry, no </p>
           <p>related items. </p>
@@ -48,7 +49,7 @@ export const RelatedCard = ({ data, outfit, nav, action }) => {
     );
   } else {
     return (
-      <RelatecCardContainer data-testid="RelatedCard"  >
+      <RelatecCardContainer data-testid="RelatedCard"  id="RelatedCard"  >
         <EmptyTextContainer>
           <p>Loading</p>
         </EmptyTextContainer>

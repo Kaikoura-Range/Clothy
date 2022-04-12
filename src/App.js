@@ -8,7 +8,7 @@ import ProductDetails from './ProductDetails/index';
 import RatingsReviews from './RatingsReviews/index';
 import QAndA from './QandA/index';
 import RelatedProducts from './RelatedProducts/index';
-
+import Tracker from './components/Tracker'
 
 
 const maxApiRequests = 2;
@@ -19,6 +19,10 @@ var requestCount = 0;
 function App() {
   const [, dispatch] = useContext(DispatchContext);
   const [state] = useContext(StateContext);
+  // console.log('this', App.name)
+  // console.log('arguments', arguments)
+
+
 
   if( state.dev.logs ) { // Used to see preformance and data flow
     renderCount++
@@ -52,14 +56,14 @@ function App() {
     requestCount = 0
 
     return (
-      <AppContainer className='App' data-testid="app"  >
-        <Modal />
-        <Header />
-        <ProductDetails />
-        <RelatedProducts  />
-        <QAndA />
-        <RatingsReviews reviewData={state.reviews.reviews} reviewMeta={state.reviews.meta} dev={state.dev} theme={state.user.theme}/>
-      </AppContainer>
+        <AppContainer className='App' data-testid="app"  >
+          <Modal />
+          <Header />
+          <ProductDetails />
+          <RelatedProducts  />
+          <QAndA />
+          <RatingsReviews reviewData={state.reviews.reviews} reviewMeta={state.reviews.meta} dev={state.dev} theme={state.user.theme}/>
+        </AppContainer>
     );
   }
 }
