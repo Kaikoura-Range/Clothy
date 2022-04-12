@@ -17,6 +17,10 @@ const Header = (props) => {
     })
   }
   function pageScroll() {
+    const body = document.getElementById('root')
+    console.log('body', body)
+    const height = body.offsetHeight
+    console.log('height', height)
     window.scroll({
       top: 0,
       left: 0,

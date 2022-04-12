@@ -9,7 +9,7 @@ export const StateContext = React.createContext([{}]);
 const savedInLocal = localStorage.getItem('user');
 const localStoreUser = savedInLocal
   ? JSON.parse(savedInLocal)
-  : { cart: [], outfit: [], theme: 'light', upVoted: [] };
+  : { cart: [], outfit: [], theme: 'light', upVoted: [], currentProduct: 37311};
 // console.log('User data fetched from localStorage', localStoreUser);
 
 const themes = {
@@ -43,7 +43,7 @@ const logRenders = {
 }
 
 const initPageState = {
-  dev: { logs: false, renders: logRenders, state: logState, reducer: true },
+  dev: { logs: true, renders: logRenders, state: logState, reducer: true },
   media: { width: mediaWidth, height: mediaHeight },
   img: { type: imgType },
   modal: { name: 'none', props: {}},
@@ -52,8 +52,9 @@ const initPageState = {
     outfit: localStoreUser.outfit || [],
     theme: localStoreUser.theme || 'light',
     upVoted: localStoreUser.upVoted || [],
+    currentProduct: localStoreUser.currentProduct || 37311,
   },
-  currentProduct: 37311,
+  currentProduct: localStoreUser.currentProduct || 37311,
   QA: {},
   details: {},
   related: {},

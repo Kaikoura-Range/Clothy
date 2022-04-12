@@ -23,6 +23,8 @@ function reducer(state, action) {
       if (toLog) {
         console.log('\n\nDEV  STATE-REDUCER   PROD_INIT   prodId: ', newState.currentProduct);
       }
+      newState.user.currentProduct = newState.currentProduct
+      setUserLocalStore(newState.user);
       return newState;
 
     case 'CHANGE_PRODUCT':
