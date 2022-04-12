@@ -217,7 +217,6 @@ const SearchBar = styled.input`
   padding: 15px;
   width: var(--searchBar-width);
   font-size: 20px;
-  height: 22.5px;
 `;
 
 const EntireQuestionsContainer = styled.div`
