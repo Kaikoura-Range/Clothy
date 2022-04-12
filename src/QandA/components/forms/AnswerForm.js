@@ -78,14 +78,14 @@ export default function AnswerForm(props) {
         <Title>Submit Answer About Product:</Title>
         <ProductName>{state.details.product.name}</ProductName>
         <form onSubmit={onSubmitHandler}>
-          <label>Username: </label>
+          <label style={{ color: 'black' }}>Username: </label>
           <Input
             type='text'
             onChange={onChangeUsername}
             placeholder='Example: jackson11!'
             required
           />
-          <label>Email: </label>
+          <label style={{ color: 'black' }}>Email: </label>
           <Input
             type='email'
             onChange={onChangeEmail}
@@ -128,6 +128,7 @@ const AnswerFormContainer = styled.div`
 
 const Title = styled.h3`
   text-align: center;
+  color: black;
 `;
 
 const TextArea = styled.textarea`
@@ -148,6 +149,7 @@ const Input = styled.input`
 
 const ProductName = styled.h4`
   margin-top: 10px;
+  color: black;
   text-align: center;
 `;
 

@@ -143,51 +143,69 @@ export default function QAndA() {
   };
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
-  return (
-    <EntireQuestionsContainer data-testid='QandA'>
-      <EntireQuestionsWrapper>
+  if (state.QA.results) {
+    return (
+      <>
         <QAHeader>Questions & Answers:</QAHeader>
-        <SearchBar
-          type='search'
-          value={searchText}
-          onChange={searchTextHandler}
-          placeholder='Have a question? Search for answers...'
-        />
-        <EntireQAndAContainer>
-          {/* RENDERS WHEN USER STARTS SEARCHING */}
-          {searchTextThere && state.QA && renderWhenSearchInput()}
+        <EntireQuestionsContainer data-testid='QandA'>
+          <EntireQuestionsWrapper>
+            <SearchBar
+              type='search'
+              value={searchText}
+              onChange={searchTextHandler}
+              placeholder='Have a question? Search for answers...'
+            />
+            <EntireQAndAContainer>
+              {/* RENDERS WHEN USER STARTS SEARCHING */}
+              {searchTextThere && state.QA && renderWhenSearchInput()}
 
-          {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
-          {!searchTextThere && state.QA && renderWhenNoSearchInput()}
-          {state.QA.results.length === 0 && (
-            <NoMatchMessage>There are no questions here. Add one!</NoMatchMessage>
+              {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
+              {!searchTextThere && state.QA && renderWhenNoSearchInput()}
+              {state.QA.results.length === 0 && (
+                <NoMatchMessage>There are no questions here. Add one!</NoMatchMessage>
+              )}
+            </EntireQAndAContainer>
+
+            {!searchTextThere &&
+              state.QA &&
+              state.QA.results.length > 2 &&
+              addMoreQuestionsButtonWhenNoSearchInput()}
+            {searchTextThere &&
+              state.QA.results.length > 2 &&
+              addMoreQuestionsButtonWhenSearchInput()}
+            <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
+          </EntireQuestionsWrapper>
+
+          {createForm && (
+            <BackDrop onClick={backDropHandler}>
+              <QuestionForm success={success} showForm={setCreateForm} />
+            </BackDrop>
           )}
-        </EntireQAndAContainer>
 
-        {!searchTextThere &&
-          state.QA &&
-          state.QA.results.length > 2 &&
-          addMoreQuestionsButtonWhenNoSearchInput()}
-        {searchTextThere && state.QA.results.length > 2 && addMoreQuestionsButtonWhenSearchInput()}
-        <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
-      </EntireQuestionsWrapper>
-
-      {createForm && (
-        <BackDrop onClick={backDropHandler}>
-          <QuestionForm success={success} showForm={setCreateForm} />
-        </BackDrop>
-      )}
-
-      {showModal && (
-        <BackDrop onClick={backDropSuccessHandler}>
-          <SuccessModal />
-        </BackDrop>
-      )}
-    </EntireQuestionsContainer>
-  );
+          {showModal && (
+            <BackDrop onClick={backDropSuccessHandler}>
+              <SuccessModal />
+            </BackDrop>
+          )}
+        </EntireQuestionsContainer>
+      </>
+    );
+  } else {
+    return (
+      <EntireQuestionsContainer>
+        <EmptyQuestionsWrapper>
+          <EntireQAndAContainer>
+            <LoadingText>Loading...</LoadingText>
+          </EntireQAndAContainer>
+        </EmptyQuestionsWrapper>
+      </EntireQuestionsContainer>
+    );
+  }
 }
 
 const QAHeader = styled.h1`
+  margin-left: 5%;
+  margin-bottom: 10px;
   font-size: var(--fs3);
   color: var(--header-fc);
 `;
@@ -199,14 +217,13 @@ const SearchBar = styled.input`
   padding: 15px;
   width: var(--searchBar-width);
   font-size: 20px;
+  height: 22.5px;
 `;
 
 const EntireQuestionsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding-top: 2em;
   padding-bottom: 4em;
 `;
 
@@ -271,4 +288,19 @@ const BackDrop = styled.div`
 const NoMatchMessage = styled.p`
   margin-top: 25px;
   text-align: center;
+`;
+
+////////////////////////////////////////////////////////////////////////////////////
+const EmptyQuestionsWrapper = styled.div`
+  display: inline;
+  height: 500px;
+  width: var(--module-width);
+  padding: 1em;
+  background-color: var(--contain-bgc);
+`;
+
+const LoadingText = styled.p`
+  text-align: center;
+  vertical-align: middle;
+  line-height: 400px;
 `;

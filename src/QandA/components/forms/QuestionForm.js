@@ -21,7 +21,7 @@ export default function QuestionForm(props) {
       email: email,
     };
     api.post
-      .question({ typeId: props.id, post:newQuestion, productId: state.currentProduct })
+      .question({ typeId: props.id, post: newQuestion, productId: state.currentProduct })
       .then((res) => console.log('post question res', res))
       .then(() => {
         setUsername('');
@@ -51,7 +51,7 @@ export default function QuestionForm(props) {
         <Title>Submit Question About Product:</Title>
         <ProductName>{state.details.product.name}</ProductName>
         <form onSubmit={onSubmitHandler}>
-          <label>Username: </label>
+          <label style={{ color: 'black' }}>Username: </label>
           <Input
             type='text'
             name='username'
@@ -59,7 +59,7 @@ export default function QuestionForm(props) {
             placeholder='Example: jackson11!'
             required
           />
-          <label>Email: </label>
+          <label style={{ color: 'black' }}>Email: </label>
           <Input
             type='email'
             name='email'
@@ -90,6 +90,7 @@ const QuestionsFormContainer = styled.div`
 
 const Title = styled.h3`
   text-align: center;
+  color: black;
 `;
 
 const TextArea = styled.textarea`
@@ -99,6 +100,7 @@ const TextArea = styled.textarea`
 
 const ProductName = styled.h4`
   margin-top: 10px;
+  color: black;
   text-align: center;
 `;
 
