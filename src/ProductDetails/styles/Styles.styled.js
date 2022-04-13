@@ -26,4 +26,14 @@ export const StylesContainer = styled.div`
   flex-wrap: wrap;
   margin-bottom: 1em;
   width: 340px;
+
+  button {
+    position: absolute;
+    margin-left: 3.5em;
+    margin-top: 0.6em;
+    border-radius: 50%;
+    width: 1.2em;
+    height: 1.2em;
+    color: #2f3640;
+  }
 `
