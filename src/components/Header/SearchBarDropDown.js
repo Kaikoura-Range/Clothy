@@ -2,9 +2,9 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 
-const SearchBarDropDown = ({ selectable, selected, loadSelected }) => {
-  console.log('selectable', selectable)
-  return selectable.length ? (
+const SearchBarDropDown = ({ selectable, selected, loadSelected, dropDown }) => {
+
+  return dropDown ? (
     <DropDownContainer>
         {selectable.map((productData, ind) => {
           const { name, id } = productData
