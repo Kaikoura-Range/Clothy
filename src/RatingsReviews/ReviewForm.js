@@ -59,10 +59,9 @@ const cSelector = {
       .review({ typeId: props.id, post:newReview, productId: state.currentProduct })
       .then((res) => console.log('post review res', res))
       .then(() => {
-        props.showForm(false);
-        setName('');
-        setEmail('');
-        setBody('');
+        props.done(false)
+
+        alert('review sent!')
         api.load.newProduct(state.currentProduct, dispatch)
       })
       .catch((err) => console.log('review not sent!'));
