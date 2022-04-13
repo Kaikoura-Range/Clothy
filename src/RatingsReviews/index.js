@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import ReviewForm from './ReviewForm.js';
 import Rating from './Rating.js';
 import Review from './Review.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartArrowDown, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 
 var mainRenderCount = 0;
 
@@ -54,7 +52,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
 
   if(reviewData) {
     return (
-      <div onClick={(e)=>{console.log(e.target.className)}}>
+      <Wrapper onClick={(e)=>{console.log(e.target.className)}}>
       <RatingsReviewsContainer data-testid="reviews" className='reviews'>
         <Rating theme={theme} data={reviewMeta} filter={filtered} test={setStarFilter} remove={removeFilter} starcount={starcount}/>
         <ReviewsListContainer className='Reviews list'>
@@ -81,11 +79,11 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
          <ButtonContainer>
           {(results.length-diplayedReviewCount >0) && (<Button onClick={()=> setReviewCount(results.length)}>More Reviews</Button>)}
           <Button onClick={() => {setOpenModal(true)}}>Add a Review</Button>
-          {openModal && (<BackDrop className='Back drop' onClick={()=>setOpenModal(!openModal)}><ReviewForm className='Review form' done={setOpenModal}/></BackDrop>)}
+          {openModal && (<BackDrop className='Back drop' onClick={()=>setOpenModal(!openModal)}><ReviewForm className='Review form' done={setOpenModal} theme={theme}/></BackDrop>)}
           </ButtonContainer>
         </ReviewsListContainer>
       </RatingsReviewsContainer>
-      </div>
+      </Wrapper>
     )
   }
   
@@ -95,6 +93,9 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
     </div>
   )
 }
+  const Wrapper=styled.div`
+  background-color: var(--contain-bgc);
+  `
   const ButtonContainer=styled.div`
   padding: 10px;
   margin:auto;
@@ -103,7 +104,6 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   const Button=styled.button`
   padding: 10px;
   background-color: #2f3640;
-
   color: #fff;
   border-radius: 5%;
   `
