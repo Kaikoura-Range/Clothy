@@ -32,6 +32,7 @@ function ProductInfo(props) {
   const [zoomView, setZoomView] = useState(false);
   const [, dispatch] = useContext(DispatchContext);
   const [notInOutfit, setNotInOutfit] = useState(true);
+  const [animate, setAnimate] = useState(false);
 
   const handleSizeDuplicates = (originalSkus) => {
     const sizeDuplicates = originalSkus.reduce((allSkus, currentSku) => {
@@ -94,7 +95,7 @@ function ProductInfo(props) {
     }
 
     const allStyles = props.styles.results.map((style, i) =>
-      <div>{ style.name === activeStyle.name ? <button><FontAwesomeIcon icon={faCheck} size='xs' /></button> : ''}<StylesImages src={style.photos[0].thumbnail_url} alt={style.name} key={style.style_id} active={style.name === activeStyle.name} onClick={(e) => handleSelectedStyle(e, style, i)}/></div>
+      <div key={style.style_id}>{ style.name === activeStyle.name ? <button><FontAwesomeIcon icon={faCheck} size='xs' /></button> : ''}<StylesImages src={style.photos[0].thumbnail_url} alt={style.name} active={style.name === activeStyle.name} onClick={(e) => handleSelectedStyle(e, style, i)}/></div>
     )
 
     const availableSizes = skus.map((sku, index) =>
@@ -141,6 +142,10 @@ function ProductInfo(props) {
 
     const toggleExpandedView = (e, index) => {
       tracker(dispatch, 'ExpandedView', 'ProductDetails', activeStyle.style_id);
+      // setAnimate(true);
+      // setTimeout(() => {
+      //   setAnimate(false);
+      // }, 500);
       setExpandedViewIndex(index);
       setShowExpandedView(!showExpandedView);
       if (!showExpandedView) {
@@ -214,7 +219,7 @@ function ProductInfo(props) {
       {/**  Expanded View (Modal) */}
       {showExpandedView ?
       <StyledExpandedViewModal onClick={(e) => toggleExpandedView(e, expandedViewIndex)}>
-        <StyledExpandedViewContainer onClick={(e) =>{ setZoomView(!zoomView); e.stopPropagation()}} bgImg={expandedViewImage} id="container">
+        <StyledExpandedViewContainer onClick={(e) =>{ setZoomView(!zoomView); e.stopPropagation()}} bgImg={expandedViewImage} id="container" animation={animate}>
           { !zoomView ? <>
             <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}><FontAwesomeIcon icon={faAngleLeft} /></button>
             {expandedViewDots}
