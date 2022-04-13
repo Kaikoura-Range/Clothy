@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Answers from './Answers';
 import Questions from './Questions';
-
 export default function QAList(props) {
   return (
     <QAndAContainer id={props.q.question_id}>
