@@ -5,11 +5,13 @@ import ThemeProvider, { lightTheme, darkTheme } from './ThemeProvider';
 export const DispatchContext = React.createContext([null, () => {}]);
 export const StateContext = React.createContext([{}]);
 
+
 //localStorage.removeItem('user')
+
 const savedInLocal = localStorage.getItem('user');
 const localStoreUser = savedInLocal
   ? JSON.parse(savedInLocal)
-  : { cart: [], outfit: [], theme: 'light', upVoted: [] };
+  : { cart: [], outfit: [], theme: 'light', upVoted: [] , reviews: [] };
 // console.log('User data fetched from localStorage', localStoreUser);
 
 const themes = {
@@ -52,12 +54,13 @@ const initPageState = {
     outfit: localStoreUser.outfit || [],
     theme: localStoreUser.theme || 'light',
     upVoted: localStoreUser.upVoted || [],
+    reviews: localStoreUser.reviews || [],
   },
   currentProduct: 37311,
   QA: {},
   details: {},
   related: {},
-  reviews: {}
+  reviews: {},
 };
 
 const AppContextProvider = ({ children, passedState }) => {

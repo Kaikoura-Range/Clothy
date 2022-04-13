@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import ReviewForm from './ReviewForm.js';
 import Rating from './Rating.js';
 import Review from './Review.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartArrowDown, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 
 var mainRenderCount = 0;
 
@@ -42,7 +44,8 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
     } else return cmp;
   }
   const setStarFilter = (e) => {
-    Number(e.target.id)+1 ===starcount ? (setFiltered(false), setStarCount(5)): (setStarCount(Number(e.target.id)+1), setFiltered(true))
+    if(Number(e.target.id)+1 === 5) setFiltered(false) 
+    else Number(e.target.id)+1 ===starcount ? (setFiltered(false), setStarCount(5)): (setStarCount(Number(e.target.id)+1), setFiltered(true))
   }
   const removeFilter = () =>{
     setFiltered(false)
@@ -51,10 +54,9 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
 
   if(reviewData) {
     return (
+      <div onClick={(e)=>{console.log(e.target.className)}}>
       <RatingsReviewsContainer data-testid="reviews" className='reviews'>
-        {/* <div onClick={setStarFilter}> */}
         <Rating theme={theme} data={reviewMeta} filter={filtered} test={setStarFilter} remove={removeFilter} starcount={starcount}/>
-        {/* </div> */}
         <ReviewsListContainer className='Reviews list'>
           <div className='review list selector'>
             {results.length} reviews sorted by
@@ -76,11 +78,14 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
           }
           }).slice(0,diplayedReviewCount).map((review,id) => {return (<Review key={id} review={review} />)})}
          </InnerListContainer>
-          {(results.length-diplayedReviewCount >0) && (<button onClick={()=> setReviewCount(results.length)}>More Reviews</button>)}
-          <button onClick={() => {setOpenModal(true)}}>Add a Review</button>
-          {openModal && (<BackDrop className='Back drop' onClick={()=>setOpenModal(!openModal)}><ReviewForm className='Review form'/></BackDrop>)}
+         <ButtonContainer>
+          {(results.length-diplayedReviewCount >0) && (<Button onClick={()=> setReviewCount(results.length)}>More Reviews</Button>)}
+          <Button onClick={() => {setOpenModal(true)}}>Add a Review</Button>
+          {openModal && (<BackDrop className='Back drop' onClick={()=>setOpenModal(!openModal)}><ReviewForm className='Review form' done={setOpenModal}/></BackDrop>)}
+          </ButtonContainer>
         </ReviewsListContainer>
       </RatingsReviewsContainer>
+      </div>
     )
   }
   
@@ -90,8 +95,18 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
     </div>
   )
 }
+  const ButtonContainer=styled.div`
+  padding: 10px;
+  margin:auto;
+  justify-content: space-between;
+  `
+  const Button=styled.button`
+  padding: 10px;
+  background-color: #2f3640;
 
-
+  color: #fff;
+  border-radius: 5%;
+  `
   const RatingsReviewsContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -102,15 +117,14 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   display: flex;
   width: 66%;
   flex-direction: column;
-  height: 600px;
+  height: 800px;
   padding-bottom:2%;
+ 
   `
   const InnerListContainer=styled.div`
   display: flex;
-
   flex-direction: column;
   overflow: auto;
-
   `
   const BackDrop = styled.div`
   position: fixed;

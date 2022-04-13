@@ -53,6 +53,15 @@ function reducer(state, action) {
       }
       return newState;
 
+    case 'ADD_TO_REVIEWS':
+      newState = { ...state };
+      newState.user.reviews.push(payload);
+      setUserLocalStore(newState.user);
+      if (toLog) {
+        console.log('\n\nDEV  STATE-REDUCER   ADD_TO_REVIEWS   new Review: ', newState.currentProduct);
+      }
+      return newState;
+
     case 'SET_OUTFIT':
       newState = { ...state };
       newState.user.outfit = payload;

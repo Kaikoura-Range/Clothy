@@ -55,17 +55,17 @@ const cSelector = {
       characteristics: c
     };
     
+    
     api.post
       .review({ typeId: props.id, post:newReview, productId: state.currentProduct })
-      .then((res) => console.log('post question res', res))
+      .then((res) => console.log('sent', res))
       .then(() => {
-        props.showForm(false);
-        setName('');
-        setEmail('');
-        setBody('');
+        props.done(false)
+        
+        alert('review sent!')
         api.load.newProduct(state.currentProduct, dispatch)
       })
-      .catch((err) => console.log('question not sent!'));
+      .catch((err) => console.log('not sent'));
   };
   }
   const setStars =(e) => {
