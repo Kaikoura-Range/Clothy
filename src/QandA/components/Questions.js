@@ -7,7 +7,7 @@ import api from '../../api/index';
 import HelpfulModal from './modals/HelpfulModal';
 import SuccessModal from './modals/SuccessModal';
 import ErrorModal from './modals/ErrorModal';
-
+import tracker from '../../components/Tracker';
 export default function Questions(props) {
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
@@ -87,7 +87,9 @@ export default function Questions(props) {
   };
 
   return (
-    <QuestionsContainer data-testid='question'>
+    <QuestionsContainer
+      data-testid='question'
+      onClick={tracker(dispatch, 'Questions', 'QAndA', props.q.question_id)}>
       <QuestionBodyHelpfulQuestionWrapper>
         <QuestionBodyWrapper>
           {!props.highlight ? (

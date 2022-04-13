@@ -67,7 +67,13 @@ export default function AnswerForm(props) {
   const previewPhotos = photos.map((photo, i) => (
     <img
       key={i}
-      style={{ width: '90px', height: '90px', marginRight: '7px', marginTop: '10px' }}
+      style={{
+        width: '90px',
+        height: '90px',
+        marginRight: '7px',
+        marginTop: '10px',
+        objectFit: 'cover',
+      }}
       src={photo}
     />
   ));

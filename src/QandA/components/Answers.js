@@ -7,6 +7,7 @@ import api from '../../api/index';
 import HelpfulModal from './modals/HelpfulModal';
 import ErrorModal from './modals/ErrorModal';
 import Image from './modals/Image';
+import tracker from '../../components/Tracker';
 export default function Answers(props) {
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
@@ -40,15 +41,17 @@ export default function Answers(props) {
         payload: newUpvoted,
       });
       setShowHelpfulModal(true);
-      api.upvote.answer({ typeId: id, productId: state.currentProduct })
-        .then(() =>  api.load.newProduct(state.currentProduct, dispatch))
+      api.upvote
+        .answer({ typeId: id, productId: state.currentProduct })
+        .then(() => api.load.newProduct(state.currentProduct, dispatch))
         .catch((err) => console.log('helpful question not sent!'));
     }
   };
 
   const reportAnswerHandler = (id) => {
-    api.report.answer({ typeId: id, productId: state.currentProduct })
-      .then(() =>  api.load.newProduct(state.currentProduct, dispatch))
+    api.report
+      .answer({ typeId: id, productId: state.currentProduct })
+      .then(() => api.load.newProduct(state.currentProduct, dispatch))
       .catch((err) => console.log('report answer not sent!'));
   };
 
@@ -74,7 +77,6 @@ export default function Answers(props) {
     setAddMoreAnswers(0);
   };
 
-
   const sortingBySeller = (values) => {
     let sorted = values.sort((a, b) => {
       if (
@@ -95,7 +97,9 @@ export default function Answers(props) {
         .slice(0, 1 + addMoreAnswers)
         .map((answer) => {
           return (
-            <EachAnswerContainer key={answer.id}>
+            <EachAnswerContainer
+              key={answer.id}
+              onClick={tracker(dispatch, 'Answers', 'QAndA', answer.id)}>
               <AnswerBody>A: {answer.body}</AnswerBody>
               {answer.photos &&
                 answer.photos.map((photo, i) => {
@@ -204,6 +208,7 @@ const Img = styled.img`
   width: 90px;
   height: 90px;
   margin: 5px;
+  object-fit: cover;
 `;
 
 const BackDrop = styled.div`

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { StateContext, DispatchContext } from '../../appState/index';
 import api from '../../api/index.js'
-import SearchBar from './SearchBar';
+import SearchBar from './searchBar';
 
 
 const Header = (props) => {
@@ -17,6 +17,10 @@ const Header = (props) => {
     })
   }
   function pageScroll() {
+    const body = document.getElementById('root')
+    console.log('body', body)
+    const height = body.offsetHeight
+    console.log('height', height)
     window.scroll({
       top: 0,
       left: 0,

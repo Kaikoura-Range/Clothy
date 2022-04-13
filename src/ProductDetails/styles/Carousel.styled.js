@@ -1,4 +1,22 @@
-import styled from 'styled-components';
+import styled, {keyframes, css} from 'styled-components';
+// transition: all 200ms ease-in-out;
+
+// const toggleIn = keyframes`
+//   0% {
+//     transform: translateX(-600px);
+//   }
+//   100% {
+//     transform: translateX(0px);
+//   }
+// `
+const toggleIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`
 
 export const StyledCarouselContainer = styled.div`
   background-image: url(${(({ photo }) => photo ? photo.url : '')});
@@ -7,6 +25,7 @@ export const StyledCarouselContainer = styled.div`
   background-position: bottom;
   /* width: 65%; */
   width: var(--product-carousel-width);
+  animation: ${({animation}) => animation && css`${toggleIn} 0.6s ease-in-out`};
 
   &:hover {
     cursor: zoom-in;
