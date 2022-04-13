@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer, StyledThumbnailContainer, StyledArrowButton, StyledExpandButton, ExpandButtonContainer, ThumbnailCarouselContainer } from './../styles/Carousel.styled.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown, faAngleUp, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import { DispatchContext } from './../../appState/index.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDown, faAngleUp, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import tracker from './../../components/Tracker.js';
 
 function Carousel(props){
   const [activePhoto, setActivePhoto] = useState(null);
   const [photoIndex, setPhotoIndex] = useState(0);
   const [displayedPhotos, setDisplayedPhotos] = useState([]);
   const [displayedPhotosIndexes, setDisplayedPhotosIndexes] = useState([0, 7]);
+  const [, dispatch] = useContext(DispatchContext);
 
   useEffect(() => {
     if (props.photos) {
@@ -46,6 +49,7 @@ function Carousel(props){
   }, [displayedPhotosIndexes]);
 
   const handleMainArrowClick = (e, index) => {
+    tracker(dispatch, 'CarouselArrows', 'ProductDetails');
     setPhotoIndex(index);
     setActivePhoto(props.photos[index]);
 
@@ -63,6 +67,7 @@ function Carousel(props){
   }
 
   const handlePhotoClick = (e, url) => {
+    tracker(dispatch, 'ThumbnailPhoto', 'ProductDetails');
     props.photos.forEach((photo, index) => {
       if (photo.thumbnail_url === url) {
         setActivePhoto(photo);
@@ -73,6 +78,7 @@ function Carousel(props){
   }
 
   const handleThumbnailArrowClick = (e, num) => {
+    tracker(dispatch, 'ThumbnailArrows', 'ProductDetails');
     let newFirstIndex = displayedPhotosIndexes[0] + num;
     let newLastIndex = displayedPhotosIndexes[1] + num;
     let firstIndex = displayedPhotosIndexes[0];

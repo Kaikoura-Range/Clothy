@@ -14,7 +14,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartArrowDown, faAngleRight, faAngleLeft, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import { faFacebook, faTwitter, faPinterest } from '@fortawesome/free-brands-svg-icons';
-import Magnifier from "react-magnifier";
+import Magnifier from 'react-magnifier';
+import tracker from './../../components/Tracker.js';
 
 function ProductInfo(props) {
   const [state] = useContext(StateContext);
@@ -89,6 +90,7 @@ function ProductInfo(props) {
     const pageUrl = document.location.href;
 
     const handleSelectedStyle = (e, style) => {
+      tracker(dispatch, 'Style', 'ProductDetails', activeStyle.style_id);
       setActiveStyle(style);
     }
 
@@ -102,6 +104,7 @@ function ProductInfo(props) {
 
     const onSizeChange = (e) => {
       const selectedSizeIndex = e.target.options.selectedIndex - 1;
+      tracker(dispatch, 'Size', 'ProductDetails', activeStyle.style_id);
 
       if (selectedSizeIndex === -1) {
         setAvailableQty(0);
@@ -121,6 +124,7 @@ function ProductInfo(props) {
     const defaultQty = <option value="none">-</option>;
 
     const handleAddToCart = (e) => {
+      tracker(dispatch, 'AddToCart', 'ProductDetails', activeStyle.style_id);
       if (selectedSize.current.value !== 'default') {
         dispatch({
           type: 'ADD_PRODUCT_TO_CART',
@@ -137,6 +141,7 @@ function ProductInfo(props) {
     }
 
     const toggleExpandedView = (e, index) => {
+      tracker(dispatch, 'ExpandedView', 'ProductDetails', activeStyle.style_id);
       setExpandedViewIndex(index);
       setShowExpandedView(!showExpandedView);
       if (!showExpandedView) {
@@ -145,6 +150,7 @@ function ProductInfo(props) {
     }
 
     const handleArrowsClickExpandedView = (e, num) => {
+      tracker(dispatch, 'ExpandedViewArrows', 'ProductDetails', activeStyle.style_id);
       const currentIndex = expandedViewIndex;
       const allPhotos = activeStyle.photos.length - 1;
       if (currentIndex + num < 0) {
@@ -172,16 +178,19 @@ function ProductInfo(props) {
     }
 
     const handleSocialMediaClick = (e, url) => {
+      tracker(dispatch, 'SocialMedia', 'ProductDetails', activeStyle.style_id);
       window.open(url, 'blank');
     }
 
     const scrollToReviews = (e) => {
       // window.scrollTo(0, document.body.clientHeight * 3);
+      tracker(dispatch, 'ReadAllReviews', 'ProductDetails', activeStyle.style_id);
       const top = document.body.clientHeight * 10;
       window.scroll({top, left: 0, behavior: 'smooth'});
     }
 
     const addProductToOutfit = (e, outfit, productData) => {
+      tracker(dispatch, 'AddToOutfit', 'ProductDetails', activeStyle.style_id);
       if (notInOutfit) {
         const newOutfit = [productData, ...outfit.map(product => product) ]
         dispatch({
