@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ReviewForm from './ReviewForm.js';
 import Rating from './Rating.js';
 import Review from './Review.js';
+import tracker from '../components/Tracker.js'
 
 var mainRenderCount = 0;
 
@@ -52,7 +53,8 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
 
   if(reviewData) {
     return (
-      <Wrapper onClick={(e)=>{console.log(e.target.className)}}>
+      <><Header>Ratings and Reviews</Header>
+      <Wrapper onClick={(e)=>{tracker('TRACK_EVENT', 'reviews', e.target.className)}}>
       <RatingsReviewsContainer data-testid="reviews" className='reviews'>
         <Rating theme={theme} data={reviewMeta} filter={filtered} test={setStarFilter} remove={removeFilter} starcount={starcount}/>
         <ReviewsListContainer className='Reviews list'>
@@ -84,6 +86,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
         </ReviewsListContainer>
       </RatingsReviewsContainer>
       </Wrapper>
+      </>
     )
   }
   
@@ -93,8 +96,14 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
     </div>
   )
 }
+  const Header=styled.h1`
+  margin-left: 5%;
+  font-size: var(--header-fs);
+  color: var(--header-fc);
+  `
   const Wrapper=styled.div`
   background-color: var(--contain-bgc);
+
   `
   const ButtonContainer=styled.div`
   padding: 10px;
@@ -118,6 +127,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   width: 66%;
   flex-direction: column;
   height: 800px;
+  padding-top:2%;
   padding-bottom:2%;
  
   `
@@ -137,7 +147,8 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
 `
 const SearchReviews = styled.input`
   border: 2px solid black;
-  display: block;
+  display:flex;
+  justify-content: space-evenly;
   margin-top: 25px;
   padding: 15px;
   width: 50%;

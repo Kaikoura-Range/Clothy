@@ -93,6 +93,7 @@ border-bottom: 0.5px solid black;
 const ImageContainer = styled.img`
 max-width: 90%;
 max-height: 90%;
+display: inline;
 `
 
 const BackDrop = styled.div`
