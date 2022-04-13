@@ -244,13 +244,13 @@ function ProductInfo(props) {
                 {selectedSize.current.value === 'default' ? defaultQty : availableQuantities}
               </select>
             </FlexRow>
-            <button onClick={handleAddToCart}><FontAwesomeIcon icon={faCartArrowDown} size='xl' style={{'marginRight': '0.7em'}} />Add to cart</button>
-            <button onClick={(e, outfit, prod) => addProductToOutfit(e, state.user.outfit, state.currentProduct)}>{ notInOutfit ? <FontAwesomeIcon icon={farHeart} size='xl'/> : <FontAwesomeIcon icon={faHeart} size='xl'/>}</button>
+            <button onClick={handleAddToCart} aria-label="add to cart"><FontAwesomeIcon icon={faCartArrowDown} size='xl' style={{'marginRight': '0.7em'}} />Add to cart</button>
+            <button aria-label="add to outfit" onClick={(e, outfit, prod) => addProductToOutfit(e, state.user.outfit, state.currentProduct)}>{ notInOutfit ? <FontAwesomeIcon icon={farHeart} size='xl'/> : <FontAwesomeIcon icon={faHeart} size='xl'/>}</button>
           </StyledSizeQty>
           <SocialMediaShareContainer>
-            <SocialMediaShareButton onClick={(e, url) => handleSocialMediaClick(e, `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`)}><FontAwesomeIcon icon={faFacebook} size='xl' /></SocialMediaShareButton>
-            <SocialMediaShareButton onClick={(e, url) => handleSocialMediaClick(e, `https://twitter.com/intent/tweet?text=${pageUrl}.${socialMessage}`)}><FontAwesomeIcon icon={faTwitter} size='xl' /></SocialMediaShareButton>
-            <SocialMediaShareButton><FontAwesomeIcon icon={faPinterest} size='xl' onClick={(e, url) => handleSocialMediaClick(e, `https://pinterest.com/pin/create/bookmarklet/?media=${activeStyle.photos[expandedViewIndex]['thumbnail_url']}&url=${pageUrl}&description=${socialMessage}`)}/></SocialMediaShareButton>
+            <SocialMediaShareButton aria-label="facebook share" onClick={(e, url) => handleSocialMediaClick(e, `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`)}><FontAwesomeIcon icon={faFacebook} size='xl' /></SocialMediaShareButton>
+            <SocialMediaShareButton aria-label="twitter share" onClick={(e, url) => handleSocialMediaClick(e, `https://twitter.com/intent/tweet?text=${pageUrl}.${socialMessage}`)}><FontAwesomeIcon icon={faTwitter} size='xl' /></SocialMediaShareButton>
+            <SocialMediaShareButton aria-label="pinterest share"><FontAwesomeIcon icon={faPinterest} size='xl' onClick={(e, url) => handleSocialMediaClick(e, `https://pinterest.com/pin/create/bookmarklet/?media=${activeStyle.photos[expandedViewIndex]['thumbnail_url']}&url=${pageUrl}&description=${socialMessage}`)}/></SocialMediaShareButton>
           </SocialMediaShareContainer>
           <p style={{fontSize: 'var(--fs-2)'}}>Share on Social Media</p><br/>
       </ProductInfoContainer>

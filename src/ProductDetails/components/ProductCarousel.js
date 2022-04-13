@@ -130,12 +130,14 @@ function Carousel(props){
           <StyledArrowButton
             className="animate"
             onClick={(e, dir) => {handleMainArrowClick(e, (photoIndex - 1)); e.stopPropagation();}}
-            disabled={ photoIndex === 0 ? true : false }>
+            disabled={ photoIndex === 0 ? true : false }
+            aria-label="left image">
             <FontAwesomeIcon icon={faAngleLeft} /></StyledArrowButton>
           <StyledArrowButton
             className="animate"
             onClick={(e, dir) => {handleMainArrowClick(e, (photoIndex + 1)); e.stopPropagation()}}
-            disabled={ photoIndex === props.photos.length - 1 ? true : false }>
+            disabled={ photoIndex === props.photos.length - 1 ? true : false }
+            aria-label="right image">
             <FontAwesomeIcon icon={faAngleRight} /></StyledArrowButton>
         </StyledArrowsContainer>
 
