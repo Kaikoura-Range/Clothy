@@ -94,11 +94,11 @@ const cSelector = {
     <Modal onClick={(e)=> e.stopPropagation()}>
       test
       <ReviewFormContainer>
-        <form onSubmit={onSubmitHandler}>
+        <form onSubmit={onSubmitHandler} style={{'color' : 'black'}}>
           <h1>Write your Review </h1>
           <h2>{`About the ${state.details.product.name}`}</h2>
           <OverallRatingContainer onClick={setStars}>Overall Rating:
-            <Stars theme={state.user.theme} ratingAvg={overallRating}/>
+            <Stars ratingAvg={overallRating}/>
             {starClicked && <p>{overallRating} star: {starDescription[overallRating-1]} </p>}
           </OverallRatingContainer>
           <div>Do you recommend the Product?
@@ -164,6 +164,7 @@ const ReviewFormContainer = styled.div`
   background-color: #f3f3f3;
   border-radius: 5px;
   padding: 20px;
+  color: black;
 `
 const OverallRatingContainer = styled.div`
 display: flex;
