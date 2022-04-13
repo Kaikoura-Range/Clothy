@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { StateContext, DispatchContext } from '../../appState/index';
 import api from '../../api/index.js'
-import SearchBar from './SearchBar';
+import SearchBar from './searchBar';
 
 
 const Header = (props) => {
