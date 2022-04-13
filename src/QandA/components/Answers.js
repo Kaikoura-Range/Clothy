@@ -40,15 +40,17 @@ export default function Answers(props) {
         payload: newUpvoted,
       });
       setShowHelpfulModal(true);
-      api.upvote.answer({ typeId: id, productId: state.currentProduct })
-        .then(() =>  api.load.newProduct(state.currentProduct, dispatch))
+      api.upvote
+        .answer({ typeId: id, productId: state.currentProduct })
+        .then(() => api.load.newProduct(state.currentProduct, dispatch))
         .catch((err) => console.log('helpful question not sent!'));
     }
   };
 
   const reportAnswerHandler = (id) => {
-    api.report.answer({ typeId: id, productId: state.currentProduct })
-      .then(() =>  api.load.newProduct(state.currentProduct, dispatch))
+    api.report
+      .answer({ typeId: id, productId: state.currentProduct })
+      .then(() => api.load.newProduct(state.currentProduct, dispatch))
       .catch((err) => console.log('report answer not sent!'));
   };
 
@@ -73,7 +75,6 @@ export default function Answers(props) {
   const collapseAllAnswersHandler = () => {
     setAddMoreAnswers(0);
   };
-
 
   const sortingBySeller = (values) => {
     let sorted = values.sort((a, b) => {
@@ -204,6 +205,7 @@ const Img = styled.img`
   width: 90px;
   height: 90px;
   margin: 5px;
+  object-fit: cover;
 `;
 
 const BackDrop = styled.div`
