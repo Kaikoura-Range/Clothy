@@ -11,9 +11,9 @@ export default function AnswerForm(props) {
   const [body, setBody] = useState('');
   const [photos, setPhotos] = useState([]);
   const [imageForm, setImageForm] = useState(false);
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    setAnswerForm(1);
     props.showForm();
     let newAnswer = {
       photos: photos,
@@ -37,9 +37,11 @@ export default function AnswerForm(props) {
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
   };
+
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
   };
+
   const onChangeBody = (e) => {
     setBody(e.target.value);
   };
@@ -65,7 +67,13 @@ export default function AnswerForm(props) {
   const previewPhotos = photos.map((photo, i) => (
     <img
       key={i}
-      style={{ width: '90px', height: '90px', marginRight: '7px', marginTop: '10px' }}
+      style={{
+        width: '90px',
+        height: '90px',
+        marginRight: '7px',
+        marginTop: '10px',
+        objectFit: 'cover',
+      }}
       src={photo}
     />
   ));
@@ -76,14 +84,14 @@ export default function AnswerForm(props) {
         <Title>Submit Answer About Product:</Title>
         <ProductName>{state.details.product.name}</ProductName>
         <form onSubmit={onSubmitHandler}>
-          <label>Username: </label>
+          <label style={{ color: 'black' }}>Username: </label>
           <Input
             type='text'
             onChange={onChangeUsername}
             placeholder='Example: jackson11!'
             required
           />
-          <label>Email: </label>
+          <label style={{ color: 'black' }}>Email: </label>
           <Input
             type='email'
             onChange={onChangeEmail}
@@ -126,6 +134,7 @@ const AnswerFormContainer = styled.div`
 
 const Title = styled.h3`
   text-align: center;
+  color: black;
 `;
 
 const TextArea = styled.textarea`
@@ -146,6 +155,7 @@ const Input = styled.input`
 
 const ProductName = styled.h4`
   margin-top: 10px;
+  color: black;
   text-align: center;
 `;
 
@@ -178,17 +188,14 @@ const ImageFormContainer = styled.div`
   display: flex;
 `;
 
-const time = `300ms linear forwards`;
-
 const fadeIn = keyframes`
  from {
     opacity: 0;
-    transform: translateY(-100%)
   }
   to {
     opacity: 1
-    transform: translateY(0)
   }`;
+const time = `300ms linear forwards`;
 
 const Modal = styled.div`
   position: fixed;

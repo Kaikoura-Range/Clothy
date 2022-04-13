@@ -1,25 +1,15 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { DispatchContext } from '../../appState/index.js'
-import api from '../../api/index.js'
+import React from 'react';
+import styled, { css } from 'styled-components';
 
 
-const SearchBarDropDown = ({ products, onLoad }) => {
-  const [, dispatch] = useContext(DispatchContext);
+const SearchBarDropDown = ({ selectable, selected, loadSelected, dropDown }) => {
 
-  const loadProduct = (id) => {
-    return (e) => {
-      api.load.newProduct(id, dispatch)
-      onLoad([])
-    }
-  }
-
-  return products.length ? (
+  return dropDown ? (
     <DropDownContainer>
-        {products.map(productData => {
+        {selectable.map((productData, ind) => {
           const { name, id } = productData
           return (
-            <ProductContainer key={id} onClick={loadProduct(id)} >
+            <ProductContainer hilight={selected === ind}  key={id} onClick={loadSelected(id)} >
               {name}
             </ProductContainer>
           )
@@ -42,7 +32,7 @@ const DropDownContainer = styled.div`
 const ProductContainer = styled.div`
   width: 100%;
   padding: 0.5em;
-  background-color: var(--bgc-2);
+  background-color: ${({ hilight }) => hilight ? css`var(--accent-color)`  : css`var(--bgc-2)` };
   /* background-color: var(--element-bgc); */
   &:hover {
     cursor: pointer;

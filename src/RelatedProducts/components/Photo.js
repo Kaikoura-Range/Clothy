@@ -6,9 +6,10 @@ const fadeTime = 400;
 
 
 const Photo = ({ src, onClick, animate, scrollDown, scrollUp, action, outfit }) => {
+
   const usedSrc = src.thumbnail_url || src.url;
    return usedSrc ? (
-    <CardImageContainer animate={animate} >
+    <CardImageContainer animate={animate}>
       <CardImage
         src={usedSrc}
         data-testid="nav"

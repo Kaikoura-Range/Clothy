@@ -54,18 +54,17 @@ const cSelector = {
       photos: img,
       characteristics: c
     };
-    
+
     api.post
       .review({ typeId: props.id, post:newReview, productId: state.currentProduct })
-      .then((res) => console.log('post question res', res))
+      .then((res) => console.log('post review res', res))   
       .then(() => {
-        props.showForm(false);
-        setName('');
-        setEmail('');
-        setBody('');
+        props.done(false)
+        
+        alert('review sent!')
         api.load.newProduct(state.currentProduct, dispatch)
       })
-      .catch((err) => console.log('question not sent!'));
+      .catch((err) => console.log('review not sent!'));
   };
   }
   const setStars =(e) => {
@@ -93,6 +92,7 @@ const cSelector = {
   }
   return (
     <Modal onClick={(e)=> e.stopPropagation()}>
+      test
       <ReviewFormContainer>
         <form onSubmit={onSubmitHandler}>
           <h1>Write your Review </h1>

@@ -1,19 +1,22 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { StateContext } from '../appState/index.js';
+import { StateContext, DispatchContext } from '../appState/index.js';
 import styled from 'styled-components';
 
 
 import { initProductsFromIds } from './methods.js'
 import Carousel from './components/Carousel.js';
-
+import tracker from '../components/Tracker.js'
 
 
 
 
 
 var renderCount = 0;
-const RelatedProducts = () => {
+const RelatedProducts = ({ children }) => {
+  console.log('Related arguments', arguments)
+
   const [state] = useContext(StateContext)
+  const [, dispatch] = useContext(DispatchContext)
   const { related, user, dev, currentProduct } = state;
   const { outfit } = user
 
@@ -49,16 +52,16 @@ const RelatedProducts = () => {
 
 
   return (
-    <RelatedContainer data-testid="related">
-      <HeaderText>Related Products</HeaderText>
-      <CarouselContainer  >
-        <Carousel products={relatedItemData} outfit={outFitItemData}  />
-      </CarouselContainer>
-      <HeaderText>My outfit</HeaderText>
-      <CarouselContainer >
-        <Carousel outfit={outFitItemData} />
-      </CarouselContainer>
-    </RelatedContainer>
+      <RelatedContainer data-testid="related" >
+        <HeaderText>Related Products</HeaderText>
+        <CarouselContainer  >
+          <Carousel products={relatedItemData} outfit={outFitItemData} />
+        </CarouselContainer>
+        <HeaderText>My outfit</HeaderText>
+        <CarouselContainer >
+          <Carousel outfit={outFitItemData} />
+        </CarouselContainer>
+      </RelatedContainer>
 
   )
 }

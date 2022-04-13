@@ -7,7 +7,6 @@ import api from '../../api/index';
 import HelpfulModal from './modals/HelpfulModal';
 import ErrorModal from './modals/ErrorModal';
 import Image from './modals/Image';
-
 export default function Answers(props) {
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
@@ -206,6 +205,7 @@ const Img = styled.img`
   width: 90px;
   height: 90px;
   margin: 5px;
+  object-fit: cover;
 `;
 
 const BackDrop = styled.div`

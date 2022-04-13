@@ -16,7 +16,17 @@ const Header = (props) => {
       type: 'TOGGLE_THEME',
     })
   }
-
+  function pageScroll() {
+    const body = document.getElementById('root')
+    console.log('body', body)
+    const height = body.offsetHeight
+    console.log('height', height)
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+     });
+  }
 
 
   return (
@@ -24,11 +34,11 @@ const Header = (props) => {
       <HeaderLogoContainer  >
         <LogoText> Clothy </LogoText>
       </HeaderLogoContainer>
-      <HeaderCartContainer >
-        <CartText onClick={toggleTheme} > Cart: {state.user.cart.length}  </CartText>
-        <CartText> Outfit: {state.user.outfit.length}  </CartText>
+      <HeaderDetailsContainer >
         <SearchBar />
-      </HeaderCartContainer>
+        <DetailsText onClick={toggleTheme} > Cart: {state.user.cart.length}  </DetailsText>
+        <DetailsText onClick={pageScroll} > Outfit: {state.user.outfit.length}   </DetailsText>
+      </HeaderDetailsContainer>
     </HeaderContainer>
   )
 }
@@ -39,45 +49,43 @@ const HeaderContainer = styled.div`
   width: 100%;
   height: 50px;
   position: sticky;
-  background-Color: rgb(247, 193, 18);
   z-index: 1;
+  background-Color: var(--accent-color);
 `
 
 const HeaderLogoContainer = styled.div`
   left: 0;
-  width: 200px;
+  width: 60%;
   height: 100%;
   display: flex;
+  padding-left: 3%;
   position: absolute;
   align-Items: center;
-  justify-Content: center;
-  background-Color: rgb(247, 193, 18);;
 `
 const LogoText = styled.h2`
   color: white;
 `
 
-const HeaderCartContainer = styled.div`
+const HeaderDetailsContainer = styled.div`
   right: 0;
-  width: 45%;
+  width: 40%;
   height: 100%;
   display: flex;
   position: absolute;
   align-Items: center;
   justify-Content: space-evenly;
-  background-Color: rgb(247, 193, 18);;
 `
 
-const CartText = styled.h3`
+const DetailsText = styled.h3`
   color: white;
 `
 
 const HeaderSearchBar = styled.input`
   width: 45%;
   height: 75%;
+  padding-left: 1em;
   border-radius: 2px;
   background-color: var(--contain-bgc);
-  padding-left: 1em;
 `
 
 
