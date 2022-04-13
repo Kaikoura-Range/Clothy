@@ -27,7 +27,7 @@ export default function Stars({ratingAvg, theme, starColor}) {
                     break;
 
                 case three:
-                    stars.push(0.75);
+                    stars.push(0.7);
                     break;
                 case full:
                     stars.push(1.0);
