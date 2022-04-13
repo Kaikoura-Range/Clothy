@@ -11,7 +11,7 @@ import { SocialMediaShareContainer, SocialMediaShareButton } from './../styles/S
 import _ from 'underscore';
 import Stars from './../styles/Star.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartArrowDown, faAngleRight, faAngleLeft, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faCartArrowDown, faAngleRight, faAngleLeft, faHeart, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import { faFacebook, faTwitter, faPinterest } from '@fortawesome/free-brands-svg-icons';
 import Magnifier from 'react-magnifier';
@@ -53,7 +53,6 @@ function ProductInfo(props) {
     if (props.styles) {
       setActiveStyle(props.styles.results[0]);
       setNotInOutfit(state.user.outfit.length ?  state.user.outfit.every(product => state.currentProduct !== product) : true);
-      console.log(document.getElementById('reviewSection'));
       if (props.styles.results.length === 0) {
         setSkus(['OUT OF STOCK']);
       } else {
@@ -89,13 +88,13 @@ function ProductInfo(props) {
     const socialMessage = `Just discovered this website and love their ${category}. Check this one out!`;
     const pageUrl = document.location.href;
 
-    const handleSelectedStyle = (e, style) => {
+    const handleSelectedStyle = (e, style, index) => {
       tracker(dispatch, 'Style', 'ProductDetails', activeStyle.style_id);
       setActiveStyle(style);
     }
 
-    const allStyles = props.styles.results.map(style =>
-      <StylesImages src={style.photos[0].thumbnail_url} alt={style.name} key={style.style_id} active={style.name === activeStyle.name} onClick={(e) => handleSelectedStyle(e, style)}/>
+    const allStyles = props.styles.results.map((style, i) =>
+      <div>{ style.name === activeStyle.name ? <button><FontAwesomeIcon icon={faCheck} size='xs' /></button> : ''}<StylesImages src={style.photos[0].thumbnail_url} alt={style.name} key={style.style_id} active={style.name === activeStyle.name} onClick={(e) => handleSelectedStyle(e, style, i)}/></div>
     )
 
     const availableSizes = skus.map((sku, index) =>
