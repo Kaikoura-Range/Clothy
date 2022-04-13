@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer, StyledThumbnailContainer, StyledArrowButton, StyledExpandButton, ExpandButtonContainer, ThumbnailCarouselContainer } from './../styles/Carousel.styled.js';
 import { DispatchContext } from './../../appState/index.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faAngleUp, faAngleRight, faAngleLeft, faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';
 import tracker from './../../components/Tracker.js';
 
 function Carousel(props){
@@ -114,7 +114,8 @@ function Carousel(props){
         {/** Thumbnails buttons and images */}
         <ExpandButtonContainer>
           <StyledExpandButton
-            onClick={(e, index) => props.handleExpandedView(e, photoIndex)}>Expand</StyledExpandButton>
+            onClick={(e, index) => props.handleExpandedView(e, photoIndex)}>
+            <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} /></StyledExpandButton>
         </ExpandButtonContainer>
 
         {/** Thumbnail carousel */}
