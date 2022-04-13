@@ -115,13 +115,15 @@ function Carousel(props){
         <ThumbnailCarouselContainer>
           <StyledArrowButton
             onClick={(e, num) => {handleThumbnailArrowClick(e, -1); e.stopPropagation()}}
-            disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === 0 ? true : false }><FontAwesomeIcon icon={faAngleUp} /></StyledArrowButton>
+            disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === 0 ? true : false }
+            aria-label="top image"><FontAwesomeIcon icon={faAngleUp} /></StyledArrowButton>
           <StyledThumbnailContainer>
             {allPhotos}
           </StyledThumbnailContainer>
           <StyledArrowButton
             onClick={(e, num) => {handleThumbnailArrowClick(e, 1); e.stopPropagation()}}
-            disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === props.photos.length - 7 ? true : false }>
+            disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === props.photos.length - 7 ? true : false }
+            aria-label="down image">
             <FontAwesomeIcon icon={faAngleDown} /></StyledArrowButton>
         </ThumbnailCarouselContainer>
 
