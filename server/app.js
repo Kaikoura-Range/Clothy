@@ -50,7 +50,7 @@ app.get('/product/data', (req, res) => {
   if (newId && endpoints) {
     api.get.productData(newId, endpoints)
       .then(productRes => res.status(200).send(productRes))
-      .catch(err => console.log('api.get.allProductData err', err))
+      .catch(err => console.log('api.get.allProductData err'))
   } else {
     res.status(406).send('No product id attached')
   }
@@ -68,7 +68,7 @@ app.get('/products/search', (req, res) => {
     db.search.then(func => func(term, searchBy))
       .then(productRes => res.status(200).send(productRes))
       .catch(err => {
-        console.log('api.search err', err)
+        console.log('api.search err')
         res.status(500).send(null)
       })
   } else {
@@ -87,7 +87,7 @@ app.post('/new',  (req, res) => {
   if (type && post) {
     api.post[type](post, productId, typeId)
       .then(postRes => res.status(204).send('created'))
-      .catch(err => console.log('api.post err', req.body,  err))
+      .catch(err => console.log('api.post err', req.body))
   } else {
     res.status(406).send('Type/body not attached')
   }
@@ -104,7 +104,7 @@ app.post('/report',  (req, res) => {
   if (type && typeId) {
     api.post[type].report(typeId, productId)
       .then(postRes => res.status(204).send('created'))
-      .catch(err => console.log('api.post.report err', req.body,  err))
+      .catch(err => console.log('api.post.report err', req.body))
   } else {
     res.status(406).send('Type/body not attached')
   }
@@ -120,7 +120,7 @@ app.post('/upvote',  (req, res) => {
   if (type && typeId) {
     api.post[type].helpful(typeId, productId)
       .then(postRes => res.status(204).send('created'))
-      .catch(err => console.log('api.post.upvote err', req.body, err))
+      .catch(err => console.log('api.post.upvote err', req.body))
   } else {
     res.status(406).send('Type/body not attached')
   }

@@ -30,11 +30,6 @@ const loadNewProduct = (productId, dispatch) => {
       type: 'PROD_INIT',
       payload: response,
     });
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-     });
   })
   .catch((err) => {
     console.log('Data init fetch error: ', err)
