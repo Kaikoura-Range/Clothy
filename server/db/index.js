@@ -85,7 +85,9 @@ const initSearchProducts = async () => {
   console.log('search is ready.')
   return (textToMatch, searchBy = 'name') => {
     textToMatch = textToMatch.toUpperCase()
-    const matched = allProducts.filter(doc => doc[searchBy].toUpperCase().includes(textToMatch))
+    const matched = allProducts.filter(doc => {
+      return doc[searchBy].toString().toUpperCase().includes(textToMatch)
+    })
     const sorted = sortMatched(textToMatch, searchBy, matched)
     return new Promise((res, rej) => res(sorted))
   }

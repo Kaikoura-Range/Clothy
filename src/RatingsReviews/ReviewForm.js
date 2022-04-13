@@ -54,18 +54,17 @@ const cSelector = {
       photos: img,
       characteristics: c
     };
-    
-    
+
     api.post
       .review({ typeId: props.id, post:newReview, productId: state.currentProduct })
-      .then((res) => console.log('sent', res))
+      .then((res) => console.log('post review res', res))   
       .then(() => {
         props.done(false)
         
         alert('review sent!')
         api.load.newProduct(state.currentProduct, dispatch)
       })
-      .catch((err) => console.log('not sent'));
+      .catch((err) => console.log('review not sent!'));
   };
   }
   const setStars =(e) => {

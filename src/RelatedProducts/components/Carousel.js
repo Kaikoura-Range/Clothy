@@ -24,7 +24,7 @@ const Carousel = ({ products, outfit, track }) => {
           track={track}
           data={data}
           outfit={cardFunction(outfit, dispatch, data, ind)}
-          nav={() => api.load.newProduct(data.id, dispatch)}
+          nav={() => navToNewProduct(data.id, dispatch)}
           key={data.id ? data.id : ind}
           dispatch={dispatch}
           // action={products ? "Add to" : "Remove from"}
@@ -37,6 +37,15 @@ const Carousel = ({ products, outfit, track }) => {
 }
 
 
+
+const navToNewProduct = (productId, dispatch) => {
+  api.load.newProduct(productId, dispatch)
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth'
+   });
+}
 
 
 const compareToCurrent = (outfit, dispatch, productData, index) => {
