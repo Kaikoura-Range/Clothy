@@ -25,7 +25,7 @@ export const StyledExpandedViewContainer = styled.div`
   background-size: cover;
   background-position: bottom;
   position: absolute;
-  cursor: crosshair;
+  cursor: zoom-in;
 
   button {
     width: 1.8em;

@@ -5,7 +5,9 @@ import ThemeProvider, { lightTheme, darkTheme } from './ThemeProvider';
 export const DispatchContext = React.createContext([null, () => {}]);
 export const StateContext = React.createContext([{}]);
 
- //localStorage.removeItem('user')
+
+//localStorage.removeItem('user')
+
 const savedInLocal = localStorage.getItem('user');
 const localStoreUser = savedInLocal
   ? JSON.parse(savedInLocal)
