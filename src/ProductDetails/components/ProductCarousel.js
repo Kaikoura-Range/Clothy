@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer, StyledThumbnailContainer, StyledArrowButton, StyledExpandButton, ExpandButtonContainer, ThumbnailCarouselContainer } from './../styles/Carousel.styled.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown, faAngleUp, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import { DispatchContext } from './../../appState/index.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDown, faAngleUp, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import tracker from './../../components/Tracker.js';
 
 function Carousel(props){
   const [activePhoto, setActivePhoto] = useState(null);
   const [photoIndex, setPhotoIndex] = useState(0);
   const [displayedPhotos, setDisplayedPhotos] = useState([]);
   const [displayedPhotosIndexes, setDisplayedPhotosIndexes] = useState([0, 7]);
+  const [, dispatch] = useContext(DispatchContext);
 
   useEffect(() => {
     if (props.photos) {
@@ -46,6 +49,7 @@ function Carousel(props){
   }, [displayedPhotosIndexes]);
 
   const handleMainArrowClick = (e, index) => {
+    tracker(dispatch, 'CarouselArrows', 'ProductDetails');
     setPhotoIndex(index);
     setActivePhoto(props.photos[index]);
 
@@ -63,6 +67,7 @@ function Carousel(props){
   }
 
   const handlePhotoClick = (e, url) => {
+    tracker(dispatch, 'ThumbnailPhoto', 'ProductDetails');
     props.photos.forEach((photo, index) => {
       if (photo.thumbnail_url === url) {
         setActivePhoto(photo);
@@ -73,6 +78,7 @@ function Carousel(props){
   }
 
   const handleThumbnailArrowClick = (e, num) => {
+    tracker(dispatch, 'ThumbnailArrows', 'ProductDetails');
     let newFirstIndex = displayedPhotosIndexes[0] + num;
     let newLastIndex = displayedPhotosIndexes[1] + num;
     let firstIndex = displayedPhotosIndexes[0];
@@ -115,13 +121,15 @@ function Carousel(props){
         <ThumbnailCarouselContainer>
           <StyledArrowButton
             onClick={(e, num) => {handleThumbnailArrowClick(e, -1); e.stopPropagation()}}
-            disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === 0 ? true : false }><FontAwesomeIcon icon={faAngleUp} /></StyledArrowButton>
+            disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === 0 ? true : false }
+            aria-label="top image"><FontAwesomeIcon icon={faAngleUp} /></StyledArrowButton>
           <StyledThumbnailContainer>
             {allPhotos}
           </StyledThumbnailContainer>
           <StyledArrowButton
             onClick={(e, num) => {handleThumbnailArrowClick(e, 1); e.stopPropagation()}}
-            disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === props.photos.length - 7 ? true : false }>
+            disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === props.photos.length - 7 ? true : false }
+            aria-label="down image">
             <FontAwesomeIcon icon={faAngleDown} /></StyledArrowButton>
         </ThumbnailCarouselContainer>
 
@@ -130,12 +138,14 @@ function Carousel(props){
           <StyledArrowButton
             className="animate"
             onClick={(e, dir) => {handleMainArrowClick(e, (photoIndex - 1)); e.stopPropagation();}}
-            disabled={ photoIndex === 0 ? true : false }>
+            disabled={ photoIndex === 0 ? true : false }
+            aria-label="left image">
             <FontAwesomeIcon icon={faAngleLeft} /></StyledArrowButton>
           <StyledArrowButton
             className="animate"
             onClick={(e, dir) => {handleMainArrowClick(e, (photoIndex + 1)); e.stopPropagation()}}
-            disabled={ photoIndex === props.photos.length - 1 ? true : false }>
+            disabled={ photoIndex === props.photos.length - 1 ? true : false }
+            aria-label="right image">
             <FontAwesomeIcon icon={faAngleRight} /></StyledArrowButton>
         </StyledArrowsContainer>
 
