@@ -1,4 +1,13 @@
-import styled from 'styled-components';
+import styled, {keyframes, css} from 'styled-components';
+
+const toggleIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`
 
 export const StyledExpandedViewModal = styled.div`
   top: 0;

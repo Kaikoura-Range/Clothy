@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer, StyledThumbnailContainer, StyledArrowButton, StyledExpandButton, ExpandButtonContainer, ThumbnailCarouselContainer } from './../styles/Carousel.styled.js';
 import { DispatchContext } from './../../appState/index.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,9 +11,14 @@ function Carousel(props){
   const [displayedPhotos, setDisplayedPhotos] = useState([]);
   const [displayedPhotosIndexes, setDisplayedPhotosIndexes] = useState([0, 7]);
   const [, dispatch] = useContext(DispatchContext);
+  const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
     if (props.photos) {
+      setAnimate(true);
+      setTimeout(() => {
+        setAnimate(false);
+      }, 600);
       if (props.photos.length - 1 >= photoIndex) {
         setActivePhoto(props.photos[photoIndex]);
       } else {
@@ -26,6 +31,10 @@ function Carousel(props){
 
   useEffect(() => {
     if (props.photos) {
+      setAnimate(true);
+      setTimeout(() => {
+        setAnimate(false);
+      }, 500);
       setActivePhoto(props.photos[0]);
       setDisplayedPhotos(props.photos.slice(0, 7));
       setDisplayedPhotosIndexes([0, 7]);
@@ -50,6 +59,10 @@ function Carousel(props){
 
   const handleMainArrowClick = (e, index) => {
     tracker(dispatch, 'CarouselArrows', 'ProductDetails');
+    setAnimate(true);
+    setTimeout(() => {
+      setAnimate(false);
+    }, 500);
     setPhotoIndex(index);
     setActivePhoto(props.photos[index]);
 
@@ -68,6 +81,10 @@ function Carousel(props){
 
   const handlePhotoClick = (e, url) => {
     tracker(dispatch, 'ThumbnailPhoto', 'ProductDetails');
+    setAnimate(true);
+    setTimeout(() => {
+      setAnimate(false);
+    }, 500);
     props.photos.forEach((photo, index) => {
       if (photo.thumbnail_url === url) {
         setActivePhoto(photo);
@@ -79,6 +96,10 @@ function Carousel(props){
 
   const handleThumbnailArrowClick = (e, num) => {
     tracker(dispatch, 'ThumbnailArrows', 'ProductDetails');
+    setAnimate(true);
+    setTimeout(() => {
+      setAnimate(false);
+    }, 500);
     let newFirstIndex = displayedPhotosIndexes[0] + num;
     let newLastIndex = displayedPhotosIndexes[1] + num;
     let firstIndex = displayedPhotosIndexes[0];
@@ -109,7 +130,8 @@ function Carousel(props){
     return(
       <StyledCarouselContainer
         photo={activePhoto}
-        onClick={(e, index) => props.handleExpandedView(e, photoIndex)}>
+        onClick={(e, index) => props.handleExpandedView(e, photoIndex)}
+        animation={animate}>
 
         {/** Thumbnails buttons and images */}
         <ExpandButtonContainer>
