@@ -38,7 +38,7 @@ const Header = (props) => {
       <HeaderDetailsContainer >
         <SearchBar />
         <DetailsText onClick={toggleTheme} ><FontAwesomeIcon icon={faCircleHalfStroke} /></DetailsText>
-        <DetailsText onClick={pageScroll} ><FontAwesomeIcon icon={faHeart} />  {state.user.outfit.length}  </DetailsText>
+        <DetailsText ><FontAwesomeIcon icon={faHeart} />  {state.user.outfit.length}  </DetailsText>
         <DetailsText ><FontAwesomeIcon icon={faCartShopping} />  {state.user.cart.length}</DetailsText>
       </HeaderDetailsContainer>
     </HeaderContainer>
