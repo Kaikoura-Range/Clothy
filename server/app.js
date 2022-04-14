@@ -28,16 +28,26 @@ const db = require('./db/index.js')
 const requestLogs = true
 let numRequests = 0;
 
+const getTime = (seconds) => {
+  var hours = Math.floor(seconds / 3600)
+  seconds = seconds % 3600
+  var minutes = Math.floor(seconds / 60)
+  seconds = seconds % 60
+  return hours ? `${hours} hours, ${minutes} minutes, and ${seconds} seconds` : `${minutes} minutes and ${seconds} seconds`
+
+}
+
 if (requestLogs) {
   console.log('requestLogs: ', requestLogs)
   const logInterval = 10000//ms
   let upTime = 0;
   setInterval(() =>{
     upTime += logInterval
-    const seconds = Math.round(upTime/1000)
+    var seconds = Math.round(upTime/1000)
+    const time = getTime(seconds)
     var reqPerSec = ( numRequests / seconds )
     reqPerSec = +reqPerSec.toFixed(2);
-    console.log(`\nSTATUS update:\n  number of requests: ${numRequests}\n  uptime (seconds): ${seconds} \n  requests/second: ${reqPerSec}`)
+    console.log(`\nSTATUS update:\n  number of requests: ${numRequests}\n  uptime: ${time} \n  requests/second: ${reqPerSec}`)
   }, logInterval)
 }
 

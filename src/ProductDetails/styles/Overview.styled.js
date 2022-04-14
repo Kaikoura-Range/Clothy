@@ -8,12 +8,10 @@ export const ProductOverviewContainer = styled.div`
 
 export const ProductInfoContainer = styled.div`
   display: flex;
+  min-width: 30%;
   flex-direction: column;
-  /* margin-left: 7em; */
-  /* margin-left: 7%; */
-  padding: 3em;
-  margin: auto;
   justify-content: center;
+  align-items: center;
 `
 
 export const StyledOverviewContainer = styled.div`
@@ -54,6 +52,7 @@ export const StyledCurrentStyle = styled.p`
     border-radius: 1em;
     padding: 0 0.6em;
     font-size: var(--fs-1);
+    color: rgb(25,25,25);
   }
 `
 

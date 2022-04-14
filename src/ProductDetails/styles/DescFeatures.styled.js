@@ -31,7 +31,7 @@ export const StyledFeaturesContainer = styled.div`
 `
 
 export const StyledDescriptionContainer = styled.div`
-  width: 45%;
+  max-width: 40%;
   margin: 3em;
 
   p, h3 {
