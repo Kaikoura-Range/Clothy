@@ -57,10 +57,10 @@ const cSelector = {
 
     api.post
       .review({ typeId: props.id, post:newReview, productId: state.currentProduct })
-      .then((res) => console.log('post review res', res))   
+      .then((res) => console.log('post review res', res))
       .then(() => {
         props.done(false)
-        
+
         alert('review sent!')
         api.load.newProduct(state.currentProduct, dispatch)
       })

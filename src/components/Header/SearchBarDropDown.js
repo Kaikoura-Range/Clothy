@@ -21,6 +21,7 @@ const SearchBarDropDown = ({ selectable, selected, loadSelected, dropDown }) => 
   null
 }
 
+
 const DropDownContainer = styled.div`
   width: 100%;
   display: flex;
