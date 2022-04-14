@@ -4,8 +4,8 @@
   "description": "Serving fec",
   "main": "app.js",
   "scripts": {
-    "server:dev": "env-cmd -f .env.staging  npx nodemon --watch server/  node server/app.js",
-    "server:start": "env-cmd -f .env.staging  node server/app.js"
+    "server:dev": "env-cmd -f .env.staging  npx nodemon --watch server/  node app.js",
+    "server:start": "env-cmd -f .env.staging  node app.js"
   },
   "repository": {
     "type": "git",

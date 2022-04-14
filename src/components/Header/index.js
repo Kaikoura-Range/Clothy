@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { StateContext, DispatchContext } from '../../appState/index';
 import api from '../../api/index.js'
-import SearchBar from './SearchBar';
+import SearchBar from './searchBar.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping, faHeart, faCircleHalfStroke } from '@fortawesome/free-solid-svg-icons'
 
