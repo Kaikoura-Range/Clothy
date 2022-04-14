@@ -17,6 +17,10 @@ app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.static(path.join(__dirname, "../dist")));
 
+app.use((req, res, next) => {
+  console.log('REQUEST')
+  next()
+})
 
 const api = require('./api/index.js');
 const db = require('./db/index.js')
