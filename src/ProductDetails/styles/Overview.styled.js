@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const ProductOverviewContainer = styled.div`
   display: flex;
+  min-height: ${({ minHeight }) =>  minHeight.toString() + 'px'};
   flex-direction: var(--product-flex);
 `
 

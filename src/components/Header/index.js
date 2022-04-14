@@ -17,18 +17,6 @@ const Header = (props) => {
       type: 'TOGGLE_THEME',
     })
   }
-  function pageScroll() {
-    const body = document.getElementById('root')
-    console.log('body', body)
-    const height = body.offsetHeight
-    console.log('height', height)
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-     });
-  }
-
 
   return (
     <HeaderContainer data-testid="Header" >
@@ -51,7 +39,6 @@ const HeaderContainer = styled.div`
   width: 100%;
   height: 54px;
   position: sticky;
-  z-index: 1;
   background-Color: var(--accent-color);
 `
 
@@ -65,8 +52,8 @@ const HeaderLogoContainer = styled.div`
   align-Items: center;
 `
 const LogoText = styled.h2`
-  color: white;
   font-size: 3em;
+  color: var(--main-bgc);
   font-family: 'Brush Script MT', cursive;
 `
 
@@ -75,24 +62,15 @@ const HeaderDetailsContainer = styled.div`
   width: 40%;
   height: 100%;
   display: flex;
+  padding-right: 3%;
   position: absolute;
   align-items: center;
   justify-content: end;
-  padding-right: 3%;
 `
 
 const DetailsText = styled.h3`
-  color: white;
   padding-left: 5%;
+  color: var(--bgc-1);
 `
-
-const HeaderSearchBar = styled.input`
-  width: 45%;
-  height: 75%;
-  padding-left: 1em;
-  border-radius: 2px;
-  background-color: var(--contain-bgc);
-`
-
 
 export default Header

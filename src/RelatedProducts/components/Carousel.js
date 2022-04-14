@@ -9,8 +9,8 @@ import { RelatedCard } from './RelatedCard.js'
 
 
 const Carousel = ({ products, outfit, track }) => {
-  var rendered = products || outfit
   const [, dispatch] = useContext(DispatchContext);
+  var rendered = products || outfit
   var cardFunction = products ? compareToCurrent : getRemoveProductFromOutfit
 
 
@@ -27,7 +27,6 @@ const Carousel = ({ products, outfit, track }) => {
           nav={() => navToNewProduct(data.id, dispatch)}
           key={data.id ? data.id : ind}
           dispatch={dispatch}
-          // action={products ? "Add to" : "Remove from"}
           action={products ? "Compare" : "Remove"}
           />
         )
@@ -97,16 +96,14 @@ const getAddProductToOutfit = (outfit, dispatch, productData, index) => {
 
 
 const CarouselContainer = styled.div`
-  width: var(--module-width);
   height: auto;
   display: flex;
   padding: 2em;
   overflow: auto;
   padding-top: 2em;
-  /* padding-bottom: 2em; */
-  /* border-radius: 7px; */
   align-items: center;
   white-space: nowrap;
+  width: var(--module-width);
   background-color: var( --contain-bgc);
 
 `

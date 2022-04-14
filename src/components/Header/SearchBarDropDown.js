@@ -33,7 +33,6 @@ const ProductContainer = styled.div`
   width: 100%;
   padding: 0.5em;
   background-color: ${({ hilight }) => hilight ? css`var(--accent-color)`  : css`var(--bgc-2)` };
-  /* background-color: var(--element-bgc); */
   &:hover {
     cursor: pointer;
     background-color: var(--bgc-3);

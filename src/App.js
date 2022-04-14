@@ -19,10 +19,6 @@ var requestCount = 0;
 function App() {
   const [, dispatch] = useContext(DispatchContext);
   const [state] = useContext(StateContext);
-  // console.log('this', App.name)
-  // console.log('arguments', arguments)
-
-
 
   if( state.dev.logs ) { // Used to see preformance and data flow
     renderCount++
@@ -39,7 +35,6 @@ function App() {
       return (
         <LoadingContainer className='App' data-testid="app"  >
           <LoadingScreen>
-            <LoadingText>Temp loading screen</LoadingText>
           </LoadingScreen>
         </LoadingContainer>
       );
@@ -92,10 +87,6 @@ const LoadingScreen = styled.div`
   align-items: center;
   justify-content: center;
   background-color: var(--main-bgc);
-
-`
-const LoadingText = styled.h1`
-  /* color: var(--bgc2); */
 
 `
 
