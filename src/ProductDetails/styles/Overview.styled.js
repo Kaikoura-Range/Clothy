@@ -2,13 +2,17 @@ import styled from 'styled-components';
 
 export const ProductOverviewContainer = styled.div`
   display: flex;
+  min-height: ${({ minHeight }) =>  minHeight.toString() + 'px'};
   flex-direction: var(--product-flex);
 `
 
 export const ProductInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 7em;
+  /* margin-left: 7em; */
+  /* margin-left: 7%; */
+  padding: 3em;
+  margin: auto;
   justify-content: center;
 `
 

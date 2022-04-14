@@ -2,8 +2,9 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { StateContext, DispatchContext } from '../../appState/index';
 import api from '../../api/index.js'
-import SearchBar from './searchBar';
-
+import SearchBar from './SearchBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartShopping, faHeart, faCircleHalfStroke } from '@fortawesome/free-solid-svg-icons'
 
 const Header = (props) => {
   const [state] = useContext(StateContext)
@@ -16,18 +17,6 @@ const Header = (props) => {
       type: 'TOGGLE_THEME',
     })
   }
-  function pageScroll() {
-    const body = document.getElementById('root')
-    console.log('body', body)
-    const height = body.offsetHeight
-    console.log('height', height)
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-     });
-  }
-
 
   return (
     <HeaderContainer data-testid="Header" >
@@ -36,8 +25,9 @@ const Header = (props) => {
       </HeaderLogoContainer>
       <HeaderDetailsContainer >
         <SearchBar />
-        <DetailsText onClick={toggleTheme} > Cart: {state.user.cart.length}  </DetailsText>
-        <DetailsText onClick={pageScroll} > Outfit: {state.user.outfit.length}   </DetailsText>
+        <DetailsText onClick={toggleTheme} ><FontAwesomeIcon icon={faCircleHalfStroke} /></DetailsText>
+        <DetailsText ><FontAwesomeIcon icon={faHeart} />  {state.user.outfit.length}  </DetailsText>
+        <DetailsText ><FontAwesomeIcon icon={faCartShopping} />  {state.user.cart.length}</DetailsText>
       </HeaderDetailsContainer>
     </HeaderContainer>
   )
@@ -47,46 +37,40 @@ const HeaderContainer = styled.div`
   top: 0;
   z-index: 1;
   width: 100%;
-  height: 50px;
+  height: 54px;
   position: sticky;
-  z-index: 1;
   background-Color: var(--accent-color);
 `
 
 const HeaderLogoContainer = styled.div`
   left: 0;
-  width: 60%;
   height: 100%;
   display: flex;
   padding-left: 3%;
   position: absolute;
   align-Items: center;
+  width: var(--header-logo-width);
 `
 const LogoText = styled.h2`
-  color: white;
+  font-size: 3em;
+  color: var(--main-bgc);
+  font-family: 'Brush Script MT', cursive;
 `
 
 const HeaderDetailsContainer = styled.div`
   right: 0;
-  width: 40%;
   height: 100%;
   display: flex;
+  padding-right: 3%;
   position: absolute;
-  align-Items: center;
-  justify-Content: space-evenly;
-`
+  align-items: center;
+  justify-content: end;
+  width: var(--header-cart-width);
+  `
 
 const DetailsText = styled.h3`
-  color: white;
+  padding-left: 5%;
+  color: var(--bgc-1);
 `
-
-const HeaderSearchBar = styled.input`
-  width: 45%;
-  height: 75%;
-  padding-left: 1em;
-  border-radius: 2px;
-  background-color: var(--contain-bgc);
-`
-
 
 export default Header

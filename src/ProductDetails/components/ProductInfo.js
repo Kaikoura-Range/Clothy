@@ -6,7 +6,7 @@ import { FlexRow } from './../styles/Flex.styled.js'
 import { StylesImages, StylesContainer } from './../styles/Styles.styled.js'
 import StyledSizeQty from './../styles/SizeQty.styled.js'
 import { ProductOverviewContainer, StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory, StyledReviews, ProductInfoContainer, StarsReviewContainer } from './../styles/Overview.styled.js'
-import { StyledExpandedViewContainer, StyledExpandedViewModal, StyledDotImage, ZoomedImage, ExpandedViewImage } from './../styles/ExpandedCarouselView.styled.js';
+import { StyledExpandedViewContainer, StyledExpandedViewModal, StyledDotImage } from './../styles/ExpandedCarouselView.styled.js';
 import { SocialMediaShareContainer, SocialMediaShareButton } from './../styles/SocialMedia.styled.js';
 import _ from 'underscore';
 import Stars from './../styles/Star.js';
@@ -32,7 +32,6 @@ function ProductInfo(props) {
   const [zoomView, setZoomView] = useState(false);
   const [, dispatch] = useContext(DispatchContext);
   const [notInOutfit, setNotInOutfit] = useState(true);
-  const [animate, setAnimate] = useState(false);
 
   const handleSizeDuplicates = (originalSkus) => {
     const sizeDuplicates = originalSkus.reduce((allSkus, currentSku) => {
@@ -142,10 +141,6 @@ function ProductInfo(props) {
 
     const toggleExpandedView = (e, index) => {
       tracker(dispatch, 'ExpandedView', 'ProductDetails', activeStyle.style_id);
-      // setAnimate(true);
-      // setTimeout(() => {
-      //   setAnimate(false);
-      // }, 500);
       setExpandedViewIndex(index);
       setShowExpandedView(!showExpandedView);
       if (!showExpandedView) {
@@ -214,12 +209,11 @@ function ProductInfo(props) {
       setNotInOutfit(!notInOutfit);
     }
 
-
     return(<>
       {/**  Expanded View (Modal) */}
       {showExpandedView ?
       <StyledExpandedViewModal onClick={(e) => toggleExpandedView(e, expandedViewIndex)}>
-        <StyledExpandedViewContainer onClick={(e) =>{ setZoomView(!zoomView); e.stopPropagation()}} bgImg={expandedViewImage} id="container" animation={animate}>
+        <StyledExpandedViewContainer onClick={(e) =>{ setZoomView(!zoomView); e.stopPropagation()}} bgImg={expandedViewImage} id="container">
           { !zoomView ? <>
             <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}><FontAwesomeIcon icon={faAngleLeft} /></button>
             {expandedViewDots}
@@ -228,7 +222,7 @@ function ProductInfo(props) {
       </StyledExpandedViewModal> : '' }
 
       {/**  Carousel */}
-      <ProductOverviewContainer>
+      <ProductOverviewContainer minHeight={state.media.width * 0.5}  >
       <Carousel photos={activeStyle.photos} handleExpandedView={toggleExpandedView} expandedImage={expandedViewIndex} newProduct={props.styles}/>
 
       {/**  Right-side (main product info) */}
@@ -269,7 +263,7 @@ function ProductInfo(props) {
       </ProductInfoContainer>
     </ProductOverviewContainer></>)
   } else {
-    return (<ProductOverviewContainer>
+    return (<ProductOverviewContainer  minHeight={state.media.width * 0.65} >
       <Carousel/>
       <ProductInfoContainer/>
     </ProductOverviewContainer>)

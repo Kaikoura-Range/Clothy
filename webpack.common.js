@@ -1,8 +1,18 @@
 const path = require("path");
+const webpack = require('webpack')
 // const styledComponentsPlugin = require('babel-plugin-styled-components');
+
+const environmentVariables = [
+  "BASE_URL",
+];
+
 
 module.exports = {
   entry: path.resolve(__dirname,  "src/index.js"),
+
+  plugins: [
+    new webpack.EnvironmentPlugin(environmentVariables)
+  ],
 
   module: {
     rules: [

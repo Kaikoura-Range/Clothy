@@ -90,6 +90,8 @@ code {
     --main-Photo-width: 100%;
     --main-Photo-heigth: ${({ dimensions }) => css`${(dimensions.width).toString()}px`};
 
+    --header-cart-width: 75%;
+    --header-logo-width: 25%;
 
     --searchBar-width: 80%;
     color: var(--body-fc);
@@ -104,11 +106,15 @@ code {
       --product-carousel-width: 65%;
       --product-info-width: 35%;
       --searchBar-width: 50%;
+      --header-cart-width: 50%;
+      --header-logo-width: 50%;
     }
 
     @media (min-width: ${media.laptop} ) {
      --body-fs: var(--fs1);
      --header-fs: var(--fs3);
+     --header-cart-width: 40%;
+     --header-logo-width: 60%;
     }
   }
 `
@@ -177,23 +183,6 @@ var darkBase = {
 }
 
 
-// var darkBase = {
-//   background: {
-//     color: [247, 193, 18],
-//     change: [-5, -5, -5]
-//   },
-//   font: {
-//     fontSize: {
-//       value: 1,
-//       range: 3,
-//       change: [.1]
-//     },
-//     fontColor: {
-//       value: [240, 240, 240]
-//     }
-//   }
-// }
-
 var ligthBase = {
   background: {
     color: [240,240,240],
@@ -215,170 +204,4 @@ export const darkTheme = createTheme(darkBase)
 export const lightTheme = createTheme(ligthBase)
 
 
-
-
-
-
 export default ThemeProvider
-
-
-
-
-
-// export const lightTheme = {
-
-//   background: {
-//     bgColor: {
-//       main: [250, 250, 250],
-//       module:  [240, 240, 240],
-//       container: [235, 235, 235],
-//       element: [245, 245, 245]
-//     }
-//   },
-
-//   font: {
-//     fSize: {
-//       body: .77,
-//       containHeader: 1.7,
-//       modHeader: 5,
-//     },
-//     fColor: {
-//       body: [35, 35, 35],
-//       header: [25, 25, 25]
-//     }
-//   }
-
-// }
-
-
-
-// export const darkTheme = {
-
-
-//   background: {
-//     bgColor: {
-//       main: [30, 30, 30],
-//       module:  [50, 50, 50],
-//       container: [45, 45, 45],
-//       element: [40, 40, 40]
-//     }
-//   },
-
-//   font: {
-//     fSize: {
-//       body: .77,
-//       containHeader: 1.7,
-//       modHeader: 5,
-//     },
-//     fColor: {
-//       body: [245, 245, 245],
-//       header: [255, 255, 255]
-//     }
-//   }
-
-
-// }
-
-
-// export const lightTheme = {
-//   main: {
-//     background: {
-
-//       color: [250, 250, 250]
-//     },
-//     font : {
-//       color: [40, 40, 40],
-//       size: 5,
-//     }
-//   },
-
-//   module: {
-//     background: {
-//       color: [235, 235, 235]
-//     }
-//   },
-
-//   container: {
-//     background: {
-//       color: [225, 225, 225]
-//     },
-//     font : {
-//       color: [40, 40, 40],
-//       size: 5,
-//     }
-//   }
-
-// }
-
-
-// export const darkTheme = {
-
-//   main: {
-//     background: {
-//       color: [30, 30, 30]
-//     }
-//   },
-
-//   module: {
-//     background: {
-//       color: [50, 50, 50]
-//     }
-//   },
-
-//   container: {
-//     background: {
-//       color: [65, 65, 65]
-//     },
-//     font : {
-//       color: [240, 240, 240],
-//       size: 4,
-//     }
-//   }
-
-// }
-
-
-
-// const element = {
-//   background: {
-//     color: [240, 240, 240]
-//   },
-//   font : {
-//     color: [40, 40, 40],
-//     size: 5,
-//   }
-// }
-
-
-
-
-// const mainLight = {
-//   background: {
-//     color: [240, 240, 240]
-//   },
-//   font : {
-//     color: [40, 40, 40],
-//     size: 5,
-//   }
-// }
-
-
-// const containerLight = {
-//   background: {
-//     color: [225, 225, 225]
-//   },
-//   font : {
-//     color: [40, 40, 40],
-//     size: 5,
-//   }
-// }
-
-
-// const createTheme = function() {
-//   const themeElements = [...arguments]
-//   return themeElements.reduce((memo, elementData) => {
-//     const [elementKey, elementValues] = elementData;
-//     memo[elementKey] = elementValues;
-//     return memo
-//   }, {})
-// }

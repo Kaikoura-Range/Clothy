@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext  } from 'react';
 import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer, StyledThumbnailContainer, StyledArrowButton, StyledExpandButton, ExpandButtonContainer, ThumbnailCarouselContainer } from './../styles/Carousel.styled.js';
 import { DispatchContext } from './../../appState/index.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

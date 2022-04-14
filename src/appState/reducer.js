@@ -1,17 +1,14 @@
 const setUserLocalStore = (newUserState) => {
-  console.log(`setting ${JSON.stringify(newUserState)} as localstore`);
+  // console.log(`setting ${JSON.stringify(newUserState)} as localstore`);
   localStorage.setItem('user', JSON.stringify(newUserState));
 };
 
 const setTracked = (newTracked) => {
-  console.log(`setting ${JSON.stringify(newTracked)} as localstore tracked`);
   localStorage.setItem('tacked', JSON.stringify(newTracked));
 };
 
-// localStorage.removeItem('tacked')
 var trackedStr = localStorage.getItem('tacked')
 const tracked = trackedStr ? JSON.parse(trackedStr) : {}
-console.log('init tracked', tracked)
 
 function reducer(state, action) {
   let newState;

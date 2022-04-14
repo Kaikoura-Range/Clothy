@@ -38,10 +38,12 @@ export const StyledCarouselContainer = styled.div`
 
 
 export const ThumbnailCarouselContainer = styled.div`
-  margin-left: 4em;
-
+  /* margin-left: 4em; */
+  margin-left: 5%;
   button {
-    margin-left: 1.2em;
+    /* margin: auto; */
+
+    /* margin-left: 1.2em; */
     width: 2em;
     height: 2em;
     font-size: var(--fs-2);
@@ -88,7 +90,6 @@ export const StyledArrowsContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 15%;
-
   button {
     width: 2.3em;
     height: 2.3em;
@@ -106,7 +107,7 @@ export const StyledArrowsContainer = styled.div`
 `
 export const StyledArrowButton = styled.button`
   animation: 3s slidein;
-  visibility: ${({disabled}) => disabled ? 'hidden' : 'visible'}
+  visibility: ${({disabled}) => disabled ? 'hidden' : 'visible'};
 `
 
 export const ExpandButtonContainer = styled.div`

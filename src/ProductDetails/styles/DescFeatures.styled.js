@@ -22,13 +22,16 @@ export const StyledDescFeaturesContainer = styled.div`
 `
 
 export const StyledFeaturesContainer = styled.div`
+  /* display: flex;
+  justify-content: space-evenly;
+  align-items: center; */
   p {
     color: var(--fc-1);
   }
 `
 
 export const StyledDescriptionContainer = styled.div`
-  width: 30%;
+  width: 45%;
   margin: 3em;
 
   p, h3 {
