@@ -4,7 +4,7 @@ import { StateContext, DispatchContext } from '../../appState/index';
 import api from '../../api/index.js'
 import SearchBar from './SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartShopping, faHeart, circleHalfStroke } from '@fortawesome/free-solid-svg-icons'
+import { faCartShopping, faHeart, faCircleHalfStroke } from '@fortawesome/free-solid-svg-icons'
 
 const Header = (props) => {
   const [state] = useContext(StateContext)
@@ -37,8 +37,9 @@ const Header = (props) => {
       </HeaderLogoContainer>
       <HeaderDetailsContainer >
         <SearchBar />
+        <DetailsText onClick={toggleTheme} ><FontAwesomeIcon icon={faCircleHalfStroke} /></DetailsText>
         <DetailsText onClick={pageScroll} ><FontAwesomeIcon icon={faHeart} />  {state.user.outfit.length}  </DetailsText>
-        <DetailsText onClick={toggleTheme} ><FontAwesomeIcon icon={faCartShopping} />  {state.user.cart.length}</DetailsText>
+        <DetailsText ><FontAwesomeIcon icon={faCartShopping} />  {state.user.cart.length}</DetailsText>
       </HeaderDetailsContainer>
     </HeaderContainer>
   )
@@ -48,7 +49,7 @@ const HeaderContainer = styled.div`
   top: 0;
   z-index: 1;
   width: 100%;
-  height: 56px;
+  height: 54px;
   position: sticky;
   z-index: 1;
   background-Color: var(--accent-color);
