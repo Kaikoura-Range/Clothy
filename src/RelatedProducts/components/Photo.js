@@ -53,9 +53,9 @@ const imgWidth = (imgHeight * 0.8).toString()
 imgHeight = imgHeight.toString()
 
 const CardImageContainer = styled.div`
-  height: ${imgHeight}em;
   position: relative;
   width: ${imgWidth}em;
+  height: ${imgHeight}em;
   background-color: var(--bgc1);
   animation: ${({ animate }) => animate &&  css`${fade} ${fadeOptions}`};
 
@@ -64,8 +64,8 @@ const CardImageContainer = styled.div`
 
 
 const CardImage = styled.img`
-  height: 100%;
   width: 100%;
+  height: 100%;
   object-fit: cover;
   &:hover {
     opacity: 0.97;
@@ -74,9 +74,9 @@ const CardImage = styled.img`
 `
 
 const EmptyCardImage = styled.div`
-  height: ${imgHeight}em;
   display: flex;
   width: ${imgWidth}px;
+  height: ${imgHeight}em;
   border-top-left-radius: 9px;
   border-top-right-radius: 9px;
   background-color: var(--bgc1);
@@ -90,10 +90,10 @@ const OutfitActionButton = styled.button`
   right: 0.5em;
   padding: 5px;
   opacity: 0.65;
+  color: var(--fc-0);
   border-radius: 5px;
   position: absolute;
   font-size: var(--fs-2);
-  color: var(--fc-0);
   background-color: var(--bgc-1);
   &:hover {
     opacity: .9;
@@ -105,20 +105,19 @@ const OutfitActionButton = styled.button`
 
 
 const ScrollButton = styled.button`
-  opacity: 0.85;
   padding: 7px;
   bottom: 0.9em;
-  padding-left: 10px;
-  padding-right: 10px;
+  opacity: 0.85;
+  color: var(--fc-0);
   font-weight: bold;
+  padding-left: 10px;
   border-radius: 50%;
   position: absolute;
+  padding-right: 10px;
   font-size: var(--fs0);
-  color: var(--fc-0);
   background-color: var(--bgc-1);
   left: ${({ direction }) => direction === 'left' && css`${sideMargin}em` };
   right: ${({ direction }) => direction === 'right' && css`${sideMargin}em` };
-
 
   &:hover {
     opacity: 1;

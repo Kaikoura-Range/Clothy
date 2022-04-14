@@ -13,14 +13,11 @@ import tracker from '../components/Tracker.js'
 
 var renderCount = 0;
 const RelatedProducts = ({ children }) => {
-  console.log('Related arguments', arguments)
 
   const [state] = useContext(StateContext)
   const [, dispatch] = useContext(DispatchContext)
   const { related, user, dev, currentProduct } = state;
   const { outfit } = user
-
-
 
   const relatedInit = related.length ? Array(related.length).fill({}) : [ { type: 'emptyRelated', id: state.currentProduct } ];
   const [relatedItemData, setRelatedItemData] = useState(relatedInit);
@@ -92,8 +89,8 @@ const CarouselContainer = styled.div`
 
 const HeaderText = styled.h1`
   margin-left: 5%;
-  font-size: var(--header-fs);
   color: var(--header-fc);
+  font-size: var(--header-fs);
 `
 
 

@@ -142,10 +142,6 @@ function ProductInfo(props) {
 
     const toggleExpandedView = (e, index) => {
       tracker(dispatch, 'ExpandedView', 'ProductDetails', activeStyle.style_id);
-      // setAnimate(true);
-      // setTimeout(() => {
-      //   setAnimate(false);
-      // }, 500);
       setExpandedViewIndex(index);
       setShowExpandedView(!showExpandedView);
       if (!showExpandedView) {
@@ -214,7 +210,6 @@ function ProductInfo(props) {
       setNotInOutfit(!notInOutfit);
     }
 
-
     return(<>
       {/**  Expanded View (Modal) */}
       {showExpandedView ?
@@ -228,7 +223,7 @@ function ProductInfo(props) {
       </StyledExpandedViewModal> : '' }
 
       {/**  Carousel */}
-      <ProductOverviewContainer>
+      <ProductOverviewContainer minHeight={state.media.width * 0.5}  >
       <Carousel photos={activeStyle.photos} handleExpandedView={toggleExpandedView} expandedImage={expandedViewIndex} newProduct={props.styles}/>
 
       {/**  Right-side (main product info) */}
@@ -269,7 +264,7 @@ function ProductInfo(props) {
       </ProductInfoContainer>
     </ProductOverviewContainer></>)
   } else {
-    return (<ProductOverviewContainer>
+    return (<ProductOverviewContainer  minHeight={state.media.width * 0.5} >
       <Carousel/>
       <ProductInfoContainer/>
     </ProductOverviewContainer>)
