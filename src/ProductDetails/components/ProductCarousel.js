@@ -136,7 +136,8 @@ function Carousel(props){
         {/** Thumbnails buttons and images */}
         <ExpandButtonContainer>
           <StyledExpandButton
-            onClick={(e, index) => props.handleExpandedView(e, photoIndex)}>
+            onClick={(e, index) => props.handleExpandedView(e, photoIndex)}
+            aria-label="expand main image">
             <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} /></StyledExpandButton>
         </ExpandButtonContainer>
 
@@ -145,14 +146,14 @@ function Carousel(props){
           <StyledArrowButton
             onClick={(e, num) => {handleThumbnailArrowClick(e, -1); e.stopPropagation()}}
             disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === 0 ? true : false }
-            aria-label="top image"><FontAwesomeIcon icon={faAngleUp} /></StyledArrowButton>
+            aria-label="switch to top image"><FontAwesomeIcon icon={faAngleUp} /></StyledArrowButton>
           <StyledThumbnailContainer>
             {allPhotos}
           </StyledThumbnailContainer>
           <StyledArrowButton
             onClick={(e, num) => {handleThumbnailArrowClick(e, 1); e.stopPropagation()}}
             disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === props.photos.length - 7 ? true : false }
-            aria-label="down image">
+            aria-label="switch to down image">
             <FontAwesomeIcon icon={faAngleDown} /></StyledArrowButton>
         </ThumbnailCarouselContainer>
 
@@ -162,13 +163,13 @@ function Carousel(props){
             className="animate"
             onClick={(e, dir) => {handleMainArrowClick(e, (photoIndex - 1)); e.stopPropagation();}}
             disabled={ photoIndex === 0 ? true : false }
-            aria-label="left image">
+            aria-label="switch to left image">
             <FontAwesomeIcon icon={faAngleLeft} /></StyledArrowButton>
           <StyledArrowButton
             className="animate"
             onClick={(e, dir) => {handleMainArrowClick(e, (photoIndex + 1)); e.stopPropagation()}}
             disabled={ photoIndex === props.photos.length - 1 ? true : false }
-            aria-label="right image">
+            aria-label="switch to right image">
             <FontAwesomeIcon icon={faAngleRight} /></StyledArrowButton>
         </StyledArrowsContainer>
 

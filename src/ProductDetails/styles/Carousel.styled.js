@@ -1,14 +1,5 @@
 import styled, {keyframes, css} from 'styled-components';
-// transition: all 200ms ease-in-out;
 
-// const toggleIn = keyframes`
-//   0% {
-//     transform: translateX(-600px);
-//   }
-//   100% {
-//     transform: translateX(0px);
-//   }
-// `
 const toggleIn = keyframes`
   0% {
     opacity: 0;
