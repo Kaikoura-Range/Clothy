@@ -18,8 +18,10 @@ const SearchBar = (props) => {
   useEffect(() => {
     if(searchValue.length) {
       setDropDown(true)
+    } else {
+      setDropDown(false)
     }
-  })
+  }, [searchValue])
 
 
   const selectSearch = (e) => {

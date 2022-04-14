@@ -51,7 +51,7 @@ export default function Rating({data, theme, filter,test,remove,starcount}){
                 <OverallContainer key={id}>
                     <div key={characteristic[1].id}>{characteristic[0]}: {Number(characteristic[1].value).toFixed(1)}</div>
                     <BarContainer style={{'backgroundColor' : '#CBCFCA'}}>
-                        <BarContainer5 className="bar-5" style={{'width' : `${Number(characteristic[1].value).toFixed(1)*20}%`}}></BarContainer5>
+                        <BarContainer5 className="bar-5" style={{'width' : `2%`,'left':`${Number(characteristic[1].value).toFixed(1)*20-5}%`}}></BarContainer5>
                     </BarContainer>
                     <CharacteristicsContainer>
                         <LeftChar>{cSelector[characteristic[0]][0]}</LeftChar>
@@ -120,6 +120,7 @@ border-radius: 25px;
 height: 13px;
 `
 const BarContainer5 = styled.div`
+position: relative;
 height: 13px;
 background-color: #283427;
 border-radius: 25px

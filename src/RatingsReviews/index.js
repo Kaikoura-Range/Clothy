@@ -6,8 +6,6 @@ import Rating from './Rating.js';
 import Review from './Review.js';
 import tracker from '../components/Tracker.js'
 
-var mainRenderCount = 0;
-
 export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   const {results} = reviewData;
   // if( dev.logs ) {
@@ -43,7 +41,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
     } else return cmp;
   }
   const setStarFilter = (e) => {
-    if(Number(e.target.id)+1 === 5) setFiltered(false) 
+    if(Number(e.target.id)+1 === 5) setFiltered(false)
     else Number(e.target.id)+1 ===starcount ? (setFiltered(false), setStarCount(5)): (setStarCount(Number(e.target.id)+1), setFiltered(true))
   }
   const removeFilter = () =>{
@@ -60,21 +58,22 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
         <ReviewsListContainer className='Reviews list'>
           <div className='review list selector'>
             {results.length} reviews sorted by
-            <select className='sort selector' value={sortSelect} onChange={(e) => {setSortSelect(e.target.value) }}>
+            <Select className='sort selector' value={sortSelect} onChange={(e) => {setSortSelect(e.target.value) }}>
               <option value="newest">newest</option>
               <option value="helpful">Helpfulness</option>
               <option value="relevant">Relevance</option>
-            </select>
-          </div>
+            </Select>
+
           <SearchReviews type='search' value={keyword} onChange={(e)=>{setKeyword(e.target.value)}} placeholder='Search For a Review'/>
+          </div>
           <InnerListContainer>
           {sortedReviews.filter((item) => {
             if(item.rating <= starcount) {
             if(keyword.length >= 3) {
               if(item.summary.toLowerCase().includes(keyword.toLowerCase()) || item.body.includes(keyword.toLowerCase())) {
                 return item
-              } 
-            } else return item 
+              }
+            } else return item
           }
           }).slice(0,diplayedReviewCount).map((review,id) => {return (<Review key={id} review={review} />)})}
          </InnerListContainer>
@@ -89,20 +88,27 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
       </>
     )
   }
-  
+
   return (
     <div data-testid="reviews" >
       Loading...
     </div>
   )
 }
+
+  const Select=styled.select`
+  width: 160px;
+  `
   const Header=styled.h1`
   margin-left: 5%;
   font-size: var(--header-fs);
   color: var(--header-fc);
   `
   const Wrapper=styled.div`
-  background-color: var(--contain-bgc);
+  display: flex;
+  justify-content:center;
+  width: 100%;
+  align-items: center;
 
   `
   const ButtonContainer=styled.div`
@@ -118,18 +124,22 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   `
   const RatingsReviewsContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: var(--product-flex);
   height: auto;
+  padding:1em;
+  align-items:center;
+  background-color: var(--contain-bgc);
+  width: var(--module-width);
+  justify-content:center;
   `
   const ReviewsListContainer =styled.div`
   display: flex;
-  width: 66%;
+  width: 100%;
   flex-direction: column;
   height: 800px;
   padding-top:2%;
   padding-bottom:2%;
- 
+
   `
   const InnerListContainer=styled.div`
   display: flex;
@@ -151,6 +161,6 @@ const SearchReviews = styled.input`
   justify-content: space-evenly;
   margin-top: 25px;
   padding: 15px;
-  width: 50%;
+  width: var(--searchBar-width);
   font-size: 20px;
 `
