@@ -4,18 +4,17 @@ import styled from 'styled-components';
 import ReviewForm from './ReviewForm.js';
 import Rating from './Rating.js';
 import Review from './Review.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartArrowDown, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import tracker from '../components/Tracker.js'
 
 var mainRenderCount = 0;
 
 export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   const {results} = reviewData;
-  if( dev.logs ) {
-    mainRenderCount++;
-    dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
-    dev.state && console.log('DEV  STATE   RelatedProducts: ', reviewData)
-  }
+  // if( dev.logs ) {
+  //   mainRenderCount++;
+  //   dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
+  //   dev.state && console.log('DEV  STATE   RelatedProducts: ', reviewData)
+  // }
 
   const [sortSelect,setSortSelect] = useState('relevant')
   const [sortedReviews, setSortedReviews] = useState(results)
@@ -35,7 +34,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
       newSorted = results.sort((a,b) => relevantSort(a,b));
     }
     setSortedReviews([...newSorted])
-  },[sortSelect, results ])
+  },[sortSelect, results])
 
   const relevantSort = (a,b) => {
     var cmp = b.helpfulness - a.helpfulness;
@@ -54,7 +53,8 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
 
   if(reviewData) {
     return (
-      <div onClick={(e)=>{console.log(e.target.className)}}>
+      <><Header>Ratings and Reviews</Header>
+      <Wrapper onClick={(e)=>{tracker('TRACK_EVENT', 'reviews', e.target.className)}}>
       <RatingsReviewsContainer data-testid="reviews" className='reviews'>
         <Rating theme={theme} data={reviewMeta} filter={filtered} test={setStarFilter} remove={removeFilter} starcount={starcount}/>
         <ReviewsListContainer className='Reviews list'>
@@ -81,11 +81,12 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
          <ButtonContainer>
           {(results.length-diplayedReviewCount >0) && (<Button onClick={()=> setReviewCount(results.length)}>More Reviews</Button>)}
           <Button onClick={() => {setOpenModal(true)}}>Add a Review</Button>
-          {openModal && (<BackDrop className='Back drop' onClick={()=>setOpenModal(!openModal)}><ReviewForm className='Review form' done={setOpenModal}/></BackDrop>)}
+          {openModal && (<BackDrop className='Back drop' onClick={()=>setOpenModal(!openModal)}><ReviewForm className='Review form' done={setOpenModal} theme={theme}/></BackDrop>)}
           </ButtonContainer>
         </ReviewsListContainer>
       </RatingsReviewsContainer>
-      </div>
+      </Wrapper>
+      </>
     )
   }
   
@@ -95,6 +96,15 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
     </div>
   )
 }
+  const Header=styled.h1`
+  margin-left: 5%;
+  font-size: var(--header-fs);
+  color: var(--header-fc);
+  `
+  const Wrapper=styled.div`
+  background-color: var(--contain-bgc);
+
+  `
   const ButtonContainer=styled.div`
   padding: 10px;
   margin:auto;
@@ -103,7 +113,6 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   const Button=styled.button`
   padding: 10px;
   background-color: #2f3640;
-
   color: #fff;
   border-radius: 5%;
   `
@@ -118,6 +127,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   width: 66%;
   flex-direction: column;
   height: 800px;
+  padding-top:2%;
   padding-bottom:2%;
  
   `
@@ -137,7 +147,8 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
 `
 const SearchReviews = styled.input`
   border: 2px solid black;
-  display: block;
+  display:flex;
+  justify-content: space-evenly;
   margin-top: 25px;
   padding: 15px;
   width: 50%;
