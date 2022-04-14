@@ -8,6 +8,14 @@ const toggleIn = keyframes`
     opacity: 1;
   }
 `
+// const thumbnailPosition = keyframes`
+//   0% {
+//     margin-left: 0;
+//   }
+//   100% {
+//     margin-left: 10px;
+//   }
+// `
 
 export const StyledCarouselContainer = styled.div`
   background-image: url(${(({ photo }) => photo ? photo.url : '')});
@@ -55,8 +63,8 @@ export const StyledThumbnailContainer = styled.div`
 display: flex;
 flex-direction: column;
 overflow: auto;
-height: 430px;
-width: 60px;
+height: 450px;
+width: 70px;
 box-shadow: 1px 1px 5px rgba(0,1em,1em,0.5);
 
 &:hover {
@@ -71,8 +79,10 @@ export const StyledCarouselPhotos = styled.span`
   min-height: 60px;
   max-width: 60px;
   border-bottom: ${({ isActive }) => isActive ? '3px solid rgb(247,193,18);' : ''};
+  margin-left: ${({ isActive }) => isActive ? '10px' : ''};
   margin-bottom: 0.2em;
   border-radius: 5px;
+  transition: all 0.3s ease-in;
 `
 
 export const StyledArrowsContainer = styled.div`

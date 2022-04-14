@@ -96,10 +96,7 @@ function Carousel(props){
 
   const handleThumbnailArrowClick = (e, num) => {
     tracker(dispatch, 'ThumbnailArrows', 'ProductDetails');
-    setAnimate(true);
-    setTimeout(() => {
-      setAnimate(false);
-    }, 500);
+
     let newFirstIndex = displayedPhotosIndexes[0] + num;
     let newLastIndex = displayedPhotosIndexes[1] + num;
     let firstIndex = displayedPhotosIndexes[0];
