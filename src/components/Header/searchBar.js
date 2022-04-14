@@ -4,15 +4,11 @@ import styled from 'styled-components';
 import api from '../../api/index.js'
 import SearchBarDropDown from './SearchBarDropDown.js'
 
-const searchCategories = [
-  {name: 'name', id: 'name', method: true},
-  {name:'category', id: 'category', method: true},
-]
+
 
 const SearchBar = (props) => {
-  const [selectable, setSelectable] = useState(searchCategories);
+  const [selectable, setSelectable] = useState([]);
   const [searchValue, setSearchValue] = useState('')
-  const [searchMethod, setSearchMethod] = useState('name')
   const [selected, setSelected] = useState(0)
   const [dropDown, setDropDown] = useState(false)
   const searchInput = useRef(null);
@@ -20,38 +16,26 @@ const SearchBar = (props) => {
 
 
   useEffect(() => {
-    if (searchValue.length === 0) {
-      setSelectable(searchCategories)
-    } else {
+    if(searchValue.length) {
       setDropDown(true)
     }
-  }, [searchValue])
+  })
 
 
   const selectSearch = (e) => {
     const { key } = e
-    const { id, method } = selectable[selected]
     if (key === 'ArrowDown') {
       selectable.length > selected && setSelected(selected + 1)
-      if (method) {
-        setSearchMethod(id)
-      }
     }
     if (key === 'ArrowUp') {
       selected && setSelected(selected - 1)
-      if (method) {
-        setSearchMethod(id)
-      }
     }
     if (key === 'Enter') {
-      if(method) {
-        setSearchMethod(id)
-      } else {
-        setDropDown(false)
-        setSelected(0)
-        setSearchValue('')
-        api.load.newProduct(id, dispatch)
-      }
+      const { id } = selectable[selected]
+      setSelected(0)
+      setSearchValue('')
+      setDropDown(false)
+      api.load.newProduct(id, dispatch)
     }
     if (key === 'Escape') {
       searchInput.current.blur();
@@ -63,11 +47,8 @@ const SearchBar = (props) => {
 
   const handleSearch = (e) => {
     setSearchValue(e.target.value)
-    api.search(e, searchMethod)
-      .then(res => {
-        const next = res.length ? res : searchCategories
-        setSelectable(next)
-      })
+    api.search(e, 'name')
+      .then(res => setSelectable(res))
   }
 
 
@@ -76,19 +57,11 @@ const SearchBar = (props) => {
       setSelected(0)
       setSearchValue('')
       setDropDown(false)
-      searchInput.current.blur();
       api.load.newProduct(id, dispatch)
     }
   }
 
-  const loadSearchMethod = (id) => {
-    return (e) => {
-      setDropDown(false)
-      setSearchMethod(id)
-    }
-  }
 
-  const loadSelected = selectable[0].method ? loadSearchMethod : loadProduct
   return (
     <SearchBarContainer data-testid="SearchBar" >
         <HeaderSearchBar
@@ -101,7 +74,7 @@ const SearchBar = (props) => {
           onBlur={() => setDropDown(false)}
         />
         <SearchBarDropDown
-          loadSelected={loadSelected}
+          loadSelected={loadProduct}
           selected={selected}
           selectable={selectable}
           dropDown={dropDown}
@@ -121,10 +94,12 @@ const SearchBarContainer = styled.div`
 const HeaderSearchBar = styled.input`
   width: 100%;
   height: 100%;
-  border-radius: 2px;
-  background-color: var(--contain-bgc);
   padding-left: 1em;
+  border-radius: 2px;
+  color: var(--body-fc);
+  background-color: var(--bgc-1);
 `
+
 
 
 export default SearchBar

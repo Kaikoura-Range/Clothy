@@ -7,6 +7,7 @@ import api from '../../api/index';
 import HelpfulModal from './modals/HelpfulModal';
 import ErrorModal from './modals/ErrorModal';
 import Image from './modals/Image';
+import tracker from '../../components/Tracker';
 export default function Answers(props) {
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
@@ -96,7 +97,9 @@ export default function Answers(props) {
         .slice(0, 1 + addMoreAnswers)
         .map((answer) => {
           return (
-            <EachAnswerContainer key={answer.id}>
+            <EachAnswerContainer
+              key={answer.id}
+              onClick={tracker(dispatch, 'Answers', 'QAndA', answer.id)}>
               <AnswerBody>A: {answer.body}</AnswerBody>
               {answer.photos &&
                 answer.photos.map((photo, i) => {

@@ -6,15 +6,16 @@ import { FlexRow } from './../styles/Flex.styled.js'
 import { StylesImages, StylesContainer } from './../styles/Styles.styled.js'
 import StyledSizeQty from './../styles/SizeQty.styled.js'
 import { ProductOverviewContainer, StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory, StyledReviews, ProductInfoContainer, StarsReviewContainer } from './../styles/Overview.styled.js'
-import { StyledExpandedViewContainer, StyledExpandedViewModal, StyledDotImage, ZoomedImage, ExpandedViewImage } from './../styles/ExpandedCarouselView.styled.js';
+import { StyledExpandedViewContainer, StyledExpandedViewModal, StyledDotImage } from './../styles/ExpandedCarouselView.styled.js';
 import { SocialMediaShareContainer, SocialMediaShareButton } from './../styles/SocialMedia.styled.js';
 import _ from 'underscore';
 import Stars from './../styles/Star.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartArrowDown, faAngleRight, faAngleLeft, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faCartArrowDown, faAngleRight, faAngleLeft, faHeart, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import { faFacebook, faTwitter, faPinterest } from '@fortawesome/free-brands-svg-icons';
-import Magnifier from "react-magnifier";
+import Magnifier from 'react-magnifier';
+import tracker from './../../components/Tracker.js';
 
 function ProductInfo(props) {
   const [state] = useContext(StateContext);
@@ -52,7 +53,6 @@ function ProductInfo(props) {
     if (props.styles) {
       setActiveStyle(props.styles.results[0]);
       setNotInOutfit(state.user.outfit.length ?  state.user.outfit.every(product => state.currentProduct !== product) : true);
-      console.log(document.getElementById('reviewSection'));
       if (props.styles.results.length === 0) {
         setSkus(['OUT OF STOCK']);
       } else {
@@ -88,12 +88,13 @@ function ProductInfo(props) {
     const socialMessage = `Just discovered this website and love their ${category}. Check this one out!`;
     const pageUrl = document.location.href;
 
-    const handleSelectedStyle = (e, style) => {
+    const handleSelectedStyle = (e, style, index) => {
+      tracker(dispatch, 'Style', 'ProductDetails', activeStyle.style_id);
       setActiveStyle(style);
     }
 
-    const allStyles = props.styles.results.map(style =>
-      <StylesImages src={style.photos[0].thumbnail_url} alt={style.name} key={style.style_id} active={style.name === activeStyle.name} onClick={(e) => handleSelectedStyle(e, style)}/>
+    const allStyles = props.styles.results.map((style, i) =>
+      <div key={style.style_id}>{ style.name === activeStyle.name ? <span><FontAwesomeIcon icon={faCheck} size='xs' /></span> : ''}<StylesImages src={style.photos[0].thumbnail_url} alt={style.name} active={style.name === activeStyle.name} onClick={(e) => handleSelectedStyle(e, style, i)}/></div>
     )
 
     const availableSizes = skus.map((sku, index) =>
@@ -102,6 +103,7 @@ function ProductInfo(props) {
 
     const onSizeChange = (e) => {
       const selectedSizeIndex = e.target.options.selectedIndex - 1;
+      tracker(dispatch, 'Size', 'ProductDetails', activeStyle.style_id);
 
       if (selectedSizeIndex === -1) {
         setAvailableQty(0);
@@ -121,6 +123,7 @@ function ProductInfo(props) {
     const defaultQty = <option value="none">-</option>;
 
     const handleAddToCart = (e) => {
+      tracker(dispatch, 'AddToCart', 'ProductDetails', activeStyle.style_id);
       if (selectedSize.current.value !== 'default') {
         dispatch({
           type: 'ADD_PRODUCT_TO_CART',
@@ -137,6 +140,7 @@ function ProductInfo(props) {
     }
 
     const toggleExpandedView = (e, index) => {
+      tracker(dispatch, 'ExpandedView', 'ProductDetails', activeStyle.style_id);
       setExpandedViewIndex(index);
       setShowExpandedView(!showExpandedView);
       if (!showExpandedView) {
@@ -145,6 +149,7 @@ function ProductInfo(props) {
     }
 
     const handleArrowsClickExpandedView = (e, num) => {
+      tracker(dispatch, 'ExpandedViewArrows', 'ProductDetails', activeStyle.style_id);
       const currentIndex = expandedViewIndex;
       const allPhotos = activeStyle.photos.length - 1;
       if (currentIndex + num < 0) {
@@ -172,16 +177,19 @@ function ProductInfo(props) {
     }
 
     const handleSocialMediaClick = (e, url) => {
+      tracker(dispatch, 'SocialMedia', 'ProductDetails', activeStyle.style_id);
       window.open(url, 'blank');
     }
 
     const scrollToReviews = (e) => {
       // window.scrollTo(0, document.body.clientHeight * 3);
+      tracker(dispatch, 'ReadAllReviews', 'ProductDetails', activeStyle.style_id);
       const top = document.body.clientHeight * 10;
       window.scroll({top, left: 0, behavior: 'smooth'});
     }
 
     const addProductToOutfit = (e, outfit, productData) => {
+      tracker(dispatch, 'AddToOutfit', 'ProductDetails', activeStyle.style_id);
       if (notInOutfit) {
         const newOutfit = [productData, ...outfit.map(product => product) ]
         dispatch({
@@ -201,7 +209,6 @@ function ProductInfo(props) {
       setNotInOutfit(!notInOutfit);
     }
 
-
     return(<>
       {/**  Expanded View (Modal) */}
       {showExpandedView ?
@@ -215,7 +222,7 @@ function ProductInfo(props) {
       </StyledExpandedViewModal> : '' }
 
       {/**  Carousel */}
-      <ProductOverviewContainer>
+      <ProductOverviewContainer minHeight={state.media.width * 0.5}  >
       <Carousel photos={activeStyle.photos} handleExpandedView={toggleExpandedView} expandedImage={expandedViewIndex} newProduct={props.styles}/>
 
       {/**  Right-side (main product info) */}
@@ -244,19 +251,20 @@ function ProductInfo(props) {
                 {selectedSize.current.value === 'default' ? defaultQty : availableQuantities}
               </select>
             </FlexRow>
-            <button onClick={handleAddToCart}><FontAwesomeIcon icon={faCartArrowDown} size='xl' style={{'marginRight': '0.7em'}} />Add to cart</button>
-            <button onClick={(e, outfit, prod) => addProductToOutfit(e, state.user.outfit, state.currentProduct)}>{ notInOutfit ? <FontAwesomeIcon icon={farHeart} size='xl'/> : <FontAwesomeIcon icon={faHeart} size='xl'/>}</button>
+            <button onClick={handleAddToCart} aria-label="add to cart"><FontAwesomeIcon icon={faCartArrowDown} size='xl' style={{'marginRight': '0.7em'}} />Add to cart</button>
+            <button aria-label="add to outfit" onClick={(e, outfit, prod) => addProductToOutfit(e, state.user.outfit, state.currentProduct)}>{ notInOutfit ? <FontAwesomeIcon icon={farHeart} size='xl'/> : <FontAwesomeIcon icon={faHeart} size='xl'/>}</button>
           </StyledSizeQty>
           <SocialMediaShareContainer>
-            <SocialMediaShareButton onClick={(e, url) => handleSocialMediaClick(e, `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`)}><FontAwesomeIcon icon={faFacebook} size='xl' /></SocialMediaShareButton>
-            <SocialMediaShareButton onClick={(e, url) => handleSocialMediaClick(e, `https://twitter.com/intent/tweet?text=${pageUrl}.${socialMessage}`)}><FontAwesomeIcon icon={faTwitter} size='xl' /></SocialMediaShareButton>
-            <SocialMediaShareButton><FontAwesomeIcon icon={faPinterest} size='xl' onClick={(e, url) => handleSocialMediaClick(e, `https://pinterest.com/pin/create/bookmarklet/?media=${activeStyle.photos[expandedViewIndex]['thumbnail_url']}&url=${pageUrl}&description=${socialMessage}`)}/></SocialMediaShareButton>
+            <SocialMediaShareButton aria-label="facebook share" onClick={(e, url) => handleSocialMediaClick(e, `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`)}><FontAwesomeIcon icon={faFacebook} size='xl' /></SocialMediaShareButton>
+            <SocialMediaShareButton aria-label="twitter share" onClick={(e, url) => handleSocialMediaClick(e, `https://twitter.com/intent/tweet?text=${pageUrl}.${socialMessage}`)}><FontAwesomeIcon icon={faTwitter} size='xl' /></SocialMediaShareButton>
+            <SocialMediaShareButton aria-label="pinterest share"><FontAwesomeIcon icon={faPinterest} size='xl' onClick={(e, url) => handleSocialMediaClick(e, `https://pinterest.com/pin/create/bookmarklet/?media=${activeStyle.photos[expandedViewIndex]['thumbnail_url']}&url=${pageUrl}&description=${socialMessage}`)}/></SocialMediaShareButton>
+          <p style={{fontSize: 'var(--fs-2)', display: 'block', paddingLeft: '5px'}}>Share on Social Media</p><br/>
           </SocialMediaShareContainer>
-          <p style={{fontSize: 'var(--fs-2)'}}>Share on Social Media</p><br/>
+
       </ProductInfoContainer>
     </ProductOverviewContainer></>)
   } else {
-    return (<ProductOverviewContainer>
+    return (<ProductOverviewContainer  minHeight={state.media.width * 0.65} >
       <Carousel/>
       <ProductInfoContainer/>
     </ProductOverviewContainer>)

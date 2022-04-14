@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 
 const SearchBarDropDown = ({ selectable, selected, loadSelected, dropDown }) => {
-
+  selectable = selectable.length > 15 ? selectable.slice(0, 15) : selectable;
   return dropDown ? (
     <DropDownContainer>
         {selectable.map((productData, ind) => {
@@ -20,6 +20,7 @@ const SearchBarDropDown = ({ selectable, selected, loadSelected, dropDown }) => 
   null
 }
 
+
 const DropDownContainer = styled.div`
   width: 100%;
   display: flex;
@@ -33,7 +34,6 @@ const ProductContainer = styled.div`
   width: 100%;
   padding: 0.5em;
   background-color: ${({ hilight }) => hilight ? css`var(--accent-color)`  : css`var(--bgc-2)` };
-  /* background-color: var(--element-bgc); */
   &:hover {
     cursor: pointer;
     background-color: var(--bgc-3);
