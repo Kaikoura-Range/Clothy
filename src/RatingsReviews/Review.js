@@ -58,8 +58,8 @@ const Review = ({review}) => {
  
     return (
     <IndividualReviewContainer className='Individual Review'>
-        <div>By: {review.reviewer_name} | {moment(review.date).format("MMM Do, YYYY")}</div>
-        <SummaryContainer>
+        By: {review.reviewer_name} | {moment(review.date).format("MMM Do, YYYY")}
+        <SummaryContainer className='Summary'>
             <b>{review.summary.substr(0,60)}</b>
             <div>{fullSummary ? review.body : (review.body.substr(0,250))}</div>
             <button hidden={fullSummary || review.body.length <250} onClick={()=>setFullSummary(true)}>show more</button>
@@ -93,6 +93,7 @@ border-bottom: 0.5px solid black;
 const ImageContainer = styled.img`
 max-width: 90%;
 max-height: 90%;
+display: inline;
 `
 
 const BackDrop = styled.div`

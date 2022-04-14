@@ -116,7 +116,6 @@ const BarContainer = styled.div`
 width: 100%;
 background-color: #f1f1f1;
 text-align: center;
-color: white;
 border-radius: 25px;
 height: 13px;
 `

@@ -38,7 +38,7 @@ const cSelector = {
       alert('choose a star rating')
     } else if(body.length<50) {
       alert('please write more in the body')
-    } else if(!recommend) {
+    } else if(recommend === null ) {
       alert('choose to recommend or not')
     } else if(!regex.test(email)) {
        alert('email is in an incorrect format')
@@ -94,11 +94,11 @@ const cSelector = {
     <Modal onClick={(e)=> e.stopPropagation()}>
       test
       <ReviewFormContainer>
-        <form onSubmit={onSubmitHandler}>
+        <form onSubmit={onSubmitHandler} style={{'color' : 'black'}}>
           <h1>Write your Review </h1>
           <h2>{`About the ${state.details.product.name}`}</h2>
           <OverallRatingContainer onClick={setStars}>Overall Rating:
-            <Stars theme={state.user.theme} ratingAvg={overallRating}/>
+            <Stars ratingAvg={overallRating}/>
             {starClicked && <p>{overallRating} star: {starDescription[overallRating-1]} </p>}
           </OverallRatingContainer>
           <div>Do you recommend the Product?
@@ -148,7 +148,6 @@ const cSelector = {
             <ReviewSummaryTextContainer type='text' placeholder='Example: Best purchase ever!' value={summary} maxlength='60' onChange={(e)=>setSummary(e.target.value)} required/>
             <ReviewBodyContainer placeholder="Why did you like the product or not?" value={body} minlength='50' maxlength='1000' onChange={(e)=>setBody(e.target.value)} required/>
           </ReviewTextContainer>
-
           {body.length >= 50 ? <div>Minimum Reached</div> : <div>Minimum required characters left: {50-body.length}</div>}
           <CenterItemsWrapper>
             <InputSubmit type='submit' />
@@ -164,6 +163,7 @@ const ReviewFormContainer = styled.div`
   background-color: #f3f3f3;
   border-radius: 5px;
   padding: 20px;
+  color: black;
 `
 const OverallRatingContainer = styled.div`
 display: flex;
@@ -201,12 +201,10 @@ const Modal = styled.div`
   z-index: 2;
 `
 const InputSubmit = styled.input`
-  background-color: #ccc;
-  color: black;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+padding: 10px;
+background-color: #2f3640;
+color: #fff;
+border-radius: 5%;
 `
 const CenterItemsWrapper = styled.div`
   display: flex;

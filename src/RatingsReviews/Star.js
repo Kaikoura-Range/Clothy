@@ -64,7 +64,7 @@ export default function Stars({ratingAvg, theme, starColor}) {
     width: 31px;
     filter: ${(props => {
         if (typeof(props.theme) === 'string') {
-            return props.theme === 'dark' ? css`invert(93%);` : css`invert(0%);`
+            return props.theme === 'dark' ? css`invert(90%);` : css`invert(3%);`
         }
     })};
   `
