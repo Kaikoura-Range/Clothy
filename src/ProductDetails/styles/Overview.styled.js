@@ -52,6 +52,7 @@ export const StyledCurrentStyle = styled.p`
     border-radius: 1em;
     padding: 0 0.6em;
     font-size: var(--fs-1);
+    color: rgb(25,25,25);
   }
 `
 

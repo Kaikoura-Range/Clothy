@@ -32,7 +32,7 @@ export const StylesContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--bgc-0);
+    background-color: rgb(240,240,240);
     position: absolute;
     margin-left: 3em;
     margin-top: 0.6em;
