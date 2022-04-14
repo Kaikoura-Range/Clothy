@@ -3,8 +3,7 @@ import { StateContext } from './../appState/index.js';
 import Info from './components/ProductInfo.js';
 import Description from './components/ProductDesc.js';
 import Features from './components/ProductFeatures.js';
-import { FlexRow } from './styles/Flex.styled.js'
-import { StyledDescFeaturesContainer, DescriptionHeader } from './styles/DescFeatures.styled.js'
+import { StyledDescFeaturesContainer } from './styles/DescFeatures.styled.js'
 
 function ProductDetails({reviewSection}) {
   const [state] = useContext(StateContext);
