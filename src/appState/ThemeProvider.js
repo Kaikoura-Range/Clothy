@@ -92,6 +92,8 @@ code {
     --review-width: 66%;
   
 
+    --header-cart-width: 80%;
+    --header-logo-width: 20%;
 
     --searchBar-width: 80%;
     color: var(--body-fc);
@@ -107,11 +109,16 @@ code {
       --product-info-width: 35%;
       --searchBar-width: 50%;
       --review-width: 100%;
+      --header-cart-width: 50%;
+      --header-logo-width: 50%;
+
     }
 
     @media (min-width: ${media.laptop} ) {
      --body-fs: var(--fs1);
      --header-fs: var(--fs3);
+     --header-cart-width: 40%;
+     --header-logo-width: 60%;
     }
   }
 `

@@ -4,7 +4,7 @@ const StyledSizeQty = styled.div`
   margin-top: 0.3em;
 
   select, button {
-    margin-right: 0.5em;
+    margin-left: 0.6em;
     text-transform: uppercase;
     background-color: var(--bgc-0);
     box-shadow: 0.5px 0.5px 0.5px rgba(0,0,0,0.08);
@@ -23,7 +23,7 @@ const StyledSizeQty = styled.div`
     -moz-appearance:none;
     -webkit-appearance:none;
     appearance:none;
-    transition: background-color 0.3s ease-in
+    transition: background-color 0.3s ease-in;
   }
 
   select:hover {

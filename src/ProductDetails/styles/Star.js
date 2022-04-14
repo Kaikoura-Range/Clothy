@@ -70,7 +70,7 @@ export default function Stars({ratingAvg, theme, starColor}) {
     position: relative;
     display: inline-block;
     height: 36px;
-    background-color: ${props => props.starColor ? props.starColor : '#2f3640'};
+    background-color: ${props => props.starColor ? props.starColor : 'var(--body-fc)'};
   `
   const SingleStarContainer =styled.div`
     height: 36px;

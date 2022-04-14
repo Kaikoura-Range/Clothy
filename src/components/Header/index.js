@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { StateContext, DispatchContext } from '../../appState/index';
 import api from '../../api/index.js'
-import SearchBar from './SearchBar';
+import SearchBar from './searchBar.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping, faHeart, faCircleHalfStroke } from '@fortawesome/free-solid-svg-icons'
 
@@ -44,12 +44,12 @@ const HeaderContainer = styled.div`
 
 const HeaderLogoContainer = styled.div`
   left: 0;
-  width: 60%;
   height: 100%;
   display: flex;
   padding-left: 3%;
   position: absolute;
   align-Items: center;
+  width: var(--header-logo-width);
 `
 const LogoText = styled.h2`
   font-size: 3em;
@@ -59,14 +59,14 @@ const LogoText = styled.h2`
 
 const HeaderDetailsContainer = styled.div`
   right: 0;
-  width: 40%;
   height: 100%;
   display: flex;
   padding-right: 3%;
   position: absolute;
   align-items: center;
-  justify-content: end;
-`
+  justify-content: center;
+  width: var(--header-cart-width);
+  `
 
 const DetailsText = styled.h3`
   padding-left: 5%;
