@@ -10,6 +10,11 @@ export const ProductInfoContainer = styled.div`
   flex-direction: column;
   margin-left: 7em;
   justify-content: center;
+
+  h1 {
+    font-size: 2.5em;
+    font-weight: 800;
+  }
 `
 
 export const StyledOverviewContainer = styled.div`

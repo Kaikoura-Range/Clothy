@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { StateContext, DispatchContext } from '../../appState/index';
 import api from '../../api/index.js'
 import SearchBar from './SearchBar';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartShopping, faHeart, circleHalfStroke } from '@fortawesome/free-solid-svg-icons'
 
 const Header = (props) => {
   const [state] = useContext(StateContext)
@@ -36,8 +37,8 @@ const Header = (props) => {
       </HeaderLogoContainer>
       <HeaderDetailsContainer >
         <SearchBar />
-        <DetailsText onClick={toggleTheme} > Cart: {state.user.cart.length}  </DetailsText>
-        <DetailsText onClick={pageScroll} > Outfit: {state.user.outfit.length}   </DetailsText>
+        <DetailsText onClick={pageScroll} ><FontAwesomeIcon icon={faHeart} />  {state.user.outfit.length}  </DetailsText>
+        <DetailsText onClick={toggleTheme} ><FontAwesomeIcon icon={faCartShopping} />  {state.user.cart.length}</DetailsText>
       </HeaderDetailsContainer>
     </HeaderContainer>
   )
@@ -47,7 +48,7 @@ const HeaderContainer = styled.div`
   top: 0;
   z-index: 1;
   width: 100%;
-  height: 50px;
+  height: 56px;
   position: sticky;
   z-index: 1;
   background-Color: var(--accent-color);
@@ -64,6 +65,8 @@ const HeaderLogoContainer = styled.div`
 `
 const LogoText = styled.h2`
   color: white;
+  font-size: 3em;
+  font-family: 'Brush Script MT', cursive;
 `
 
 const HeaderDetailsContainer = styled.div`
@@ -72,12 +75,14 @@ const HeaderDetailsContainer = styled.div`
   height: 100%;
   display: flex;
   position: absolute;
-  align-Items: center;
-  justify-Content: space-evenly;
+  align-items: center;
+  justify-content: end;
+  padding-right: 3%;
 `
 
 const DetailsText = styled.h3`
   color: white;
+  padding-left: 5%;
 `
 
 const HeaderSearchBar = styled.input`
