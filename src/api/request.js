@@ -1,7 +1,5 @@
 import axios from 'axios';
-const baseUrl = 'http://localhost:3000/'
-// const baseURL = 'ec2-44-195-25-198.compute-1.amazonaws.com'
-
+const baseUrl = process.env.BASE_URL || 'http://localhost:3000/'
 
 const buildGetOptions = (endpoint, params = {}, data = {}) => {
   return {

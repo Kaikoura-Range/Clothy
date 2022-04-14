@@ -94,10 +94,12 @@ const SearchBarContainer = styled.div`
 const HeaderSearchBar = styled.input`
   width: 100%;
   height: 100%;
-  border-radius: 2px;
-  background-color: var(--contain-bgc);
   padding-left: 1em;
+  border-radius: 2px;
+  color: var(--body-fc);
+  background-color: var(--bgc-1);
 `
+
 
 
 export default SearchBar

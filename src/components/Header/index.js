@@ -26,7 +26,7 @@ const Header = (props) => {
       <HeaderDetailsContainer >
         <SearchBar />
         <DetailsText onClick={toggleTheme} ><FontAwesomeIcon icon={faCircleHalfStroke} /></DetailsText>
-        <DetailsText onClick={pageScroll} ><FontAwesomeIcon icon={faHeart} />  {state.user.outfit.length}  </DetailsText>
+        <DetailsText ><FontAwesomeIcon icon={faHeart} />  {state.user.outfit.length}  </DetailsText>
         <DetailsText ><FontAwesomeIcon icon={faCartShopping} />  {state.user.cart.length}</DetailsText>
       </HeaderDetailsContainer>
     </HeaderContainer>
@@ -62,24 +62,15 @@ const HeaderDetailsContainer = styled.div`
   width: 40%;
   height: 100%;
   display: flex;
+  padding-right: 3%;
   position: absolute;
   align-items: center;
   justify-content: end;
-  padding-right: 3%;
 `
 
 const DetailsText = styled.h3`
   padding-left: 5%;
-  color: var(--main-bgc);
+  color: var(--bgc-1);
 `
-
-const HeaderSearchBar = styled.input`
-  width: 45%;
-  height: 72%;
-  padding-left: 1em;
-  border-radius: 2px;
-  background-color: var(--contain-bgc);
-`
-
 
 export default Header
