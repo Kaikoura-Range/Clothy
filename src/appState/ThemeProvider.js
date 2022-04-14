@@ -90,8 +90,8 @@ code {
     --main-Photo-width: 100%;
     --main-Photo-heigth: ${({ dimensions }) => css`${(dimensions.width).toString()}px`};
 
-    --header-cart-width: 75%;
-    --header-logo-width: 25%;
+    --header-cart-width: 80%;
+    --header-logo-width: 20%;
 
     --searchBar-width: 80%;
     color: var(--body-fc);

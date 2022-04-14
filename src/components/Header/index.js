@@ -64,7 +64,7 @@ const HeaderDetailsContainer = styled.div`
   padding-right: 3%;
   position: absolute;
   align-items: center;
-  justify-content: end;
+  justify-content: center;
   width: var(--header-cart-width);
   `
 
