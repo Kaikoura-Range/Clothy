@@ -89,6 +89,8 @@ code {
     --product-info-width: 100%;
     --main-Photo-width: 100%;
     --main-Photo-heigth: ${({ dimensions }) => css`${(dimensions.width).toString()}px`};
+    --review-width: 66%;
+  
 
 
     --searchBar-width: 80%;
@@ -104,6 +106,7 @@ code {
       --product-carousel-width: 65%;
       --product-info-width: 35%;
       --searchBar-width: 50%;
+      --review-width: 100%;
     }
 
     @media (min-width: ${media.laptop} ) {
