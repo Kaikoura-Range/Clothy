@@ -10,11 +10,11 @@ var mainRenderCount = 0;
 
 export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   const {results} = reviewData;
-  if( dev.logs ) {
-    mainRenderCount++;
-    dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
-    dev.state && console.log('DEV  STATE   RelatedProducts: ', reviewData)
-  }
+  // if( dev.logs ) {
+  //   mainRenderCount++;
+  //   dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
+  //   dev.state && console.log('DEV  STATE   RelatedProducts: ', reviewData)
+  // }
 
   const [sortSelect,setSortSelect] = useState('relevant')
   const [sortedReviews, setSortedReviews] = useState(results)
@@ -34,7 +34,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
       newSorted = results.sort((a,b) => relevantSort(a,b));
     }
     setSortedReviews([...newSorted])
-  },[sortSelect, results ])
+  },[sortSelect, results])
 
   const relevantSort = (a,b) => {
     var cmp = b.helpfulness - a.helpfulness;
