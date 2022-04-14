@@ -2,153 +2,140 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
 import ReviewForm from './ReviewForm.js';
+import Rating from './Rating.js';
+import Review from './Review.js';
+import tracker from '../components/Tracker.js'
 
 var mainRenderCount = 0;
 
-export default function RatingsReviews(props) {
-  if( props.dev.logs ) {
-    mainRenderCount++;
-    props.dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
-    props.dev.state && console.log('DEV  STATE   RelatedProducts: ', props.reviewData)
-  }
+export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
+  const {results} = reviewData;
+  // if( dev.logs ) {
+  //   mainRenderCount++;
+  //   dev.renders && console.log('DEV  RENDER   RelatedProducts     number of renders: ', mainRenderCount)
+  //   dev.state && console.log('DEV  STATE   RelatedProducts: ', reviewData)
+  // }
 
- 
+  const [sortSelect,setSortSelect] = useState('relevant')
+  const [sortedReviews, setSortedReviews] = useState(results)
+  const [diplayedReviewCount, setReviewCount] = useState(2)
+  const [openModal, setOpenModal] = useState(false)
+  const [keyword, setKeyword] = useState('')
+  const [starcount, setStarCount] = useState(5)
+  const [filtered, setFiltered] = useState(false)
 
-  const [fullSummary, setFullSummary] = React.useState(false);
-  // const [sortedReviews, setSortedReviews] = React.useState([{date:'2022-02-21T00:00:00.000Z', helpfulness:1},
-  // {date:'2020-02-21T00:00:00.000Z',helpfulness:3},{date:'2021-02-21T00:00:00.000Z',helpfulness:2}]);
-  const [sortedReviews, setSortedReviews] = useState(props.reviewData.results);
-  const [diplayedReviewCount, setReviewCount] = useState(2);
-  const [openModal, setOpenModal] = useState(false);
-
-
-  // useEffect(() => {
-  //   props.reviewData && reviewStateInit(props.reviewData, )
-  // }, [props.reviewData])
-
-
-
-  //[{helpfulness:1},{helpfulness:2},{helpfulness:3}]
-  function Recommended(props) {
-    if(props.input === 'true') {
-      return <div>Recommended!</div>
+  useEffect(()=> {
+    var newSorted;
+    if(sortSelect === "helpful") {
+      newSorted = results.sort((a,b) => b.helpfulness - a.helpfulness);
+    } if(sortSelect === "newest") {
+      newSorted = results.sort((a,b) => new moment(b.date).valueOf() - new moment(a.date).valueOf());
+    } if(sortSelect === 'relevant') {
+      newSorted = results.sort((a,b) => relevantSort(a,b));
     }
+    setSortedReviews([...newSorted])
+  },[sortSelect, results])
+
+  const relevantSort = (a,b) => {
+    var cmp = b.helpfulness - a.helpfulness;
+    if(Math.abs(cmp) <=7) {
+       return new moment(b.date).valueOf() - new moment(a.date).valueOf();
+    } else return cmp;
   }
-  function SalesResponse(props) {
-    if(props.response) {
-      return <div>{props.response}</div>
-    }
+  const setStarFilter = (e) => {
+    if(Number(e.target.id)+1 === 5) setFiltered(false) 
+    else Number(e.target.id)+1 ===starcount ? (setFiltered(false), setStarCount(5)): (setStarCount(Number(e.target.id)+1), setFiltered(true))
+  }
+  const removeFilter = () =>{
+    setFiltered(false)
+    setStarCount(5)
   }
 
-  function Images(props) {
-     return props.photos.map((photo) => {
-      return <img key={photo.id} src={photo.url} alt='' height="50" width="50"/>
-    });
-  }
-  function Star(props) {
-   return <div>star rating: {props.stars}</div>
- }
- function Helpfulness(props) {
-  return <div>Was this helpful?</div>
-}
-
-function SummaryBody(props) {
-  return (
-  <div>
-    <b>{props.summary}</b>
-   {fullSummary ? <div>{props.body}</div> : <div>{props.body.substring(0,250)}</div>}
-  </div>
-  )
-}
-
-function sorting(a,b,option) {
-  if(option === "helpful") {
-   return b.helpfulness - a.helpfulness;
-  } else if(option === "newest") {
-    return moment(b.date).valueOf() - moment(a.date).valueOf();
-  } else {
-    return 0
-  }
-}
-//sortedReviews.sort((a,b)=>sorting(a,b,e.target.value))
-// props.reviewData.results.sort((a,b) => sorting( a,b,e.target.value))
-
-function SortReviews() {
-var newlist = sortedReviews;
-
-  return (
-    <>
-      <div>{props.reviewData.results.length} reviews
-      <select onChange={ (e) => { setSortedReviews(newlist.sort((a,b) => sorting( a,b,e.target.value)).sort((a,b) => sorting(a,b,e.target.value))) } }>
-        <option value="newest">newest</option>
-        <option value="helpful">Helpfulness</option>
-        <option value="relevant">Relevance</option>
-      </select>
-      </div>
-    </>
-  )
-}
-  function addReviews(){
-    var value = sortedReviews.length-diplayedReviewCount;
-    if(value >= 2) {
-      setReviewCount(diplayedReviewCount +2);
-    } else if( value === 1 ) {
-      setReviewCount(diplayedReviewCount +1);
-    } 
-  }
-  function ReviewButton(){
-    var value = sortedReviews.length-diplayedReviewCount;
-    if(value > 0 ){
-      return (<button onClick={addReviews}>More Reviews</button>)
-    }
-  }
-  function backDropHandler() {
-    setOpenModal(!openModal)
+  if(reviewData) {
+    return (
+      <><Header>Ratings and Reviews</Header>
+      <Wrapper onClick={(e)=>{tracker('TRACK_EVENT', 'reviews', e.target.className)}}>
+      <RatingsReviewsContainer data-testid="reviews" className='reviews'>
+        <Rating theme={theme} data={reviewMeta} filter={filtered} test={setStarFilter} remove={removeFilter} starcount={starcount}/>
+        <ReviewsListContainer className='Reviews list'>
+          <div className='review list selector'>
+            {results.length} reviews sorted by
+            <select className='sort selector' value={sortSelect} onChange={(e) => {setSortSelect(e.target.value) }}>
+              <option value="newest">newest</option>
+              <option value="helpful">Helpfulness</option>
+              <option value="relevant">Relevance</option>
+            </select>
+          </div>
+          <SearchReviews type='search' value={keyword} onChange={(e)=>{setKeyword(e.target.value)}} placeholder='Search For a Review'/>
+          <InnerListContainer>
+          {sortedReviews.filter((item) => {
+            if(item.rating <= starcount) {
+            if(keyword.length >= 3) {
+              if(item.summary.toLowerCase().includes(keyword.toLowerCase()) || item.body.includes(keyword.toLowerCase())) {
+                return item
+              } 
+            } else return item 
+          }
+          }).slice(0,diplayedReviewCount).map((review,id) => {return (<Review key={id} review={review} />)})}
+         </InnerListContainer>
+         <ButtonContainer>
+          {(results.length-diplayedReviewCount >0) && (<Button onClick={()=> setReviewCount(results.length)}>More Reviews</Button>)}
+          <Button onClick={() => {setOpenModal(true)}}>Add a Review</Button>
+          {openModal && (<BackDrop className='Back drop' onClick={()=>setOpenModal(!openModal)}><ReviewForm className='Review form' done={setOpenModal} theme={theme}/></BackDrop>)}
+          </ButtonContainer>
+        </ReviewsListContainer>
+      </RatingsReviewsContainer>
+      </Wrapper>
+      </>
+    )
   }
   
-    if(props.reviewData) {
-    return (
-      <div data-testid="reviews" >
-        <SortReviews />
-        {sortedReviews.slice(0,diplayedReviewCount).map((review,id) => {
-          return (
-          <div key={id}>
-            <div>{moment(review.date).format("MMM Do YY")}</div>
-            <div>review name- {review.reviewer_name}</div>
-            <SummaryBody summary={review.summary} body={review.body} showFull={false}/>
-            <Recommended input={review.recommend.toString()}/>
-            <SalesResponse response={review.response}/>
-            <Images photos={review.photos}/>
-            <Star stars={review.rating}/>
-            <Helpfulness counter={review.helpfulness}/>
-          </div>
-          )
-        })}
-        <ReviewButton/>
-        <button onClick={() => {setOpenModal(true)}}>Add a Review</button>
-        {openModal && <ReviewForm />}
-        {openModal && (
-        <BackDrop onClick={backDropHandler}>
-          <ReviewForm />
-        </BackDrop>
-      )}
-      </div>
-    )
-    }
-    return (
-      <div data-testid="reviews" >
-        Loading...
-      </div>
-    )
-};
+  return (
+    <div data-testid="reviews" >
+      Loading...
+    </div>
+  )
+}
+  const Header=styled.h1`
+  margin-left: 5%;
+  font-size: var(--header-fs);
+  color: var(--header-fc);
+  `
+  const Wrapper=styled.div`
+  background-color: var(--contain-bgc);
 
-
-export const reviewStateInit = (productId) => {
-    return ['/reviews/', { product_id: productId, page: 1, sort: 'newest' }]
-  }
-
-
-
+  `
+  const ButtonContainer=styled.div`
+  padding: 10px;
+  margin:auto;
+  justify-content: space-between;
+  `
+  const Button=styled.button`
+  padding: 10px;
+  background-color: #2f3640;
+  color: #fff;
+  border-radius: 5%;
+  `
+  const RatingsReviewsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: auto;
+  `
+  const ReviewsListContainer =styled.div`
+  display: flex;
+  width: 66%;
+  flex-direction: column;
+  height: 800px;
+  padding-top:2%;
+  padding-bottom:2%;
+ 
+  `
+  const InnerListContainer=styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  `
   const BackDrop = styled.div`
   position: fixed;
   top: 0;
@@ -157,30 +144,13 @@ export const reviewStateInit = (productId) => {
   height: 100vh;
   z-index: 1.5;
   background: rgba(0, 0, 0, 0.75);
-`;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// POST METHODS
-
-    // api.post.review( { product_id: state.currentProduct,  })
-    //   .then(res => console.log('post review res', res))
-
-    // api.post.review.helpful('reviewId')
-    //   .then(res => console.log('post help review res', res))
-
-    // api.post.review.report('reviewId')
-    //   .then(res => console.log('post report review res', res))
+`
+const SearchReviews = styled.input`
+  border: 2px solid black;
+  display:flex;
+  justify-content: space-evenly;
+  margin-top: 25px;
+  padding: 15px;
+  width: 50%;
+  font-size: 20px;
+`

@@ -3,25 +3,6 @@ import api from '../api/index.js';
 
 
 
-export const addProductToOutfit = (dispatch, prodId) => {
-  dispatch({
-    type: 'ADD_PRODUCT_TO_OUTFIT',
-    payload: prodId,
-  });
-}
-
-
-export const initializeAppState = (dispatch, prodId) => {
-  api.get.allProductData(prodId)
-    .then((response) => {
-      response.currentProduct = prodId
-      dispatch({
-        type: 'PROD_INIT',
-        payload: response,
-      });
-    });
-}
-
 
 
 const getPhotoUrls = (styles) => {
@@ -35,28 +16,25 @@ const getPhotoUrls = (styles) => {
 
 
 
-
-
-const getProductEndpoints = (productIds) => {
-  return productIds.reduce((memo, prodId) => {
-    memo[prodId] = {
-      product: [`/products/${prodId}`, {}],
-      styles: [`/products/${prodId}/styles`, {}]
-    }
-    return memo
-  }, {})
+const getProductParams = (productIds) => {
+  return productIds.map(productId => ['product/data', { productId, endpoints: 'details' }] )
 }
 
 
 
-export const initProductsFromIds = (productIds, currentProduct, setItemData) => {
-  productIds = productIds.filter((id, ind) =>  productIds.slice((ind + 1)).indexOf(id) === -1 && id !== currentProduct)
-  const endpoints = getProductEndpoints(productIds)
+export const initProductsFromIds = (productIds, currentProduct, setItemData, filterCurrentProduct = true) => {
+  if (filterCurrentProduct) {
+    productIds = productIds.filter((id, ind) =>  productIds.slice((ind + 1)).indexOf(id) === -1 && id !== currentProduct && id  && id !== 37312)
+  } else {
+    productIds = productIds.filter((id, ind) =>  productIds.slice((ind + 1)).indexOf(id) === -1 && id && id !== 37312)
+  }
+
+  const endpoints = getProductParams(productIds)
   api.get.all(endpoints)
     .then((getResult) => {
-      const condensed = Object.values(getResult).map((values) => {
-        var photos = getPhotoUrls(values.styles)
-        return ({ ...values.product, photos })
+      const condensed = getResult.map(({ details }) => {
+        var photos = getPhotoUrls(details.styles)
+        return ({ ...details.product, ...details.styles, photos, type: 'render' })
       })
       setItemData(condensed)
       })

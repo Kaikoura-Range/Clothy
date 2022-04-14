@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StateContext, DispatchContext } from '../../../appState/index.js';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import api from '../../../api/index';
 import ImageForm from './ImageForm';
 export default function AnswerForm(props) {
@@ -9,9 +9,8 @@ export default function AnswerForm(props) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [body, setBody] = useState('');
-  const [photos, setPhotos] = useState(null);
+  const [photos, setPhotos] = useState([]);
   const [imageForm, setImageForm] = useState(false);
-  const [uploadImagesButton, setUploadImagesButton] = useState(true);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -23,31 +22,26 @@ export default function AnswerForm(props) {
       email: email,
     };
     api.post
-      .answer(props.id, newAnswer)
+      .answer({ typeId: props.id, post: newAnswer, productId: state.currentProduct })
       .then((res) => console.log('post answer res', res))
       .then(() => {
         setUsername('');
         setEmail('');
         setBody('');
         setPhotos(null);
-        setUploadImagesButton(true);
-        return api.get.allProductData(state.currentProduct);
+        api.load.newProduct(state.currentProduct, dispatch);
       })
-      .then((getRes) =>
-        dispatch({
-          type: 'PROD_INIT',
-          payload: getRes,
-        })
-      )
       .catch((err) => console.log('answer not sent!'));
   };
 
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
   };
+
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
   };
+
   const onChangeBody = (e) => {
     setBody(e.target.value);
   };
@@ -55,7 +49,6 @@ export default function AnswerForm(props) {
   const showImageFormHandler = (e) => {
     e.stopPropagation();
     setImageForm(true);
-    setUploadImagesButton(false);
   };
 
   const getPhotosHandler = (arrOfPhotos) => {
@@ -71,19 +64,34 @@ export default function AnswerForm(props) {
     e.stopPropagation();
   };
 
+  const previewPhotos = photos.map((photo, i) => (
+    <img
+      key={i}
+      style={{
+        width: '90px',
+        height: '90px',
+        marginRight: '7px',
+        marginTop: '10px',
+        objectFit: 'cover',
+      }}
+      src={photo}
+    />
+  ));
+
   return (
     <Modal onClick={preventBubbling}>
       <AnswerFormContainer>
-        <Title>Answer Form</Title>
+        <Title>Submit Answer About Product:</Title>
+        <ProductName>{state.details.product.name}</ProductName>
         <form onSubmit={onSubmitHandler}>
-          <label>Username: </label>
+          <label style={{ color: 'black' }}>Username: </label>
           <Input
             type='text'
             onChange={onChangeUsername}
             placeholder='Example: jackson11!'
             required
           />
-          <label>Email: </label>
+          <label style={{ color: 'black' }}>Email: </label>
           <Input
             type='email'
             onChange={onChangeEmail}
@@ -93,7 +101,7 @@ export default function AnswerForm(props) {
           <TextArea
             type='text'
             onChange={onChangeBody}
-            placeholder='Add your answer to a question here...'
+            placeholder='Have an answer to a question? Answer it here!'
             required></TextArea>
           <CenterItemsWrapper>
             <InputSubmit type='submit' />
@@ -104,13 +112,15 @@ export default function AnswerForm(props) {
             <ImageForm afterSubmit={afterImageFormSubmitHandler} getPhotos={getPhotosHandler} />
           </ImageFormContainer>
         )}
-        {uploadImagesButton && (
-          <CenterItemsWrapper>
+        <CenterItemsWrapper>
+          {photos.length < 5 && (
             <UploadImageButton onClick={showImageFormHandler}>
               Click to upload images
             </UploadImageButton>
-          </CenterItemsWrapper>
-        )}
+          )}
+        </CenterItemsWrapper>
+        {photos.length >= 1 && <p>Images Preview: </p>}
+        {photos.length >= 1 && previewPhotos}
       </AnswerFormContainer>
     </Modal>
   );
@@ -124,6 +134,7 @@ const AnswerFormContainer = styled.div`
 
 const Title = styled.h3`
   text-align: center;
+  color: black;
 `;
 
 const TextArea = styled.textarea`
@@ -140,6 +151,12 @@ const Input = styled.input`
   margin-top: 6px;
   margin-bottom: 16px;
   resize: vertical;
+`;
+
+const ProductName = styled.h4`
+  margin-top: 10px;
+  color: black;
+  text-align: center;
 `;
 
 const CenterItemsWrapper = styled.div`
@@ -171,10 +188,24 @@ const ImageFormContainer = styled.div`
   display: flex;
 `;
 
+const fadeIn = keyframes`
+ from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1
+  }`;
+const time = `300ms linear forwards`;
+
 const Modal = styled.div`
   position: fixed;
-  top: 30vh;
-  left: 15%;
-  width: 75%;
-  z-index: 2;
+  top: 15vh;
+  left: 25%;
+  width: 50%;
+  z-index: 3;
+  animation: ${fadeIn} ${time};
+`;
+
+const ImagesPreview = styled.p`
+  text-align: center;
 `;

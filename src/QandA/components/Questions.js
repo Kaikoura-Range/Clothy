@@ -6,19 +6,20 @@ import moment from 'moment';
 import api from '../../api/index';
 import HelpfulModal from './modals/HelpfulModal';
 import SuccessModal from './modals/SuccessModal';
-import ReportModal from './modals/ReportModal';
+import ErrorModal from './modals/ErrorModal';
+import tracker from '../../components/Tracker';
 export default function Questions(props) {
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
   const [answerForm, setAnswerForm] = useState(false);
   const [submitHelpfulQuestionOnce, setsubmitHelpfulQuestionOnce] = useState(true);
-  const [reportQuestionOnce, setreportQuestionOnce] = useState(true);
   const [showHelpfulModal, setShowHelpfulModal] = useState(false);
-  // const [showReportModal, setShowReportModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+
   useEffect(() => {
     setAnswerForm(false);
-  }, [state.currentProduct]);
+  }, [state.QA]);
 
   const answerFormHandler = () => {
     setAnswerForm(!answerForm);
@@ -27,48 +28,6 @@ export default function Questions(props) {
   const showAnswerForm = () => {
     setAnswerForm(false);
     setShowSuccess(true);
-  };
-
-  const helpfulQuestionHandler = (id) => {
-    setsubmitHelpfulQuestionOnce(false);
-    if (submitHelpfulQuestionOnce) {
-      setShowHelpfulModal(true);
-      api.post.question
-        .helpful(id)
-        .then(() => {
-          return api.get.allProductData(state.currentProduct);
-        })
-        .then((getRes) =>
-          dispatch({
-            type: 'PROD_INIT',
-            payload: getRes,
-          })
-        )
-        .catch((err) => console.log('helpful answer not sent!'));
-    } else {
-      alert('You can only mark question as helpful once!');
-    }
-  };
-
-  const reportQuestionHandler = (id) => {
-    setreportQuestionOnce(false);
-    // setShowReportModal(true);
-    if (reportQuestionOnce) {
-      api.post.question
-        .report(id)
-        .then(() => {
-          return api.get.allProductData(state.currentProduct);
-        })
-        .then((getRes) =>
-          dispatch({
-            type: 'PROD_INIT',
-            payload: getRes,
-          })
-        )
-        .catch((err) => console.log('report question not sent!'));
-    } else {
-      alert('You can only report question once!');
-    }
   };
 
   const backDropHandler = () => {
@@ -83,26 +42,76 @@ export default function Questions(props) {
     setShowSuccess(false);
   };
 
-  // const backDropReportHandler = () => {
-  //   setShowReportModal(false);
-  // };
+  const backDropErrorHandler = () => {
+    setShowErrorModal(false);
+  };
+
+  const helpfulQuestionHandler = (id) => {
+    setsubmitHelpfulQuestionOnce(false);
+    if (submitHelpfulQuestionOnce) {
+      setShowHelpfulModal(true);
+      api.upvote
+        .question({ typeId: id, productId: state.currentProduct })
+        .then(() => api.load.newProduct(state.currentProduct, dispatch))
+        .catch((err) => console.log('helpful question not sent!'));
+    } else {
+      setShowErrorModal(true);
+    }
+  };
+
+  const reportQuestionHandler = (id) => {
+    api.report
+      .question({ typeId: id, productId: state.currentProduct })
+      .then(() => api.load.newProduct(state.currentProduct, dispatch))
+      .catch((err) => console.log('report question not sent!'));
+  };
+
+  const highlight = (sentence, keyword) => {
+    const splitValue =
+      keyword.includes('?') && keyword.length === 1 ? /(\?)/gi : new RegExp(`(${keyword})`, 'gi');
+    let sentenceSplit = sentence.split(splitValue);
+    return (
+      <>
+        <QuestionBody>Q: </QuestionBody>
+        {sentenceSplit.map((word, i) => (
+          <QuestionBody
+            key={i}
+            style={
+              word.toLowerCase() === keyword.toLowerCase() ? { backgroundColor: 'yellow' } : {}
+            }>
+            {word}
+          </QuestionBody>
+        ))}
+      </>
+    );
+  };
 
   return (
-    <QuestionsContainer data-testid='question'>
-      <QuestionBody>Q: {props.q.question_body}</QuestionBody>
-      <HelpfulReportContainer>
-        Helpful Question?{' '}
-        <HelpfulLink
-          helpful={!submitHelpfulQuestionOnce}
-          onClick={() => helpfulQuestionHandler(props.q.question_id)}>
-          Yes
-        </HelpfulLink>{' '}
-        ({props.q.question_helpfulness}) |{'  '}
-        <ReportedLink onClick={() => reportQuestionHandler(props.q.question_id)}>
-          Report
-        </ReportedLink>
-        <AddAnswerLink onClick={answerFormHandler}>Add Answer</AddAnswerLink>
-      </HelpfulReportContainer>
+    <QuestionsContainer
+      data-testid='question'
+      onClick={tracker(dispatch, 'Questions', 'QAndA', props.q.question_id)}>
+      <QuestionBodyHelpfulQuestionWrapper>
+        <QuestionBodyWrapper>
+          {!props.highlight ? (
+            <QuestionBody>Q: {props.q.question_body}</QuestionBody>
+          ) : (
+            highlight(props.q.question_body, props.highlight)
+          )}
+        </QuestionBodyWrapper>
+        <HelpfulReportContainer>
+          Helpful Question?{' '}
+          <HelpfulLink
+            helpful={!submitHelpfulQuestionOnce}
+            onClick={() => helpfulQuestionHandler(props.q.question_id)}>
+            Yes
+          </HelpfulLink>{' '}
+          ({props.q.question_helpfulness}) |{'  '}
+          <ReportedLink onClick={() => reportQuestionHandler(props.q.question_id)}>
+            Report
+          </ReportedLink>
+          <AddAnswerLink onClick={answerFormHandler}>Add Answer</AddAnswerLink>
+        </HelpfulReportContainer>
+      </QuestionBodyHelpfulQuestionWrapper>
       <QuestionsAuthor>
         By: {props.q.asker_name} | {moment(props.q.question_date).format('MMMM Do, YYYY')}
       </QuestionsAuthor>
@@ -121,18 +130,18 @@ export default function Questions(props) {
           <SuccessModal />
         </BackDrop>
       )}
-
-      {/* {showReportModal && (
-        <BackDrop onClick={backDropReportHandler}>
-          <ReportModal />
+      {showErrorModal && (
+        <BackDrop onClick={backDropErrorHandler}>
+          <ErrorModal />
         </BackDrop>
-      )} */}
+      )}
     </QuestionsContainer>
   );
 }
 
 const ReportedLink = styled.span`
   text-decoration: underline;
+  margin-right: 10px;
   cursor: pointer;
   padding-left: 1.5px;
 `;
@@ -142,15 +151,27 @@ const HelpfulLink = styled.span`
   cursor: pointer;
 `;
 
-const AddAnswerLink = styled.div`
+const AddAnswerLink = styled.span`
+  margin-bottom: 10px;
+  width: 90px;
   margin-top: 10px;
+  display: block;
   text-decoration: underline;
   cursor: pointer;
 `;
 
+const QuestionBodyWrapper = styled.div`
+  flex: 1;
+`;
+
+const QuestionBodyHelpfulQuestionWrapper = styled.div`
+  display: flex;
+`;
+
 const QuestionsContainer = styled.div`
-  width: 100%;
   margin-top: 25px;
+  width: 60%;
+  display: inline-block;
 `;
 
 const QuestionsAuthor = styled.p`
@@ -158,14 +179,13 @@ const QuestionsAuthor = styled.p`
 `;
 
 const QuestionBody = styled.h3`
-  overflow-wrap: break-word;
   display: inline;
+  font-size: var(--body-fs);
 `;
 
 const HelpfulReportContainer = styled.div`
-  display: inline;
-  float: right;
-  vertical-align: top;
+  position: absolute;
+  left: 70%;
 `;
 
 const BackDrop = styled.div`
@@ -174,6 +194,6 @@ const BackDrop = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 1.5;
+  z-index: 1;
   background: rgba(0, 0, 0, 0.75);
 `;

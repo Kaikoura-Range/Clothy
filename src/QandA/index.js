@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import QAList from './components/QAList';
 import QuestionForm from './components/forms/QuestionForm';
 import SuccessModal from './components/modals/SuccessModal';
+
+let filteredResultslength;
+
 export default function QAndA() {
   //central API state
   const [state] = useContext(StateContext);
@@ -20,6 +23,7 @@ export default function QAndA() {
     setAddMoreQuestionsNoSearch(0);
     setAddQuestionsSearch(0);
     setCreateForm(false);
+    setSearchText('');
   }, [state.currentProduct]);
   //these functions render 2 questions at a time
   const addQuestionsNoSearchHandler = () => {
@@ -46,39 +50,44 @@ export default function QAndA() {
     let filteredResults = state.QA.results.map(
       (q) =>
         q.question_body.toLowerCase().indexOf(searchText.toLowerCase()) > -1 && (
-          <QAList key={q.question_id} q={q} />
+          <QAList highlight={searchText} key={q.question_id} q={q} />
         )
     );
-    let length = filteredResults.filter((val) => val !== false).length;
+
+    filteredResultslength = filteredResults.filter((val) => val !== false).length;
     let results = filteredResults.filter((val) => val !== false).slice(0, 2 + addQuestionsSearch);
     if (results.length) {
-      if (length % 2 !== 0) {
-        return (
-          <div>
-            {results}
-            {length > 2 && addQuestionsSearch + 1 !== length && (
-              <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
-                More Answered Questions
-              </MoreAnsweredQuestionsButton>
-            )}
-            {results.length === 0 && <p>No match</p>}
-          </div>
-        );
+      if (filteredResultslength % 2 !== 0) {
+        return <>{results}</>;
       }
-      if (length % 2 === 0) {
-        return (
-          <div>
-            {results}
-            {length > 2 && addQuestionsSearch + 2 !== length && (
-              <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
-                More Answered Questions
-              </MoreAnsweredQuestionsButton>
-            )}
-          </div>
-        );
+      if (filteredResultslength % 2 === 0) {
+        return <>{results}</>;
       }
     } else {
       return <NoMatchMessage>No match</NoMatchMessage>;
+    }
+  };
+
+  const addMoreQuestionsButtonWhenSearchInput = () => {
+    if (filteredResultslength % 2 === 0) {
+      return (
+        filteredResultslength > 2 &&
+        addQuestionsSearch + 2 !== filteredResultslength && (
+          <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
+            More Answered Questions
+          </MoreAnsweredQuestionsButton>
+        )
+      );
+    }
+    if (filteredResultslength % 2 !== 0) {
+      return (
+        filteredResultslength > 2 &&
+        addQuestionsSearch + 1 !== filteredResultslength && (
+          <MoreAnsweredQuestionsButton onClick={addQuestionsSearchHandler}>
+            More Answered Questions
+          </MoreAnsweredQuestionsButton>
+        )
+      );
     }
   };
 
@@ -134,92 +143,134 @@ export default function QAndA() {
   };
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
-  return (
-    <EntireQuestionsContainer data-testid='QandA'>
-      <EntireQuestionsWrapper>
-        <h1>Questions & Answers:</h1>
-        <SearchBar
-          type='search'
-          value={searchText}
-          onChange={searchTextHandler}
-          placeholder='Have a question? Search for answers...'
-        />
+  if (state.QA.results) {
+    return (
+      <>
+        <QAHeader>Questions & Answers:</QAHeader>
+        <EntireQuestionsContainer data-testid='QandA'>
+          <EntireQuestionsWrapper>
+            <SearchBar
+              type='search'
+              value={searchText}
+              onChange={searchTextHandler}
+              placeholder='Have a question? Search for answers...'
+            />
+            <EntireQAndAContainer>
+              {/* RENDERS WHEN USER STARTS SEARCHING */}
+              {searchTextThere && state.QA && renderWhenSearchInput()}
 
-        {/* RENDERS WHEN USER STARTS SEARCHING */}
-        {searchTextThere && state.QA && renderWhenSearchInput()}
+              {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
+              {!searchTextThere && state.QA && renderWhenNoSearchInput()}
+              {state.QA.results.length === 0 && (
+                <NoMatchMessage>There are no questions here. Add one!</NoMatchMessage>
+              )}
+            </EntireQAndAContainer>
 
-        {/* IF NOT SEARCH VALUE RENDER BOTTOM */}
-        {!searchTextThere && state.QA && renderWhenNoSearchInput()}
-        {!searchTextThere &&
-          state.QA &&
-          state.QA.results.length > 2 &&
-          addMoreQuestionsButtonWhenNoSearchInput()}
-        {state.QA.results.length === 0 && (
-          <NoMatchMessage>There are no questions here. Add one!</NoMatchMessage>
-        )}
-        <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
-      </EntireQuestionsWrapper>
-      {createForm && (
-        <BackDrop onClick={backDropHandler}>
-          <QuestionForm success={success} showForm={setCreateForm} />
-        </BackDrop>
-      )}
-      {showModal && (
-        <BackDrop onClick={backDropSuccessHandler}>
-          <SuccessModal />
-        </BackDrop>
-      )}
-    </EntireQuestionsContainer>
-  );
+            {!searchTextThere &&
+              state.QA &&
+              state.QA.results.length > 2 &&
+              addMoreQuestionsButtonWhenNoSearchInput()}
+            {searchTextThere &&
+              state.QA.results.length > 2 &&
+              addMoreQuestionsButtonWhenSearchInput()}
+            <AddQuestionButton onClick={createQuestionForm}>Add A Question</AddQuestionButton>
+          </EntireQuestionsWrapper>
+
+          {createForm && (
+            <BackDrop onClick={backDropHandler}>
+              <QuestionForm success={success} showForm={setCreateForm} />
+            </BackDrop>
+          )}
+
+          {showModal && (
+            <BackDrop onClick={backDropSuccessHandler}>
+              <SuccessModal />
+            </BackDrop>
+          )}
+        </EntireQuestionsContainer>
+      </>
+    );
+  } else {
+    return (
+      <EntireQuestionsContainer>
+        <EmptyQuestionsWrapper>
+          <EntireQAndAContainer>
+            <LoadingText>Loading...</LoadingText>
+          </EntireQAndAContainer>
+        </EmptyQuestionsWrapper>
+      </EntireQuestionsContainer>
+    );
+  }
 }
 
-export const qAndAStateInit = (productId) => {
-  return ['/qa/questions/', { product_id: productId, count: 500 }];
-};
+const QAHeader = styled.h1`
+  margin-left: 5%;
+  margin-bottom: 10px;
+  font-size: var(--fs3);
+  color: var(--header-fc);
+`;
 
 const SearchBar = styled.input`
   border: 2px solid black;
   display: block;
   margin-top: 25px;
   padding: 15px;
-  width: 50%;
+  width: var(--searchBar-width);
   font-size: 20px;
 `;
 
 const EntireQuestionsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 100px;
-  margin-right: 100px;
+  align-items: center;
+  padding-bottom: 4em;
+`;
+
+const EntireQAndAContainer = styled.div`
+  height: auto;
+  max-height: 500px !important;
+  overflow: auto;
+  position: relative;
 `;
 
 const EntireQuestionsWrapper = styled.div`
   display: inline;
+  width: var(--module-width);
+  padding: 1em;
+  background-color: var(--contain-bgc);
 `;
 
 const AddQuestionButton = styled.button`
   cursor: pointer;
-  margin: 25px;
+  margin: 15px;
   float: left;
   font-size: 16px;
   border-radius: 5px;
   padding: 15px;
   text-align: center;
   &:active {
-    transform: translateY(4px);
+    transform: translateY(6px);
+  }
+  &:hover {
+    background-color: #b5b5b5;
+    transition: 0.7s ease-in-out;
   }
 `;
 
 const MoreAnsweredQuestionsButton = styled.button`
   cursor: pointer;
-  margin: 25px;
+  margin: 15px;
   float: left;
   font-size: 16px;
   border-radius: 5px;
   padding: 15px;
   text-align: center;
   &:active {
-    transform: translateY(4px);
+    transform: translateY(6px);
+  }
+  &:hover {
+    background-color: #b5b5b5;
+    transition: 0.7s ease-in-out;
   }
 `;
 
@@ -229,10 +280,26 @@ const BackDrop = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
+  z-index: 1;
   background: rgba(0, 0, 0, 0.75);
 `;
 
 const NoMatchMessage = styled.p`
   margin-top: 25px;
   text-align: center;
+`;
+
+////////////////////////////////////////////////////////////////////////////////////
+const EmptyQuestionsWrapper = styled.div`
+  display: inline;
+  height: 500px;
+  width: var(--module-width);
+  padding: 1em;
+  background-color: var(--contain-bgc);
+`;
+
+const LoadingText = styled.p`
+  text-align: center;
+  vertical-align: middle;
+  line-height: 400px;
 `;

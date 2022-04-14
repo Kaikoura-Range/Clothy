@@ -1,9 +1,7 @@
 
-
 import get from './get.js'
-import post from './post.js'
-
-const api = { get, post };
+import methods from './post.js'
+const { post, report, upvote } = methods
 
 
 Promise.all.obj = (asyncObj) => {
@@ -24,28 +22,40 @@ Promise.all.obj = (asyncObj) => {
 }
 
 
+const loadNewProduct = (productId, dispatch) => {
+  get.allProductData(productId)
+  .then((response) => {
+    response.currentProduct = productId
+    dispatch({
+      type: 'PROD_INIT',
+      payload: response,
+    });
+  })
+  .catch((err) => {
+    console.log('Data init fetch error: ', err)
+    dispatch({ type: '' }) //sets state so that the app rerenders and trys again.
+  })
+}
+
+const load = {
+  newProduct: loadNewProduct
+}
+
+const search = (event, searchBy = 'category') => {
+  const term = event.target.value;
+  // console.log('seraching ', term)
+  // console.log('seraching ', term.length)
+  if(term.length) {
+    return get('/products/search', { term, searchBy })
+  } else {
+    return new Promise((res, rej) => res([]))
+  }
+}
+
+const api = { get, post, load, report, upvote, search };
+
 
 export default api;
 
 
 
-
-
-
-// const productId = 37311;
-// const testObj = {
-//   product: [`/products/${productId}`, {}],
-//   styles: [`/products/${productId}/styles`, {}]
-// }
-// const testArray = [
-//    [`/products/${productId}`, {}],
-//    [`/products/${productId}/styles`, {}]
-// ]
-
-
-
-// get.all(testObj)
-// .then(objRes => console.log('objRes', objRes))
-
-// get.all(testArray)
-// .then(ArrayRes => console.log('ArrayRes', ArrayRes))

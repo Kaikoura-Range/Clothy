@@ -51,5 +51,5 @@ const Modal = styled.div`
   margin-left: 25%;
   top: 5.5vh;
   width: 50%;
-  z-index: 5;
+  z-index: 2;
 `;

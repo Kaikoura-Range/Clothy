@@ -1,126 +1,123 @@
+import React from 'react';
 import styled from 'styled-components';
+import PhotoCarousel from './PhotoCarousel.js'
+import tracker from '../../components/Tracker'
+
+// const fadeTime = 400;
+// const splitFade = Math.round(fadeTime / 2) - Math.round(fadeTime * 0.15)
 
 
-const RelatedCard = ({ data, outfit, nav, action }) => {
-  if (data.name) {
-    const { name, id, photos } = data;
-    var photoUrl = photos.length ? photos[0].url : null;
+export const RelatedCard = ({ data, outfit, nav, action, dispatch }) => {
+  data.photos = data.photos || []
+
+  if ( data.type === 'render') {
+    // console.log(data)
+    const { name, category, photos, default_price } = data;
 
 
     return  (
-      <RelatecCardContainer data-testid="RelatedCard" >
-        {photoUrl ? <CardImage src={photoUrl} onClick={nav} data-testid="nav" ></CardImage> : <EmptyCardImage onClick={nav} data-testid="nav"  ></EmptyCardImage>}
+      <RelatecCardContainer data-testid="RelatedCard"  onClick={tracker(dispatch, 'RelatedCard', 'Related', data.id)}  >
+        <PhotoCarousel photos={photos} nav={nav} action={action} outfit={outfit} />
         <CardFooter>
-          <CardFooterText>{name}</CardFooterText>
-          <CardFooterButtonContainer>
-            {/* <CardFooterButton data-testid="nav" onClick={nav} >View product</CardFooterButton> */}
-            <CardFooterButton data-testid="outfit" onClick={outfit} >{`${action} outfit`}</CardFooterButton>
-          </CardFooterButtonContainer>
+          <CardFooterText>{name} </CardFooterText>
+          <CardFooterText>{category}</CardFooterText>
+          <CardFooterText>{'$' + default_price} </CardFooterText>
+
         </CardFooter>
       </RelatecCardContainer>
     );
   }
-  return  (
-    <RelatecCardContainer>
-      <EmptyTextContainer>
-        <p>Dont forget </p>
-        <p>to add items </p>
-        <p>to your outfit!</p>
-      </EmptyTextContainer>
-    </RelatecCardContainer>
-  );
+  if (data.type === 'emptyOutfit') {
+    return  (
+      <RelatecCardContainer data-testid="RelatedCard"  id="RelatedCard"  onClick={outfit} >
+        <EmptyTextContainer>
+          <p>Click to add </p>
+          <p>the viewed item </p>
+          <p>to your outfit!</p>
+        </EmptyTextContainer>
+      </RelatecCardContainer>
+    );
+  }
+  if (data.type === 'emptyRelated') {
+    return  (
+      <RelatecCardContainer data-testid="RelatedCard" id="RelatedCard"   >
+        <EmptyTextContainer>
+          <p>Sorry, no </p>
+          <p>related items. </p>
+        </EmptyTextContainer>
+      </RelatecCardContainer>
+    );
+  } else {
+    return (
+      <RelatecCardContainer data-testid="RelatedCard"  id="RelatedCard"  >
+        <EmptyTextContainer>
+          <p>Loading</p>
+        </EmptyTextContainer>
+      </RelatecCardContainer>
+    )
+  }
+
 }
 
 
 
 
-
-
-
-const mainBackground = [230, 230, 230]
-var cardHeight = 250;
-const cardWidth = Math.round(cardHeight * 0.66).toString()
+var cardHeight = 19;
+const cardWidth = Math.round(cardHeight * 0.8).toString()
 cardHeight = cardHeight.toString()
 const borderRadius = '3';
 
 const RelatecCardContainer = styled.div`
+  /* height: ${cardHeight}em; */
   display: flex;
   margin-left: 5px;
   margin-right: 5px;
   border-radius: 5px;
-  align-items: center;
   flex-direction: column;
-  width: ${cardWidth}px;
-  height: ${cardHeight}px;
+
   justify-content: space-evenly;
-  background-color: rgb( ${mainBackground.toString()} );
-
-`
-const imgBackground = [235, 235, 235]
-const CardImage = styled.img`
-  height: 66%;
-  display: flex;
-  width: ${cardWidth}px;
-  border-top-left-radius: 9px;
-  border-top-right-radius: 9px;
-  background-color: rgb(${imgBackground.toString()});
+  background-color: var(--element-bgc);
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.15);
 `
 
-const EmptyCardImage = styled.div`
-  height: 100%;
-  display: flex;
-  width: ${cardWidth}px;
-  border-top-left-radius: 9px;
-  border-top-right-radius: 9px;
-  background-color: rgb(${imgBackground.toString()});
-`
-// 772 / 514
+
 
 const CardFooter = styled.div`
-  height: 90px;
+  height: 5em;
+  width: 100%;
+
   display: flex;
-  width: ${cardWidth}px;
-  border-radius: ${borderRadius}px;
   align-items: center;
   flex-direction: column;
-  justify-content: space-around;
-  background-color: rgb(${mainBackground.toString()});
+  justify-content: space-evenly;
+  /* background-color: var(--element-bgc); */
+  border-radius: ${borderRadius}px;
 `
 
 
 const CardFooterText = styled.p`
-  font-size: 14px;
-  margin-top: 7px;
+  font-size: var(--fs-1);
+  /* font-size: var(--body-fs); */
+  color: var(--body-fc);
 `
 
 
-const buttonBackground = [217, 217, 217]
-const CardFooterButton = styled.button`
-  height: 75%;
-  padding: 7px;
-  font-size: 12px;
-  border-radius: 5px;
-  background-color: rgb(${buttonBackground.toString()});
 
-`
 
-const CardFooterButtonContainer = styled.div`
-  width: ${cardWidth}px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  background-color: rgb(${mainBackground.toString()});
-`
 
 
 const EmptyTextContainer = styled.div`
-  width: 100%;
+  width: ${cardWidth}em;
   display: flex;
+  height: ${cardHeight}em;
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  font-size: var(--body-fs);
+  color: var(--body-fc);
+  background-color: var(--element-bgc);
+
+
 `
 
 
-export default RelatedCard

@@ -1,18 +1,21 @@
 import React from 'react';
+import { StyledDescriptionContainer } from './../styles/DescFeatures.styled.js'
 
-function ProductDescription(props) {
-  if (props.product) {
+function ProductDescription({product}) {
+  if (product) {
 
-      const slogan = props.product.slogan || 'Description'
-      const description = props.product.description || ''
-
-      return(<div>
-        <h3>{slogan}</h3>
-        <p>{description}</p>
-      </div>)
+      return(<StyledDescriptionContainer>
+        { product.description ? <>
+          <h3>{product.slogan}</h3>
+          <p>{product.description}</p>
+          </> : ''}
+      </StyledDescriptionContainer>)
 
   } else {
-    return <p>loading</p>
+    return(<StyledDescriptionContainer>
+        <h3>''</h3>
+        <p>loading</p>
+    </StyledDescriptionContainer>)
   }
 }
 

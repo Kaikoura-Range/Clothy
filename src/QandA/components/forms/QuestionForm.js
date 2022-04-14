@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StateContext, DispatchContext } from '../../../appState/index.js';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import api from '../../../api/index';
 export default function QuestionForm(props) {
   const [state] = useContext(StateContext);
@@ -13,6 +13,7 @@ export default function QuestionForm(props) {
     e.stopPropagation();
     e.preventDefault();
     props.success();
+    props.showForm();
     var newQuestion = {
       product_id: state.currentProduct,
       body: body,
@@ -20,21 +21,14 @@ export default function QuestionForm(props) {
       email: email,
     };
     api.post
-      .question(newQuestion)
+      .question({ typeId: props.id, post: newQuestion, productId: state.currentProduct })
       .then((res) => console.log('post question res', res))
       .then(() => {
-        props.showForm();
         setUsername('');
         setEmail('');
         setBody('');
-        return api.get.allProductData(state.currentProduct);
+        api.load.newProduct(state.currentProduct, dispatch);
       })
-      .then((getRes) =>
-        dispatch({
-          type: 'PROD_INIT',
-          payload: getRes,
-        })
-      )
       .catch((err) => console.log('question not sent!'));
   };
   const onChangeUsername = (e) => {
@@ -54,9 +48,10 @@ export default function QuestionForm(props) {
   return (
     <Modal onClick={preventBubbling}>
       <QuestionsFormContainer>
-        <Title>Question Form</Title>
+        <Title>Submit Question About Product:</Title>
+        <ProductName>{state.details.product.name}</ProductName>
         <form onSubmit={onSubmitHandler}>
-          <label>Username: </label>
+          <label style={{ color: 'black' }}>Username: </label>
           <Input
             type='text'
             name='username'
@@ -64,7 +59,7 @@ export default function QuestionForm(props) {
             placeholder='Example: jackson11!'
             required
           />
-          <label>Email: </label>
+          <label style={{ color: 'black' }}>Email: </label>
           <Input
             type='email'
             name='email'
@@ -76,7 +71,7 @@ export default function QuestionForm(props) {
             type='text'
             name='body'
             onChange={onChangeBody}
-            placeholder='Ask a question about the product'
+            placeholder='Have a question about a product? Ask it here!'
             required></TextArea>
           <CenterItemsWrapper>
             <InputSubmit type='submit' />
@@ -95,11 +90,18 @@ const QuestionsFormContainer = styled.div`
 
 const Title = styled.h3`
   text-align: center;
+  color: black;
 `;
 
 const TextArea = styled.textarea`
   height: 200px;
   width: 100%;
+`;
+
+const ProductName = styled.h4`
+  margin-top: 10px;
+  color: black;
+  text-align: center;
 `;
 
 const Input = styled.input`
@@ -129,10 +131,20 @@ const InputSubmit = styled.input`
   cursor: pointer;
 `;
 
+const fadeIn = keyframes`
+ from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1
+  }`;
+const time = `300ms linear forwards`;
+
 const Modal = styled.div`
   position: fixed;
-  top: 30vh;
-  left: 15%;
-  width: 75%;
-  z-index: 2;
+  top: 15vh;
+  left: 25%;
+  width: 50%;
+  z-index: 3;
+  animation: ${fadeIn} ${time};
 `;

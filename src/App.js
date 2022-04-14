@@ -1,38 +1,33 @@
-import './App.css';
 import api from './api/index.js';
 import React, {  useContext } from 'react';
 import styled from 'styled-components';
-import Header from './components/Header.js'
+import Header from './components/Header/index.js'
 import Modal from './components/Modal/index'
 import { StateContext, DispatchContext } from './appState/index.js';
-import ProductDetails, { detailsStateInit } from './ProductDetails/index';
-import RatingsReviews, { reviewStateInit } from './RatingsReviews/index';
-import QAndA, { qAndAStateInit } from './QandA/index';
-import RelatedProducts, { relatedStateInit } from './RelatedProducts/index';
-
-
-
-api.get.initProductDataFetch(
-  detailsStateInit,
-  reviewStateInit,
-  qAndAStateInit,
-  relatedStateInit,
-)
-
+import ProductDetails from './ProductDetails/index';
+import RatingsReviews from './RatingsReviews/index';
+import QAndA from './QandA/index';
+import RelatedProducts from './RelatedProducts/index';
+import Tracker from './components/Tracker'
 
 
 const maxApiRequests = 2;
 var renderCount = 0;
 var requestCount = 0;
 
+
 function App() {
   const [, dispatch] = useContext(DispatchContext);
   const [state] = useContext(StateContext);
-  renderCount++
+  // console.log('this', App.name)
+  // console.log('arguments', arguments)
+
+
 
   if( state.dev.logs ) { // Used to see preformance and data flow
-    state.dev.renders && console.log('\n\nDEV  RENDER   App     number of renders: ', renderCount)
-    state.dev.state && console.log('DEV  App STATE: ', state)
+    renderCount++
+    state.dev.renders.mod.main && console.log('\nDEV-RENDER   App   renderCount: ', renderCount, '\n')
+    state.dev.state.mod.main && console.log('\nDEV-STATE  App: \n', state, '\n')
   }
   if (state.dev.test) { // Gives tests access to state while running
     state.dev.get(state)
@@ -40,7 +35,7 @@ function App() {
   if (!state.details.product) {
     if (maxApiRequests > requestCount) {
       requestCount++
-      initializeAppState(state.currentProduct, dispatch)
+      api.load.newProduct(state.currentProduct, dispatch)
       return (
         <LoadingContainer className='App' data-testid="app"  >
           <LoadingScreen>
@@ -61,24 +56,23 @@ function App() {
     requestCount = 0
 
     return (
-      <AppContainer className='App' data-testid="app"  >
-        <Modal />
-        <Header />
-        <ProductDetails />
-        <RelatedProducts  />
-        <QAndA />
-        <RatingsReviews reviewData={state.reviews} dev={state.dev} />
-      </AppContainer>
+        <AppContainer className='App' data-testid="app"  >
+          <Modal />
+          <Header />
+          <ProductDetails />
+          <RelatedProducts  />
+          <QAndA />
+          <RatingsReviews reviewData={state.reviews.reviews} reviewMeta={state.reviews.meta} dev={state.dev} theme={state.user.theme}/>
+        </AppContainer>
     );
   }
-
 }
 
-const appBackgroundColor = [250, 250, 250]
 
 const AppContainer = styled.div`
   width: 100%;
-  background-color: rgb(${appBackgroundColor.toString()});
+  background-color: var(--main-bgc);
+
 `
 const LoadingContainer = styled.div`
   width: 100%;
@@ -86,10 +80,10 @@ const LoadingContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(${appBackgroundColor.toString()});
+  background-color: var(--contain-bgc);
+
 `
 
-const loadingBackgroundColor = [240, 240, 240]
 const LoadingScreen = styled.div`
   width: 50%;
   height: 50%;
@@ -97,29 +91,13 @@ const LoadingScreen = styled.div`
   border-radius: 10px;
   align-items: center;
   justify-content: center;
-  background-color: rgb(${loadingBackgroundColor.toString()});
+  background-color: var(--main-bgc);
+
 `
-const textColor = [60, 60, 60]
 const LoadingText = styled.h1`
-  color: rgb(${textColor.toString()});
+  /* color: var(--bgc2); */
+
 `
-
-
-
-const initializeAppState = (productId, dispatch) => {
-  return api.get.allProductData(productId)
-    .then((response) => {
-      response.currentProduct = productId
-      dispatch({
-        type: 'PROD_INIT',
-        payload: response,
-      });
-    })
-    .catch((err) => {
-      console.log('Data init fetch error: ', err)
-      dispatch({ type: '' }) //sets state so that the app rerenders and trys again.
-    })
-}
 
 
 export default App;
