@@ -24,12 +24,17 @@ export const StylesImages = styled.img`
 export const StylesContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  margin-left: 6.5em;
   margin-bottom: 1em;
   width: 340px;
 
-  button {
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bgc-0);
     position: absolute;
-    margin-left: 3.5em;
+    margin-left: 3em;
     margin-top: 0.6em;
     border-radius: 50%;
     width: 1.2em;

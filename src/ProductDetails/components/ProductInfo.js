@@ -94,7 +94,7 @@ function ProductInfo(props) {
     }
 
     const allStyles = props.styles.results.map((style, i) =>
-      <div key={style.style_id}>{ style.name === activeStyle.name ? <button><FontAwesomeIcon icon={faCheck} size='xs' /></button> : ''}<StylesImages src={style.photos[0].thumbnail_url} alt={style.name} active={style.name === activeStyle.name} onClick={(e) => handleSelectedStyle(e, style, i)}/></div>
+      <div key={style.style_id}>{ style.name === activeStyle.name ? <span><FontAwesomeIcon icon={faCheck} size='xs' /></span> : ''}<StylesImages src={style.photos[0].thumbnail_url} alt={style.name} active={style.name === activeStyle.name} onClick={(e) => handleSelectedStyle(e, style, i)}/></div>
     )
 
     const availableSizes = skus.map((sku, index) =>
@@ -258,8 +258,9 @@ function ProductInfo(props) {
             <SocialMediaShareButton aria-label="facebook share" onClick={(e, url) => handleSocialMediaClick(e, `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`)}><FontAwesomeIcon icon={faFacebook} size='xl' /></SocialMediaShareButton>
             <SocialMediaShareButton aria-label="twitter share" onClick={(e, url) => handleSocialMediaClick(e, `https://twitter.com/intent/tweet?text=${pageUrl}.${socialMessage}`)}><FontAwesomeIcon icon={faTwitter} size='xl' /></SocialMediaShareButton>
             <SocialMediaShareButton aria-label="pinterest share"><FontAwesomeIcon icon={faPinterest} size='xl' onClick={(e, url) => handleSocialMediaClick(e, `https://pinterest.com/pin/create/bookmarklet/?media=${activeStyle.photos[expandedViewIndex]['thumbnail_url']}&url=${pageUrl}&description=${socialMessage}`)}/></SocialMediaShareButton>
+          <p style={{fontSize: 'var(--fs-2)', display: 'block', paddingLeft: '5px'}}>Share on Social Media</p><br/>
           </SocialMediaShareContainer>
-          <p style={{fontSize: 'var(--fs-2)'}}>Share on Social Media</p><br/>
+
       </ProductInfoContainer>
     </ProductOverviewContainer></>)
   } else {
