@@ -4,13 +4,14 @@ import styled, { css } from 'styled-components';
 
 const SearchBarDropDown = ({ selectable, selected, loadSelected, dropDown }) => {
 
+  selectable = selectable.length > 15 ? selectable.slice(0, 15) : selectable;
   return dropDown ? (
     <DropDownContainer>
         {selectable.map((productData, ind) => {
           const { name, id } = productData
           return (
             <ProductContainer hilight={selected === ind}  key={id} onClick={loadSelected(id)} >
-              {name}
+               <ProductText hilight={selected === ind} >{name}</ProductText>
             </ProductContainer>
           )
         })}
@@ -37,6 +38,10 @@ const ProductContainer = styled.div`
     cursor: pointer;
     background-color: var(--bgc-3);
   }
+`
+
+const ProductText = styled.p`
+    color: ${({ hilight }) => hilight ? css`#111`  : css`var(--body-fc)` };
 `
 
 

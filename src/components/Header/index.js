@@ -38,16 +38,16 @@ const HeaderContainer = styled.div`
   z-index: 1;
   width: 100%;
   height: 54px;
+  display: flex;
   position: sticky;
+  align-items: space-around;
   background-Color: var(--accent-color);
 `
 
 const HeaderLogoContainer = styled.div`
-  left: 0;
   height: 100%;
   display: flex;
   padding-left: 3%;
-  position: absolute;
   align-Items: center;
   width: var(--header-logo-width);
 `
@@ -58,18 +58,16 @@ const LogoText = styled.h2`
 `
 
 const HeaderDetailsContainer = styled.div`
-  right: 0;
   height: 100%;
   display: flex;
-  padding-right: 3%;
-  position: absolute;
+  padding-right: 2%;
   align-items: center;
-  justify-content: center;
+  justify-content: end;
   width: var(--header-cart-width);
   `
 
 const DetailsText = styled.h3`
-  padding-left: 5%;
+  padding-left: 3%;
   color: var(--bgc-1);
 `
 

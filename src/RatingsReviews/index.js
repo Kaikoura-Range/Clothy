@@ -41,7 +41,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
     } else return cmp;
   }
   const setStarFilter = (e) => {
-    if(Number(e.target.id)+1 === 5) setFiltered(false) 
+    if(Number(e.target.id)+1 === 5) setFiltered(false)
     else Number(e.target.id)+1 ===starcount ? (setFiltered(false), setStarCount(5)): (setStarCount(Number(e.target.id)+1), setFiltered(true))
   }
   const removeFilter = () =>{
@@ -63,7 +63,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
               <option value="helpful">Helpfulness</option>
               <option value="relevant">Relevance</option>
             </Select>
-          
+
           <SearchReviews type='search' value={keyword} onChange={(e)=>{setKeyword(e.target.value)}} placeholder='Search For a Review'/>
           </div>
           <InnerListContainer>
@@ -72,8 +72,8 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
             if(keyword.length >= 3) {
               if(item.summary.toLowerCase().includes(keyword.toLowerCase()) || item.body.includes(keyword.toLowerCase())) {
                 return item
-              } 
-            } else return item 
+              }
+            } else return item
           }
           }).slice(0,diplayedReviewCount).map((review,id) => {return (<Review key={id} review={review} />)})}
          </InnerListContainer>
@@ -88,7 +88,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
       </>
     )
   }
-  
+
   return (
     <div data-testid="reviews" >
       Loading...
@@ -106,8 +106,6 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   `
   const Wrapper=styled.div`
   display: flex;
-  // background-color: var(--contain-bgc);
-  // width: var(--module-width);
   justify-content:center;
   width: 100%;
   align-items: center;
@@ -141,7 +139,7 @@ export default function RatingsReviews({reviewData, reviewMeta, dev, theme}) {
   height: 800px;
   padding-top:2%;
   padding-bottom:2%;
- 
+
   `
   const InnerListContainer=styled.div`
   display: flex;
