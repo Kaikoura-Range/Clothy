@@ -68,7 +68,7 @@ const Review = ({review}) => {
         {review.response && <div>Seller Response: {review.response}</div>}
         {nonDups.map((photo, id) => {
             return(<span key={id}>
-                <img key={photo.id} src={photo.thumbnail_url} alt='' height="50" width="50" onClick={() => {showImg(photo)}}/>
+                <img key={photo.id} src={photo.url} alt='' decoding="async" loading="lazy" height="50" width="50" onClick={() => {showImg(photo)}}/>
                 {(openModal && photo.id===selectedImage)&& (<BackDrop onClick={()=>setOpenModal(!openModal)}>  <ImageContainer src={photo.url} alt=''/> </BackDrop>)}
                 </span>
             )
@@ -86,7 +86,12 @@ const Review = ({review}) => {
 const SummaryContainer = styled.div`
 margin-left: 30px;
 `
-
+const Image=styled.img`
+decoding="async";
+loading="lazy";
+height="50";
+width="50";
+`
 const IndividualReviewContainer = styled.div`
 border-bottom: 0.5px solid black;
 `
@@ -106,5 +111,3 @@ z-index: 2;
 background: rgba(0, 0, 0, 0.90);
 `
 export default Review;
-
-

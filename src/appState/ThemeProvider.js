@@ -89,6 +89,8 @@ code {
     --product-info-width: 100%;
     --main-Photo-width: 100%;
     --main-Photo-heigth: ${({ dimensions }) => css`${(dimensions.width).toString()}px`};
+    --review-width: 66%;
+  
 
     --header-cart-width: 80%;
     --header-logo-width: 20%;
@@ -106,8 +108,10 @@ code {
       --product-carousel-width: 65%;
       --product-info-width: 35%;
       --searchBar-width: 50%;
+      --review-width: 100%;
       --header-cart-width: 50%;
       --header-logo-width: 50%;
+
     }
 
     @media (min-width: ${media.laptop} ) {
