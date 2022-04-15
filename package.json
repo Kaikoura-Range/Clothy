@@ -19,7 +19,7 @@
   },
   "scripts": {
     "build:dev": "webpack --config webpack.dev.js --watch ./src",
-    "build:prod": "webpack --config webpack.prod.js",
+    "build:prod": "webpack  --config webpack.prod.js",
     "build:staging": "env-cmd -f .env.src.staging npm run build:prod"
   },
   "eslintConfig": {

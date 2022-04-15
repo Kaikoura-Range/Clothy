@@ -5,7 +5,7 @@ import { DispatchContext } from './../../appState/index.js';
 import { FlexRow } from './../styles/Flex.styled.js'
 import { StylesImages, StylesContainer } from './../styles/Styles.styled.js'
 import StyledSizeQty from './../styles/SizeQty.styled.js'
-import { ProductOverviewContainer, StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory, StyledReviews, ProductInfoContainer, StarsReviewContainer } from './../styles/Overview.styled.js'
+import { ProductOverviewContainer, StyledOverviewContainer, StyledPrice, StyledCurrentStyle, StyledCategory, StyledReviews, ProductInfoContainer, StarsReviewContainer, ProductInfoWrapper } from './../styles/Overview.styled.js'
 import { StyledExpandedViewContainer, StyledExpandedViewModal, StyledDotImage } from './../styles/ExpandedCarouselView.styled.js';
 import { SocialMediaShareContainer, SocialMediaShareButton } from './../styles/SocialMedia.styled.js';
 import _ from 'underscore';
@@ -227,6 +227,7 @@ function ProductInfo(props) {
 
       {/**  Right-side (main product info) */}
       <ProductInfoContainer>
+        <ProductInfoWrapper>
         <StyledOverviewContainer>
           <StarsReviewContainer>
             <Stars theme={props.theme} ratingAvg={ratingAverage()} />
@@ -260,7 +261,7 @@ function ProductInfo(props) {
             <SocialMediaShareButton aria-label="pinterest share"><FontAwesomeIcon icon={faPinterest} size='xl' onClick={(e, url) => handleSocialMediaClick(e, `https://pinterest.com/pin/create/bookmarklet/?media=${activeStyle.photos[expandedViewIndex]['thumbnail_url']}&url=${pageUrl}&description=${socialMessage}`)}/></SocialMediaShareButton>
           <p style={{fontSize: 'var(--fs-2)', display: 'block', paddingLeft: '5px'}}>Share on Social Media</p><br/>
           </SocialMediaShareContainer>
-
+        </ProductInfoWrapper>
       </ProductInfoContainer>
     </ProductOverviewContainer></>)
   } else {

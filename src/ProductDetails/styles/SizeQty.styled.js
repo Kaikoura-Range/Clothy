@@ -4,7 +4,7 @@ const StyledSizeQty = styled.div`
   margin-top: 0.3em;
 
   select, button {
-    margin-left: 0.6em;
+    /* margin-left: 0.6em; */
     text-transform: uppercase;
     background-color: var(--bgc-0);
     box-shadow: 0.5px 0.5px 0.5px rgba(0,0,0,0.08);

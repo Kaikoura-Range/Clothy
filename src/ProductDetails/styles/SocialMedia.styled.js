@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SocialMediaShareContainer = styled.div`
   margin-top: 10%;
   width: 340px;
-  margin-left: 6em;
+  /* margin-left: 6em; */
 `
 
 export const SocialMediaShareButton = styled.button`

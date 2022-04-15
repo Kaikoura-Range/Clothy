@@ -8,11 +8,20 @@ export const ProductOverviewContainer = styled.div`
 
 export const ProductInfoContainer = styled.div`
   display: flex;
-  min-width: 30%;
-  flex-direction: column;
+  width: var(--product-info-width);
   justify-content: center;
   align-items: center;
 `
+
+export const ProductInfoWrapper = styled.div`
+  display: flex;
+  min-width: 70%;
+  padding-left: 10%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+`
+
 
 export const StyledOverviewContainer = styled.div`
   margin-bottom: 0.3em;
