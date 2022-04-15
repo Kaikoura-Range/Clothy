@@ -28,6 +28,8 @@ const GlobalStyles = createGlobalStyle`
 
 html,
 body {
+  max-width: 100%;
+  overflow-x: hidden;
   min-height: 100%;
   height: 100%;
   background-color: rgb(247, 193, 18);
@@ -48,6 +50,10 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+.magnifier-image {
+    object-fit: cover;
+  }
 
   html {
     --bgc-3: ${({ bgc }) => `rgb(${bgc['-3'].toString()})`};
@@ -110,7 +116,9 @@ code {
       --main-Photo-width: ${({ dimensions }) => css`${(dimensions.width * 0.65).toString()}px`};
       --main-Photo-heigth: ${({ dimensions }) => css`${(dimensions.width * 0.65).toString()}px`};
       --product-carousel-width: 65%;
+
       --product-info-width: 35%;
+
       --searchBar-width: 50%;
       --review-width: 100%;
       --header-cart-width: 50%;

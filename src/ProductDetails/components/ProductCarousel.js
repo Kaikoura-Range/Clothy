@@ -7,6 +7,8 @@ import tracker from './../../components/Tracker.js';
 import useDimensions from '../../components/useDimensions.js'
 
 
+const largeScreenMult = 0.65;
+const heightToWidthRatio = 0.65
 
 function Carousel(props){
   const [activePhoto, setActivePhoto] = useState(null);
@@ -16,15 +18,19 @@ function Carousel(props){
   const [, dispatch] = useContext(DispatchContext);
   const [animate, setAnimate] = useState(false);
   const { height, width } = useDimensions();
-  const initWidth = width > 768 ? width * 0.65 : width;
-  const [mainPhotoHeight, setMainPhotoHeight] = useState(initWidth)
+  const initWidth = width > 768 ? width * largeScreenMult : width;
+  const [mainPhotoHeight, setMainPhotoHeight] = useState(initWidth * heightToWidthRatio)
+  const [mainPhotoWidth, setMainPhotoWidth] = useState(initWidth)
 
 
   useEffect(() => {
+    const newHeight = width * heightToWidthRatio
     if(width > 768) {
-      setMainPhotoHeight(width * 0.65)
+      setMainPhotoHeight(newHeight * largeScreenMult)
+      setMainPhotoWidth(width * largeScreenMult)
     } else {
-      setMainPhotoHeight(width)
+      setMainPhotoHeight(newHeight)
+      setMainPhotoWidth(width)
     }
     }, [width])
 
@@ -139,13 +145,13 @@ function Carousel(props){
         onClick={(e, url) => {handlePhotoClick(e, photo.thumbnail_url); e.stopPropagation()}}
         isActive={ activePhoto.thumbnail_url === photo.thumbnail_url ? true : false }/>);
 
-    const smallWidth = 600
+    const smallWidth = 768
     return(
       <StyledCarouselBackground>
 
       <StyledCarouselContainer
         height={mainPhotoHeight}
-        width={mainPhotoHeight}
+        width={mainPhotoWidth}
         url={activePhoto.url}
         // url={width > smallWidth ? activePhoto.url : activePhoto.thumbnail_url}
         onClick={(e, index) => props.handleExpandedView(e, photoIndex)}
@@ -202,7 +208,7 @@ function Carousel(props){
      )
   } else {
 
-    return <StyledCarouselContainer width={mainPhotoHeight} height={mainPhotoHeight} />
+    return <StyledCarouselContainer width={mainPhotoWidth} height={mainPhotoHeight} />
   }
 
 }

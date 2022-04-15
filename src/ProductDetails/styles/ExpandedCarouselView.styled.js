@@ -36,6 +36,7 @@ export const StyledExpandedViewContainer = styled.div`
   position: absolute;
   cursor: zoom-in;
 
+
   button {
     width: 1.8em;
     height: 1.8em;

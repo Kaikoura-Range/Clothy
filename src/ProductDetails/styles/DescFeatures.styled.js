@@ -16,7 +16,7 @@ export const StyledDescFeaturesContainer = styled.div`
 export const StyledDescFeatureHeader = styled.div`
   display: flex;
   align-items:center;
-  margin-bottom: 0.5em;
+  margin-right: 0.5em;
   border-radius: 0.3em;
   justify-content: center;
   background-color: #2f3640;

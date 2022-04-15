@@ -10,6 +10,7 @@ export const ProductInfoContainer = styled.div`
   width: var(--product-info-width);
   justify-content: center;
   align-items: center;
+  padding-left: 3%;
 `
 
 export const ProductInfoWrapper = styled.div`

@@ -54,7 +54,7 @@ const getAllProductDataEndpoints = (productId) => {
     },
     reviews: {
       'meta':['/reviews/meta', { product_id: productId }],
-      'reviews': ['/reviews/', { product_id: productId, page: 1, count:20, sort: 'newest' }]
+      'reviews': ['/reviews/', { product_id: productId, page: 0, count: 500, sort: 'newest' }]
     },
     QA: ['/qa/questions/', { product_id: productId, count: 500 }],
     related: [`/products/${productId}/related/`, {}],

@@ -52,7 +52,7 @@ function App() {
 
     return (
         <AppContainer className='App' data-testid="app"  >
-          <Modal />
+          {/* <Modal /> */}
           <Header />
           <ProductDetails />
           <RelatedProducts  />
@@ -92,11 +92,11 @@ const LoadingScreen = styled.div`
 `
 
 const Footer = styled.footer`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 2em;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: var(--bgc-3);
 `
 

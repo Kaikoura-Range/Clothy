@@ -217,7 +217,7 @@ function ProductInfo(props) {
           { !zoomView ? <>
             <button onClick={(e, num) => {handleArrowsClickExpandedView(e, -1); e.stopPropagation(); }}><FontAwesomeIcon icon={faAngleLeft} /></button>
             {expandedViewDots}
-            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}><FontAwesomeIcon icon={faAngleRight} /></button> </> : <Magnifier src={expandedViewImage} width={container.offsetWidth} zoomFactor={2.5} style={{cursor: 'zoom-out'}}/> }
+            <button onClick={(e, num) => {handleArrowsClickExpandedView(e, +1); e.stopPropagation(); }}><FontAwesomeIcon icon={faAngleRight} /></button> </> : <Magnifier src={expandedViewImage} width="100%" height="100%"  zoomFactor={1.25} style={{cursor: 'zoom-out' }}/> }
           </StyledExpandedViewContainer>
       </StyledExpandedViewModal> : '' }
 

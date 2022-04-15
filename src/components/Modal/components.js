@@ -38,7 +38,7 @@ const ModalContainer = styled(Animatior)`
   bottom: 0;
   z-index: 4;
   display: flex;
-  position: fixed;
+  /* position: fixed; */
   align-Items: center;
   justify-Content: center;
   background-Color: rgba(0, 0, 0, 0.35);

@@ -87,7 +87,7 @@ const SearchBar = (props) => {
 
 
 const SearchBarContainer = styled.div`
-  width: 45%;
+  width: 55%;
   height: 75%;
   position: relative;
 `

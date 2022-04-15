@@ -19,6 +19,7 @@ export const StyledCarouselContainer = styled.div`
   height: ${({height}) =>  css`${height}px`};
   animation: ${({animation}) => animation && css`${toggleIn} 0.5s ease-in-out`};
   position: relative;
+  min-height: 700px;
 
   &:hover {
     cursor: zoom-in;
@@ -38,8 +39,11 @@ export const StyledCarouselBackground = styled.div`
 
 export const ThumbnailCarouselContainer = styled.div`
   /* margin-left: 4em; */
-  margin-left: 5%;
+  top: 8%;
+  left: 5%;
+  position: absolute;
   button {
+    margin-left: 23%;
     width: 2em;
     height: 2em;
     font-size: var(--fs-2);
@@ -50,11 +54,11 @@ export const ThumbnailCarouselContainer = styled.div`
   }
 
   button:first-of-type {
-    margin-bottom: 1em;
+    margin-bottom: 0.8em;
   }
 
   button:last-of-type {
-    margin-top: 1em;
+    margin-top: 0.8em;
   }
 `
 
