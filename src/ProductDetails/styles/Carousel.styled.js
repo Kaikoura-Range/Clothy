@@ -20,6 +20,7 @@ export const StyledCarouselContainer = styled.div`
   width: ${({width}) =>  css`${width}px`};
   height: ${({height}) =>  css`${height}px`};
   animation: ${({animation}) => animation && css`${toggleIn} 0.6s ease-in-out`};
+  position: relative;
 
   &:hover {
     cursor: zoom-in;
@@ -82,14 +83,17 @@ export const StyledCarouselPhotos = styled.span`
 export const StyledArrowsContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 15%;
+  /* margin-top: 15%; */
+  position: absolute;
+  width: 100%;
+  bottom: 0;
   button {
     width: 2.3em;
     height: 2.3em;
     font-size: var(--fs-2);
     font-weight: 400;
     border-radius: 50%;
-    margin: 3em 4em;
+    margin: 5% 6%;
     opacity: 0.8;
     transition: opacity 0.4s ease-in-out;
   }
@@ -105,7 +109,13 @@ export const StyledArrowButton = styled.button`
 
 export const ExpandButtonContainer = styled.div`
   display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10%;
   justify-content: end;
+  padding-top: 5%;
+  padding-right: 6%;
 `
 
 export const StyledExpandButton = styled.button`
@@ -116,8 +126,7 @@ export const StyledExpandButton = styled.button`
   color: var(--fc-0);
   background-color: var(--bgc-1);
   transition: opacity 0.4s ease-in-out;
-  margin-top: 3em;
-  margin-right: 4em;
+
 
   &:hover {
     opacity: 1;
