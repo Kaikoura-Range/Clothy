@@ -52,7 +52,7 @@ function App() {
 
     return (
         <AppContainer className='App' data-testid="app"  >
-          {/* <Modal /> */}
+          <Modal />
           <Header />
           <ProductDetails />
           <RelatedProducts  />

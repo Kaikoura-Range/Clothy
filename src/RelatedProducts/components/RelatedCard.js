@@ -11,14 +11,11 @@ export const RelatedCard = ({ data, outfit, nav, action, dispatch }) => {
   data.photos = data.photos || []
 
   if ( data.type === 'render') {
-    // console.log(data)
     const { name, category, photos, default_price } = data;
-
-
     return  (
       <RelatecCardContainer data-testid="RelatedCard"  onClick={tracker(dispatch, 'RelatedCard', 'Related', data.id)}  >
         <PhotoCarousel photos={photos} nav={nav} action={action} outfit={outfit} />
-        <CardFooter>
+        <CardFooter onClick={nav} >
           <CardFooterText>{name} </CardFooterText>
           <CardFooterText>{category}</CardFooterText>
           <CardFooterText>{'$' + default_price} </CardFooterText>
@@ -67,8 +64,11 @@ const cardWidth = Math.round(cardHeight * 0.8).toString()
 cardHeight = cardHeight.toString()
 const borderRadius = '3';
 
+var imgHeight = 14;
+const imgWidth = (imgHeight * 0.8).toString()
+imgHeight = imgHeight.toString()
+
 const RelatecCardContainer = styled.div`
-  /* height: ${cardHeight}em; */
   display: flex;
   margin-left: 5px;
   margin-right: 5px;
@@ -90,14 +90,12 @@ const CardFooter = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: space-evenly;
-  /* background-color: var(--element-bgc); */
   border-radius: ${borderRadius}px;
 `
 
 
 const CardFooterText = styled.p`
   font-size: var(--fs-1);
-  /* font-size: var(--body-fs); */
   color: var(--body-fc);
 `
 
@@ -107,14 +105,14 @@ const CardFooterText = styled.p`
 
 
 const EmptyTextContainer = styled.div`
-  width: ${cardWidth}em;
   display: flex;
-  height: ${cardHeight}em;
   align-items: center;
+  width: ${imgWidth}em;
+  color: var(--body-fc);
   flex-direction: column;
   justify-content: center;
+  height: ${imgHeight}em;
   font-size: var(--body-fs);
-  color: var(--body-fc);
   background-color: var(--element-bgc);
 
 

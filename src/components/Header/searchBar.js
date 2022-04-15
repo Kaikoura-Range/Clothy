@@ -26,7 +26,6 @@ const SearchBar = (props) => {
 
   const selectSearch = (e) => {
     const { key } = e
-    console.log('key', key)
     if (key === 'ArrowDown') {
       selectable.length > selected && setSelected(selected + 1)
     }

@@ -119,7 +119,7 @@ export default function AnswerForm(props) {
             </UploadImageButton>
           )}
         </CenterItemsWrapper>
-        {photos.length >= 1 && <p>Images Preview: </p>}
+        {photos.length >= 1 && <p style={{color: '#000'}} >Images Preview: </p>}
         {photos.length >= 1 && previewPhotos}
       </AnswerFormContainer>
     </Modal>

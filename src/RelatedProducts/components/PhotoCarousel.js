@@ -55,7 +55,7 @@ const PhotoCarousel = ({ photos, nav, action, outfit }) => {
 
   return (
     <Photo
-      src={photos[photoIndex] }
+      src={photos[photoIndex]}
       onClick={nav}
       action={action}
       animate={animate}

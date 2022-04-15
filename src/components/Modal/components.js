@@ -38,7 +38,7 @@ const ModalContainer = styled(Animatior)`
   bottom: 0;
   z-index: 4;
   display: flex;
-  /* position: fixed; */
+  position: fixed;
   align-Items: center;
   justify-Content: center;
   background-Color: rgba(0, 0, 0, 0.35);
@@ -47,11 +47,8 @@ const ModalContainer = styled(Animatior)`
 
 
 const ModalContent = styled(Animatior)`
-  /* width: 550px; */
-  /* height: 400px; */
   background-Color: rgba(250, 250, 250, 0);
 `
-//background-Color: rgb(247, 193, 18);;
 
 
 const ModalText = styled(Animatior)`
