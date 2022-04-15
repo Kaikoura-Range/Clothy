@@ -8,22 +8,17 @@ const toggleIn = keyframes`
     opacity: 1;
   }
 `
-// const thumbnailPosition = keyframes`
-//   0% {
-//     margin-left: 0;
-//   }
-//   100% {
-//     margin-left: 10px;
-//   }
-// `
+
 
 export const StyledCarouselContainer = styled.div`
   background-image: url(${(({ photo }) => photo ? photo.url : '')});
   background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom;
-  /* width: 65%; */
-  width: var(--product-carousel-width);
+  /* width: var(--main-Photo-width); */
+  /* height: var(--main-Photo-heigth); */
+  width: ${({width}) =>  css`${width}px`};
+  height: ${({height}) =>  css`${height}px`};
   animation: ${({animation}) => animation && css`${toggleIn} 0.6s ease-in-out`};
 
   &:hover {
@@ -40,9 +35,6 @@ export const ThumbnailCarouselContainer = styled.div`
   /* margin-left: 4em; */
   margin-left: 5%;
   button {
-    /* margin: auto; */
-
-    /* margin-left: 1.2em; */
     width: 2em;
     height: 2em;
     font-size: var(--fs-2);

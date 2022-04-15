@@ -222,7 +222,7 @@ function ProductInfo(props) {
       </StyledExpandedViewModal> : '' }
 
       {/**  Carousel */}
-      <ProductOverviewContainer minHeight={state.media.width * 0.5}  >
+      <ProductOverviewContainer>
       <Carousel photos={activeStyle.photos} handleExpandedView={toggleExpandedView} expandedImage={expandedViewIndex} newProduct={props.styles}/>
 
       {/**  Right-side (main product info) */}
@@ -265,7 +265,7 @@ function ProductInfo(props) {
       </ProductInfoContainer>
     </ProductOverviewContainer></>)
   } else {
-    return (<ProductOverviewContainer  minHeight={state.media.width * 0.65} >
+    return (<ProductOverviewContainer >
       <Carousel/>
       <ProductInfoContainer/>
     </ProductOverviewContainer>)

@@ -3,6 +3,7 @@ import { createGlobalStyle, css } from 'styled-components';
 
 const ThemeProvider = ({ STYLES, dimensions }) => {
   const { bgc, fc, fs } = STYLES;
+
   return (
     <GlobalStyles dimensions={dimensions} fs={fs} fc={fc} bgc={bgc} />
   )
@@ -90,7 +91,8 @@ code {
     --main-Photo-width: 100%;
     --main-Photo-heigth: ${({ dimensions }) => css`${(dimensions.width).toString()}px`};
     --review-width: 66%;
-  
+    --product-description-margin-left: 22%;
+
 
     --header-cart-width: 80%;
     --header-logo-width: 20%;
@@ -111,12 +113,14 @@ code {
       --review-width: 100%;
       --header-cart-width: 50%;
       --header-logo-width: 50%;
-
+      --product-description-margin-left: 0%;
     }
 
     @media (min-width: ${media.laptop} ) {
      --body-fs: var(--fs1);
      --header-fs: var(--fs3);
+     --main-Photo-width: ${({ dimensions }) => css`${(dimensions.width * 0.65).toString()}px`};
+      --main-Photo-heigth: ${({ dimensions }) => css`${(dimensions.width * 0.65).toString()}px`};
      --header-cart-width: 40%;
      --header-logo-width: 60%;
     }

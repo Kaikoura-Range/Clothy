@@ -4,6 +4,9 @@ import { DispatchContext } from './../../appState/index.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp, faAngleRight, faAngleLeft, faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';
 import tracker from './../../components/Tracker.js';
+import useDimensions from '../../components/useDimensions.js'
+
+
 
 function Carousel(props){
   const [activePhoto, setActivePhoto] = useState(null);
@@ -12,6 +15,18 @@ function Carousel(props){
   const [displayedPhotosIndexes, setDisplayedPhotosIndexes] = useState([0, 7]);
   const [, dispatch] = useContext(DispatchContext);
   const [animate, setAnimate] = useState(false);
+  const { height, width } = useDimensions();
+  const initWidth = width > 768 ? width * 0.65 : width;
+  const [mainPhotoHeight, setMainPhotoHeight] = useState(initWidth)
+
+
+  useEffect(() => {
+    if(width > 768) {
+      setMainPhotoHeight(width * 0.65)
+    } else {
+      setMainPhotoHeight(width)
+    }
+    }, [width])
 
   useEffect(() => {
     if (props.photos) {
@@ -115,6 +130,7 @@ function Carousel(props){
     setDisplayedPhotosIndexes([firstIndex, lastIndex]);
   }
 
+
   if (props.photos && activePhoto) {
 
     const allPhotos = displayedPhotos.map((photo, i) =>
@@ -126,6 +142,8 @@ function Carousel(props){
 
     return(
       <StyledCarouselContainer
+        height={mainPhotoHeight}
+        width={mainPhotoHeight}
         photo={activePhoto}
         onClick={(e, index) => props.handleExpandedView(e, photoIndex)}
         animation={animate}>
@@ -173,7 +191,8 @@ function Carousel(props){
       </StyledCarouselContainer>)
 
   } else {
-    return <StyledCarouselContainer/>
+
+    return <StyledCarouselContainer width={mainPhotoHeight} height={mainPhotoHeight} />
   }
 
 }

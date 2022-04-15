@@ -68,7 +68,7 @@ const AppContextProvider = ({ children, passedState }) => {
   return (
     <DispatchContext.Provider value={[null, dispatch]}>
       <StateContext.Provider value={[state]}>
-        <ThemeProvider STYLES={themes[state.user.theme]}  dimensions={initState.media} />
+        <ThemeProvider STYLES={themes[state.user.theme]} dimensions={initState.media} />
         {children}
       </StateContext.Provider>
     </DispatchContext.Provider>

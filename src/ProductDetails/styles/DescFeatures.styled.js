@@ -4,7 +4,7 @@ export const StyledDescFeaturesContainer = styled.div`
   display: flex;
   color: #2f3640;
   padding: 2.5em;
-  align-items: center;
+  /* align-items: center; */
   padding-left: 1.5em;
   padding-right: 1.5em;
   justify-content: space-around;
@@ -33,6 +33,7 @@ export const StyledFeaturesContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-left: var(--product-description-margin-left);
   p {
     color: var(--fc-1);
   }
@@ -40,6 +41,7 @@ export const StyledFeaturesContainer = styled.div`
 
 export const StyledDescriptionContainer = styled.div`
   margin: 0.5em;
+  margin-left: var(--product-description-margin-left);
   max-width: 55%;
   p, h3 {
     color: var(--fc-1);
