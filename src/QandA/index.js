@@ -248,11 +248,14 @@ const AddQuestionButton = styled.button`
   border-radius: 5px;
   padding: 15px;
   text-align: center;
+  color: var(--body-fc);
+  background-color: var(--bgc-1);
+
   &:active {
     transform: translateY(6px);
   }
   &:hover {
-    background-color: #b5b5b5;
+    background-color: var(--bgc2);
     transition: 0.7s ease-in-out;
   }
 `;
@@ -265,11 +268,14 @@ const MoreAnsweredQuestionsButton = styled.button`
   border-radius: 5px;
   padding: 15px;
   text-align: center;
+  color: var(--body-fc);
+  background-color: var(--bgc-1);
+
   &:active {
     transform: translateY(6px);
   }
   &:hover {
-    background-color: #b5b5b5;
+    background-color: var(--bgc2);
     transition: 0.7s ease-in-out;
   }
 `;

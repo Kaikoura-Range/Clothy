@@ -26,6 +26,7 @@ const SearchBar = (props) => {
 
   const selectSearch = (e) => {
     const { key } = e
+    console.log('key', key)
     if (key === 'ArrowDown') {
       selectable.length > selected && setSelected(selected + 1)
     }
@@ -56,6 +57,7 @@ const SearchBar = (props) => {
 
   const loadProduct = (id) => {
     return (e) => {
+      console.log('loading', id)
       setSelected(0)
       setSearchValue('')
       setDropDown(false)
@@ -73,7 +75,6 @@ const SearchBar = (props) => {
           onChange={handleSearch}
           onKeyDown={selectSearch}
           onFocus={() => setDropDown(true)}
-          onBlur={() => setDropDown(false)}
         />
         <SearchBarDropDown
           loadSelected={loadProduct}
