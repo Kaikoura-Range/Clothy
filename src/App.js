@@ -58,6 +58,7 @@ function App() {
           <RelatedProducts  />
           <QAndA />
           <RatingsReviews reviewData={state.reviews.reviews} reviewMeta={state.reviews.meta} dev={state.dev} theme={state.user.theme}/>
+          <Footer><small>{'\u00a9 2022 Kaikoura Range. All rights reserved.'}</small></Footer>
         </AppContainer>
     );
   }
@@ -88,6 +89,15 @@ const LoadingScreen = styled.div`
   justify-content: center;
   background-color: var(--main-bgc);
 
+`
+
+const Footer = styled.footer`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2em;
+  width: 100%;
+  background-color: var(--bgc-3);
 `
 
 
