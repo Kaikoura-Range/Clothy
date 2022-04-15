@@ -139,14 +139,15 @@ function Carousel(props){
         onClick={(e, url) => {handlePhotoClick(e, photo.thumbnail_url); e.stopPropagation()}}
         isActive={ activePhoto.thumbnail_url === photo.thumbnail_url ? true : false }/>);
 
-
+    const smallWidth = 600
     return(
       <StyledCarouselBackground>
 
       <StyledCarouselContainer
         height={mainPhotoHeight}
         width={mainPhotoHeight}
-        url={width > 427 ? activePhoto.url : activePhoto.thumbnail_url}
+        url={activePhoto.url}
+        // url={width > smallWidth ? activePhoto.url : activePhoto.thumbnail_url}
         onClick={(e, index) => props.handleExpandedView(e, photoIndex)}
         animation={animate}>
 
@@ -159,7 +160,7 @@ function Carousel(props){
         </ExpandButtonContainer>
 
         {/** Thumbnail carousel */}
-        {width > 427 ?
+        {width > smallWidth ?
           <ThumbnailCarouselContainer>
             <StyledArrowButton
               onClick={(e, num) => {handleThumbnailArrowClick(e, -1); e.stopPropagation()}}
