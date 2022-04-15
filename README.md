@@ -1,5 +1,3 @@
-## CLOTHY you need cloth we got the cloth.
-
 ## Table of contents
 
 - [General Info](#general-info)
@@ -8,7 +6,7 @@
 
 ## General Info
 
-CLOTHY is an e-commerce website with the latest fashion trends. Consumers can find a Product with different styles, Related Product, along with the Questions and Answers and Ratings and Reviews.
+CLOTHY is an e-commerce website that sells clothes, shoes, and accessories of the latest fashion trends. The website is broken into 4 sections: Product Details, Related Products, Questions and Answers, and Ratings and Reviews. The website itself is hosted on Amazon Web Services (AWS).
 
 ## Technologies
 
