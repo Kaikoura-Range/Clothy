@@ -146,7 +146,7 @@ function Carousel(props){
       <StyledCarouselContainer
         height={mainPhotoHeight}
         width={mainPhotoHeight}
-        photo={activePhoto}
+        url={width > 427 ? activePhoto.url : activePhoto.thumbnail_url}
         onClick={(e, index) => props.handleExpandedView(e, photoIndex)}
         animation={animate}>
 
@@ -159,7 +159,7 @@ function Carousel(props){
         </ExpandButtonContainer>
 
         {/** Thumbnail carousel */}
-        {width > 425 ?
+        {width > 427 ?
           <ThumbnailCarouselContainer>
             <StyledArrowButton
               onClick={(e, num) => {handleThumbnailArrowClick(e, -1); e.stopPropagation()}}

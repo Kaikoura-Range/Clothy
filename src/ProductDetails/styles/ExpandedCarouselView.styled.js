@@ -25,7 +25,7 @@ export const StyledExpandedViewContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: end;
-  width: 60%;
+  width: var(--main-photo-modal-width);
   height: 80%;
   background-color: #fff;
   border-radius: 0.5%;

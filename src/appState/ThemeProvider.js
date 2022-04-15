@@ -93,6 +93,7 @@ code {
     --review-width: 66%;
     --product-description-margin-left: 22%;
     --logo-fs: 2em;
+    --main-photo-modal-width: 90%;
 
 
     --header-cart-width: 75%;
@@ -116,6 +117,7 @@ code {
       --header-logo-width: 50%;
       --product-description-margin-left: 0%;
       --logo-fs: 3em;
+      --main-photo-modal-width: 75%;
     }
 
     @media (min-width: ${media.laptop} ) {
@@ -125,6 +127,7 @@ code {
       --main-Photo-heigth: ${({ dimensions }) => css`${(dimensions.width * 0.65).toString()}px`};
      --header-cart-width: 40%;
      --header-logo-width: 60%;
+     --main-photo-modal-width: 60%;
     }
   }
 `

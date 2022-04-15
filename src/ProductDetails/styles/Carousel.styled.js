@@ -11,7 +11,7 @@ const toggleIn = keyframes`
 
 
 export const StyledCarouselContainer = styled.div`
-  background-image: url(${(({ photo }) => photo ? photo.url : '')});
+  background-image: url(${(({ url }) => url ? url : '')});
   background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom;
