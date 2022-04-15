@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext  } from 'react';
-import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer, StyledThumbnailContainer, StyledArrowButton, StyledExpandButton, ExpandButtonContainer, ThumbnailCarouselContainer } from './../styles/Carousel.styled.js';
+import { StyledCarouselContainer, StyledCarouselPhotos, StyledArrowsContainer, StyledThumbnailContainer, StyledArrowButton, StyledExpandButton, ExpandButtonContainer, ThumbnailCarouselContainer, StyledCarouselBackground } from './../styles/Carousel.styled.js';
 import { DispatchContext } from './../../appState/index.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp, faAngleRight, faAngleLeft, faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';
@@ -33,7 +33,7 @@ function Carousel(props){
       setAnimate(true);
       setTimeout(() => {
         setAnimate(false);
-      }, 600);
+      }, 500);
       if (props.photos.length - 1 >= photoIndex) {
         setActivePhoto(props.photos[photoIndex]);
       } else {
@@ -141,6 +141,8 @@ function Carousel(props){
 
 
     return(
+      <StyledCarouselBackground>
+
       <StyledCarouselContainer
         height={mainPhotoHeight}
         width={mainPhotoHeight}
@@ -157,20 +159,26 @@ function Carousel(props){
         </ExpandButtonContainer>
 
         {/** Thumbnail carousel */}
-        <ThumbnailCarouselContainer>
-          <StyledArrowButton
-            onClick={(e, num) => {handleThumbnailArrowClick(e, -1); e.stopPropagation()}}
-            disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === 0 ? true : false }
-            aria-label="switch to top image"><FontAwesomeIcon icon={faAngleUp} /></StyledArrowButton>
-          <StyledThumbnailContainer>
-            {allPhotos}
-          </StyledThumbnailContainer>
-          <StyledArrowButton
-            onClick={(e, num) => {handleThumbnailArrowClick(e, 1); e.stopPropagation()}}
-            disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === props.photos.length - 7 ? true : false }
-            aria-label="switch to down image">
-            <FontAwesomeIcon icon={faAngleDown} /></StyledArrowButton>
-        </ThumbnailCarouselContainer>
+        {width > 425 ?
+          <ThumbnailCarouselContainer>
+            <StyledArrowButton
+              onClick={(e, num) => {handleThumbnailArrowClick(e, -1); e.stopPropagation()}}
+              disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === 0 ? true : false }
+              aria-label="switch to top image"><FontAwesomeIcon icon={faAngleUp} /></StyledArrowButton>
+            <StyledThumbnailContainer>
+              {allPhotos}
+            </StyledThumbnailContainer>
+            <StyledArrowButton
+              onClick={(e, num) => {handleThumbnailArrowClick(e, 1); e.stopPropagation()}}
+              disabled={ displayedPhotos.length < 7 || displayedPhotosIndexes[0] === props.photos.length - 7 ? true : false }
+              aria-label="switch to down image">
+              <FontAwesomeIcon icon={faAngleDown} />
+            </StyledArrowButton>
+          </ThumbnailCarouselContainer>
+          :
+          null
+        }
+
 
         {/** Main image */}
         <StyledArrowsContainer>
@@ -188,8 +196,9 @@ function Carousel(props){
             <FontAwesomeIcon icon={faAngleRight} /></StyledArrowButton>
         </StyledArrowsContainer>
 
-      </StyledCarouselContainer>)
-
+      </StyledCarouselContainer>
+      </StyledCarouselBackground>
+     )
   } else {
 
     return <StyledCarouselContainer width={mainPhotoHeight} height={mainPhotoHeight} />

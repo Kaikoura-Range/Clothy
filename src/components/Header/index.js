@@ -52,8 +52,8 @@ const HeaderLogoContainer = styled.div`
   width: var(--header-logo-width);
 `
 const LogoText = styled.h2`
-  font-size: 3em;
   color: var(--main-bgc);
+  font-size: var(--logo-fs);
   font-family: 'Brush Script MT', cursive;
 `
 

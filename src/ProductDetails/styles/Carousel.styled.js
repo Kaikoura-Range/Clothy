@@ -15,11 +15,9 @@ export const StyledCarouselContainer = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom;
-  /* width: var(--main-Photo-width); */
-  /* height: var(--main-Photo-heigth); */
   width: ${({width}) =>  css`${width}px`};
   height: ${({height}) =>  css`${height}px`};
-  animation: ${({animation}) => animation && css`${toggleIn} 0.6s ease-in-out`};
+  animation: ${({animation}) => animation && css`${toggleIn} 0.5s ease-in-out`};
   position: relative;
 
   &:hover {
@@ -29,6 +27,12 @@ export const StyledCarouselContainer = styled.div`
   button:hover {
     cursor: pointer;
   }
+`
+
+
+export const StyledCarouselBackground = styled.div`
+  background-color: rgb(110, 110, 110);
+
 `
 
 
@@ -83,7 +87,6 @@ export const StyledCarouselPhotos = styled.span`
 export const StyledArrowsContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  /* margin-top: 15%; */
   position: absolute;
   width: 100%;
   bottom: 0;

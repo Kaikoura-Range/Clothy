@@ -92,10 +92,11 @@ code {
     --main-Photo-heigth: ${({ dimensions }) => css`${(dimensions.width).toString()}px`};
     --review-width: 66%;
     --product-description-margin-left: 22%;
+    --logo-fs: 2em;
 
 
-    --header-cart-width: 80%;
-    --header-logo-width: 20%;
+    --header-cart-width: 75%;
+    --header-logo-width: 25%;
 
     --searchBar-width: 80%;
     color: var(--body-fc);
@@ -114,6 +115,7 @@ code {
       --header-cart-width: 50%;
       --header-logo-width: 50%;
       --product-description-margin-left: 0%;
+      --logo-fs: 3em;
     }
 
     @media (min-width: ${media.laptop} ) {
