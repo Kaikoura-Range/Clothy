@@ -35,6 +35,7 @@ export default function Questions(props) {
   };
 
   const backDropHelpfulHandler = () => {
+    console.log('clicked');
     setShowHelpfulModal(false);
   };
 
@@ -115,11 +116,13 @@ export default function Questions(props) {
       <QuestionsAuthor>
         By: {props.q.asker_name} | {moment(props.q.question_date).format('MMMM Do, YYYY')}
       </QuestionsAuthor>
+
       {answerForm && (
         <BackDrop onClick={backDropHandler}>
           <AnswerForm id={props.q.question_id} showForm={showAnswerForm} />
         </BackDrop>
       )}
+
       {showHelpfulModal && (
         <BackDrop onClick={backDropHelpfulHandler}>
           <HelpfulModal />

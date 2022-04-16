@@ -12,8 +12,8 @@ export default function QuestionForm(props) {
   const onSubmitHandler = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    props.success();
     props.showForm();
+    props.success();
     var newQuestion = {
       product_id: state.currentProduct,
       body: body,

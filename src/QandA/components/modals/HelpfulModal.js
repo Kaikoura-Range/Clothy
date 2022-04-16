@@ -3,14 +3,15 @@ import styled from 'styled-components';
 import { keyframes } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import ModalTemplate from './ModalTemplate';
 export default function HelpfulModal() {
   return (
-    <Modal>
+    <ModalTemplate>
       <HelpfulMessage>
         <FontAwesomeIcon icon={faThumbsUp} style={{ marginRight: '5px' }} />
         You marked this as helpful!
       </HelpfulMessage>
-    </Modal>
+    </ModalTemplate>
   );
 }
 const successAnimation = keyframes`
@@ -35,13 +36,4 @@ const HelpfulMessage = styled.h3`
   padding: 20px;
   border-radius: 5px;
   animation: ${successAnimation} 1s ease-in-out;
-`;
-
-const Modal = styled.div`
-  text-align: center;
-  position: fixed;
-  margin-left: 25%;
-  top: 5.5vh;
-  width: 50%;
-  z-index: 2;
 `;

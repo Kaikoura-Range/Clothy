@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import QAList from './components/QAList';
 import QuestionForm from './components/forms/QuestionForm';
 import SuccessModal from './components/modals/SuccessModal';
-
 let filteredResultslength;
 
 export default function QAndA() {
@@ -230,6 +229,7 @@ const EntireQAndAContainer = styled.div`
   height: auto;
   max-height: 500px !important;
   overflow: auto;
+
   position: relative;
 `;
 
@@ -280,6 +280,11 @@ const MoreAnsweredQuestionsButton = styled.button`
   }
 `;
 
+const NoMatchMessage = styled.p`
+  margin-top: 25px;
+  text-align: center;
+`;
+
 const BackDrop = styled.div`
   position: fixed;
   top: 0;
@@ -288,11 +293,6 @@ const BackDrop = styled.div`
   height: 100vh;
   z-index: 1;
   background: rgba(0, 0, 0, 0.75);
-`;
-
-const NoMatchMessage = styled.p`
-  margin-top: 25px;
-  text-align: center;
 `;
 
 ////////////////////////////////////////////////////////////////////////////////////

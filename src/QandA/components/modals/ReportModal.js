@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { keyframes } from 'styled-components';
+import ModalTemplate from './ModalTemplate';
 export default function ReportModal() {
   return (
-    <Modal>
+    <ModalTemplate>
       <ReportMessage>You have marked this as reported!</ReportMessage>
-    </Modal>
+    </ModalTemplate>
   );
 }
 
@@ -31,13 +32,4 @@ const ReportMessage = styled.h3`
   padding: 20px;
   border-radius: 5px;
   animation: ${ErrorAnimation} 1s ease-in-out;
-`;
-
-const Modal = styled.div`
-  text-align: center;
-  position: fixed;
-  margin-left: 25%;
-  top: 5.5vh;
-  width: 50%;
-  z-index: 2;
 `;

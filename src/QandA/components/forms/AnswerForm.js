@@ -3,6 +3,7 @@ import { StateContext, DispatchContext } from '../../../appState/index.js';
 import styled, { keyframes } from 'styled-components';
 import api from '../../../api/index';
 import ImageForm from './ImageForm';
+import ModalTemplate from '../modals/ModalTemplate';
 export default function AnswerForm(props) {
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
@@ -119,7 +120,7 @@ export default function AnswerForm(props) {
             </UploadImageButton>
           )}
         </CenterItemsWrapper>
-        {photos.length >= 1 && <p style={{color: '#000'}} >Images Preview: </p>}
+        {photos.length >= 1 && <p style={{ color: '#000' }}>Images Preview: </p>}
         {photos.length >= 1 && previewPhotos}
       </AnswerFormContainer>
     </Modal>

@@ -8,6 +8,7 @@ import HelpfulModal from './modals/HelpfulModal';
 import ErrorModal from './modals/ErrorModal';
 import Image from './modals/Image';
 import tracker from '../../components/Tracker';
+
 export default function Answers(props) {
   const [state] = useContext(StateContext);
   const [, dispatch] = useContext(DispatchContext);
@@ -211,6 +212,14 @@ const Img = styled.img`
   object-fit: cover;
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+`;
+
+const AnswerBody = styled.h3`
+  font-size: var(--body-fs);
+`;
+
 const BackDrop = styled.div`
   position: fixed;
   top: 0;
@@ -219,12 +228,4 @@ const BackDrop = styled.div`
   height: 100vh;
   z-index: 1;
   background: rgba(0, 0, 0, 0.75);
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-`;
-
-const AnswerBody = styled.h3`
-  font-size: var(--body-fs);
 `;

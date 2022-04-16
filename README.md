@@ -1,5 +1,6 @@
 ## Table of contents
 
+- [Table of contents](#table-of-contents)
 - [General Info](#general-info)
 - [Technologies](#technologies)
 - [Setup](#setup)
@@ -23,9 +24,16 @@ Project is created with:
 
 To run this project, open two terminals in order to run the client and the server.
 
+On first terminal run the client by:
+
 ```
 npm install
 npm run build:dev
+```
+
+On the second terminal run the server by:
+
+```
 cd server
 npm install
 npm run server:start

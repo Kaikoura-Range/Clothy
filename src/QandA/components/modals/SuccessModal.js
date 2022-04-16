@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { keyframes } from 'styled-components';
+import ModalTemplate from './ModalTemplate';
 export default function SuccessModal() {
   return (
-    <Modal>
+    <ModalTemplate>
       <SuccessMessage>
         <CheckMark></CheckMark> Success! Message posted.
       </SuccessMessage>
-    </Modal>
+    </ModalTemplate>
   );
 }
 
@@ -43,13 +44,4 @@ const SuccessMessage = styled.h3`
   padding: 20px;
   border-radius: 5px;
   animation: ${successAnimation} 1s ease-in-out;
-`;
-
-const Modal = styled.div`
-  text-align: center;
-  position: fixed;
-  margin-left: 25%;
-  top: 5.5vh;
-  width: 50%;
-  z-index: 2;
 `;
