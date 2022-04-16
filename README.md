@@ -27,5 +27,6 @@ To run this project, open two terminals in order to run the client and the serve
 npm install
 npm run build:dev
 cd server
+npm install
 npm run server:start
 ```
