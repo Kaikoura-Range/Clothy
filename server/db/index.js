@@ -1,13 +1,9 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const { checkForHydration } = require('./hydrate.js')
-// mongoose.connect(`mongodb://localhost:${process.env.PORT || 3000}/server`);
 mongoose.connect('mongodb://localhost/fec')
 // mongoose.connect('mongodb://localhost/fec_dev')
-//{ autoIndex: false }
-//sudo iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 3000
 
-// const { ProductsSchema } = require('./schemes');\
 
 
 const ProductsSchema = new Schema({
