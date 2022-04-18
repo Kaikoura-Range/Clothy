@@ -18,29 +18,19 @@ const checkCache = (options) => {
   }
 }
 
-// var numApiRequests = 0;
-// var numCached = 0;
+
 
 
 const startRequest = (options, formatKey) => {
   const cached = checkCache(options)
   if (cached) {
-    // numCached++
-    // console.log('numApiRequests', numApiRequests)
-    // console.log('numCached', numCached)
     return cached
   }
-  // numApiRequests++
-  // console.log('numApiRequests', numApiRequests)
-  // console.log('numCached', numCached)
+
   return axios(options)
     .then((res) => {
       if (options.method.toUpperCase() === 'GET') {
-        // console.log('\n\nformat key', formatKey)
-        // console.log('pre format', res.data)
         const value = res.data;
-        // const value = formatKey ? format.get(res.data, formatKey) :  res.data;
-        // formatKey ? console.log('post format', value) : console.log('no format key', formatKey)
         cache.add(options, value)
         return value
       }
