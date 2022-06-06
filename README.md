@@ -7,6 +7,8 @@
 
 ## General Info
 
+<img alt="Clothy preview" src="./dist/images/preview.gif"/>
+
 CLOTHY is an e-commerce website that sells clothes, shoes, and accessories of the latest fashion trends. The website is broken into 4 sections: Product Details, Related Products, Questions and Answers, and Ratings and Reviews. The website itself is hosted on Amazon Web Services (AWS).
 
 ## Technologies
